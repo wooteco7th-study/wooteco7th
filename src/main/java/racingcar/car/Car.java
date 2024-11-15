@@ -1,13 +1,19 @@
 package racingcar.car;
 
 public class Car {
+    private static final int MOVE_INITIALIZATION = 0;
     private final String name;
     private final int moveAmount;
 
-    public Car(String name, int moveAmount) {
+    private Car(String name, int moveAmount) {
         this.name = name;
         this.moveAmount = moveAmount;
     }
+
+    public static Car of (String name){
+        return new Car(name,MOVE_INITIALIZATION);
+    }
+
 
     public Car move(CarMovePolicy carMovePolicy){
         int moveAmount = carMovePolicy.drawOut();
