@@ -1,7 +1,8 @@
 package racingcar.view;
 
 import java.util.List;
-import racingcar.dto.RacingProgress;
+import racingcar.dto.RaceProgress;
+import racingcar.dto.RaceResult;
 
 public interface OutputView {
 
@@ -9,7 +10,7 @@ public interface OutputView {
 
     void printAskAttempt();
 
-    void printRacingProgresses(final List<RacingProgress> racingProgresses);
+    void printRaceResults(final List<RaceResult> raceResults);
 
-    void printRacingWinners(final List<String> racingWinners);
+    void printRaceWinners(final List<String> racingWinners);
 }

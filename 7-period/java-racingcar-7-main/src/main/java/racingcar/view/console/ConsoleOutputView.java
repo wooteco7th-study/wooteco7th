@@ -2,7 +2,7 @@ package racingcar.view.console;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import racingcar.dto.RacingProgress;
+import racingcar.dto.RaceProgress;
 import racingcar.view.OutputView;
 
 public class ConsoleOutputView implements OutputView {
@@ -28,10 +28,10 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void printRacingProgresses(final List<RacingProgress> racingProgresses) {
-        final String message = racingProgresses.stream()
-                .map(racingProgress -> String.format(PROGRESS, racingProgress.carName(),
-                        HYPHEN.repeat(racingProgress.score())))
+    public void printRacingProgresses(final List<RaceProgress> raceProgresses) {
+        final String message = raceProgresses.stream()
+                .map(raceProgress -> String.format(PROGRESS, raceProgress.carName(),
+                        HYPHEN.repeat(raceProgress.score())))
                 .collect(Collectors.joining(LINE_SEPARATOR));
 
         printlnMessage(PROGRESSES_TITLE + LINE_SEPARATOR + message);
