@@ -6,6 +6,7 @@ public class Car {
     private final int moveAmount;
 
     private Car(String name, int moveAmount) {
+        validateName(name);
         this.name = name;
         this.moveAmount = moveAmount;
     }
@@ -20,7 +21,7 @@ public class Car {
 
         return new Car(name,this.moveAmount + moveAmount);
     }
-    private void validateName(){
+    private void validateName(String name){
         if(name.length() < 1 || name.length() > 5){
             throw new IllegalArgumentException("[ERROR] 자동차 이름의 길이를 0~5글자 사이로 입력 해 주세요.");
         }

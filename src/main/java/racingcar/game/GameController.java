@@ -9,26 +9,24 @@ import racingcar.car.*;
 
 public class GameController {
     private static final String MOVE_MARK = "-";
+    private final InputView inputView;
+    private final OutputView outputView;
 
-    public static void main(String[] args) {
-        new GameController().run();
+    public GameController(InputView inputView, OutputView outputView) {
+        this.inputView = inputView;
+        this.outputView = outputView;
     }
+
     public void run() {
         // given
-        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
-        List<String> carNames = Arrays.stream(readLine().trim().split(",")).toList();
-
-        System.out.println("시도할 횟수는 몇 회 인가요?");
-        int rounds = Integer.parseInt(readLine().trim());
-
-
-        CarMovePolicy carMovePolicy = new CarMovePolicy();
-
-        // when
-        // 자동차 초기 세팅
+        List<String> carNames = inputView.requestCarNames();
         List<Car> cars = carNames.stream()
                 .map(Car::of)
                 .collect(Collectors.toList());
+
+        int rounds = inputView.requestRoundCount();
+        inputView.messageInitiateGameResult();
+        CarMovePolicy carMovePolicy = new CarMovePolicy();
 
         List<RaceInfo> finalRaceInfos = null;
 
@@ -44,27 +42,13 @@ public class GameController {
                     .map(Car::carInfo)
                     .toList();
 
-            printRaceInfos(raceInfos);
+            outputView.printRaceInfos(raceInfos);
             finalRaceInfos = raceInfos;
         }
         // then
         // 최종 승자 발표
         Winners winners = new GameResult(finalRaceInfos).pickWinners();
-        announceWinners(winners);
-    }
-
-    private void announceWinners(Winners winners) {
-        System.out.println("최종 우승자" + " : " + winners.formatWinners());
-    }
-
-    private void printRaceInfos(List<RaceInfo> raceInfos) {
-
-            raceInfos.stream()
-                    .forEach(raceInfo -> {
-                        String moveMarks = MOVE_MARK.repeat(raceInfo.getTotalMoveAmount());
-                        System.out.println(raceInfo.getName() + " : " + moveMarks);
-                    });
-            System.out.println();
+        outputView.announceWinners(winners);
     }
 
 }
