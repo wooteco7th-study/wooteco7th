@@ -27,4 +27,7 @@ public class Car {
     public int getMoveAmount() {
         return moveAmount;
     }
+    public RaceInfo carInfo(){
+        return new RaceInfo(this);
+    }
 }
