@@ -2,12 +2,24 @@ package racingcar.domain;
 
 public class Car {
 
+    private static final int MIN_NUMBER = 0;
+    private static final int MAX_NUMBER = 9;
+    private static final int GO_FORWARD_CONDITION = 4;
     private final CarName name;
-    private final Score score;
+    private final NumberGenerator numberGenerator;
+    private Score score;
 
-    public Car(final CarName name, final Score score) {
+    public Car(final CarName name, final Score score, final NumberGenerator numberGenerator) {
         this.name = name;
         this.score = score;
+        this.numberGenerator = numberGenerator;
+    }
+
+    public void move() {
+        final int number = numberGenerator.generate(MIN_NUMBER, MAX_NUMBER);
+        if (number >= GO_FORWARD_CONDITION) {
+            this.score = score.updateValue(score.getValue() + 1);
+        }
     }
 
     public String getName() {
@@ -18,7 +30,7 @@ public class Car {
         return score.getValue();
     }
 
-    public boolean isSameScore(final Score score) {
-        return this.score.isSameValue(score.getValue());
+    public boolean isSameScore(final int score) {
+        return this.score.isSameValue(score);
     }
 }
