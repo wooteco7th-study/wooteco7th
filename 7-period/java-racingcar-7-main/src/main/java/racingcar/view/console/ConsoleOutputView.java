@@ -33,7 +33,7 @@ public class ConsoleOutputView implements OutputView {
         final String message = raceResults.stream()
                 .map(this::generateRaceResultMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
-        printlnMessage(RACE_RESULT_TITLE + LINE_SEPARATOR + message);
+        printlnMessage(LINE_SEPARATOR + RACE_RESULT_TITLE + LINE_SEPARATOR + message);
     }
 
     @Override
