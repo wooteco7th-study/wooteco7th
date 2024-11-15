@@ -42,7 +42,11 @@ public class GameController {
         // then
         // 최종 승자 발표
         Winners winners = new GameResult(finalRaceInfos).pickWinners();
-        System.out.println(winners.winners().toString());
+        announceWinners(winners);
+    }
+
+    private void announceWinners(Winners winners) {
+        System.out.println("최종 우승자" + " : " + winners.formatWinners());
     }
 
     private void printRaceInfos(List<RaceInfo> raceInfos) {
