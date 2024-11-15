@@ -2,8 +2,6 @@ package racingcar.domain;
 
 public class Car {
 
-    private static final int MIN_NUMBER = 0;
-    private static final int MAX_NUMBER = 9;
     private static final int GO_FORWARD_CONDITION = 4;
     private final CarName name;
     private final NumberGenerator numberGenerator;
@@ -16,7 +14,7 @@ public class Car {
     }
 
     public void move() {
-        final int number = numberGenerator.generate(MIN_NUMBER, MAX_NUMBER);
+        final int number = numberGenerator.generate();
         if (number >= GO_FORWARD_CONDITION) {
             this.score = score.updateValue(score.getValue() + 1);
         }
