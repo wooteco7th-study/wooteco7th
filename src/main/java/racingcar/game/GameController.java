@@ -1,5 +1,8 @@
 package racingcar.game;
 
+import static camp.nextstep.edu.missionutils.Console.readLine;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import racingcar.car.*;
@@ -12,9 +15,14 @@ public class GameController {
     }
     public void run() {
         // given
+        System.out.println("경주할 자동차 이름을 입력하세요.(이름은 쉼표(,) 기준으로 구분)");
+        List<String> carNames = Arrays.stream(readLine().trim().split(",")).toList();
+
+        System.out.println("시도할 횟수는 몇 회 인가요?");
+        int rounds = Integer.parseInt(readLine().trim());
+
+
         CarMovePolicy carMovePolicy = new CarMovePolicy();
-        List<String> carNames = List.of("kim","park","poo");
-        int rounds = 5;
 
         // when
         // 자동차 초기 세팅
