@@ -19,10 +19,11 @@ public class Cars {
         return Collections.unmodifiableList(this.cars);
     }
 
-    public List<Car> getWinners() {
+    public List<String> getWinners() {
         final int score = calculateMaxScore();
         return cars.stream()
                 .filter(car -> car.isSameScore(score))
+                .map(Car::getName)
                 .toList();
     }
 
