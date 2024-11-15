@@ -2,10 +2,10 @@ package racingcar.car;
 
 import java.util.List;
 
-public class RoundResult {
+public class GameResult {
     private final List<RaceInfo> raceInfos;
 
-    public RoundResult(List<RaceInfo> raceInfos) {
+    public GameResult(List<RaceInfo> raceInfos) {
         this.raceInfos = raceInfos;
     }
 
