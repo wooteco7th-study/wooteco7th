@@ -1,7 +1,6 @@
-package racingcar;
+package racingcar.car;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class RoundResult {
     private final List<RaceInfo> raceInfos;
