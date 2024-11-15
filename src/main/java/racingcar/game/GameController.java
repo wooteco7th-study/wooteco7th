@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 import racingcar.car.*;
 
 public class GameController {
+    private static final String MOVE_MARK = "-";
+
     public static void main(String[] args) {
         new GameController().run();
     }
@@ -44,9 +46,13 @@ public class GameController {
     }
 
     private void printRaceInfos(List<RaceInfo> raceInfos) {
-        raceInfos.stream()
-                .forEach(raceInfo -> System.out.println(
-                        raceInfo.getName() + " : " + raceInfo.getTotalMoveAmount()));
-        System.out.println();
+
+            raceInfos.stream()
+                    .forEach(raceInfo -> {
+                        String moveMarks = MOVE_MARK.repeat(raceInfo.getTotalMoveAmount());
+                        System.out.println(raceInfo.getName() + " : " + moveMarks);
+                    });
+            System.out.println();
     }
+
 }
