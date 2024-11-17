@@ -17,7 +17,7 @@ public class ConsoleOutputView implements OutputView {
     private static final String PRIZE_RESULT_LINE = "---";
     private static final String WINNING_LOTTO_WITHOUT_BONUS = "%d개 일치 (%,d원) - %d개";
     private static final String WINNING_LOTTO_WITH_BONUS = "%d개 일치, 보너스 볼 일치 (%,d원) - %d개";
-    private static final String PRIZE_RESULT_RATIO = "총 수익률은 %%.1f입니다.";
+    private static final String PRIZE_RESULT_RATIO = "총 수익률은 %,.1f%%입니다.";
 
 
     @Override
@@ -36,12 +36,12 @@ public class ConsoleOutputView implements OutputView {
 
     @Override
     public void printAskWinningNumber() {
-        printlnMessage(ASK_WINNING_NUMBER);
+        printlnMessage(LINE_SEPARATOR + ASK_WINNING_NUMBER);
     }
 
     @Override
     public void printAskBonusNumber() {
-        printlnMessage(ASK_BONUS_NUMBER);
+        printlnMessage(LINE_SEPARATOR + ASK_BONUS_NUMBER);
     }
 
     @Override
@@ -49,7 +49,8 @@ public class ConsoleOutputView implements OutputView {
         final String message = winningLottoRecipes.stream()
                 .map(this::createWinningLottoRecipeMessage)
                 .collect(Collectors.joining(LINE_SEPARATOR));
-        final String prizeResultTitle = LINE_SEPARATOR + PRIZE_RESULT_HEADER + PRIZE_RESULT_LINE + LINE_SEPARATOR;
+        final String prizeResultTitle =
+                LINE_SEPARATOR + PRIZE_RESULT_HEADER + LINE_SEPARATOR + PRIZE_RESULT_LINE + LINE_SEPARATOR;
         printlnMessage(prizeResultTitle + message);
     }
 
