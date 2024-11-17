@@ -6,11 +6,11 @@ import java.util.Map.Entry;
 public class PrizeResult {
 
     private static final double PERCENTAGE_NUMBER = 100.0;
-    private final Map<LottoRank, Integer> lottoRankResult;
+    private final WinningResult winningResult;
     private final Money money;
 
-    public PrizeResult(final Map<LottoRank, Integer> lottoRankResult, final Money money) {
-        this.lottoRankResult = lottoRankResult;
+    public PrizeResult(final WinningResult winningResult, final Money money) {
+        this.winningResult = winningResult;
         this.money = money;
     }
 
@@ -21,7 +21,7 @@ public class PrizeResult {
     }
 
     private long calculateTotalPrizePrice() {
-        return lottoRankResult.entrySet().stream()
+        return winningResult.getLottoRankResult().entrySet().stream()
                 .mapToLong(this::calculatePrizePrice)
                 .sum();
     }
