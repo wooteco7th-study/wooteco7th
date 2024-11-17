@@ -1,6 +1,8 @@
 package lotto.util;
 
+import java.util.List;
 import lotto.error.ErrorMessage;
+import lotto.error.exception.InvalidListDuplicatedException;
 import lotto.error.exception.InvalidNumberFormatException;
 import lotto.error.exception.InvalidNumberRangeException;
 
@@ -20,6 +22,12 @@ public class NumberValidator {
     public static void validateUnit(final int value, final int unit, final ErrorMessage errorMessage) {
         if(isInvalidUnit(value, unit)) {
             throw new InvalidNumberFormatException(errorMessage);
+        }
+    }
+
+    public static <T> void validateDuplicate(final T value, final List<T> values, ErrorMessage errorMessage) {
+        if (values.contains(value)) {
+            throw new InvalidListDuplicatedException(errorMessage);
         }
     }
 
