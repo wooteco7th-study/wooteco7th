@@ -29,7 +29,7 @@ public enum LottoRank {
                 .filter(lottoRank -> Objects.equals(lottoRank.isMatchedBonus, isMatchedBonus))
                 .filter(lottoRank -> Objects.equals(lottoRank.matchNumberCount, matchNumberCount))
                 .findAny()
-                .orElse(null);
+                .orElse(RANK_NONE);
 
     }
 
