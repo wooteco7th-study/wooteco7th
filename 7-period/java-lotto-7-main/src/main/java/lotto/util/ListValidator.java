@@ -23,7 +23,7 @@ public class ListValidator {
         }
     }
 
-    public static <T extends Number & Comparable<T>> void validateRange(final List<T> values, final ValidateFunction<T> function) {
+    public static <T extends Number> void validateRange(final List<T> values, final ValidateFunction<T> function) {
         for (T value : values) {
             function.validate(value);
         }
@@ -36,7 +36,7 @@ public class ListValidator {
     }
 
     @FunctionalInterface
-    interface ValidateFunction <T extends Number>{
+    public interface ValidateFunction <T extends Number>{
         void validate(final T value);
     }
 }
