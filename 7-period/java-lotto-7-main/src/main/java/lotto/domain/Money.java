@@ -19,6 +19,10 @@ public class Money {
         return value / number;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     private void validate(final int value) {
         NumberValidator.validateRange(value, MIN, MAX, ErrorMessage.INVALID_EXCEEDS_MONEY_RANGE);
         NumberValidator.validateUnit(value, UNIT, ErrorMessage.INVALID_WRONG_MONEY_UNIT);
