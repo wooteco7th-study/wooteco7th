@@ -9,7 +9,8 @@ public enum LottoRank {
     RANK_2(2, 5, 30_000_000, true),
     RANK_3(3, 5, 1_500_000, false),
     RANK_4(4, 4, 50_000, false),
-    RANK_5(5, 3, 5_000, false);
+    RANK_5(5, 3, 5_000, false),
+    RANK_NONE(Integer.MAX_VALUE, 0, 0, false);
 
     private final int rank;
     private final int matchNumberCount;
@@ -34,6 +35,7 @@ public enum LottoRank {
 
     public static List<LottoRank> findAll() {
         return Arrays.stream(LottoRank.values())
+                .sorted((r1, r2) -> r2.rank - r1.rank)
                 .toList();
     }
 
