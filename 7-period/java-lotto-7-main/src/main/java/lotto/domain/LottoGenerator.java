@@ -9,4 +9,8 @@ public class LottoGenerator {
         final List<Integer> numbers = Randoms.pickUniqueNumbersInRange(min, max, count);
         return new Lotto(numbers);
     }
+
+    private LottoGenerator() {
+
+    }
 }
