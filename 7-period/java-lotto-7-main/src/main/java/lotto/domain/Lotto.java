@@ -24,6 +24,10 @@ public class Lotto {
         return numbers.contains(number);
     }
 
+    public List<Integer> getNumbers() {
+        return numbers;
+    }
+
     private void validate(final List<Integer> numbers) {
         ListValidator.validateSize(numbers, LOTTO_SIZE, ErrorMessage.INVALID_WRONG_LOTTO_NUMBER_SIZE);
         ListValidator.validateRange(numbers, number -> NumberValidator.validateRange(number, MIN_NUMBER, MAX_NUMBER, ErrorMessage.INVALID_EXCEEDS_LOTTO_NUMBER_RANGE));
