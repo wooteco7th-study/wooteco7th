@@ -7,7 +7,7 @@ import lotto.error.exception.InvalidNumberRangeException;
 public class NumberValidator {
 
     private NumberValidator() {
-        
+
     }
 
     public static <T extends Number & Comparable<T>> void validateRange(final T number, final T min, final T max, final
