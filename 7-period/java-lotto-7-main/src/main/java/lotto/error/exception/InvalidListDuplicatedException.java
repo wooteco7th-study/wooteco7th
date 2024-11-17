@@ -3,8 +3,8 @@ package lotto.error.exception;
 import lotto.error.AppException;
 import lotto.error.ErrorMessage;
 
-public class DuplicatedLottoNumberException extends AppException {
-    public DuplicatedLottoNumberException(final ErrorMessage errorMessage) {
+public class InvalidListDuplicatedException extends AppException {
+    public InvalidListDuplicatedException(final ErrorMessage errorMessage) {
         super(errorMessage);
     }
 }
