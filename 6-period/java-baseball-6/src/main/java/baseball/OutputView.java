@@ -3,7 +3,7 @@ package baseball;
 import baseball.domain.BaseballGame;
 
 public class OutputView {
-    public static void printPlayStatus(final BaseballGame baseballGame) {
+    public static void printResultStatus(final BaseballGame baseballGame) {
         System.out.println(baseballGame.getMessage());
     }
 
