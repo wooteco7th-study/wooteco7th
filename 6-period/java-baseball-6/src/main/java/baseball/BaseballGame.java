@@ -47,6 +47,22 @@ public enum BaseballGame {
         return BaseballGame.findStatus(strikeCount,ballsCount);
     }
 
+    public boolean isAllStrike() {
+        return this.equals(THREE_STRIKE);
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public int getStrike() {
+        return strike;
+    }
+
+    public int getBall() {
+        return ball;
+    }
+
     private static int countBalls(final List<Integer> computer, final List<Integer> user, final int strikeCount) {
         int balls =0;
         for(int i =0; i < BASEBALL_SIZE.getValue(); i++)
@@ -72,7 +88,4 @@ public enum BaseballGame {
         throw new IllegalArgumentException("[ERROR] 일치하는 상태 못찾았습니다: strike=" + strike + ", ball=" + ball);
     }
 
-    public boolean isAllStrike() {
-        return this.equals(THREE_STRIKE);
-    }
 }
