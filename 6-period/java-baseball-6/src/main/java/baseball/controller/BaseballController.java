@@ -23,26 +23,29 @@ public class BaseballController {
     public void start() {
         outputView.printlnMessage(PrintMessage.START_MESSAGE);
         do {
-            startInning();
+            startGame();
         } while (end());
     }
 
-    private void startInning() {
+    private void startGame() {
         Computer computer = new Computer();
+        doInning(computer);
+        outputView.printlnMessage(PrintMessage.END_MESSAGE);
+    }
 
+    private void doInning(Computer computer) {
         while (true) {
             HitterBallGenerator hitterBallGenerator = new HitterBallGenerator(inputView.inputBaseball());
             Hitter hitter = new Hitter(hitterBallGenerator.getHitterBalls());
 
             HitRecordGenerator hitRecordGenerator = new HitRecordGenerator(computer.getBalls());
             HitRecord hitRecord = hitRecordGenerator.generate(hitter.getHitterBalls());
-            System.out.println(hitRecord.toString());
+            outputView.printResult(hitRecord);
 
             if (hitRecord.isThreeStrike()) {
                 break;
             }
         }
-        outputView.printlnMessage(PrintMessage.END_MESSAGE);
     }
 
     private boolean end() {
