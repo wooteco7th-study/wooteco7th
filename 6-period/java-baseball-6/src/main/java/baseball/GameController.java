@@ -25,34 +25,53 @@ public class GameController {
         boolean isGameRunning = true;
 
         while (isGameRunning) {
+            // 3스트라이크 이전
             playOneGame();
+            // 3스트라이크 이후 Y/N 물어봄
             isGameRunning = requestGameContinue();
         }
 
     }
     private void playOneGame() {
-        // given
-        Computer computer = new Computer(numberGenerator.pickUniqueThreeNumbers());
-        // when
+        // 콘솔 야구 번호 입력 받기
         printStartMessage();
+        Computer computer = initializeComputerNums();
+        // 게임시작
         playUntilGameOver(computer);
     }
 
+    private Computer initializeComputerNums() {
+        Computer computer = new Computer(numberGenerator.pickUniqueThreeNumbers());
+        return computer;
+    }
+
     private static void playUntilGameOver(final Computer computer) {
-        boolean isCorrect = false;
+        boolean isThreeStrike = false;
 
-        while (!isCorrect) {
+        while (!isThreeStrike) {
             printRequestNumberMessage();
-            User user = new User(requestUserNumber());
+            User user = createUserNums();
+
+            // when
             BaseballGame baseballGame = BaseballGame.of(computer, user);
+            printResultStatus(baseballGame);
 
-            printPlayStatus(baseballGame);
-
-            if (baseballGame.isAllStrike()) {
-                printEndingMessage();
-                isCorrect = true;
-            }
+            // then
+            isThreeStrike = isThreeStrike(isThreeStrike, baseballGame);
         }
+    }
+
+    private static boolean isThreeStrike(boolean isThreeStrike, final BaseballGame baseballGame) {
+        if (baseballGame.isAllStrike()) {
+            printEndingMessage();
+            isThreeStrike = true;
+        }
+        return isThreeStrike;
+    }
+
+    private static User createUserNums() {
+        User user = new User(requestUserNumber());
+        return user;
     }
 
     private boolean requestGameContinue() {
