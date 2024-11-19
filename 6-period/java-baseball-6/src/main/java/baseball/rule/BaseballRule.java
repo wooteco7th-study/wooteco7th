@@ -1,10 +1,10 @@
-package baseball;
+package baseball.rule;
 
 public enum BaseballRule {
 
     BASEBALL_SIZE(3),
     MIN_NUMBER(1),
-    MAX_NUMBER(3);
+    MAX_NUMBER(9);
     private final int value;
 
     BaseballRule(final int value) {
