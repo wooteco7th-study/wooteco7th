@@ -3,15 +3,17 @@ package baseball.view;
 import baseball.util.StringParser;
 import camp.nextstep.edu.missionutils.Console;
 
+import java.util.List;
+
 import static baseball.exception.ExceptionMessage.INPUT_BLANK;
 
 public class InputView {
 
     private static final String INPUT_NUMBERS_MSG = "숫자를 입력해주세요 : ";
 
-    public int readNumbers() {
+    public List<Integer> readNumbers() {
         String input = getValidatedInput(INPUT_NUMBERS_MSG);
-        return StringParser.parseToInt(input);
+        return StringParser.parseToList(input);
     }
 
     private String getValidatedInput(String message) {
