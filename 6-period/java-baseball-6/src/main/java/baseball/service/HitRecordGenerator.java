@@ -5,6 +5,8 @@ import java.util.List;
 
 public class HitRecordGenerator {
 
+    private static final Integer BALL_SIZE = 3;
+
     private final List<Integer> computerBalls;
 
     public HitRecordGenerator(List<Integer> computerBalls) {
@@ -13,7 +15,7 @@ public class HitRecordGenerator {
 
     public HitRecord generate(List<Integer> hitterBalls) {
         HitRecord record = new HitRecord();
-        for (int inning = 0; inning < 3; inning++) {
+        for (int inning = 0; inning < BALL_SIZE; inning++) {
             if (hitStrike(computerBalls.get(inning), hitterBalls.get(inning))) {
                 record.addStrike();
                 continue;

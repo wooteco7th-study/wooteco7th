@@ -4,6 +4,11 @@ import baseball.view.PrintMessage;
 
 public class HitRecord {
 
+    private static final Integer NOTHING = 0;
+    private static final Integer COUNT = 1;
+    private static final Integer THREE_STRIKE = 3;
+    private static final String SPACE = " ";
+
     private Integer strike;
     private Integer ball;
 
@@ -13,32 +18,32 @@ public class HitRecord {
     }
 
     public void addStrike() {
-        strike += 1;
+        strike += COUNT;
     }
 
     public void addBall() {
-        ball += 1;
+        ball += COUNT;
     }
 
     public boolean isThreeStrike() {
-        return strike.equals(3);
+        return strike.equals(THREE_STRIKE);
     }
 
     @Override
     public String toString() {
-        if (strike + ball == 0) {
+        if (strike + ball == NOTHING) {
             return PrintMessage.NOTHING.getMessage();
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        if (ball > 0) {
+        if (ball > NOTHING) {
             stringBuilder.append(ball);
             stringBuilder.append(PrintMessage.BALL.getMessage());
         }
-        if (ball > 0 && strike > 0) {
-            stringBuilder.append(" ");
+        if (ball > NOTHING && strike > NOTHING) {
+            stringBuilder.append(SPACE);
         }
-        if (strike > 0) {
+        if (strike > NOTHING) {
             stringBuilder.append(strike);
             stringBuilder.append(PrintMessage.STRIKE.getMessage());
         }

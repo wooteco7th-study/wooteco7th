@@ -2,6 +2,9 @@ package baseball.domain;
 
 public class Reset {
 
+    private static final String RESTART = "1";
+    private static final String END = "2";
+
     private final String reset;
 
     public Reset(String reset) {
@@ -16,10 +19,10 @@ public class Reset {
     }
 
     private boolean checkNotReset(String reset) {
-        return !(reset.equals("1") || reset.equals("2"));
+        return !(reset.equals(RESTART) || reset.equals(END));
     }
 
     public boolean resetGame() {
-        return reset.equals("1");
+        return reset.equals(RESTART);
     }
 }
