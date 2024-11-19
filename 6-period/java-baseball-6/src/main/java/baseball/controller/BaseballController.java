@@ -3,6 +3,7 @@ package baseball.controller;
 import baseball.domain.Computer;
 import baseball.domain.HitRecord;
 import baseball.domain.Hitter;
+import baseball.domain.Reset;
 import baseball.service.HitRecordGenerator;
 import baseball.service.HitterBallGenerator;
 import baseball.view.InputView;
@@ -19,8 +20,14 @@ public class BaseballController {
         this.outputView = outputView;
     }
 
-    public void startInning() {
+    public void start() {
         outputView.printlnMessage(PrintMessage.START_MESSAGE);
+        do {
+            startInning();
+        } while (end());
+    }
+
+    private void startInning() {
         Computer computer = new Computer();
 
         while (true) {
@@ -32,9 +39,14 @@ public class BaseballController {
             System.out.println(hitRecord.toString());
 
             if (hitRecord.isThreeStrike()) {
-                outputView.printlnMessage(PrintMessage.END_MESSAGE);
                 break;
             }
         }
+        outputView.printlnMessage(PrintMessage.END_MESSAGE);
+    }
+
+    private boolean end() {
+        Reset reset = new Reset(inputView.inputReset());
+        return reset.resetGame();
     }
 }

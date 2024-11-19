@@ -18,4 +18,9 @@ public class InputView {
         outputView.printMessage(PrintMessage.INPUT_BALL_MESSAGE);
         return inputUser();
     }
+
+    public String inputReset() {
+        outputView.printlnMessage(PrintMessage.RESTART_MESSAGE);
+        return inputUser();
+    }
 }
