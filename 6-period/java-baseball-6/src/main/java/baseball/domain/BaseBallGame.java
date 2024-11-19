@@ -10,8 +10,8 @@ public class BaseBallGame {
 
     private GameScore gameScore;
 
-    public BaseBallGame(final GameScore gameScore) {
-        this.gameScore = gameScore;
+    public BaseBallGame() {
+        this.gameScore = new GameScore(0,0);
     }
 
     public boolean isAllStrike() {
