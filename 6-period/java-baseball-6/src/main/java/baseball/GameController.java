@@ -3,12 +3,23 @@ package baseball;
 import static baseball.InputView.*;
 import static baseball.InputView.YESorNO.GAME_RESTART;
 import static baseball.OutputView.*;
+import static baseball.rule.BaseballRule.MAX_NUMBER;
+import static baseball.rule.BaseballRule.MIN_NUMBER;
 
 import baseball.domain.BaseballGame;
 import baseball.domain.Computer;
 import baseball.domain.User;
+import baseball.infrastructure.BaseBallNumberGenerator;
 
 public class GameController {
+    private final BaseBallNumberGenerator numberGenerator;
+
+    public GameController() {
+        this.numberGenerator = new BaseBallNumberGenerator(
+                MIN_NUMBER.getValue(),
+                MAX_NUMBER.getValue()
+        );
+    }
 
     public void run(){
         boolean isGameRunning = true;
@@ -21,7 +32,7 @@ public class GameController {
     }
     private void playOneGame() {
         // given
-        Computer computer = new Computer(NumberGenerator.pickUniqueThreeNumbers());
+        Computer computer = new Computer(numberGenerator.pickUniqueThreeNumbers());
         // when
         printStartMessage();
         playUntilGameOver(computer);
