@@ -1,16 +1,17 @@
 package baseball;
 
+import baseball.config.Config;
 import baseball.controller.Controller;
-import baseball.util.Formatter;
-import baseball.view.InputView;
-import baseball.view.OutputView;
+import camp.nextstep.edu.missionutils.Console;
 
 public class Application {
     public static void main(String[] args) {
-        InputView inputView = new InputView();
-        OutputView outputView = new OutputView();
-        Formatter formatter = new Formatter();
-        Controller controller = new Controller(inputView, outputView, formatter);
-        controller.process();
+        Config config = new Config();
+        Controller controller = config.createController();
+        try {
+            controller.process();
+        } finally {
+            Console.close();
+        }
     }
 }
