@@ -25,7 +25,7 @@ class BaseballNumbersTest {
             // When & Then
             assertThatThrownBy(() -> new BaseballNumbers(numbers))
                     .isExactlyInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("숫자는 중복되지 않은 3개여야 합니다.");
+                    .hasMessageContaining("숫자는 중복되지 않은 3개여야 합니다.");
         }
 
         @Test
@@ -37,7 +37,7 @@ class BaseballNumbersTest {
             // When & Then
             assertThatThrownBy(() -> new BaseballNumbers(numbers))
                     .isExactlyInstanceOf(IllegalArgumentException.class)
-                    .hasMessage("숫자는 1과 9 사이여야 합니다.");
+                    .hasMessageContaining("숫자는 1과 9 사이여야 합니다.");
         }
     }
 

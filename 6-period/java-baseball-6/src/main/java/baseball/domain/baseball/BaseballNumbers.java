@@ -1,5 +1,6 @@
 package baseball.domain.baseball;
 
+import baseball.exception.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,12 +14,22 @@ public class BaseballNumbers {
     }
 
     private void validate(final List<Integer> numbers) {
+        validateUnique(numbers);
+        validateRange(numbers);
+    }
+
+    private void validateUnique(final List<Integer> numbers) {
         if (numbers.stream().distinct().count() != BaseballRules.SIZE.getValue()) {
-            throw new IllegalArgumentException("숫자는 중복되지 않은 3개여야 합니다.");
+            throw new IllegalArgumentException(
+                    ExceptionMessage.UNIQUE_NUMBERS.getMessage(BaseballRules.SIZE.getValue()));
         }
+    }
+
+    private void validateRange(final List<Integer> numbers) {
         if (numbers.stream().anyMatch(number -> number < BaseballRules.MIN_NUMBER.getValue()
                 || number > BaseballRules.MAX_NUMBER.getValue())) {
-            throw new IllegalArgumentException("숫자는 1과 9 사이여야 합니다.");
+            throw new IllegalArgumentException(
+                    ExceptionMessage.VALID_RANGE.getMessage(BaseballRules.MIN_NUMBER, BaseballRules.MAX_NUMBER));
         }
     }
 
