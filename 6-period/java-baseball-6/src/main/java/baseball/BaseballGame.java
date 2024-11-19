@@ -68,4 +68,8 @@ public enum BaseballGame {
         }
         throw new IllegalArgumentException("[ERROR] 일치하는 상태 못찾았습니다: strike=" + strike + ", ball=" + ball);
     }
+
+    public boolean isAllStrike() {
+        return this.equals(THREE_STRIKE);
+    }
 }
