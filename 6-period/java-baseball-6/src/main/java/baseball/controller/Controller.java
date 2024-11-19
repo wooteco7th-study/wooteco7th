@@ -38,11 +38,7 @@ public class Controller {
     }
 
     private void startGame() {
-        //        ### ✅ 랜덤 숫자 생성하기
-//        1에서 9까지 **서로 다른 임의의 수 3개**를 선택한다.
         BaseballNumbers numbers = makeNumbers();
-//        ### ✅ 숫자 입력하기
-//        -  게임 플레이어는 컴퓨터가 생각하고 있는 **서로 다른 3개의 숫자**를 입력한다.
         while (true) {
             BaseballResult result = playGame(numbers);
             if (result.isWin()) {
@@ -54,12 +50,6 @@ public class Controller {
 
     private BaseballResult playGame(final BaseballNumbers numbers) {
         BaseballNumbers inputNumbers = makeInputNumbers();
-//        ### ✅ 결과 출력하기
-//        - 입력한 수에 대한 결과를 볼, 스트라이크 개수로 표시한다.
-//        - 같은 수가 같은 자리에 있으면 스트라이크,
-//                - 다른 자리에 있으면 볼,
-//                - 같은 수가 전혀 없으면 낫싱
-//        - 맞추지 못할 경우 다시 숫자를 입력받는다.
         BaseballMatcher matcher = new BaseballMatcher(numbers);
         BaseballResult result = matcher.match(inputNumbers);
         outputView.showResult(formatter.makeResult(result));
