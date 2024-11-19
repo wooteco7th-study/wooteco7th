@@ -17,6 +17,21 @@ public class Numbers {
         this.numbers = createNumbers(numbers);
     }
 
+    public List<Integer> getNumbers() {
+        return numbers.stream()
+                .map(Number::getValue)
+                .toList();
+    }
+
+    public boolean isThreeStrike(Numbers other) {
+        for (int i = 0; i < NUMBERS_SIZE; i++) {
+            if (!numbers.get(i).equals(other.numbers.get(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private static List<Number> createNumbers(final List<Integer> numbers) {
         return numbers.stream()
                 .map(Number::new)
