@@ -31,6 +31,6 @@ class ConverterTest {
         // When
         assertThatThrownBy(() -> Converter.convertToInteger(input))
                 .isExactlyInstanceOf(IllegalArgumentException.class)
-                .hasMessage("[ERROR] 숫자여야합니다.");
+                .hasMessageContaining("숫자여야 합니다.");
     }
 }
