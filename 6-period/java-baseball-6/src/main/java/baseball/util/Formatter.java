@@ -1,6 +1,6 @@
 package baseball.util;
 
-import baseball.domain.BaseballResult;
+import baseball.domain.baseball.BaseballResult;
 
 public class Formatter {
 

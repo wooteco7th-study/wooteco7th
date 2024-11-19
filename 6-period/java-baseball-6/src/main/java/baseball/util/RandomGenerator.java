@@ -1,6 +1,6 @@
 package baseball.util;
 
-import baseball.domain.BaseballRules;
+import baseball.domain.baseball.BaseballRules;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.List;
