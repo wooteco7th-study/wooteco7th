@@ -21,23 +21,26 @@ import java.util.List;
  *                     - [ ] 나머지 같은 수가 다른 자리에 0개 있으면 - 낫싱
  */
 public enum BaseballGame {
-    THREE_STRIKE(3,0),
-    TWO_STRIKE(2,0),
-    ONE_STRIKE_TWO_BALL(1,2),
-    ONE_STRIKE_ONE_BALL(1,1),
-    ONE_STRIKE_ZERO_BALL(1,0),
-    ZERO_STRIKE_THREE_BALL(0,3),
-    ZERO_STRIKE_TWO_BALL(0,2),
-    ZERO_STRIKE_ONE_BALL(0,1),
-    NOTHING(0,0);
+    THREE_STRIKE("3스트라이크",3,0),
+    TWO_STRIKE("2스트라이크",2,0),
+    ONE_STRIKE_TWO_BALL("2볼 1스트라이크",1,2),
+    ONE_STRIKE_ONE_BALL("1볼 1스트라이크",1,1),
+    ONE_STRIKE_ZERO_BALL("1스트라이크",1,0),
+    ZERO_STRIKE_THREE_BALL("3볼",0,3),
+    ZERO_STRIKE_TWO_BALL("2볼",0,2),
+    ZERO_STRIKE_ONE_BALL("1볼",0,1),
+    NOTHING("낫싱",0,0);
 
+    private final String message;
     private final int strike;
     private final int ball;
 
-    BaseballGame(final int strike, final int ball) {
+    BaseballGame(final String message, final int strike, final int ball) {
+        this.message = message;
         this.strike = strike;
         this.ball = ball;
     }
+
     public static BaseballGame of(List<Integer> computer, List<Integer> user){
         int strikeCount = countStrikes(computer,user);
         int ballsCount = countBalls(computer,user,strikeCount);
