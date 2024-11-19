@@ -1,8 +1,8 @@
 package baseball.controller;
 
-import baseball.domain.BaseballMatcher;
-import baseball.domain.BaseballNumbers;
-import baseball.domain.BaseballResult;
+import baseball.domain.baseball.BaseballMatcher;
+import baseball.domain.baseball.BaseballNumbers;
+import baseball.domain.baseball.BaseballResult;
 import baseball.util.Converter;
 import baseball.util.Formatter;
 import baseball.util.RandomGenerator;
