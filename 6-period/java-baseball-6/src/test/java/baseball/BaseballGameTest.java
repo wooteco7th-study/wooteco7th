@@ -1,8 +1,11 @@
 package baseball;
 
-import static baseball.BaseballGame.*;
+import static baseball.domain.BaseballGame.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import baseball.domain.BaseballGame;
+import baseball.domain.Computer;
+import baseball.domain.User;
 import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,8 +25,8 @@ class BaseballGameTest {
     @Test
     void 낫싱_테스트(){
         // given
-        List<Integer> computer = List.of(1, 2, 3);
-        List<Integer> user = List.of(4, 5, 6);
+        Computer computer = new Computer(List.of(1, 2, 3));
+        User user = new User(List.of(4, 5, 6));
 
         // when
         BaseballGame status = of(computer, user);
@@ -36,9 +39,8 @@ class BaseballGameTest {
     @Test
     void Three_스트라이크(){
         // given
-        List<Integer> computer = List.of(1, 2, 3);
-        List<Integer> user = List.of(1, 2, 3);
-
+        Computer computer = new Computer(List.of(1, 2, 3));
+        User user = new User(List.of(1, 2, 3));
         // when
         BaseballGame status = of(computer, user);
 
@@ -49,8 +51,8 @@ class BaseballGameTest {
     @Test
     void Two스트라이크(){
         // given
-        List<Integer> computer = List.of(1, 2, 4);
-        List<Integer> user = List.of(1, 2, 3);
+        Computer computer = new Computer(List.of(1, 2, 4));
+        User user = new User(List.of(1, 2, 3));
 
         // when
         BaseballGame status = of(computer, user);
@@ -62,8 +64,8 @@ class BaseballGameTest {
     @Test
     void One스트라이크_Two볼(){
         // given
-        List<Integer> computer = List.of(1, 3, 4);
-        List<Integer> user = List.of(1, 4, 3);
+        Computer computer = new Computer(List.of(1, 3, 4));
+        User user = new User(List.of(1, 4, 3));
 
         // when
         BaseballGame status = of(computer, user);
@@ -75,8 +77,8 @@ class BaseballGameTest {
     @Test
     void One스트라이크_One볼(){
         // given
-        List<Integer> computer = List.of(1, 3, 4);
-        List<Integer> user = List.of(1, 2, 3);
+        Computer computer = new Computer(List.of(1, 3, 4));
+        User user = new User(List.of(1, 2, 3));
 
         // when
         BaseballGame status = of(computer, user);
@@ -88,8 +90,8 @@ class BaseballGameTest {
     @Test
     void One스트라이크_Zero볼(){
         // given
-        List<Integer> computer = List.of(1, 3, 4);
-        List<Integer> user = List.of(1, 7, 8);
+        Computer computer = new Computer(List.of(1, 3, 4));
+        User user = new User(List.of(1, 7, 8));
 
         // when
         BaseballGame status = of(computer, user);
@@ -101,8 +103,9 @@ class BaseballGameTest {
     @Test
     void Zero스트라이크_Three볼(){
         // given
-        List<Integer> computer = List.of(1, 3, 4);
-        List<Integer> user = List.of(4, 1, 3);
+
+        Computer computer = new Computer(List.of(1, 4, 5));
+        User user = new User(List.of(5, 1 ,4));
 
         // when
         BaseballGame status = of(computer, user);
@@ -114,8 +117,8 @@ class BaseballGameTest {
     @Test
     void Zero스트라이크_Two볼(){
         // given
-        List<Integer> computer = List.of(1, 3, 4);
-        List<Integer> user = List.of(4, 1, 9);
+        Computer computer = new Computer(List.of(1, 3, 4));
+        User user = new User(List.of(4, 1, 9));
 
         // when
         BaseballGame status = of(computer, user);
@@ -127,8 +130,8 @@ class BaseballGameTest {
     @Test
     void Zero스트라이크_One볼(){
         // given
-        List<Integer> computer = List.of(1, 3, 4);
-        List<Integer> user = List.of(3, 8, 9);
+        Computer computer = new Computer(List.of(1, 3, 4));
+        User user = new User(List.of(3, 8, 9));
 
         // when
         BaseballGame status = of(computer, user);
