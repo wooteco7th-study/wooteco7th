@@ -6,6 +6,7 @@ import baseball.domain.BaseballResult;
 import baseball.util.Converter;
 import baseball.util.Formatter;
 import baseball.util.RandomGenerator;
+import baseball.view.Answer;
 import baseball.view.InputView;
 import baseball.view.OutputView;
 import java.util.ArrayList;
@@ -24,13 +25,24 @@ public class Controller {
     }
 
     public void process() {
+        outputView.showStartMessage();
+        startGame();
+        askRestart();
+    }
+
+    private void askRestart() {
+        outputView.showCommentForRestart();
+        if (Answer.sayYes(inputView.readLine())) {
+            startGame();
+        }
+    }
+
+    private void startGame() {
         //        ### ✅ 랜덤 숫자 생성하기
 //        1에서 9까지 **서로 다른 임의의 수 3개**를 선택한다.
         BaseballNumbers numbers = makeNumbers();
 //        ### ✅ 숫자 입력하기
 //        -  게임 플레이어는 컴퓨터가 생각하고 있는 **서로 다른 3개의 숫자**를 입력한다.
-        outputView.showStartMessage();
-
         while (true) {
             BaseballResult result = playGame(numbers);
             if (result.isWin()) {
