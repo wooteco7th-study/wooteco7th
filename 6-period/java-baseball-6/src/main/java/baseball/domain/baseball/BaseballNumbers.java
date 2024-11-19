@@ -3,6 +3,7 @@ package baseball.domain.baseball;
 import baseball.exception.ExceptionMessage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class BaseballNumbers {
 
@@ -29,7 +30,8 @@ public class BaseballNumbers {
         if (numbers.stream().anyMatch(number -> number < BaseballRules.MIN_NUMBER.getValue()
                 || number > BaseballRules.MAX_NUMBER.getValue())) {
             throw new IllegalArgumentException(
-                    ExceptionMessage.VALID_RANGE.getMessage(BaseballRules.MIN_NUMBER, BaseballRules.MAX_NUMBER));
+                    ExceptionMessage.VALID_RANGE.getMessage(BaseballRules.MIN_NUMBER.getValue(),
+                            BaseballRules.MAX_NUMBER.getValue()));
         }
     }
 
