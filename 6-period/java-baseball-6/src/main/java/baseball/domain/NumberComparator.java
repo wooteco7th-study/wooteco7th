@@ -13,8 +13,7 @@ public class NumberComparator {
         int strikeCount = 0;
 
         for (Integer number : userNumbers.getNumbers()) {
-            if (computerNumbers.getNumbers().contains(number)
-                    && computerNumbers.getNumbers().indexOf(number) == userNumbers.getNumbers().indexOf(number)) {
+            if (computerNumbers.getNumbers().indexOf(number) == userNumbers.getNumbers().indexOf(number)) {
                 strikeCount += 1;
                 continue;
             }
