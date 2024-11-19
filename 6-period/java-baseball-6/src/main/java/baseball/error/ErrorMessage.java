@@ -1,4 +1,4 @@
-package baseball.constant;
+package baseball.error;
 
 public enum ErrorMessage {
 

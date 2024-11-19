@@ -1,6 +1,7 @@
 package baseball.constant;
 
 import baseball.error.AppException;
+import baseball.error.ErrorMessage;
 import java.util.Arrays;
 import java.util.Objects;
 
