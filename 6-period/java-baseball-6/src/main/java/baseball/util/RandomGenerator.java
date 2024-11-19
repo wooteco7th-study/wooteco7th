@@ -11,7 +11,7 @@ public class RandomGenerator {
         List<Integer> pickNumbers = new ArrayList<>();
         while (hasNotEnoughSize(pickNumbers)) {
             int number = pickNumber();
-            if (doesContains(pickNumbers, number)) {
+            if (!doesContains(pickNumbers, number)) {
                 pickNumbers.add(number);
             }
         }
