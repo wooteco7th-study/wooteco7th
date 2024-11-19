@@ -20,8 +20,8 @@ public class HitRecord {
         ball += 1;
     }
 
-    public Integer getStrike() {
-        return strike;
+    public boolean isThreeStrike() {
+        return strike.equals(3);
     }
 
     @Override
