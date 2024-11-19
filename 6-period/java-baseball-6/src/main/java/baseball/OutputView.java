@@ -1,6 +1,6 @@
 package baseball;
 
-import static baseball.BaseballGame.*;
+import baseball.domain.BaseballGame;
 
 public class OutputView {
     public static void printPlayStatus(final BaseballGame baseballGame) {

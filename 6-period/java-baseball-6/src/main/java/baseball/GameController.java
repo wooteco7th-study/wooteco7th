@@ -4,7 +4,9 @@ import static baseball.InputView.*;
 import static baseball.InputView.YESorNO.GAME_RESTART;
 import static baseball.OutputView.*;
 
-import java.util.List;
+import baseball.domain.BaseballGame;
+import baseball.domain.Computer;
+import baseball.domain.User;
 
 public class GameController {
 
@@ -19,18 +21,18 @@ public class GameController {
     }
     private void playOneGame() {
         // given
-        List<Integer> computer = NumberGenerator.pickUniqueThreeNumbers();
+        Computer computer = new Computer(NumberGenerator.pickUniqueThreeNumbers());
         // when
         printStartMessage();
         playUntilGameOver(computer);
     }
 
-    private static void playUntilGameOver(final List<Integer> computer) {
+    private static void playUntilGameOver(final Computer computer) {
         boolean isCorrect = false;
 
         while (!isCorrect) {
             printRequestNumberMessage();
-            List<Integer> user = requestUserNumber();
+            User user = new User(requestUserNumber());
             BaseballGame baseballGame = BaseballGame.of(computer, user);
 
             printPlayStatus(baseballGame);

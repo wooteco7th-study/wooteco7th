@@ -1,6 +1,6 @@
-package baseball;
+package baseball.domain;
 
-import static baseball.BaseballRule.*;
+import static baseball.rule.BaseballRule.*;
 
 import java.util.List;
 
@@ -41,9 +41,12 @@ public enum BaseballGame {
         this.ball = ball;
     }
 
-    public static BaseballGame of(List<Integer> computer, List<Integer> user){
-        int strikeCount = countStrikes(computer,user);
-        int ballsCount = countBalls(computer,user,strikeCount);
+    public static BaseballGame of(Computer computer, User user){
+        List<Integer> comNums = computer.numbers();
+        List<Integer> userNums = user.numbers();
+
+        int strikeCount = countStrikes(comNums,userNums);
+        int ballsCount = countBalls(comNums,userNums,strikeCount);
         return BaseballGame.findStatus(strikeCount,ballsCount);
     }
 
