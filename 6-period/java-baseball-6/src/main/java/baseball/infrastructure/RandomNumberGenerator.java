@@ -2,7 +2,7 @@ package baseball.infrastructure;
 
 import camp.nextstep.edu.missionutils.Randoms;
 
-public class RandomNumberGenerator {
+public class RandomNumberGenerator implements NumberGenerator {
     private final int inclusiveStart;
     private final int inclusiveEnd;
 
