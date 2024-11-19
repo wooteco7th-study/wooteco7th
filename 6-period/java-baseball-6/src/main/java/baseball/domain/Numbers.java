@@ -9,12 +9,18 @@ public class Numbers {
 
     public static final int NUMBERS_SIZE = 3;
 
-    private final List<Integer> numbers;
+    private final List<Number> numbers;
 
     public Numbers(final List<Integer> numbers) {
         validateSize(numbers);
         validateDuplicatedNumbers(numbers);
-        this.numbers = numbers;
+        this.numbers = createNumbers(numbers);
+    }
+
+    private static List<Number> createNumbers(final List<Integer> numbers) {
+        return numbers.stream()
+                .map(Number::new)
+                .toList();
     }
 
     private void validateSize(List<Integer> numbers) {
