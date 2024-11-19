@@ -20,7 +20,7 @@ import java.util.List;
  *                     - [ ] 나머지 같은 수가 다른 자리에 1개 있으면 - 1볼
  *                     - [ ] 나머지 같은 수가 다른 자리에 0개 있으면 - 낫싱
  */
-public enum PlayRoundStatus {
+public enum BaseballGame {
     THREE_STRIKE(3,0),
     TWO_STRIKE(2,0),
     ONE_STRIKE_TWO_BALL(1,2),
@@ -34,14 +34,14 @@ public enum PlayRoundStatus {
     private final int strike;
     private final int ball;
 
-    PlayRoundStatus(final int strike, final int ball) {
+    BaseballGame(final int strike, final int ball) {
         this.strike = strike;
         this.ball = ball;
     }
-    public static PlayRoundStatus of(List<Integer> computer,List<Integer> user){
+    public static BaseballGame of(List<Integer> computer, List<Integer> user){
         int strikeCount = countStrikes(computer,user);
         int ballsCount = countBalls(computer,user,strikeCount);
-        return PlayRoundStatus.findStatus(strikeCount,ballsCount);
+        return BaseballGame.findStatus(strikeCount,ballsCount);
     }
 
     private static int countBalls(final List<Integer> computer, final List<Integer> user, final int strikeCount) {
@@ -60,8 +60,8 @@ public enum PlayRoundStatus {
         return strikeCount;
     }
 
-    private static PlayRoundStatus findStatus(final int strike, final int ball) {
-        for (PlayRoundStatus status : values()) {
+    private static BaseballGame findStatus(final int strike, final int ball) {
+        for (BaseballGame status : values()) {
             if (status.strike == strike && status.ball == ball) {
                 return status;
             }
