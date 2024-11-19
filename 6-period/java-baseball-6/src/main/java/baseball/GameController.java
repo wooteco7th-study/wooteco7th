@@ -1,5 +1,9 @@
 package baseball;
 
+import static baseball.InputView.*;
+import static baseball.InputView.YESorNO.GAME_RESTART;
+import static baseball.OutputView.*;
+
 import java.util.List;
 
 public class GameController {
@@ -9,33 +13,38 @@ public class GameController {
 
         while (isGameRunning) {
             playOneGame();
-            isGameRunning = askGameContinue();
+            isGameRunning = requestGameContinue();
         }
 
     }
     private void playOneGame() {
         // given
-        List<Integer> computer = NumberGenerator.generateNumber();
-        boolean isCorrect = false;
-        System.out.println("숫자 야구 게임을 시작합니다.");
-
+        List<Integer> computer = NumberGenerator.pickUniqueThreeNumbers();
         // when
+        printStartMessage();
+        playUntilGameOver(computer);
+    }
+
+    private static void playUntilGameOver(final List<Integer> computer) {
+        boolean isCorrect = false;
+
         while (!isCorrect) {
-            List<Integer> user = InputView.getUserNumber();
-            PlayStatus playStatus = BaseballGame.match(computer, user);
+            printRequestNumberMessage();
+            List<Integer> user = requestUserNumber();
+            BaseballGame baseballGame = BaseballGame.of(computer, user);
 
-            OutputView.printPlayStatus(playStatus);
+            printPlayStatus(baseballGame);
 
-            if (playStatus.isAllStrike()) {
-                System.out.println("3개의 숫자를 모두 맞히셨습니다! 게임 종료");
+            if (baseballGame.isAllStrike()) {
+                printEndingMessage();
                 isCorrect = true;
             }
         }
     }
-    private boolean askGameContinue() {
-        System.out.println("게임을 새로 시작하려면 1, 종료하려면 2를 입력하세요.");
-        int choice = InputView.getUserChoice();
 
+    private boolean requestGameContinue() {
+        printReplayMessage();
+        YESorNO choice = requestRePlayChoice();
         return choice == GAME_RESTART;
     }
 }
