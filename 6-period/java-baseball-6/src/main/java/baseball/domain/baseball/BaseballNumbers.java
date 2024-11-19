@@ -60,14 +60,8 @@ public class BaseballNumbers {
     }
 
     private boolean hasDifferentPosition(final int inputIndex, final int number) {
-        for (int index = 0; index < BaseballRules.SIZE.getValue(); index++) {
-            if (index == inputIndex) {
-                continue;
-            }
-            if (numbers.get(index).equals(number)) {
-                return true;
-            }
-        }
-        return false;
+        return IntStream.range(0, BaseballRules.SIZE.getValue())
+                .filter(index -> index != inputIndex)
+                .anyMatch(index -> numbers.get(index).equals(number));
     }
 }
