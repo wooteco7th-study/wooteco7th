@@ -13,6 +13,8 @@ public enum ExceptionMessage {
 
     DUPLICATED_NUMBER("중복된 번호가 존재합니다."),
 
+    COMMAND_NOT_FOUND("잘못된 게임 명령어 입니다."),
+
     NUMBER_OUT_OF_RANGE(
             format("범위는 %d이상 %d이하여야 합니다.",
                     MIN_RANGE,
