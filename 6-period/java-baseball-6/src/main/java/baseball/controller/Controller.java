@@ -6,7 +6,7 @@ import baseball.domain.BaseballResult;
 import baseball.util.Converter;
 import baseball.util.Formatter;
 import baseball.util.RandomGenerator;
-import baseball.view.Answer;
+import baseball.domain.Answer;
 import baseball.view.InputView;
 import baseball.view.OutputView;
 import java.util.ArrayList;
