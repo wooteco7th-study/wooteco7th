@@ -1,12 +1,13 @@
 package baseball.controller;
 
+import baseball.domain.Answer;
 import baseball.domain.baseball.BaseballMatcher;
 import baseball.domain.baseball.BaseballNumbers;
 import baseball.domain.baseball.BaseballResult;
 import baseball.util.Converter;
 import baseball.util.Formatter;
+import baseball.util.InputValidator;
 import baseball.util.RandomGenerator;
-import baseball.domain.Answer;
 import baseball.view.InputView;
 import baseball.view.OutputView;
 import java.util.ArrayList;
@@ -32,7 +33,9 @@ public class Controller {
 
     private void askRestart() {
         outputView.showCommentForRestart();
-        if (Answer.sayYes(inputView.readLine())) {
+        String input = inputView.readLine();
+        InputValidator.validateNotNullOrBlank(input);
+        if (Answer.sayYes(input)) {
             startGame();
         }
     }
@@ -63,6 +66,7 @@ public class Controller {
     }
 
     private BaseballNumbers makeBaseballNumbers(final String input) {
+        InputValidator.validateNotNullOrBlank(input);
         List<Integer> inputNumbers = new ArrayList<>();
         for (char c : input.toCharArray()) {
             int number = Converter.convertToInteger(c);
