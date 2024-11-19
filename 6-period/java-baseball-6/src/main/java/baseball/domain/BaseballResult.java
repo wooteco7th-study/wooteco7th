@@ -11,7 +11,7 @@ public class BaseballResult {
     }
 
     public boolean isWin() {
-        return strike == 3;
+        return strike == BaseballRules.SIZE.getValue();
     }
 
     public int getStrike() {

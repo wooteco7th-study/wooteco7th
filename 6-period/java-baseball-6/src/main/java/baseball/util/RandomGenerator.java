@@ -12,9 +12,8 @@ public class RandomGenerator {
         while (hasNotEnoughSize(pickNumbers)) {
             int number = pickNumber();
             if (doesContains(pickNumbers, number)) {
-                continue;
+                pickNumbers.add(number);
             }
-            pickNumbers.add(number);
         }
         return pickNumbers;
     }
