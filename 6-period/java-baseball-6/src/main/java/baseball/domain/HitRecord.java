@@ -29,23 +29,47 @@ public class HitRecord {
         return strike.equals(THREE_STRIKE);
     }
 
+    private boolean isNothing() {
+        return strike + ball == NOTHING;
+    }
+
+    private boolean isNotBallNothing() {
+        return ball > NOTHING;
+    }
+
+    private boolean isNotStrikeNothing() {
+        return strike > NOTHING;
+    }
+
+    private void addBallMessage(StringBuilder stringBuilder) {
+        stringBuilder.append(ball);
+        stringBuilder.append(PrintMessage.BALL.getMessage());
+    }
+
+    private void addStrikeMessage(StringBuilder stringBuilder) {
+        stringBuilder.append(strike);
+        stringBuilder.append(PrintMessage.STRIKE.getMessage());
+    }
+
+    private void addSpace(StringBuilder stringBuilder) {
+        if (isNotBallNothing() && isNotStrikeNothing()) {
+            stringBuilder.append(SPACE);
+        }
+    }
+
     @Override
     public String toString() {
-        if (strike + ball == NOTHING) {
+        if (isNothing()) {
             return PrintMessage.NOTHING.getMessage();
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        if (ball > NOTHING) {
-            stringBuilder.append(ball);
-            stringBuilder.append(PrintMessage.BALL.getMessage());
+        if (isNotBallNothing()) {
+            addBallMessage(stringBuilder);
         }
-        if (ball > NOTHING && strike > NOTHING) {
-            stringBuilder.append(SPACE);
-        }
-        if (strike > NOTHING) {
-            stringBuilder.append(strike);
-            stringBuilder.append(PrintMessage.STRIKE.getMessage());
+        addSpace(stringBuilder);
+        if (isNotStrikeNothing()) {
+            addStrikeMessage(stringBuilder);
         }
         return stringBuilder.toString();
     }
