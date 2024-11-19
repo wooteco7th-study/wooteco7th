@@ -7,8 +7,6 @@ import java.util.List;
 
 public class StringParser {
 
-    private static final int SPLIT_LIMIT = -1;
-
     private StringParser() {
 
     }
@@ -22,7 +20,7 @@ public class StringParser {
     }
 
     public static List<Integer> parseToNumberTokens(final String value, final String delimiter) {
-        return Arrays.stream(value.split(delimiter, SPLIT_LIMIT))
+        return Arrays.stream(value.split(delimiter))
                 .map(StringParser::parseToInt)
                 .toList();
     }
