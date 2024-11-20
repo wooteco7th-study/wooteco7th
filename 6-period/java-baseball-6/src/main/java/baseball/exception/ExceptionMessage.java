@@ -16,11 +16,6 @@ public enum ExceptionMessage {
         this.message = "[ERROR] " + message;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-
     public String getMessage(Object... args) {
         return String.format(message, args);
     }
