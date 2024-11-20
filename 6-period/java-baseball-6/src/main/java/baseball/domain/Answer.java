@@ -1,5 +1,7 @@
 package baseball.domain;
 
+import baseball.exception.ExceptionMessage;
+
 public enum Answer {
 
     YES("1"),
@@ -12,10 +14,12 @@ public enum Answer {
     }
 
     public static boolean sayYes(String input) {
-        return input.equals(YES.getValue());
-    }
-
-    public String getValue() {
-        return value;
+        if (input.equals(YES.value)) {
+            return true;
+        }
+        if (input.equals(NO.value)) {
+            return false;
+        }
+        throw new IllegalArgumentException(ExceptionMessage.INVALID_COMMAND.getMessage(YES.value, NO.value));
     }
 }
