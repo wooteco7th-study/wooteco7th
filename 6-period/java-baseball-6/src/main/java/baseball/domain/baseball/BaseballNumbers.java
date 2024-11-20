@@ -28,13 +28,6 @@ public class BaseballNumbers {
         return new BaseballResult(strike, ball);
     }
 
-    private void validateUnique(final List<BaseballNumber> numbers) {
-        if (numbers.stream().distinct().count() != SIZE) {
-            throw new IllegalArgumentException(
-                    ExceptionMessage.INVALID_LENGTH.getMessage(SIZE));
-        }
-    }
-
     public int countStrike(final BaseballNumbers compared) {
         int strike = 0;
         for (int i = 0; i < SIZE; i++) {
@@ -53,6 +46,13 @@ public class BaseballNumbers {
             }
         }
         return ball;
+    }
+
+    private void validateUnique(final List<BaseballNumber> numbers) {
+        if (numbers.stream().distinct().count() != SIZE) {
+            throw new IllegalArgumentException(
+                    ExceptionMessage.INVALID_LENGTH.getMessage(SIZE));
+        }
     }
 
     private boolean hasExactPosition(final int index, final BaseballNumber number) {

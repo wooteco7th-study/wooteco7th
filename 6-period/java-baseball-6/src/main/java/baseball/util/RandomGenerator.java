@@ -12,24 +12,16 @@ public class RandomGenerator {
 
     public static List<Integer> makeRandomNumbers() {
         List<Integer> pickNumbers = new ArrayList<>();
-        while (hasNotEnoughSize(pickNumbers)) {
+        while (pickNumbers.size() < SIZE) {
             int number = pickNumber();
-            if (!doesContains(pickNumbers, number)) {
+            if (!pickNumbers.contains(number)) {
                 pickNumbers.add(number);
             }
         }
         return pickNumbers;
     }
 
-    private static boolean hasNotEnoughSize(final List<Integer> pickNumbers) {
-        return pickNumbers.stream().distinct().count() != SIZE;
-    }
-
     private static int pickNumber() {
         return Randoms.pickNumberInRange(MIN_NUMBER, MAX_NUMBER);
-    }
-
-    private static boolean doesContains(final List<Integer> pickNumbers, final int number) {
-        return pickNumbers.contains(number);
     }
 }

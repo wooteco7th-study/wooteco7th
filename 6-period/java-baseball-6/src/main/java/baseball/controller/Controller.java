@@ -1,6 +1,6 @@
 package baseball.controller;
 
-import baseball.domain.Answer;
+import baseball.command.Answer;
 import baseball.domain.baseball.BaseballNumber;
 import baseball.domain.baseball.BaseballNumbers;
 import baseball.domain.baseball.BaseballResult;
@@ -34,7 +34,7 @@ public class Controller {
         outputView.showCommentForRestart();
         String input = inputView.readLine();
         InputValidator.validateNotNullOrBlank(input);
-        if (Answer.sayYes(input)) {
+        if (Answer.from(input).isYes()) {
             startGame();
         }
     }

@@ -7,13 +7,14 @@ public enum ExceptionMessage {
     NOT_A_NUMBER("숫자만 입력할 수 있습니다."),
     NULL_INPUT("null일 수 없습니다."),
     BLANK_INPUT("공백일 수 없습니다."),
-    EMPTY_VALUE("빈 값일 수 없습니다."),
     INVALID_COMMAND("%s 또는 %s만 입력할 수 있습니다.");
 
-    private String message;
+    private static final String PREFIX = "[ERROR] ";
+
+    private final String message;
 
     ExceptionMessage(final String message) {
-        this.message = "[ERROR] " + message;
+        this.message = PREFIX + message;
     }
 
     public String getMessage(Object... args) {
