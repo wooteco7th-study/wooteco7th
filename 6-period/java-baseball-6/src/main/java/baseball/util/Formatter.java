@@ -11,15 +11,15 @@ public class Formatter {
     }
 
     private String checkBall(final BaseballResult result) {
-        if (result.getBall() > 0) {
-            return String.format("%d볼 ", result.getBall());
+        if (result.ball() > 0) {
+            return String.format("%d볼 ", result.ball());
         }
         return "";
     }
 
     private String checkStrike(final BaseballResult result) {
-        if (result.getStrike() > 0) {
-            return String.format("%d스트라이크", result.getStrike());
+        if (result.strike() > 0) {
+            return String.format("%d스트라이크", result.strike());
         }
         return "";
     }
