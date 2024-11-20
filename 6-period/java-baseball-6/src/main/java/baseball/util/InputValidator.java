@@ -6,10 +6,10 @@ public class InputValidator {
 
     public static void validateNotNullOrBlank(final String input) {
         if (input == null) {
-            throw new IllegalArgumentException(ExceptionMessage.NULL_VALUE.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.NULL_INPUT.getMessage());
         }
         if (input.isBlank()) {
-            throw new IllegalArgumentException(ExceptionMessage.BLANK_VALUE.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.BLANK_INPUT.getMessage());
         }
     }
 }

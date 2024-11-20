@@ -2,12 +2,13 @@ package baseball.exception;
 
 public enum ExceptionMessage {
 
-    UNIQUE_NUMBERS("숫자는 중복되지 않은 %d개여야 합니다."),
-    VALID_RANGE("숫자는 %d과 %d 사이여야 합니다."),
-    VALID_NUMBER("숫자여야 합니다."),
-    NULL_VALUE("null일 수 없습니다."),
-    BLANK_VALUE("공백일 수 없습니다."),
-    EMPTY_VALUE("빈 값일 수 없습니다.");
+    INVALID_LENGTH("%d자리 숫자만 입력할 수 있습니다."),
+    OUT_OF_RANGE("%d부터 %d까지의 숫자만 입력할 수 있습니다."),
+    NOT_A_NUMBER("숫자만 입력할 수 있습니다."),
+    NULL_INPUT("null일 수 없습니다."),
+    BLANK_INPUT("공백일 수 없습니다."),
+    EMPTY_VALUE("빈 값일 수 없습니다."),
+    INVALID_COMMAND("%s 또는 %s만 입력할 수 있습니다.");
 
     private String message;
 
