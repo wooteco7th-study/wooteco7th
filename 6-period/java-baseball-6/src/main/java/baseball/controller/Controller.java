@@ -1,7 +1,7 @@
 package baseball.controller;
 
 import baseball.domain.Answer;
-import baseball.domain.baseball.BaseballMatcher;
+import baseball.domain.baseball.BaseballNumber;
 import baseball.domain.baseball.BaseballNumbers;
 import baseball.domain.baseball.BaseballResult;
 import baseball.util.Converter;
@@ -10,7 +10,6 @@ import baseball.util.InputValidator;
 import baseball.util.RandomGenerator;
 import baseball.view.InputView;
 import baseball.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Controller {
@@ -53,8 +52,7 @@ public class Controller {
 
     private BaseballResult playGame(final BaseballNumbers numbers) {
         BaseballNumbers inputNumbers = makeInputNumbers();
-        BaseballMatcher matcher = new BaseballMatcher(numbers);
-        BaseballResult result = matcher.match(inputNumbers);
+        BaseballResult result = numbers.match(inputNumbers);
         outputView.showResult(formatter.makeResult(result));
         return result;
     }
@@ -67,16 +65,18 @@ public class Controller {
 
     private BaseballNumbers makeBaseballNumbers(final String input) {
         InputValidator.validateNotNullOrBlank(input);
-        List<Integer> inputNumbers = new ArrayList<>();
-        for (char c : input.toCharArray()) {
-            int number = Converter.convertToInteger(c);
-            inputNumbers.add(number);
-        }
-        return new BaseballNumbers(inputNumbers);
+        return new BaseballNumbers(convertToBaseNumbers(input));
+    }
+
+    private static List<BaseballNumber> convertToBaseNumbers(final String input) {
+        return input.chars()
+                .map(c -> Converter.convertToInteger((char) c))
+                .mapToObj(BaseballNumber::new)
+                .toList();
     }
 
     private BaseballNumbers makeNumbers() {
         List<Integer> pickNumbers = RandomGenerator.makeRandomNumbers();
-        return new BaseballNumbers(pickNumbers);
+        return BaseballNumbers.from(pickNumbers);
     }
 }
