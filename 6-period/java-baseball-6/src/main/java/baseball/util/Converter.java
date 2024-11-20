@@ -8,7 +8,7 @@ public class Converter {
 
     public static int convertToInteger(char number) {
         if (!Character.isDigit(number)) {
-            throw new IllegalArgumentException(ExceptionMessage.VALID_NUMBER.getMessage());
+            throw new IllegalArgumentException(ExceptionMessage.NOT_A_NUMBER.getMessage());
         }
         return number - START_NUMBER;
     }

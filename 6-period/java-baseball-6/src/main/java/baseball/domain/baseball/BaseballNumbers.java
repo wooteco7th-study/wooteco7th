@@ -22,7 +22,7 @@ public class BaseballNumbers {
     private void validateUnique(final List<Integer> numbers) {
         if (numbers.stream().distinct().count() != BaseballRules.SIZE.getValue()) {
             throw new IllegalArgumentException(
-                    ExceptionMessage.UNIQUE_NUMBERS.getMessage(BaseballRules.SIZE.getValue()));
+                    ExceptionMessage.INVALID_LENGTH.getMessage(BaseballRules.SIZE.getValue()));
         }
     }
 
@@ -30,7 +30,7 @@ public class BaseballNumbers {
         if (numbers.stream().anyMatch(number -> number < BaseballRules.MIN_NUMBER.getValue()
                 || number > BaseballRules.MAX_NUMBER.getValue())) {
             throw new IllegalArgumentException(
-                    ExceptionMessage.VALID_RANGE.getMessage(BaseballRules.MIN_NUMBER.getValue(),
+                    ExceptionMessage.OUT_OF_RANGE.getMessage(BaseballRules.MIN_NUMBER.getValue(),
                             BaseballRules.MAX_NUMBER.getValue()));
         }
     }
