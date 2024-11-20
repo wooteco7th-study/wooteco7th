@@ -23,7 +23,7 @@ class BaseballNumbersTest {
             List<Integer> numbers = List.of(1, 2, 2);
 
             // When & Then
-            assertThatThrownBy(() -> new BaseballNumbers(numbers))
+            assertThatThrownBy(() -> BaseballNumbers.from(numbers))
                     .isExactlyInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("3자리 숫자만 입력할 수 있습니다.");
         }
@@ -35,7 +35,7 @@ class BaseballNumbersTest {
             List<Integer> numbers = List.of(10, 2, 3);
 
             // When & Then
-            assertThatThrownBy(() -> new BaseballNumbers(numbers))
+            assertThatThrownBy(() -> BaseballNumbers.from(numbers))
                     .isExactlyInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining("1부터 9까지의 숫자만 입력할 수 있습니다.");
         }
@@ -45,8 +45,8 @@ class BaseballNumbersTest {
     @DisplayName("스트라이크 수를 센다")
     void 성공_스트라이크() {
         // Given
-        BaseballNumbers numbers = new BaseballNumbers(List.of(1, 2, 3));
-        BaseballNumbers compared = new BaseballNumbers(List.of(1, 7, 8));
+        BaseballNumbers numbers = BaseballNumbers.from(List.of(1, 2, 3));
+        BaseballNumbers compared = BaseballNumbers.from(List.of(1, 7, 8));
 
         // When
         int strike = numbers.countStrike(compared);
@@ -59,8 +59,8 @@ class BaseballNumbersTest {
     @DisplayName("볼 수를 센다")
     void 성공_볼() {
         // Given
-        BaseballNumbers numbers = new BaseballNumbers(List.of(1, 2, 3));
-        BaseballNumbers compared = new BaseballNumbers(List.of(3, 7, 8));
+        BaseballNumbers numbers = BaseballNumbers.from(List.of(1, 2, 3));
+        BaseballNumbers compared = BaseballNumbers.from(List.of(3, 7, 8));
 
         // When
         int ball = numbers.countBall(compared);

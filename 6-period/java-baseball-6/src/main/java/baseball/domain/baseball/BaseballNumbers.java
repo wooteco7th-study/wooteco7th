@@ -7,37 +7,37 @@ import java.util.stream.IntStream;
 
 public class BaseballNumbers {
 
-    private final List<Integer> numbers;
+    public static final int SIZE = 3;
 
-    public BaseballNumbers(final List<Integer> numbers) {
-        validate(numbers);
+    private final List<BaseballNumber> numbers;
+
+    public BaseballNumbers(final List<BaseballNumber> numbers) {
+        validateUnique(numbers);
         this.numbers = new ArrayList<>(numbers);
     }
 
-    private void validate(final List<Integer> numbers) {
-        validateUnique(numbers);
-        validateRange(numbers);
+    public static BaseballNumbers from(final List<Integer> numbers) {
+        return new BaseballNumbers(numbers.stream()
+                .map(BaseballNumber::new)
+                .toList());
     }
 
-    private void validateUnique(final List<Integer> numbers) {
-        if (numbers.stream().distinct().count() != BaseballRules.SIZE.getValue()) {
-            throw new IllegalArgumentException(
-                    ExceptionMessage.INVALID_LENGTH.getMessage(BaseballRules.SIZE.getValue()));
-        }
+    public BaseballResult match(BaseballNumbers compared) {
+        int strike = countStrike(compared);
+        int ball = countBall(compared);
+        return new BaseballResult(strike, ball);
     }
 
-    private void validateRange(final List<Integer> numbers) {
-        if (numbers.stream().anyMatch(number -> number < BaseballRules.MIN_NUMBER.getValue()
-                || number > BaseballRules.MAX_NUMBER.getValue())) {
+    private void validateUnique(final List<BaseballNumber> numbers) {
+        if (numbers.stream().distinct().count() != SIZE) {
             throw new IllegalArgumentException(
-                    ExceptionMessage.OUT_OF_RANGE.getMessage(BaseballRules.MIN_NUMBER.getValue(),
-                            BaseballRules.MAX_NUMBER.getValue()));
+                    ExceptionMessage.INVALID_LENGTH.getMessage(SIZE));
         }
     }
 
     public int countStrike(final BaseballNumbers compared) {
         int strike = 0;
-        for (int i = 0; i < BaseballRules.SIZE.getValue(); i++) {
+        for (int i = 0; i < SIZE; i++) {
             if (compared.hasExactPosition(i, numbers.get(i))) {
                 strike++;
             }
@@ -47,7 +47,7 @@ public class BaseballNumbers {
 
     public int countBall(final BaseballNumbers compared) {
         int ball = 0;
-        for (int index = 0; index < BaseballRules.SIZE.getValue(); index++) {
+        for (int index = 0; index < SIZE; index++) {
             if (compared.hasDifferentPosition(index, numbers.get(index))) {
                 ball++;
             }
@@ -55,12 +55,12 @@ public class BaseballNumbers {
         return ball;
     }
 
-    private boolean hasExactPosition(final int index, final int number) {
+    private boolean hasExactPosition(final int index, final BaseballNumber number) {
         return numbers.get(index).equals(number);
     }
 
-    private boolean hasDifferentPosition(final int inputIndex, final int number) {
-        return IntStream.range(0, BaseballRules.SIZE.getValue())
+    private boolean hasDifferentPosition(final int inputIndex, final BaseballNumber number) {
+        return IntStream.range(0, SIZE)
                 .filter(index -> index != inputIndex)
                 .anyMatch(index -> numbers.get(index).equals(number));
     }
