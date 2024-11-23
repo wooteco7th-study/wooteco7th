@@ -1,5 +1,7 @@
 package christmas.util;
 
+import christmas.error.AppException;
+import christmas.error.ErrorMessage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -16,11 +18,11 @@ public class StringParser {
         return value.replaceAll(regex, BLANK);
     }
 
-    public static int parseToInt(final String value) {
+    public static int parseToInt(final String value, final ErrorMessage errorMessage) {
         try {
             return Integer.parseInt(value);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
+            throw new AppException(errorMessage);
         }
     }
 
