@@ -14,7 +14,7 @@ public enum ErrorMessage {
     private final String message;
 
     ErrorMessage(final String message) {
-        this.message = String.format("[ERROR] +%s+ 다시 입력해 주세요.", message);
+        this.message = String.format("[ERROR] %s 다시 입력해 주세요.", message);
     }
 
     public String getMessage() {
