@@ -1,9 +1,12 @@
 package christmas.domain;
 
+import java.util.Arrays;
+
 import static christmas.domain.MenuCategory.APPETIZER;
 import static christmas.domain.MenuCategory.DESSERT;
 import static christmas.domain.MenuCategory.DRINK;
 import static christmas.domain.MenuCategory.MAIN;
+import static christmas.exception.ExceptionMessage.INVALID_ORDER;
 
 public enum Menu {
 
@@ -31,5 +34,12 @@ public enum Menu {
         this.category = category;
         this.name = name;
         this.price = price;
+    }
+
+    public static Menu from(String input) {
+        return Arrays.stream(Menu.values())
+                .filter(element -> element.name.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_ORDER.getMessage()));
     }
 }
