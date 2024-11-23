@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.Domain.Badge;
 import christmas.Domain.Orders;
 import christmas.Domain.VisitDate;
 import christmas.Domain.Visitor;
@@ -71,5 +72,8 @@ public class DiscountController {
 
         outputView.printMessage(PrintMessage.PAYMENT_INFO_MESSAGE);
         outputView.printMoney(calculator.getTotalPayment());
+
+        outputView.printMessage(PrintMessage.BADGE_INFO_MESSAGE);
+        outputView.print(Badge.getBadge(calculator.getTotalDiscountToBadge(freeDiscounter.calculate())));
     }
 }

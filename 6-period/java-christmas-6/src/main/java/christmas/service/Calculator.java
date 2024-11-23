@@ -11,12 +11,13 @@ public class Calculator {
         this.visitor = visitor;
         this.discount = discount;
     }
-    
+
     public int getTotalDiscount(int free) {
-        if (discount > 0 || free > 0) {
-            return (discount + free) * -1;
-        }
-        return 0;
+        return Math.max(discount + free, 0) * -1;
+    }
+
+    public int getTotalDiscountToBadge(int free) {
+        return Math.max(discount + free, 0);
     }
 
     public int getTotalPayment() {

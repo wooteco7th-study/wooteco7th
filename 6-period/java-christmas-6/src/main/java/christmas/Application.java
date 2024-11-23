@@ -1,15 +1,10 @@
 package christmas;
 
-import christmas.Domain.Order;
 import christmas.Domain.Orders;
 import christmas.Domain.VisitDate;
-import christmas.Domain.Visitor;
 import christmas.controller.DiscountController;
 import christmas.controller.OrdersController;
 import christmas.controller.VisitDateController;
-import christmas.service.Converter;
-import christmas.service.OrderCreator;
-import christmas.service.Separator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import christmas.view.PrintMessage;
