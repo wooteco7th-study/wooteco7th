@@ -63,7 +63,7 @@ public class DiscountInfo {
                 this.priceBeforeDiscount,
                 this.discountResults,
                 promotion,
-                this.totalDiscountAmount,
+                this.totalDiscountAmount + promotion.getGiveAmount(),
                 this.badge
         );
     }
