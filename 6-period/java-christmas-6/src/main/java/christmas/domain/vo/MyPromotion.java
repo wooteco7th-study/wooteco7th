@@ -1,15 +1,17 @@
 package christmas.domain.vo;
 
 import christmas.domain.Badge;
+import christmas.domain.Promotion;
 
 public class MyPromotion {
-    private final Badge badge;
+    private final Promotion promotion;
 
-    public MyPromotion(final Badge badge) {
-        this.badge = badge;
+    public MyPromotion(final Promotion promotion) {
+        this.promotion = promotion;
     }
 
-    public Badge getBadge() {
-        return badge;
+    public Promotion getPromotion() {
+        return promotion;
     }
+
 }
