@@ -22,6 +22,7 @@ import java.util.regex.Pattern;
 public class Controller {
 
     private static final String ORDER_REGEX = "([ㄱ-ㅎ|ㅏ-ㅣ|가-힣]+)-(\\d+)";
+    private static final String COMMA = ",";
     private static final Pattern PATTERN = Pattern.compile(ORDER_REGEX);
 
     private final InputView inputView;
@@ -91,7 +92,7 @@ public class Controller {
         outputView.commentOrderMenu();
         String input = inputView.readLine();
         Orders orders = new Orders(new ArrayList<>());
-        for (String order : input.split(",")) {
+        for (String order : input.split(COMMA)) {
             validateOrder(orders, order.trim());
         }
         return orders;
