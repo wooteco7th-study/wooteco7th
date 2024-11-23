@@ -31,7 +31,7 @@ public class OrderForm {
 
     public List<OrderMenu> findMenuByCategory(MenuCategory category) {
         return menus.stream()
-                .filter(orderMenu -> orderMenu.getMenuByCategory(category) != null)
+                .filter(orderMenu -> orderMenu.hasSameMenuCategory(category))
                 .toList();
     }
 

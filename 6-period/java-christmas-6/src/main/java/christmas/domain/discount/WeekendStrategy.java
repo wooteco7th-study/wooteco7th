@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static christmas.domain.MenuCategory.MAIN;
+import static christmas.domain.discount.DiscountCategory.WEEKEND;
 
 public class WeekendStrategy implements DiscountStrategy {
 
@@ -28,5 +29,10 @@ public class WeekendStrategy implements DiscountStrategy {
     public int appliedAmount(final OrderForm orderForm) {
         List<OrderMenu> dessertMenu = orderForm.findMenuByCategory(MAIN);
         return PER_DISCOUNT_AMOUNT * dessertMenu.size();
+    }
+
+    @Override
+    public String getName() {
+        return WEEKEND.getName();
     }
 }

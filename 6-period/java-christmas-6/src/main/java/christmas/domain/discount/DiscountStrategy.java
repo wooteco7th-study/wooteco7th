@@ -8,4 +8,6 @@ public interface DiscountStrategy {
     boolean isApplicable(VisitDate visitDate);
 
     int appliedAmount(OrderForm orderForm);
+
+    String getName();
 }

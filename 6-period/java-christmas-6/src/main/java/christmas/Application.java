@@ -8,8 +8,10 @@ import christmas.view.OutputView;
 
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
-        OrderController orderController = new OrderController(new InputView(), new OutputView(), new OrderProcessor(new DiscountProcessor()));
+        OrderController orderController = new OrderController(
+                new InputView(),
+                new OutputView(),
+                new OrderProcessor(new DiscountProcessor()));
         orderController.run();
 
     }

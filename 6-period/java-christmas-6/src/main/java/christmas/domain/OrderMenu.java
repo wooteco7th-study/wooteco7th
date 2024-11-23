@@ -18,11 +18,8 @@ public class OrderMenu {
         return menu.getCategory().equals(DRINK);
     }
 
-    public Menu getMenuByCategory(MenuCategory category) {
-        if (menu.getCategory().equals(category)) {
-            return menu;
-        }
-        return null;
+    public boolean hasSameMenuCategory(MenuCategory category) {
+        return menu.getCategory().equals(category);
     }
 
     public int getTotalPrice() {

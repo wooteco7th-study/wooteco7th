@@ -3,6 +3,8 @@ package christmas.domain.discount;
 import christmas.domain.OrderForm;
 import christmas.domain.VisitDate;
 
+import static christmas.domain.discount.DiscountCategory.CHRISTMAS_D_DAY;
+
 public class ChristmasDDayStrategy implements DiscountStrategy {
 
     private static final int START_DATE = 1;
@@ -18,5 +20,10 @@ public class ChristmasDDayStrategy implements DiscountStrategy {
     @Override
     public int appliedAmount(final OrderForm orderForm) {
         return START_AMOUNT + (orderForm.getOrderDate().getDate() * INCREASE_AMOUNT);
+    }
+
+    @Override
+    public String getName() {
+        return CHRISTMAS_D_DAY.getName();
     }
 }

@@ -5,6 +5,8 @@ import christmas.domain.VisitDate;
 
 import java.time.LocalDate;
 
+import static christmas.domain.discount.DiscountCategory.SPECIAL;
+
 public class SpecialStrategy implements DiscountStrategy {
 
     private static final int YEAR = 2023;
@@ -23,5 +25,10 @@ public class SpecialStrategy implements DiscountStrategy {
     @Override
     public int appliedAmount(final OrderForm orderForm) {
         return DISCOUNT_AMOUNT;
+    }
+
+    @Override
+    public String getName() {
+        return SPECIAL.getName();
     }
 }

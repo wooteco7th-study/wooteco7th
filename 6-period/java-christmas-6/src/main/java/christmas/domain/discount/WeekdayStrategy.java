@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import static christmas.domain.MenuCategory.DESSERT;
+import static christmas.domain.discount.DiscountCategory.WEEKDAY;
 
 public class WeekdayStrategy implements DiscountStrategy {
 
@@ -27,6 +28,13 @@ public class WeekdayStrategy implements DiscountStrategy {
     @Override
     public int appliedAmount(final OrderForm orderForm) {
         List<OrderMenu> dessertMenu = orderForm.findMenuByCategory(DESSERT);
-        return PER_DISCOUNT_AMOUNT * dessertMenu.size();
+        return dessertMenu.stream()
+                .map(menu -> menu.getQuantity() * PER_DISCOUNT_AMOUNT)
+                .reduce(0, Integer::sum);
+    }
+
+    @Override
+    public String getName() {
+        return WEEKDAY.getName();
     }
 }

@@ -4,10 +4,10 @@ import java.util.Arrays;
 
 public enum EventBadge {
 
-    NONE("없음", 0),
-    STAR("별", 5_000),
+    SANTA("산타", 20_000),
     TREE("트리", 10_000),
-    SANTA("산타", 20_000);
+    STAR("별", 5_000),
+    NONE("없음", 0);
 
     private final String name;
     private final int benefitValue;
@@ -19,8 +19,12 @@ public enum EventBadge {
 
     public static EventBadge from(int benefitValue) {
         return Arrays.stream(EventBadge.values())
-                .filter(element -> element.benefitValue >= benefitValue)
+                .filter(element -> element.benefitValue <= benefitValue)
                 .findFirst()
                 .orElse(NONE);
+    }
+
+    public String getName() {
+        return name;
     }
 }
