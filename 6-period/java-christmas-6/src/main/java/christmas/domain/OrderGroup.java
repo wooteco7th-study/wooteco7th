@@ -27,6 +27,12 @@ public class OrderGroup {
         return Collections.unmodifiableList(orders);
     }
 
+    public int countMenuType(final MenuType menuType) {
+        return (int) orders.stream()
+                .filter(order -> Objects.equals(order.getMenuType(), menuType))
+                .count();
+    }
+
     private void validate(final List<Order> orders) {
         ListValidator.validateDuplicate(orders, ErrorMessage.INVALID_WRONG_ORDER_FORMAT);
         NumberValidator.validateRange(calculateOrderTotalQuantity(orders), Order.MIN_QUANTITY, Order.MAX_QUANTITY,
