@@ -19,10 +19,12 @@ public class BenefitEvent extends Discount implements Benefit {
         return BENEFIT_MENU.getPrice() * BENEFIT_MENU_QUANTITY;
     }
 
+    @Override
     public String getBenefitMenuName() {
         return BENEFIT_MENU.getName();
     }
 
+    @Override
     public int getBenefitMenuQuantity() {
         return BENEFIT_MENU_QUANTITY;
     }
