@@ -8,10 +8,10 @@ public class OrderForm {
 
     public static final int MAX_QUANTITY = 20;
 
-    private final int orderDate;
+    private final VisitDate orderDate;
     private final List<OrderMenu> menus;
 
-    public OrderForm(final int orderDate, final List<OrderMenu> menus) {
+    public OrderForm(final VisitDate orderDate, final List<OrderMenu> menus) {
         validateDuplicateMenu(menus);
         validateOrderQuantity(menus);
         this.orderDate = orderDate;
