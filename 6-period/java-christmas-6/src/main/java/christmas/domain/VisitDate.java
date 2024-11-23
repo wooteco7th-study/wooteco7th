@@ -27,6 +27,10 @@ public class VisitDate {
         return new VisitDate(LocalDateConvertor.convert(YEAR, MONTH, day));
     }
 
+    public int getDayOfMonth() {
+        return localDate.getDayOfMonth();
+    }
+
     public boolean isWeekday() {
         final DayOfWeek dayOfWeek = localDate.getDayOfWeek();
         return dayOfWeek == DayOfWeek.SUNDAY
