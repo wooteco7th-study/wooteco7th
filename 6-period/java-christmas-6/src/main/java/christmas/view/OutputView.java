@@ -1,0 +1,25 @@
+package christmas.view;
+
+public class OutputView {
+
+    private static final String COMMENT_WELCOME_MESSAGE = "안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.";
+    private static final String COMMENT_VISIT_DATE = "12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)";
+    private static final String COMMENT_ORDER_MENU = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)  ";
+    private static final String COMMENT_EVENT = "12월 3일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!";
+    private static final String ORDER_MENU = "<주문 메뉴>";
+    private static final String TOTAL_ORDER_BEFORE_DISCOUNT = "<할인 전 총주문 금액>";
+    private static final String BONUS_MENU = "<증정 메뉴>";
+    private static final String PROMOTION_LIST = "<혜택 내역>";
+    private static final String TOTAL_PROMOTION_PRICE = "<총혜택 금액>";
+    private static final String EXPECT_PRICE = "<할인 후 예상 결제 금액>";
+    private static final String BADGE = "<12월 이벤트 배지>";
+    private static final String NOT_EXIST = "없음";
+
+    public void commentWelcomeMessage() {
+        System.out.println(COMMENT_WELCOME_MESSAGE);
+    }
+
+    public void commentVisitDate() {
+        System.out.println(COMMENT_VISIT_DATE);
+    }
+}
