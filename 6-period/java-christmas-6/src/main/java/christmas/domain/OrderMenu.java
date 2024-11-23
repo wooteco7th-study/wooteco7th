@@ -18,6 +18,10 @@ public class OrderMenu {
         return menu.getCategory().equals(DRINK);
     }
 
+    public int getTotalPrice() {
+        return menu.getPrice() * quantity.getValue();
+    }
+
     public int getQuantity() {
         return quantity.getValue();
     }

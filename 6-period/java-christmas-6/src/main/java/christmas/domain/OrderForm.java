@@ -19,6 +19,12 @@ public class OrderForm {
         this.menus = menus;
     }
 
+    public int getTotalPriceBeforeDiscount() {
+        return menus.stream()
+                .mapToInt(OrderMenu::getTotalPrice)
+                .sum();
+    }
+
     private void validateDuplicateMenu(List<OrderMenu> menus) {
         long distinctMenuSize = menus.stream()
                 .distinct()
