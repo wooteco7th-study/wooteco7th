@@ -17,6 +17,7 @@ import christmas.dto.DiscountReceipt;
 import christmas.dto.OrderMenuReceipt;
 import christmas.error.ErrorMessage;
 import christmas.util.StringParser;
+import christmas.util.StringValidator;
 import java.util.List;
 import java.util.Map;
 
@@ -29,6 +30,7 @@ public class ChristmasService {
 
 
     public List<Order> generateOrders(final List<String> orderMenus) {
+        validateOrderMenuFormat(orderMenus);
         return orderMenus.stream()
                 .map(this::createOrder)
                 .toList();
@@ -67,6 +69,12 @@ public class ChristmasService {
         final Menu menu = Menu.findByName(tokens.get(MENU_NAME_INDEX));
         final int quantity = StringParser.parseToInt(tokens.get(MENU_QUANTITY_INDEX), ErrorMessage.INVALID_WRONG_ORDER_FORMAT);
         return new Order(menu, quantity);
+    }
+
+    private void validateOrderMenuFormat(final List<String> orderMenus) {
+        for (String orderMenu : orderMenus) {
+            StringValidator.validateFormat(orderMenu, ErrorMessage.INVALID_WRONG_ORDER_FORMAT);
+        }
     }
 
 }
