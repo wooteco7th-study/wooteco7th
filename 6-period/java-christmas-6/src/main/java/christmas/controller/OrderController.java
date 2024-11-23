@@ -26,11 +26,15 @@ public class OrderController {
     }
 
     public void run() {
-        OrderMenus orderMenus = getOrderMenusWithRetry();
+        outputView.printRequestVisitDateMessage();
         VisitDate visitDate = getVisitDateWithRetry();
+
+        outputView.printRequestOrderMenusMessage();
+        OrderMenus orderMenus = getOrderMenusWithRetry();
 
         DiscountInfo discountInfo = orderService.processOrder(orderMenus, visitDate);
 
+        outputView.printDiscountPreviewMessage(visitDate.getVisitDate().getDayOfMonth());
         outputView.printDiscountInfo(discountInfo);
     }
 
