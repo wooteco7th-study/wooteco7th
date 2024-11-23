@@ -16,3 +16,25 @@ gradle/
 gradlew
 gradlew.bat
 
+
+.gradle/
+build/
+*/build/
+*/out/
+.idea/
+*.iml
+*.jar
+**/caches/
+wrapper/dists/
+**/javaCompile/
+**/scripts/
+**/workerMain/
+*.jar
+.DS_Store
+gradle/
+gradlew
+gradlew.bat
+bin/
+**/gradle-wrapper.properties
+**/gradle-wrapper.jar
+
