@@ -6,7 +6,6 @@ import christmas.service.OrderCreator;
 import christmas.service.Separator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import christmas.view.PrintMessage;
 import java.util.List;
 
 public class OrdersController {
@@ -20,6 +19,16 @@ public class OrdersController {
     }
 
     public Orders run() {
+        while (true) {
+            try {
+                return getOrders();
+            } catch (IllegalArgumentException e) {
+                outputView.print(e.getMessage());
+            }
+        }
+    }
+
+    private Orders getOrders() {
         String userOrders = inputView.getOrders();
         List<String> splitOrders = Separator.separate(userOrders, ",");
         List<Order> order = splitOrders.stream()

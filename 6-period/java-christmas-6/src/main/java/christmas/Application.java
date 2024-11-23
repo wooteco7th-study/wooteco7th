@@ -15,7 +15,7 @@ public class Application {
         final InputView inputView = new InputView(outputView);
 
         outputView.printMessage(PrintMessage.HELLO_MESSAGE);
-        VisitDateController visitDateController = new VisitDateController(inputView);
+        VisitDateController visitDateController = new VisitDateController(inputView, outputView);
         VisitDate visitDate = visitDateController.run();
 
         OrdersController ordersController = new OrdersController(inputView, outputView);

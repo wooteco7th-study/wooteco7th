@@ -1,5 +1,6 @@
 package christmas.Domain;
 
+import christmas.Exception.InputException;
 import java.util.List;
 
 public class Orders {
@@ -15,7 +16,7 @@ public class Orders {
 
     private void validateMenuDuplicate(List<Order> orders) {
         if (isDuplicate(orders)) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 
@@ -25,7 +26,7 @@ public class Orders {
 
     private void validateOnlyDrink(List<Order> orders) {
         if (orders.size() == countDrink(orders)) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 
@@ -44,7 +45,7 @@ public class Orders {
     private void validateTotalCount(List<Order> orders) {
         int totalCount = calculateTotalCount(orders);
         if (totalCount > 20) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 

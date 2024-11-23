@@ -1,5 +1,6 @@
 package christmas.Domain;
 
+import christmas.Exception.InputException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -13,7 +14,7 @@ public record VisitDate(int visitDate) {
 
     private void validate(int visitDate) {
         if (visitDate < 1 || visitDate > 31) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 

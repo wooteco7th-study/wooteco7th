@@ -1,5 +1,7 @@
 package christmas.service;
 
+import christmas.Exception.InputException;
+
 public class Converter {
 
     private Converter() {
@@ -10,7 +12,7 @@ public class Converter {
         try {
             return Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 }

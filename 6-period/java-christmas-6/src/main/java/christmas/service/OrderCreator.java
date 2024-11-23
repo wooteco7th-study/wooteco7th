@@ -2,6 +2,7 @@ package christmas.service;
 
 import christmas.Domain.Menu;
 import christmas.Domain.Order;
+import christmas.Exception.InputException;
 import java.util.List;
 
 public class OrderCreator {
@@ -23,7 +24,7 @@ public class OrderCreator {
 
     private void validateMenu(String splitMenu) {
         if (!Menu.getMenuName().contains(splitMenu)) {
-             throw new IllegalArgumentException();
+             throw new InputException();
         }
     }
 
@@ -33,7 +34,7 @@ public class OrderCreator {
 
     private void validateCountRange(int splitCount) {
         if (splitCount < 1) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 
