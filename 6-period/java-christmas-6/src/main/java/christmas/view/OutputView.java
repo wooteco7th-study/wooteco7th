@@ -7,7 +7,7 @@ import christmas.domain.discount.DiscountStrategy;
 import java.util.Map;
 
 public class OutputView {
-
+ 
     private static final String NEW_LINE = System.lineSeparator();
     private static final String START_MSG = "12월 %d일에 우테코 식당에서 받을 이벤트 혜택 미리 보기!" + NEW_LINE;
     private static final String ORDER_MENU = NEW_LINE + "<주문 메뉴>";
