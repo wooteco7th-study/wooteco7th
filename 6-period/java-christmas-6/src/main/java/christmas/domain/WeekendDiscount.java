@@ -18,11 +18,7 @@ public class WeekendDiscount extends Discount {
 
     @Override
     public int calculateDiscount() {
-        int discount = 0;
-        if (canReceiveDiscount()) {
-            final int count = countMenuType(DISCOUNT_MENU_TYPE);
-            discount += DISCOUNT * count;
-        }
-        return discount;
+        final int count = countMenuType(DISCOUNT_MENU_TYPE);
+        return DISCOUNT * count;
     }
 }

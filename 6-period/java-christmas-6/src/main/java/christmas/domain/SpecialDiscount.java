@@ -17,10 +17,6 @@ public class SpecialDiscount extends Discount {
 
     @Override
     public int calculateDiscount() {
-        int discount = 0;
-        if (canReceiveDiscount()) {
-            discount += DISCOUNT;
-        }
-        return discount;
+        return DISCOUNT;
     }
 }

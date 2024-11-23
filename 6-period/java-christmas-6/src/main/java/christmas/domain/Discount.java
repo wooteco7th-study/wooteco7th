@@ -3,6 +3,7 @@ package christmas.domain;
 public abstract class Discount {
 
     private static final int DISCOUNT_CONDITION = 10_000;
+    private static final int BENEFIT_EVENT_CONDITION = 120_000;
     private final DiscountType discountType;
     private final OrderGroup orderGroup;
 
@@ -21,6 +22,10 @@ public abstract class Discount {
 
     protected boolean isExceedsDiscountCondition() {
         return orderGroup.calculateOrdersTotalPrice() >= DISCOUNT_CONDITION;
+    }
+
+    protected boolean isExceedsBenefitEventCondition() {
+        return orderGroup.calculateOrdersTotalPrice() >= BENEFIT_EVENT_CONDITION;
     }
 
     protected int countMenuType(final MenuType menuType) {

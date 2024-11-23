@@ -19,11 +19,7 @@ public class ChristmasDiscount extends Discount {
 
     @Override
     public int calculateDiscount() {
-        int discount = 0;
-        if (canReceiveDiscount()) {
-            final int dayOfMonth = visitDate.getDayOfMonth();
-            discount += DISCOUNT_DEFAULT  + ((dayOfMonth - 1) * DISCOUNT_INCREASE);
-        }
-        return discount;
+        final int dayOfMonth = visitDate.getDayOfMonth();
+        return DISCOUNT_DEFAULT + ((dayOfMonth - 1) * DISCOUNT_INCREASE);
     }
 }
