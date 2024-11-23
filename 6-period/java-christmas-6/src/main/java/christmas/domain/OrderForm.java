@@ -29,6 +29,12 @@ public class OrderForm {
         return orderDate;
     }
 
+    public List<OrderMenu> findMenuByCategory(MenuCategory category) {
+        return menus.stream()
+                .filter(orderMenu -> orderMenu.getMenuByCategory(category) != null)
+                .toList();
+    }
+
     private void validateDuplicateMenu(List<OrderMenu> menus) {
         long distinctMenuSize = menus.stream()
                 .distinct()

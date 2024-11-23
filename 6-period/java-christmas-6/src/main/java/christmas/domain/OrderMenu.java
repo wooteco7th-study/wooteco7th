@@ -18,6 +18,13 @@ public class OrderMenu {
         return menu.getCategory().equals(DRINK);
     }
 
+    public Menu getMenuByCategory(MenuCategory category) {
+        if (menu.getCategory().equals(category)) {
+            return menu;
+        }
+        return null;
+    }
+
     public int getTotalPrice() {
         return menu.getPrice() * quantity.getValue();
     }
