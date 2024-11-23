@@ -57,7 +57,7 @@ public class DiscountController {
         }
 
         if (stringBuilder.isEmpty()) {
-            stringBuilder.append("없음");
+            stringBuilder.append("없음").append("\n");
         }
         outputView.print(stringBuilder.toString());
         return discount;

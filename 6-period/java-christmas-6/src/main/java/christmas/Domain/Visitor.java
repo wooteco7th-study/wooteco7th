@@ -31,7 +31,7 @@ public class Visitor {
     }
 
     public String getPriceMessage() {
-        return String.format("%,d원", getTotalPrice());
+        return String.format("%,d원\n", getTotalPrice());
     }
 
     @Override

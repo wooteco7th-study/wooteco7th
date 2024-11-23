@@ -25,6 +25,6 @@ public class OutputView {
     }
 
     public void printMoney(int total) {
-        System.out.println(String.format("%,d원", total));
+        System.out.println(String.format("%,d원\n", total));
     }
 }

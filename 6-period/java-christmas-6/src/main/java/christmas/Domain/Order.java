@@ -18,16 +18,20 @@ public class Order {
         return menuWithPrice.get(menu) * count;
     }
 
+    private boolean checkType(String type) {
+        return menuWithType.get(menu).equals(type);
+    }
+
     public boolean isDessert() {
-        return menuWithType.get(menu).equals("디저트");
+        return checkType("디저트");
     }
 
     public boolean isMain() {
-        return menuWithType.get(menu).equals("메인");
+        return checkType("메인");
     }
 
     public boolean isDrink() {
-        return menuWithType.get(menu).equals("음료");
+        return checkType("음료");
     }
 
     public String getMenu() {
@@ -40,6 +44,6 @@ public class Order {
 
     @Override
     public String toString() {
-        return menu + " " + count + "개"; //format 설정 필요
+        return menu + " " + count + "개";
     }
 }

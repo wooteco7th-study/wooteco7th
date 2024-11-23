@@ -32,8 +32,8 @@ public class FreeDiscounter {
     @Override
     public String toString() {
         if (state) {
-            return FREE + " " + COUNT + "개";
+            return FREE + " " + COUNT + "개\n";
         }
-        return "없음";
+        return "없음\n";
     }
 }
