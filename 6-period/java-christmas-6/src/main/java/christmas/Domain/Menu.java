@@ -6,6 +6,38 @@ import java.util.List;
 
 public class Menu {
 
+    public static int getPrice(String menuName) {
+        return Arrays.stream(MenuDetail.values())
+                .filter(menu -> menu.name.equals(menuName))
+                .toList().get(0).price;
+    }
+
+    public static HashMap<String, Integer> getMenuPrice() {
+        HashMap<String, Integer> menus = new HashMap<>();
+        MenuDetail[] totalMenu = MenuDetail.values();
+        Arrays.stream(totalMenu).forEach(
+                menu -> {
+                    menus.put(menu.name, menu.price);
+                }
+        );
+        return menus;
+    }
+
+    public static HashMap<String, String> getMenuType() {
+        HashMap<String, String> menus = new HashMap<>();
+        MenuDetail[] totalMenu = MenuDetail.values();
+        Arrays.stream(totalMenu).forEach(
+                menu -> {
+                    menus.put(menu.name, menu.type);
+                }
+        );
+        return menus;
+    }
+
+    public static List<String> getMenuName() {
+        return Arrays.stream(MenuDetail.values()).map(MenuDetail::getName).toList();
+    }
+
     public enum MenuDetail {
         BUTTON_MUSHROOM_SOUP("양송이수프", "에피타이저", 6_000),
         TAPAS("타파스", "에피타이저", 5_500),
@@ -33,33 +65,5 @@ public class Menu {
         public String getName() {
             return name;
         }
-    }
-
-    public static int getPrice(String menuName) {
-        return Arrays.stream(MenuDetail.values())
-                .filter(menu -> menu.name.equals(menuName))
-                .toList().get(0).price;
-    }
-
-    public static HashMap<String, Integer> getMenuPrice() {
-        HashMap<String, Integer> menus = new HashMap<>();
-        MenuDetail[] totalMenu = MenuDetail.values();
-        Arrays.stream(totalMenu).forEach(
-                menu -> { menus.put(menu.name, menu.price); }
-        );
-        return menus;
-    }
-
-    public static HashMap<String, String> getMenuType() {
-        HashMap<String, String> menus = new HashMap<>();
-        MenuDetail[] totalMenu = MenuDetail.values();
-        Arrays.stream(totalMenu).forEach(
-                menu -> { menus.put(menu.name, menu.type); }
-        );
-        return menus;
-    }
-
-    public static List<String> getMenuName() {
-        return Arrays.stream(MenuDetail.values()).map(MenuDetail::getName).toList();
     }
 }

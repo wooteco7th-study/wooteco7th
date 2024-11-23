@@ -24,7 +24,7 @@ public class OrderCreator {
 
     private void validateMenu(String splitMenu) {
         if (!Menu.getMenuName().contains(splitMenu)) {
-             throw new InputException();
+            throw new InputException();
         }
     }
 

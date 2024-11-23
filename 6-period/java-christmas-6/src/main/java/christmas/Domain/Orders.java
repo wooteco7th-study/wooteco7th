@@ -60,7 +60,9 @@ public class Orders {
     @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        orders.forEach(order -> { stringBuilder.append(order.toString()).append("\n"); });
+        orders.forEach(order -> {
+            stringBuilder.append(order.toString()).append("\n");
+        });
         return stringBuilder.toString();
     }
 }

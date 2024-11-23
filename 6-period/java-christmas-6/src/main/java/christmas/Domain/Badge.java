@@ -6,7 +6,7 @@ import java.util.List;
 
 public enum Badge {
 
-    STAR("별" ,5_000),
+    STAR("별", 5_000),
     TREE("트리", 10_000),
     SANTA("산타", 20_000);
 
@@ -18,17 +18,18 @@ public enum Badge {
         this.minPrice = minPrice;
     }
 
-    public int getMinPrice() {
-        return minPrice;
-    }
-
     public static String getBadge(int discount) {
-        List<Badge> badges = Arrays.stream(Badge.values()).sorted(Comparator.comparing(Badge::getMinPrice).reversed()).toList();
+        List<Badge> badges = Arrays.stream(Badge.values()).sorted(Comparator.comparing(Badge::getMinPrice).reversed())
+                .toList();
         for (Badge badge : badges) {
             if (discount >= badge.minPrice) {
                 return badge.name;
             }
         }
         return "없음";
+    }
+
+    public int getMinPrice() {
+        return minPrice;
     }
 }
