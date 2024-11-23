@@ -47,7 +47,7 @@ public class VisitDate {
     }
 
     public boolean isBeforeChristmas() {
-        return localDate.isBefore(CHRISTMAS);
+        return localDate.isBefore(CHRISTMAS) || localDate.isEqual(CHRISTMAS);
     }
 
     public boolean isSpecialDay() {
