@@ -3,13 +3,13 @@ package christmas.domain.vo;
 import java.util.Map;
 
 public class OrderMenus {
-    private final Map<String,Integer> orderMenus;
+    private final Map<Menu, Integer> orderMenus;
 
-    public OrderMenus(final Map<String, Integer> orderMenus) {
+    public OrderMenus(final Map<Menu, Integer> orderMenus) {
         this.orderMenus = orderMenus;
     }
 
-    public Map<String, Integer> getOrderMenus() {
+    public Map<Menu, Integer> getOrderMenus() {
         return orderMenus;
     }
 }
