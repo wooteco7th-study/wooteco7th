@@ -11,6 +11,11 @@ public class OrderParser {
     public static OrderForm parse(VisitDate visitDate, String orders) {
         String[] menuAndQuantity = orders.split(ORDER_DELIMITER);
         List<OrderMenu> orderForm = new ArrayList<>();
+        addOrderMenu(menuAndQuantity, orderForm);
+        return new OrderForm(visitDate, orderForm);
+    }
+
+    private static void addOrderMenu(final String[] menuAndQuantity, final List<OrderMenu> orderForm) {
         for (String order : menuAndQuantity) {
             String[] data = order.split(MENU_QUANTITY_DELIMITER);
             Menu menu = Menu.from(data[0]);
@@ -18,6 +23,5 @@ public class OrderParser {
             OrderMenu orderMenu = new OrderMenu(menu, quantity);
             orderForm.add(orderMenu);
         }
-        return new OrderForm(visitDate, orderForm);
     }
 }
