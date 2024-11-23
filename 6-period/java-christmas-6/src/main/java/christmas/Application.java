@@ -13,5 +13,7 @@ public class Application {
 
         outputView.printMessage(PrintMessage.HELLO_MESSAGE);
         VisitDate visitDate = new VisitDate(Converter.getNumber(inputView.getVisitDate()));
+
+        outputView.printVisitDate(PrintMessage.EVENT_DETAIL_INFO_MESSAGE, visitDate.getVisitDate());
     }
 }
