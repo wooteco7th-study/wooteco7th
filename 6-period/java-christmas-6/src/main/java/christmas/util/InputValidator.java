@@ -13,13 +13,4 @@ public class InputValidator {
             throw new IllegalArgumentException(ErrorMessage.BLANK.getMessage());
         }
     }
-
-    public static void validateNotNullOrEmpty(final List<?> input) {
-        if (input == null) {
-            throw new IllegalArgumentException(ErrorMessage.NULL.getMessage());
-        }
-        if (input.isEmpty()) {
-            throw new IllegalArgumentException(ErrorMessage.EMPTY.getMessage());
-        }
-    }
 }

@@ -1,6 +1,5 @@
 package christmas.domain;
 
-import christmas.exception.CustomIllegalArgumentException;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
@@ -31,9 +30,5 @@ public enum Badge {
 
     public String getName() {
         return name;
-    }
-
-    public BigDecimal getAtLeastPrice() {
-        return atLeastPrice;
     }
 }
