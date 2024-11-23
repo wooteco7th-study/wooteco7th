@@ -1,6 +1,7 @@
 package christmas.view.console;
 
 import camp.nextstep.edu.missionutils.Console;
+import christmas.error.ErrorMessage;
 import christmas.util.StringParser;
 import christmas.view.InputView;
 import java.util.List;
@@ -16,8 +17,9 @@ public class ConsoleInputView implements InputView {
     }
 
     @Override
-    public String readVisitDay() {
-        return readInput();
+    public int readVisitDay() {
+        final String input = readInput();
+        return StringParser.parseToInt(input, ErrorMessage.INVALID_VISIT_DAY_FORMAT);
     }
 
     private String readInput() {

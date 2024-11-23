@@ -6,5 +6,5 @@ public interface InputView {
 
     List<String> readOrderMenu();
 
-    String readVisitDay();
+    int readVisitDay();
 }
