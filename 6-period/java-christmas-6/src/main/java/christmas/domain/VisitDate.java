@@ -27,7 +27,7 @@ public class VisitDate {
         return new VisitDate(LocalDateConvertor.convert(YEAR, MONTH, day));
     }
 
-    public boolean isWeekDay() {
+    public boolean isWeekday() {
         final DayOfWeek dayOfWeek = localDate.getDayOfWeek();
         return dayOfWeek == DayOfWeek.SUNDAY
                 || dayOfWeek == DayOfWeek.MONDAY
@@ -36,7 +36,7 @@ public class VisitDate {
                 || dayOfWeek == DayOfWeek.THURSDAY;
     }
 
-    public boolean isWeekEnd() {
+    public boolean isWeekend() {
         final DayOfWeek dayOfWeek = localDate.getDayOfWeek();
         return dayOfWeek == DayOfWeek.FRIDAY
                 || dayOfWeek == DayOfWeek.SATURDAY;
