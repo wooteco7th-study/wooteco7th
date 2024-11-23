@@ -38,8 +38,8 @@ public class WeekDiscounter {
 
     public String getMessage() {
         if (state) {
-            return String.format("평일 할인: -%,d원", calculateWeekDay());
+            return String.format("평일 할인: -%,d원\n", calculateWeekDay());
         }
-        return String.format("주말 할인: -%,d원", calculateWeekEnd());
+        return String.format("주말 할인: -%,d원\n", calculateWeekEnd());
     }
 }

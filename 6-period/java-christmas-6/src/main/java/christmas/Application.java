@@ -26,7 +26,7 @@ public class Application {
         OrdersController ordersController = new OrdersController(inputView, outputView);
         Orders orders = ordersController.run();
 
-        DiscountController discountController = new DiscountController(inputView, outputView);
+        DiscountController discountController = new DiscountController(outputView);
         discountController.run(visitDate, orders);
     }
 }

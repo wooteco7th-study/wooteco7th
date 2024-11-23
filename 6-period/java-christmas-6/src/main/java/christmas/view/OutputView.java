@@ -24,7 +24,7 @@ public class OutputView {
         System.out.println(input);
     }
 
-    public void printExpectPayment(int total, int discount) {
-        System.out.println(String.format("%,d원", total - discount));
+    public void printMoney(int total) {
+        System.out.println(String.format("%,d원", total));
     }
 }
