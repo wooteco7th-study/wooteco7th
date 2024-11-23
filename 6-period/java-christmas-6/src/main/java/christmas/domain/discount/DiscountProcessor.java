@@ -14,11 +14,17 @@ public class DiscountProcessor {
         Map<String, Integer> discountList = new HashMap<>();
         for (DiscountStrategy discountStrategy : discountStrategies) {
             if (discountStrategy.isApplicable(orderForm.getOrderDate())) {
-                int appliedAmount = discountStrategy.appliedAmount(orderForm);
-                discountList.put(discountStrategy.getName(), appliedAmount);
+                putDiscount(orderForm, discountStrategy, discountList);
             }
         }
         return discountList;
+    }
+
+    private static void putDiscount(final OrderForm orderForm, final DiscountStrategy discountStrategy, final Map<String, Integer> discountList) {
+        int appliedAmount = discountStrategy.appliedAmount(orderForm);
+        if (appliedAmount > 0) {
+            discountList.put(discountStrategy.getName(), appliedAmount);
+        }
     }
 
     private List<DiscountStrategy> createDiscountStrategies() {

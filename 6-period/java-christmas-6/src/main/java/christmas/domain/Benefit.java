@@ -10,7 +10,7 @@ public record Benefit(
 ) {
 
     public boolean hasFreeGift() {
-        return !discountList.isEmpty() && discountList.get(FREE_GIFT.getName()) != 0;
+        return discountList.containsKey(FREE_GIFT.getName());
     }
 
     public int getTotalBenefitAmount() {
