@@ -13,6 +13,7 @@ public class OrderForm {
 
     public OrderForm(final VisitDate orderDate, final List<OrderMenu> menus) {
         validateDuplicateMenu(menus);
+        validateMenuCategory(menus);
         validateOrderQuantity(menus);
         this.orderDate = orderDate;
         this.menus = menus;
@@ -25,6 +26,19 @@ public class OrderForm {
         if (distinctMenuSize != menus.size()) {
             throw new IllegalArgumentException(INVALID_ORDER.getMessage());
         }
+    }
+
+    private void validateMenuCategory(List<OrderMenu> menus) {
+        long drinkCount = getDrinkCount(menus);
+        if (drinkCount == menus.size()) {
+            throw new IllegalArgumentException(INVALID_ORDER.getMessage());
+        }
+    }
+
+    private long getDrinkCount(final List<OrderMenu> menus) {
+        return menus.stream()
+                .filter(OrderMenu::isDrinkCategory)
+                .count();
     }
 
     private void validateOrderQuantity(List<OrderMenu> menus) {

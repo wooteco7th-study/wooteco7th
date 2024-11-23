@@ -42,4 +42,8 @@ public enum Menu {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_ORDER.getMessage()));
     }
+
+    public MenuCategory getCategory() {
+        return category;
+    }
 }
