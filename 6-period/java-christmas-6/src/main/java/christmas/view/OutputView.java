@@ -23,6 +23,7 @@ public class OutputView {
     private static final String BENEFIT_AMOUNT_FORMAT = "-%,d원";
     private static final String EXPECTED_PAY_AMOUNT_FORMAT = "%,d원";
     private static final String NONE = "없음";
+    public static final String FREE_CHAMPAGNE = "샴페인 1개";
 
 
     public void printError(String error) {
@@ -69,16 +70,15 @@ public class OutputView {
             System.out.println(NONE);
         }
         if (!discountList.isEmpty()) {
-            discountList.forEach((key, value) -> {
-                System.out.printf(DISCOUNT_MONEY_FORMAT + NEW_LINE, key, value);
-            });
+            discountList.forEach((key, value)
+                    -> System.out.printf(DISCOUNT_MONEY_FORMAT + NEW_LINE, key, value));
         }
     }
 
     private void printGiftMenu(final Benefit benefit) {
         System.out.println(FREE_GIFT);
         if (benefit.hasFreeGift()) {
-            System.out.println("샴페인 1개" + NEW_LINE);
+            System.out.println(FREE_CHAMPAGNE + NEW_LINE);
         }
         if (!benefit.hasFreeGift()) {
             System.out.println(NONE);
