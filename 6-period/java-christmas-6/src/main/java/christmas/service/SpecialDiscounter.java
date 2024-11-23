@@ -22,4 +22,8 @@ public class SpecialDiscounter {
         }
         return 0;
     }
+
+    public String getMessage() {
+        return String.format("특별 할인: -%,d", calculate());
+    }
 }

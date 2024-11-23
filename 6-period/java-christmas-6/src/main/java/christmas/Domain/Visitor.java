@@ -29,4 +29,13 @@ public class Visitor {
     public String getDateName() {
         return visitDate.calculateDate();
     }
+
+    public String getPriceMessage() {
+        return String.format("%,d원", getTotalPrice());
+    }
+
+    @Override
+    public String toString() {
+        return orders.toString();
+    }
 }

@@ -25,6 +25,10 @@ public class FreeDiscounter {
         return 0;
     }
 
+    public String getMessage() {
+        return String.format("증정 이벤트: -%,d원", calculate());
+    }
+
     @Override
     public String toString() {
         if (state) {

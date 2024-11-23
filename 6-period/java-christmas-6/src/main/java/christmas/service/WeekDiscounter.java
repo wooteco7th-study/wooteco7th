@@ -19,9 +19,27 @@ public class WeekDiscounter {
     }
 
     public int calculate() {
+        return calculateWeekDay() + calculateWeekEnd();
+    }
+
+    private int calculateWeekDay() {
         if (state) {
             return visitor.getDessertCount() * 2023;
         }
+        return 0;
+    }
+
+    private int calculateWeekEnd() {
+        if (state) {
+            return 0;
+        }
         return visitor.getMainCount() * 2023;
+    }
+
+    public String getMessage() {
+        if (state) {
+            return String.format("평일 할인: -%,d원", calculateWeekDay());
+        }
+        return String.format("주말 할인: -%,d원", calculateWeekEnd());
     }
 }

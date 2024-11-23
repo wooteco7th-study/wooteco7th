@@ -22,4 +22,8 @@ public class ChristmasDiscounter {
         }
         return 0;
     }
+
+    public String getMessage() {
+        return String.format("크리스마스 디데이 할인: -%,d원", calculate());
+    }
 }
