@@ -57,26 +57,10 @@ public class PromotionProcessor {
         return orders.calculateTotalPrice().subtract(totalDiscountPrice);
     }
 
-//## ✅ 총 혜택 계산하기
-//
-//- 날짜와 메뉴, 총 주문금액별 혜택을 계산한다.
-//- 총혜택 금액 : 할인 금액의 합계 + 증정 메뉴의 가격
-//- 할인 후 예상 결제 금액 : 할인 전 총주문 금액 - 할인 금액
-//
-//> 증정 메뉴의 가격은 포함하지 않는다.
-//
-//## ✅ 총 혜택 출력하기
-//
-//- 할인 전 총주문 금액 보여주기
-//- 증정 메뉴 보여주기
-//    - 증정 이벤트에 해당하지 않는 경우, "없음"
-//            - 혜택 내역 보여주기
-//    - 고객에게 적용된 이벤트 내역만 보여주기
-//    - 적용된 이벤트가 하나도 없다면 "없음"
-//            - 혜택 내역에 여러 개의 이벤트가 적용된 경우, 출력 순서는 자유롭게 출력
-//- 총혜택 금액 보여주기
-//    - 할인 금액이 없다면 "0원"
-//            - 할인 후 예상 결제 금액 보여주기
-//- 12월 이벤트 배지 보여주기
-//    - 이벤트 배지가 부여되지 않는 경우, "없음"
+    public BigDecimal makeGiftDiscount(final Optional<Order> optionalOrder) {
+        if (optionalOrder.isEmpty()) {
+            return BigDecimal.ZERO;
+        }
+        return optionalOrder.get().getPrice();
+    }
 }

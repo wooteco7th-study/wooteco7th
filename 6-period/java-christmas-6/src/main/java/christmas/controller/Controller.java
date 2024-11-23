@@ -39,6 +39,10 @@ public class Controller {
         Day visitDay = createDay();
         Orders orders = createOrders();
         showOrders(orders);
+        checkPromotion(visitDay, orders);
+    }
+
+    private void checkPromotion(final Day visitDay, final Orders orders) {
         PromotionProcessor promotionProcessor = new PromotionProcessor(visitDay, orders);
         Optional<Order> optionalOrder = promotionProcessor.checkGift();
         outputView.showBonusMenu();
@@ -48,32 +52,31 @@ public class Controller {
     }
 
     private void showDiscount(final Day visitDay, final PromotionProcessor promotionProcessor,
-                           final Optional<Order> optionalOrder) {
+                              final Optional<Order> optionalOrder) {
         boolean noPromotion = !promotionProcessor.checkAtLeastPrice();
         BigDecimal untilChristmasDiscount = promotionProcessor.checkUntiChristmasDiscount();
         BigDecimal dayDiscount = promotionProcessor.checkDayDiscount();
         BigDecimal specialDiscount = promotionProcessor.checkSpecialDiscount();
-        BigDecimal giftDiscount = makeGiftDiscount(optionalOrder);
-        BigDecimal totalDiscount = addTotalDiscount(untilChristmasDiscount, dayDiscount, specialDiscount, giftDiscount, noPromotion);
+        BigDecimal giftDiscount = promotionProcessor.makeGiftDiscount(optionalOrder);
+        outputView.showMessage(
+                stringFormatter.makePromotionListMessage(untilChristmasDiscount, dayDiscount, specialDiscount,
+                        giftDiscount, visitDay, noPromotion));
+        showTotalDiscount(promotionProcessor, noPromotion, untilChristmasDiscount, dayDiscount, specialDiscount, giftDiscount);
+    }
+
+    private void showTotalDiscount(final PromotionProcessor promotionProcessor, final boolean noPromotion,
+                           final BigDecimal untilChristmasDiscount, final BigDecimal dayDiscount,
+                           final BigDecimal specialDiscount, final BigDecimal giftDiscount) {
+        BigDecimal totalDiscount = addTotalDiscount(untilChristmasDiscount, dayDiscount, specialDiscount, giftDiscount,
+                noPromotion);
         BigDecimal discountPriceExceptBonusPrice = totalDiscount.subtract(giftDiscount);
         BigDecimal expectPrice = promotionProcessor.calculateExpectPrice(discountPriceExceptBonusPrice);
-        outputView.showMessage(stringFormatter.makePromotionListMessage(untilChristmasDiscount, dayDiscount, specialDiscount,
-                giftDiscount, visitDay, noPromotion));
         outputView.showMessage(stringFormatter.makeMinusPriceMessage(totalDiscount, expectPrice, noPromotion));
     }
 
-    private static BigDecimal makeGiftDiscount(final Optional<Order> optionalOrder) {
-        BigDecimal giftDiscount = BigDecimal.ZERO;
-        if (optionalOrder.isPresent()) {
-            Order order = optionalOrder.get();
-            giftDiscount = order.getMenu().getPrice().multiply(new BigDecimal(order.getQuantity().getValue()));
-        }
-        return giftDiscount;
-    }
-
     private BigDecimal addTotalDiscount(final BigDecimal untilChristmasDiscount, final BigDecimal dayDiscount,
-                                               final BigDecimal specialDiscount, final BigDecimal giftDiscount,
-                                               final boolean noPromotion) {
+                                        final BigDecimal specialDiscount, final BigDecimal giftDiscount,
+                                        final boolean noPromotion) {
         if (noPromotion) {
             return BigDecimal.ZERO;
         }

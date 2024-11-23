@@ -1,6 +1,7 @@
 package christmas.domain;
 
 import christmas.domain.Menu.MenuType;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Order {
@@ -19,6 +20,10 @@ public class Order {
 
     public boolean hasMenuType(MenuType menuType) {
         return menu.getType().equals(menuType);
+    }
+
+    public BigDecimal getPrice() {
+        return menu.getPrice().multiply(new BigDecimal(quantity.getValue()));
     }
 
     public Menu getMenu() {
