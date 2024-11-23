@@ -33,6 +33,14 @@ public class Orders {
         return orders.stream().filter(Order::isDrink).toList().size();
     }
 
+    public int countMain() {
+        return orders.stream().filter(Order::isMain).toList().size();
+    }
+
+    public int countDessert() {
+        return orders.stream().filter(Order::isDessert).toList().size();
+    }
+
     private void validateTotalCount(List<Order> orders) {
         int totalCount = calculateTotalCount(orders);
         if (totalCount > 20) {

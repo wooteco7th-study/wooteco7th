@@ -18,6 +18,14 @@ public class Order {
         return menuWithPrice.get(menu) * count;
     }
 
+    public boolean isDessert() {
+        return menuWithType.get(menu).equals("디저트");
+    }
+
+    public boolean isMain() {
+        return menuWithType.get(menu).equals("메인");
+    }
+
     public boolean isDrink() {
         return menuWithType.get(menu).equals("음료");
     }

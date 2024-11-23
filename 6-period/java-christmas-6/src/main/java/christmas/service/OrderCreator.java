@@ -1,5 +1,6 @@
 package christmas.service;
 
+import christmas.Domain.Menu.MenuDetail;
 import christmas.Domain.Order;
 import java.util.List;
 
@@ -20,9 +21,8 @@ public class OrderCreator {
         this.splitCount = splitCount;
     }
 
-    //menu가 존재하는지 검사
     private void validateMenu(String splitMenu) {
-        //메뉴 존재 X -> 예외 처리
+        MenuDetail.valueOf(splitMenu);
     }
 
     private int validateNumber(String inputCount) {

@@ -20,7 +20,7 @@ public class Application {
         outputView.printMessage(PrintMessage.HELLO_MESSAGE);
         VisitDate visitDate = new VisitDate(Converter.getNumber(inputView.getVisitDate()));
 
-        outputView.printVisitDate(PrintMessage.EVENT_DETAIL_INFO_MESSAGE, visitDate.getVisitDate());
+        outputView.printVisitDate(PrintMessage.EVENT_DETAIL_INFO_MESSAGE, visitDate.visitDate());
         String userOrders = inputView.getOrders();
         List<String> splitOrders = Separator.separate(userOrders, ",");
         List<Order> order = splitOrders.stream()

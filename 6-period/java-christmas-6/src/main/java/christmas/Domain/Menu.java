@@ -35,6 +35,10 @@ public class Menu {
         }
     }
 
+    public static int getPrice(String name) {
+        return MenuDetail.valueOf(name).price;
+    }
+
     public static HashMap<String, Integer> getMenuPrice() {
         HashMap<String, Integer> menus = new HashMap<>();
         MenuDetail[] totalMenu = MenuDetail.values();
