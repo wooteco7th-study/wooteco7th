@@ -35,6 +35,10 @@ public class OrderForm {
                 .toList();
     }
 
+    public List<OrderMenu> getMenus() {
+        return menus;
+    }
+
     private void validateDuplicateMenu(List<OrderMenu> menus) {
         long distinctMenuSize = menus.stream()
                 .distinct()

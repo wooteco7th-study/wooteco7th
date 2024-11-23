@@ -29,6 +29,10 @@ public class OrderMenu {
         return menu.getPrice() * quantity.getValue();
     }
 
+    public String getMenu() {
+        return menu.getName();
+    }
+
     public int getQuantity() {
         return quantity.getValue();
     }
