@@ -1,9 +1,9 @@
-package christmas.domain;
+package christmas.domain.order;
 
-import static christmas.domain.MenuType.APPETIZER;
-import static christmas.domain.MenuType.DESSERT;
-import static christmas.domain.MenuType.DRINK;
-import static christmas.domain.MenuType.MAIN;
+import static christmas.domain.order.MenuType.APPETIZER;
+import static christmas.domain.order.MenuType.DESSERT;
+import static christmas.domain.order.MenuType.DRINK;
+import static christmas.domain.order.MenuType.MAIN;
 
 import christmas.error.AppException;
 import christmas.error.ErrorMessage;

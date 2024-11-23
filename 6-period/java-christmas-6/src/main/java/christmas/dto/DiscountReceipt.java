@@ -1,7 +1,6 @@
 package christmas.dto;
 
-import christmas.domain.Discount;
-import christmas.domain.DiscountType;
+import christmas.domain.discount.DiscountType;
 import java.util.Map.Entry;
 
 public record DiscountReceipt(

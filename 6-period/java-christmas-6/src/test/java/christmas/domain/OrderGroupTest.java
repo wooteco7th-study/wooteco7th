@@ -2,6 +2,9 @@ package christmas.domain;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import christmas.domain.order.Menu;
+import christmas.domain.order.Order;
+import christmas.domain.order.OrderGroup;
 import christmas.error.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

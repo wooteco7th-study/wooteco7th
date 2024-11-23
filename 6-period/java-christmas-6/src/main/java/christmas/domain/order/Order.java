@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.order;
 
 import christmas.error.ErrorMessage;
 import christmas.util.NumberValidator;

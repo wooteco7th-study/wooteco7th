@@ -1,4 +1,7 @@
-package christmas.domain;
+package christmas.domain.discount;
+
+import christmas.domain.order.Menu;
+import christmas.domain.order.OrderGroup;
 
 public class BenefitEvent extends Discount implements Benefit {
 

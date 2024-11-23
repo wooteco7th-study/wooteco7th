@@ -1,5 +1,6 @@
-package christmas.domain;
+package christmas.domain.discount;
 
+import christmas.domain.order.Menu;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

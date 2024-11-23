@@ -1,4 +1,7 @@
-package christmas.domain;
+package christmas.domain.discount;
+
+import christmas.domain.order.MenuType;
+import christmas.domain.order.OrderGroup;
 
 public abstract class Discount {
 

@@ -1,10 +1,10 @@
 package christmas.controller;
 
-import christmas.domain.Discount;
-import christmas.domain.EventPlanner;
-import christmas.domain.Order;
-import christmas.domain.OrderGroup;
-import christmas.domain.VisitDate;
+import christmas.domain.discount.Discount;
+import christmas.domain.discount.EventPlanner;
+import christmas.domain.order.Order;
+import christmas.domain.order.OrderGroup;
+import christmas.domain.visit.VisitDate;
 import christmas.dto.BenefitMenuReceipt;
 import christmas.dto.DiscountReceipt;
 import christmas.dto.OrderMenuReceipt;

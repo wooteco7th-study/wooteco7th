@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.visit;
 
 import christmas.error.ErrorMessage;
 import christmas.util.LocalDateConvertor;

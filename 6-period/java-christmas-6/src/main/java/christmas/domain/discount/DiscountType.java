@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.discount;
 
 public enum DiscountType {
     WEEKDAY_DISCOUNT("평일 할인"),
