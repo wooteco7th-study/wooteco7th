@@ -40,25 +40,28 @@ public class DiscountController {
 
     private int showDetail(Visitor visitor, FreeDiscounter freeDiscounter) {
         int discount = 0;
+        ChristmasDiscounter christmasDiscounter = new ChristmasDiscounter(visitor);
+        WeekDiscounter weekDiscounter = new WeekDiscounter(visitor);
+        SpecialDiscounter specialDiscounter = new SpecialDiscounter(visitor);
         StringBuilder stringBuilder = new StringBuilder();
-        if (visitor.getTotalPrice() >= 10000) {
-            ChristmasDiscounter christmasDiscounter = new ChristmasDiscounter(visitor);
-            WeekDiscounter weekDiscounter = new WeekDiscounter(visitor);
-            SpecialDiscounter specialDiscounter = new SpecialDiscounter(visitor);
 
+        if (visitor.getTotalPrice() >= 10000) {
             discount += christmasDiscounter.calculate();
             discount += weekDiscounter.calculate();
             discount += specialDiscounter.calculate();
+        }
 
+        if (discount > 0) {
             stringBuilder.append(christmasDiscounter.getMessage());
             stringBuilder.append(weekDiscounter.getMessage());
             stringBuilder.append(specialDiscounter.getMessage());
             stringBuilder.append(freeDiscounter.getMessage());
         }
 
-        if (stringBuilder.isEmpty()) {
+        if (discount == 0) {
             stringBuilder.append("없음").append("\n");
         }
+
         outputView.print(stringBuilder.toString());
         return discount;
     }

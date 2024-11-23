@@ -5,7 +5,7 @@ import java.util.List;
 
 public class WeekDiscounter {
 
-    private static final List<String> WEEKDAY = List.of("SUN", "MON", "TUE", "WED", "TUE");
+    private static final List<String> WEEKDAY = List.of("Sun", "Mon", "Tue", "Wed", "Thu");
     private final Visitor visitor;
     private final boolean state;
 
