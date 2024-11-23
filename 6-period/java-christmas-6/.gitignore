@@ -1,35 +1,18 @@
-HELP.md
-.gradle
+.gradle/
 build/
-!gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**
-!**/src/test/**
-
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
+*/build/
+*/out/
+.idea/
 *.iml
-*.ipr
-out/
-
-### NetBeans ###
-/nbproject/private/
-/nbbuild/
-/dist/
-/nbdist/
-/.nb-gradle/
-
-### VS Code ###
-.vscode/
-
-### Mac OS ###
+*.jar
+**/caches/
+wrapper/dists/
+**/javaCompile/
+**/scripts/
+**/workerMain/
+*.jar
 .DS_Store
+gradle/
+gradlew
+gradlew.bat
+
