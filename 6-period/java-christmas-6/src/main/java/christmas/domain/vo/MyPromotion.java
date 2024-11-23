@@ -2,10 +2,10 @@ package christmas.domain.vo;
 
 import christmas.domain.Badge;
 
-public class MyBadge {
+public class MyPromotion {
     private final Badge badge;
 
-    public MyBadge(final Badge badge) {
+    public MyPromotion(final Badge badge) {
         this.badge = badge;
     }
 
