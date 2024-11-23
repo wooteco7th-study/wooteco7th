@@ -14,6 +14,7 @@ public class StringFormatter {
     private static final String BADGE = "<12월 이벤트 배지>";
     private static final String FORMAT = "%s %d개" + System.lineSeparator();
     public static final String NONE = "없음" + System.lineSeparator();
+    public static final String ZERO_PRICE = "0원" + System.lineSeparator();
 
     public String makeMessage(final Orders orders) {
         StringBuilder message = new StringBuilder();
@@ -80,8 +81,7 @@ public class StringFormatter {
         if (!totalDiscount.equals(BigDecimal.ZERO)) {
             return makeMinusPriceMessage(totalDiscount) + System.lineSeparator();
         }
-        return "0원" + System.lineSeparator();
-
+        return ZERO_PRICE + System.lineSeparator();
     }
 
     private String makeExpectPriceMessage(final BigDecimal expectPrice) {
