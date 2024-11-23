@@ -41,6 +41,7 @@ public class EventPlanner {
     public Map<DiscountType, Integer> getDiscountResult() {
         return discounts.stream()
                 .filter(Discount::canReceiveDiscount)
+                .filter(discount -> discount.calculateDiscount() > 0)
                 .collect(Collectors.toMap(
                         Discount::getDiscountType,
                         Discount::calculateDiscount

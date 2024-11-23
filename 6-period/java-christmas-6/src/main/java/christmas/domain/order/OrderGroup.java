@@ -28,9 +28,10 @@ public class OrderGroup {
     }
 
     public int countMenuType(final MenuType menuType) {
-        return (int) orders.stream()
+        return orders.stream()
                 .filter(order -> Objects.equals(order.getMenuType(), menuType))
-                .count();
+                .mapToInt(Order::getQuantity)
+                .sum();
     }
 
     private void validate(final List<Order> orders) {
