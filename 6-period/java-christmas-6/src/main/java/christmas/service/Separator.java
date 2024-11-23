@@ -8,7 +8,7 @@ public class Separator {
 
     }
 
-    public static List<String> separate(String input, String separator) {
-        return List.of(input.split(separator));
+    public static List<String> separate(String input, String separator, int limit) {
+        return List.of(input.split(separator, limit));
     }
 }

@@ -30,7 +30,7 @@ public class OrdersController {
 
     private Orders getOrders() {
         String userOrders = inputView.getOrders();
-        List<String> splitOrders = Separator.separate(userOrders, ",");
+        List<String> splitOrders = Separator.separate(userOrders, ",", 0);
         List<Order> order = splitOrders.stream()
                 .map(split -> new OrderCreator(split).create())
                 .toList();

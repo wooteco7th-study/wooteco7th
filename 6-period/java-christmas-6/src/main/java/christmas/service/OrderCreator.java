@@ -11,7 +11,7 @@ public class OrderCreator {
     private final int splitCount;
 
     public OrderCreator(String order) {
-        List<String> splitOrder = Separator.separate(order, "-");
+        List<String> splitOrder = Separator.separate(order, "-", 2);
 
         String splitMenu = splitOrder.get(0);
         validateMenu(splitMenu);

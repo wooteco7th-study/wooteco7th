@@ -21,6 +21,6 @@ public record VisitDate(int visitDate) {
     public String calculateDate() {
         LocalDate today = LocalDate.of(2023, 12, visitDate);
         DayOfWeek dayOfWeek = today.getDayOfWeek();
-        return dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.US);
+        return dayOfWeek.getDisplayName(TextStyle.SHORT, Locale.KOREA);
     }
 }

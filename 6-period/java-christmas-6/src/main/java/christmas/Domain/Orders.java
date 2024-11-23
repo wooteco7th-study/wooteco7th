@@ -35,11 +35,15 @@ public class Orders {
     }
 
     public int countMain() {
-        return orders.stream().filter(Order::isMain).toList().size();
+        return orders.stream().filter(Order::isMain)
+                .mapToInt(Order::getCount)
+                .sum();
     }
 
     public int countDessert() {
-        return orders.stream().filter(Order::isDessert).toList().size();
+        return orders.stream().filter(Order::isDessert)
+                .mapToInt(Order::getCount)
+                .sum();
     }
 
     private void validateTotalCount(List<Order> orders) {
