@@ -8,6 +8,7 @@ import christmas.domain.Order;
 import christmas.domain.Orders;
 import christmas.domain.Quantity;
 import christmas.exception.CustomIllegalArgumentException;
+import christmas.support.StringFormatter;
 import christmas.util.Converter;
 import christmas.view.InputView;
 import christmas.view.OutputView;
@@ -22,16 +23,19 @@ public class Controller {
 
     private final InputView inputView;
     private final OutputView outputView;
+    private final StringFormatter stringFormatter;
 
-    public Controller(final InputView inputView, final OutputView outputView) {
+    public Controller(final InputView inputView, final OutputView outputView, final StringFormatter stringFormatter) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.stringFormatter = stringFormatter;
     }
 
     public void process() {
         outputView.commentWelcomeMessage();
         Day visitDay = createDay();
         Orders orders = createOrders();
+        showOrders(orders);
     }
 
     private Orders createOrders() {
@@ -39,7 +43,7 @@ public class Controller {
         String input = inputView.readLine();
         Orders orders = new Orders(new ArrayList<>());
         for (String order : input.split(",")) {
-            validateOrder(orders, order);
+            validateOrder(orders, order.trim());
         }
         return orders;
     }
@@ -61,5 +65,12 @@ public class Controller {
         outputView.commentVisitDate();
         String day = inputView.readLine();
         return new Day(Converter.convertToInteger(day));
+    }
+
+    private void showOrders(final Orders orders) {
+        outputView.commentEvent();
+        outputView.showOrderMenu();
+        outputView.showMessage(stringFormatter.makeMessage(orders));
+        outputView.showBlankLine();
     }
 }

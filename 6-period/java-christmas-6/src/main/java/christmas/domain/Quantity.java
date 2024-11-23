@@ -17,4 +17,8 @@ public class Quantity {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_ORDER.getMessage());
         }
     }
+
+    public int getValue() {
+        return value;
+    }
 }

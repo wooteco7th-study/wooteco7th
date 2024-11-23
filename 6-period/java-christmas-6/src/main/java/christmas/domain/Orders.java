@@ -3,6 +3,7 @@ package christmas.domain;
 import christmas.exception.CustomIllegalArgumentException;
 import christmas.exception.ErrorMessage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Orders {
@@ -20,5 +21,9 @@ public class Orders {
             }
         }
         orders.add(addedOrder);
+    }
+
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders);
     }
 }
