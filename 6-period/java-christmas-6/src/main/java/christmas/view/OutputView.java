@@ -22,4 +22,9 @@ public class OutputView {
     public void commentVisitDate() {
         System.out.println(COMMENT_VISIT_DATE);
     }
+
+    public void commentOrderMenu() {
+        System.out.println(COMMENT_ORDER_MENU);
+    }
+
 }
