@@ -1,5 +1,6 @@
 package christmas;
 
+import camp.nextstep.edu.missionutils.Console;
 import christmas.controller.Controller;
 import christmas.support.StringFormatter;
 import christmas.view.InputView;
@@ -12,7 +13,12 @@ public class Application {
         OutputView outputView = new OutputView();
         StringFormatter stringFormatter = new StringFormatter();
         Controller controller = new Controller(inputView, outputView, stringFormatter);
-        controller.process();
-
+        try {
+            controller.process();
+        } catch (IllegalArgumentException exception) {
+            System.out.println(exception);
+        } finally {
+            Console.close();
+        }
     }
 }

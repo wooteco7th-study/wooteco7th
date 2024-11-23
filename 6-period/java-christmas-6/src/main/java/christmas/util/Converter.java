@@ -1,5 +1,6 @@
 package christmas.util;
 
+import static christmas.exception.ErrorMessage.INVALID_DAY;
 import static christmas.exception.ErrorMessage.NOT_A_NUMBER;
 
 import christmas.exception.CustomIllegalArgumentException;
@@ -19,7 +20,7 @@ public class Converter {
         try {
             return Integer.parseInt(input.trim());
         } catch (NumberFormatException exception) {
-            throw new CustomIllegalArgumentException(NOT_A_NUMBER.getMessage());
+            throw new CustomIllegalArgumentException(INVALID_DAY.getMessage());
         }
     }
 }
