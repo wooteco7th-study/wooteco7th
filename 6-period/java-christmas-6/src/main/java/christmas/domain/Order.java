@@ -1,5 +1,6 @@
 package christmas.domain;
 
+import christmas.domain.Menu.MenuType;
 import java.util.Objects;
 
 public class Order {
@@ -14,6 +15,10 @@ public class Order {
 
     public boolean hasSameMenu(final Order order) {
         return this.menu.equals(order.getMenu());
+    }
+
+    public boolean hasMenuType(MenuType menuType) {
+        return menu.getType().equals(menuType);
     }
 
     public Menu getMenu() {

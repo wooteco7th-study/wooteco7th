@@ -1,5 +1,7 @@
 package christmas.view;
 
+import java.math.BigDecimal;
+
 public class OutputView {
 
     private static final String COMMENT_WELCOME_MESSAGE = "안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.";
@@ -10,10 +12,6 @@ public class OutputView {
     private static final String TOTAL_ORDER_BEFORE_DISCOUNT = "<할인 전 총주문 금액>";
     private static final String BONUS_MENU = "<증정 메뉴>";
     private static final String PROMOTION_LIST = "<혜택 내역>";
-    private static final String TOTAL_PROMOTION_PRICE = "<총혜택 금액>";
-    private static final String EXPECT_PRICE = "<할인 후 예상 결제 금액>";
-    private static final String BADGE = "<12월 이벤트 배지>";
-    private static final String NOT_EXIST = "없음";
 
     public void commentWelcomeMessage() {
         System.out.println(COMMENT_WELCOME_MESSAGE);
@@ -36,11 +34,25 @@ public class OutputView {
         System.out.println(ORDER_MENU);
     }
 
-    public void showMessage(String message){
+    public void showMessage(String message) {
         System.out.println(message);
     }
 
-    public void showBlankLine(){
+    public void showOrderPrice(final BigDecimal price) {
+        System.out.println(TOTAL_ORDER_BEFORE_DISCOUNT);
+        System.out.printf("%,.0f원", price);
+        System.out.println();
+    }
+
+    public void showBonusMenu() {
+        System.out.println(BONUS_MENU);
+    }
+
+    public void showPromotionList() {
+        System.out.println(PROMOTION_LIST);
+    }
+
+    public void showBlankLine() {
         System.out.println();
     }
 }
