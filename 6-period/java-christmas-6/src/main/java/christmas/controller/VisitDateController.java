@@ -18,7 +18,7 @@ public class VisitDateController {
     public VisitDate run() {
         while (true) {
             try {
-                return new VisitDate(Converter.getNumber(inputView.getVisitDate()));
+                return new VisitDate(Converter.getNumberDate(inputView.getVisitDate()));
             } catch (IllegalArgumentException e) {
                 outputView.print(e.getMessage());
             }

@@ -10,7 +10,7 @@ public enum PrintMessage {
     TOTAL_PRICE_INFO_MESSAGE("<할인 전 총주문 금액>"),
     GIVE_MENU_INFO_MESSAGE("<증정 메뉴>"),
     PROMOTION_INFO_MESSAGE("<혜택 내역>"),
-    TOTAL_PROMOTION_INFO_MESSAGE("<총 혜택 금액>"),
+    TOTAL_PROMOTION_INFO_MESSAGE("<총혜택 금액>"),
     PAYMENT_INFO_MESSAGE("<할인 후 예상 결제 금액>"),
     BADGE_INFO_MESSAGE("<12월 이벤트 배지>"); //<>구조가 반복되니 이를 분리시키는 방법도 생각
 

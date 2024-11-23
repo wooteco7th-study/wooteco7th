@@ -29,7 +29,7 @@ public class OrderCreator {
     }
 
     private int validateNumber(String inputCount) {
-        return Converter.getNumber(inputCount);
+        return Converter.getNumberCount(inputCount);
     }
 
     private void validateCountRange(int splitCount) {
