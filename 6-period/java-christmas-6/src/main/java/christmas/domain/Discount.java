@@ -4,9 +4,11 @@ public abstract class Discount {
 
     private static final int DISCOUNT_CONDITION = 10_000;
     private final DiscountType discountType;
+    private final OrderGroup orderGroup;
 
-    protected Discount(final DiscountType discountType) {
+    protected Discount(final DiscountType discountType, final OrderGroup orderGroup) {
         this.discountType = discountType;
+        this.orderGroup = orderGroup;
     }
 
     public String getDiscountTypeName() {
@@ -17,8 +19,12 @@ public abstract class Discount {
 
     public abstract int calculateDiscount();
 
-    protected boolean isExceedsDiscountCondition(final long orderPrice) {
-        return orderPrice >= DISCOUNT_CONDITION;
+    protected boolean isExceedsDiscountCondition() {
+        return orderGroup.calculateOrdersTotalPrice() >= DISCOUNT_CONDITION;
+    }
+
+    protected int countMenuType(final MenuType menuType) {
+        return orderGroup.countMenuType(menuType);
     }
 
 }
