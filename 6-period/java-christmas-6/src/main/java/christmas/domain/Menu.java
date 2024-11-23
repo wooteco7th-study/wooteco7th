@@ -39,7 +39,9 @@ public enum Menu {
 
     ZERO_COLA(DRINK, "제로콜라", 3_000),
     RED_WINE(DRINK, "레드와인", 60_000),
-    CHAMPAGNE(DRINK, "샴페인", 25_000);
+    CHAMPAGNE(DRINK, "샴페인", 25_000),
+
+    NONE(MenuType.NONE, "없음", 0);
 
 
     private final MenuType menuType;
