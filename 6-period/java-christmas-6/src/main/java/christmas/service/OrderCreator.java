@@ -1,5 +1,6 @@
 package christmas.service;
 
+import christmas.Domain.Menu;
 import christmas.Domain.Menu.MenuDetail;
 import christmas.Domain.Order;
 import java.util.List;
@@ -22,7 +23,9 @@ public class OrderCreator {
     }
 
     private void validateMenu(String splitMenu) {
-        MenuDetail.valueOf(splitMenu);
+        if (!Menu.getMenuName().contains(splitMenu)) {
+             throw new IllegalArgumentException();
+        }
     }
 
     private int validateNumber(String inputCount) {

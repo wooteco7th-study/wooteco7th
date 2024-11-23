@@ -35,8 +35,10 @@ public class Menu {
         }
     }
 
-    public static int getPrice(String name) {
-        return MenuDetail.valueOf(name).price;
+    public static int getPrice(String menuName) {
+        return Arrays.stream(MenuDetail.values())
+                .filter(menu -> menu.name.equals(menuName))
+                .toList().get(0).price;
     }
 
     public static HashMap<String, Integer> getMenuPrice() {
