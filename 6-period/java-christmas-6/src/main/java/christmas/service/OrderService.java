@@ -6,10 +6,10 @@ import christmas.domain.Promotion;
 import christmas.domain.vo.OrderMenus;
 import christmas.domain.vo.VisitDate;
 
-public class DiscountService {
+public class OrderService {
 
 
-    public DiscountInfo discount(OrderMenus orderMenus, VisitDate visitDate) {
+    public DiscountInfo processOrder(OrderMenus orderMenus, VisitDate visitDate) {
         DiscountInfo discountInfo = applyDiscount(orderMenus, visitDate);
 
         discountInfo = updatePromotion(discountInfo);
@@ -35,5 +35,6 @@ public class DiscountService {
         discountInfo = orderMenus.discount(discountInfo, visitDate);
         return discountInfo;
     }
+
 
 }
