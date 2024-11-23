@@ -25,6 +25,10 @@ public class OrderForm {
                 .sum();
     }
 
+    public VisitDate getOrderDate() {
+        return orderDate;
+    }
+
     private void validateDuplicateMenu(List<OrderMenu> menus) {
         long distinctMenuSize = menus.stream()
                 .distinct()
