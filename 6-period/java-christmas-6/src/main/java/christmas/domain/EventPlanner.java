@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class EventPlanner {
 
-
     public final List<Discount> discounts;
 
     public EventPlanner(final List<Discount> discounts) {
