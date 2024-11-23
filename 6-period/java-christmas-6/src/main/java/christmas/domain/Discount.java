@@ -12,8 +12,8 @@ public abstract class Discount {
         this.orderGroup = orderGroup;
     }
 
-    public String getDiscountTypeName() {
-        return discountType.getName();
+    public DiscountType getDiscountType() {
+        return discountType;
     }
 
     public abstract boolean canReceiveDiscount();
