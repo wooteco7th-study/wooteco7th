@@ -55,4 +55,8 @@ public class OutputView {
     public void showBlankLine() {
         System.out.println();
     }
+
+    public void showException(Exception exception){
+        System.out.println(exception.getMessage());
+    }
 }

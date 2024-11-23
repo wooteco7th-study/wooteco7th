@@ -16,7 +16,7 @@ public class Application {
         try {
             controller.process();
         } catch (IllegalArgumentException exception) {
-            System.out.println(exception);
+            outputView.showException(exception);
         } finally {
             Console.close();
         }
