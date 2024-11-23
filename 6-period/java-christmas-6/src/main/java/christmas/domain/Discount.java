@@ -5,17 +5,12 @@ import static christmas.domain.vo.MenuType.MAIN;
 
 import christmas.domain.vo.Menu;
 import christmas.domain.vo.MenuType;
-import christmas.domain.vo.MyBadge;
-import christmas.domain.vo.MyDiscountResult;
-import christmas.domain.vo.MyPromotion;
-import christmas.domain.vo.OrderMenus;
 import christmas.domain.vo.VisitDate;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public enum Discount {
 
@@ -114,6 +109,16 @@ public enum Discount {
     private static final int SPECIAL_DISCOUNT = 1000;
     private static final List<Integer> SPECIAL_DAYS = List.of(3, 10, 17, 24, 25, 31);
 
+    public static List<DiscountResult> discount(final VisitDate visitDate, final Menu menu, final int quantity) {
+        return Arrays.stream(values())
+                .filter(discount -> discount.isValid(visitDate.getVisitDate(), menu.getMenuType()))
+                .map(validDiscount -> validDiscount.calculateDiscountAmount(
+                        visitDate.getVisitDate(),
+                        quantity
+                ))
+                .collect(Collectors.toList());
+    }
+
     protected abstract boolean isValid(LocalDate visitDate, MenuType menuType);
 
     protected abstract DiscountResult calculateDiscountAmount(LocalDate visitDate, int menuCount);
@@ -125,24 +130,6 @@ public enum Discount {
         this.menuType = menuType;
     }
 
-    public static Discounting discount(VisitDate visitDate, OrderMenus orderMenus) {
-        List<DiscountResult> allDiscountResults = orderMenus.getOrderMenus().entrySet().stream()
-                .flatMap(entry -> calculateMenuDiscount(visitDate, entry.getKey(), entry.getValue()))
-                .collect(Collectors.toList());
-
-        // 전체 before
-        int priceBeforeDiscount = calculateTotalPrice(orderMenus);
-
-        return new Discounting(
-                orderMenus,
-                visitDate,
-                priceBeforeDiscount,
-                new MyDiscountResult(allDiscountResults),
-                new MyPromotion(Promotion.of(priceBeforeDiscount)),
-                calculateTotalDiscountAmount(allDiscountResults),
-                new MyBadge(Badge.of(calculateTotalDiscountAmount(allDiscountResults)))
-        );
-    }
 
     public LocalDate getStartDate() {
         return startDate;
@@ -155,30 +142,6 @@ public enum Discount {
     protected static boolean isWeekend(LocalDate date) {
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return dayOfWeek == DayOfWeek.FRIDAY || dayOfWeek == DayOfWeek.SATURDAY;
-    }
-
-    private static Stream<DiscountResult> calculateMenuDiscount(
-            VisitDate visitDate,
-            Menu menu,
-            int quantity) {
-        return Arrays.stream(values())
-                .filter(discount -> discount.isValid(visitDate.getVisitDate(), menu.getMenuType()))
-                .map(validDiscount -> validDiscount.calculateDiscountAmount(
-                        visitDate.getVisitDate(),
-                        quantity
-                ));
-    }
-
-    private static int calculateTotalPrice(OrderMenus orderMenus) {
-        return orderMenus.getOrderMenus().entrySet().stream()
-                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
-                .sum();
-    }
-
-    private static int calculateTotalDiscountAmount(List<DiscountResult> discountResults) {
-        return discountResults.stream()
-                .mapToInt(DiscountResult::getAmount)
-                .sum();
     }
 
 

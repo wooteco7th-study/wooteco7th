@@ -41,12 +41,11 @@
 
 #### 방문 날짜, 주문 메뉴(메뉴이름-수량)를 알고 있다.
 
-<<<<<<< HEAD
 ## Discounting을 생성한다.
 =======
+
 ## ✅ Discounting을 생성한다.
 
->>>>>>> c619514 (docs(README.md): 기능 구현 완료 업데이트)
 #### 초기화시 Order가 필요하다.
 
 #### 초기화시 아래 정보들을 가지고 있다
@@ -75,7 +74,7 @@
 (계산 과정)
 Discounting의 정보로 Discounting을 업데이트한다.
 
-## Discount
+## ✅Discount
 
 > 중복 할인 한다
 
