@@ -27,4 +27,20 @@ public class OutputView {
         System.out.println(COMMENT_ORDER_MENU);
     }
 
+    public void commentEvent() {
+        System.out.println(COMMENT_EVENT);
+        System.out.println();
+    }
+
+    public void showOrderMenu() {
+        System.out.println(ORDER_MENU);
+    }
+
+    public void showMessage(String message){
+        System.out.println(message);
+    }
+
+    public void showBlankLine(){
+        System.out.println();
+    }
 }

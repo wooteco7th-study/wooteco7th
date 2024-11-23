@@ -16,8 +16,12 @@ public class Order {
         return this.menu.equals(order.getMenu());
     }
 
-    private Menu getMenu() {
+    public Menu getMenu() {
         return menu;
+    }
+
+    public Quantity getQuantity() {
+        return quantity;
     }
 
     @Override
