@@ -19,8 +19,8 @@ public class InputView {
         return getUser();
     }
 
-    public String getMenu() {
-        outputView.printMessage(PrintMessage.INPUT_MENU_MESSAGE);
+    public String getOrders() {
+        outputView.printMessage(PrintMessage.INPUT_ORDERS_MESSAGE);
         return getUser();
     }
 }
