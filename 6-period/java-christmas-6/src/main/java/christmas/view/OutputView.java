@@ -3,6 +3,7 @@ package christmas.view;
 import christmas.domain.Benefit;
 import christmas.domain.EventBadge;
 import christmas.domain.OrderForm;
+import christmas.domain.discount.DiscountCategory;
 
 import java.util.Map;
 
@@ -69,8 +70,12 @@ public class OutputView {
             System.out.println(NONE);
         }
         if (!discountList.isEmpty()) {
-            discountList.forEach((key, value) ->
-                    System.out.printf(DISCOUNT_MONEY_FORMAT, key, value));
+            discountList.forEach((key, value) -> {
+                if (!key.equals(DiscountCategory.FREE_GIFT.getName()) || value != 0) {
+                    System.out.printf(DISCOUNT_MONEY_FORMAT, key, value);
+                }
+            });
+            System.out.println();
         }
     }
 
