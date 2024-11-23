@@ -98,5 +98,5 @@ public class ConsoleOutputView implements OutputView {
     private void printlnMessage(final String message) {
         System.out.println(message);
     }
-    
+
 }
