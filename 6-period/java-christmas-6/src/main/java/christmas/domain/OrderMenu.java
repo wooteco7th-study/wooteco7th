@@ -2,8 +2,6 @@ package christmas.domain;
 
 import java.util.Objects;
 
-import static christmas.domain.MenuCategory.DRINK;
-
 public class OrderMenu {
 
     private final Menu menu;
@@ -14,12 +12,8 @@ public class OrderMenu {
         this.quantity = quantity;
     }
 
-    public boolean isDrinkCategory() {
-        return menu.getCategory().equals(DRINK);
-    }
-
     public boolean hasSameMenuCategory(MenuCategory category) {
-        return menu.getCategory().equals(category);
+        return menu.getCategory() == category;
     }
 
     public int getTotalPrice() {
@@ -36,7 +30,8 @@ public class OrderMenu {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
+        if (this == o)
+            return true;
         if (!(o instanceof final OrderMenu orderMenu)) return false;
         return Objects.equals(this.menu, orderMenu.menu);
     }

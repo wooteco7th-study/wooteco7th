@@ -2,6 +2,7 @@ package christmas.domain;
 
 import java.util.List;
 
+import static christmas.domain.MenuCategory.DRINK;
 import static christmas.exception.ExceptionMessage.INVALID_ORDER;
 
 public class OrderForm {
@@ -57,7 +58,7 @@ public class OrderForm {
 
     private long getDrinkCount(final List<OrderMenu> menus) {
         return menus.stream()
-                .filter(OrderMenu::isDrinkCategory)
+                .filter(orderMenu -> orderMenu.hasSameMenuCategory(DRINK))
                 .count();
     }
 
