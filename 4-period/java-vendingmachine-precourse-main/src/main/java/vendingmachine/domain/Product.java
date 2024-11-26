@@ -13,23 +13,23 @@ public class Product {
     private final int price;
 
     public Product(final String name, final int price) {
-        validatePrice();
+        validatePrice(price);
         this.name = name;
         this.price = price;
     }
 
-    private void validatePrice() {
-        validatePriceRange();
-        validateRemainder();
+    private void validatePrice(final int price) {
+        validatePriceRange(price);
+        validateRemainder(price);
     }
 
-    private void validatePriceRange() {
+    private void validatePriceRange(final int price) {
         if (price < MINIMUM_PRICE) {
             throw new IllegalArgumentException(PRICE_OUT_OF_RANGE.getMessage());
         }
     }
 
-    private void validateRemainder() {
+    private void validateRemainder(final int price) {
         if (price % COIN_10_AMOUNT != REMAINDER) {
             throw new IllegalArgumentException(REMAINDER_EXIST.getMessage());
         }
