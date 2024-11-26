@@ -10,7 +10,7 @@ public enum ExceptionMessage {
 
     INVALID_AMOUNT("금액은 숫자여야 합니다."),
 
-    ;
+    COIN_NOT_FOUND("해당 종류의 코인이 존재하지 않습니다.");
     private static final String ERROR_PREFIX = "[ERROR] ";
 
     private final String message;
