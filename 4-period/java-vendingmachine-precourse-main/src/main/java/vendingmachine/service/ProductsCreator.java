@@ -43,6 +43,16 @@ public class ProductsCreator {
         return new Product(name, price, count);
     }
 
+    private void validateProduct(String product) {
+        if (isNotContainSemiColon(product)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private boolean isNotContainSemiColon(String product) {
+        return !product.contains(",");
+    }
+
     public Products create() {
         List<Product> newProducts = products.stream()
                 .map(this::createProduct)

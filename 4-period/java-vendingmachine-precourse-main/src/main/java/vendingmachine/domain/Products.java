@@ -7,16 +7,23 @@ public class Products {
 
     private HashMap<String, Product> products;
 
-    public Products(List<Product> products) {
-        this.products = create(products);
+    public Products(List<Product> inputProducts) {
+        this.products = create(inputProducts);
     }
 
-    private HashMap<String, Product> create(List<Product> products) {
-        HashMap<String, Product> productHashMap = new HashMap<>();
-        for (Product product : products) {
-            productHashMap.put(product.getName(), product);
+    private HashMap<String, Product> create(List<Product> inputProducts) {
+        HashMap<String, Product> newProducts = new HashMap<>();
+        for (Product product : inputProducts) {
+            validateDuplication(newProducts, product);
+            newProducts.put(product.getName(), product);
         }
-        return productHashMap;
+        return newProducts;
+    }
+
+    private void validateDuplication(HashMap<String, Product> newProducts, Product product) {
+        if (newProducts.containsKey(product.getName())) {
+            throw new IllegalArgumentException();
+        }
     }
 
     public Product find(String productName) {
