@@ -21,20 +21,25 @@ public class MachineController {
 
     public void run() {
         MachineCoins machineCoins = retryOnInvalidInput(this::getMachineCoins);
-        Map<Coin, Integer> coinIntegerMap = machineCoins.saveCoins();
+        machineCoins.saveCoins();
         outputView.printMachineCoins(machineCoins.toResponse());
-        Inventories inventories = inputView.readInventories();
-        int orderAmount = inputView.readOrderAmount();
+        Inventories inventories = retryOnInvalidInput(inputView::readInventories);
+        int orderAmount = retryOnInvalidInput(inputView::readOrderAmount);
 
         do {
             outputView.printOrderAmount(orderAmount);
-            String orderProductName = inputView.readOrderProductName();
-            orderAmount = inventories.update(orderAmount, orderProductName);
+            final int currentOrderAmount = orderAmount;
+            orderAmount = retryOnInvalidInput(() -> getOrderAmount(currentOrderAmount, inventories));
         } while (inventories.keepOrder(orderAmount));
 
         Map<Coin, Integer> coins = machineCoins.update(orderAmount);
         outputView.printOrderAmount(orderAmount);
         outputView.printChange(coins);
+    }
+
+    private int getOrderAmount(int orderAmount, final Inventories inventories) {
+        String orderProductName = inputView.readOrderProductName();
+        return inventories.update(orderAmount, orderProductName);
     }
 
     private MachineCoins getMachineCoins() {
