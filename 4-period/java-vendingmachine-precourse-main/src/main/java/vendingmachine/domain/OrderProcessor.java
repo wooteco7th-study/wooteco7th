@@ -20,6 +20,9 @@ public class OrderProcessor {
 
     public boolean process(final Product orderProduct) {
         // 구매할 수 있는지 확인
+        if (checkAllOutOfStock() || checkInputPriceLowerThanLeastProductPrice()) {
+            return true;
+        }
         checkAvailablePrice(orderProduct);
         checkOutOfStock(orderProduct);
         // 구매
@@ -34,6 +37,8 @@ public class OrderProcessor {
     }
 
     private boolean checkInputPriceLowerThanLeastProductPrice() {
+        System.out.println(inputPrice);
+        System.out.println(holdingProducts.getLowestProcutPrice());
         return !inputPrice.isMoreThanEqual(holdingProducts.getLowestProcutPrice());
     }
 
