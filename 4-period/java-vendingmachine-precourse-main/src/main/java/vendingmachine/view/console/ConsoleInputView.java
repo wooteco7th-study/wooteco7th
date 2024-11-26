@@ -19,7 +19,7 @@ public class ConsoleInputView implements InputView {
     @Override
     public List<String> readProducts() {
         final String input = readInput();
-        return StringParser.parseToTokens(input, DELIMITER_SEMI_COLON);
+        return StringParser.parseToTokens(input.strip(), DELIMITER_SEMI_COLON);
     }
 
     @Override
