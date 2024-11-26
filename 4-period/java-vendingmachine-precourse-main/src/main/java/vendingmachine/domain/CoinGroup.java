@@ -20,4 +20,8 @@ public class CoinGroup {
                 .map(Entry::getKey)
                 .orElse(Coin.NONE);
     }
+
+    public void subtractQuantity(final Coin coin) {
+        coins.merge(coin, -1, Integer::sum);
+    }
 }

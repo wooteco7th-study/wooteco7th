@@ -46,6 +46,7 @@ public class VendingMachine {
         }
         money.subtractValue(expensiveCoin.getAmount());
         coins.merge(expensiveCoin, 1, Integer::sum);
+        coinGroup.subtractQuantity(expensiveCoin);
         mergeCoin(coins);
     }
 
