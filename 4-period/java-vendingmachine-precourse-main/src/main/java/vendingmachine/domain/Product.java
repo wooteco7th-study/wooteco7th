@@ -37,8 +37,12 @@ public class Product {
         return price >= this.price;
     }
 
-    public boolean hasQuantity() {
-        return quantity > 0;
+    public boolean hasQuantity(final int quantity) {
+        return this.quantity >= quantity;
+    }
+
+    public String getName() {
+        return name;
     }
 
     @Override
