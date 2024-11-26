@@ -39,6 +39,7 @@ public class ProductsCreator {
     private Product createProduct(String product) {
         validateProduct(product);
         List<String> splitProduct = splitInfo(product);
+        validateInfoSize(splitProduct);
         String name = splitProduct.get(0);
         int price = Convertor.changeType(splitProduct.get(1));
         int count = Convertor.changeType(splitProduct.get(2));
@@ -47,6 +48,12 @@ public class ProductsCreator {
 
     private void validateProduct(String product) {
         if (isNotContainSemiColon(product)) {
+            throw new InputException();
+        }
+    }
+
+    private void validateInfoSize(List<String> splitProduct) {
+        if (splitProduct.size() != 3) {
             throw new InputException();
         }
     }
