@@ -16,12 +16,23 @@ public class Payment {
     }
 
     public void pay(String buy) {
+        validateProduct(buy);
         Product product = findProduct(buy);
+        validatePrice(product);
+        product.setCount();
+        drinker.setMoney(product.getPrice());
+    }
+
+    private void validateProduct(String name) {
+        if (products.isNotContain(name)) {
+            throw new InputException();
+        }
+    }
+
+    private void validatePrice(Product product) {
         if (product.getPrice() > drinker.getMoney()) {
             throw new InputException();
         }
-        product.setCount();
-        drinker.setMoney(product.getPrice());
     }
 
     private Product findProduct(String buy) {

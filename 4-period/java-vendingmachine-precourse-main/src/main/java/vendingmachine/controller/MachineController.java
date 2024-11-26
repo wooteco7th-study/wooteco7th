@@ -23,15 +23,11 @@ public class MachineController {
     }
 
     public void run() {
-        String machineCoin = inputView.getMachineCoin();
-        Coins coins = new CoinCreator(machineCoin).create();
+        Coins coins = makeCoins();
         outputView.print(coins.toString());
 
-        String productInfo = inputView.getProductInfo();
-        Products products = new ProductsCreator(productInfo).create();
-
-        String inputMoney = inputView.getMoney();
-        Drinker drinker = new DrinkerCreator(inputMoney).create();
+        Products products = makeProducts();
+        Drinker drinker = makeDrinker();
         Payment payment = new Payment(products, drinker);
 
         while (true) {
@@ -39,12 +35,56 @@ public class MachineController {
             if (products.isMoreThanMinPrice(drinker.getMoney())  || products.isProductsEmpty()) {
                 break;
             }
-            String buyProduct = inputView.getProductName();
-            payment.pay(buyProduct);
+            makePayment(payment);
             outputView.print(products.toString());
         }
         outputView.printlnMessage(PrintMessage.RETURN_CHANGE);
         Changes changes = coins.change(drinker.getMoney());
         outputView.print(changes.toString());
+    }
+
+    private Coins makeCoins() {
+        while (true) {
+            try {
+                String machineCoin = inputView.getMachineCoin();
+                return new CoinCreator(machineCoin).create();
+            } catch (IllegalArgumentException e) {
+                outputView.print(e.getMessage());
+            }
+        }
+    }
+
+    private Products makeProducts() {
+        while (true) {
+            try {
+                String productInfo = inputView.getProductInfo();
+                return new ProductsCreator(productInfo).create();
+            } catch (IllegalArgumentException e) {
+                outputView.print(e.getMessage());
+            }
+        }
+    }
+
+    private Drinker makeDrinker() {
+        while (true) {
+            try {
+                String inputMoney = inputView.getMoney();
+                return new DrinkerCreator(inputMoney).create();
+            } catch (IllegalArgumentException e) {
+                outputView.print(e.getMessage());
+            }
+        }
+    }
+
+    private void makePayment(Payment payment) {
+        while (true) {
+            try {
+                String buyProduct = inputView.getProductName();
+                payment.pay(buyProduct);
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.print(e.getMessage());
+            }
+        }
     }
 }

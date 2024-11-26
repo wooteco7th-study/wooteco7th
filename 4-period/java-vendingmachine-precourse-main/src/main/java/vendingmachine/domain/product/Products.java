@@ -31,6 +31,10 @@ public class Products {
         return products.get(productName);
     }
 
+    public boolean isNotContain(String productName) {
+        return !products.containsKey(productName);
+    }
+
     public boolean isProductsEmpty() {
         int maxCount = 0;
         for (String name : products.keySet()) {
