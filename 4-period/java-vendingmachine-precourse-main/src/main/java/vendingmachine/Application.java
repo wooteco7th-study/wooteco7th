@@ -1,7 +1,15 @@
 package vendingmachine;
 
+import vendingmachine.controller.VendingMachineController;
+import vendingmachine.view.console.ConsoleInputView;
+import vendingmachine.view.console.ConsoleOutputView;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        final ConsoleInputView consoleInputView = new ConsoleInputView();
+        final ConsoleOutputView consoleOutputView = new ConsoleOutputView();
+        final VendingMachineController vendingMachineController = new VendingMachineController(consoleInputView,
+                consoleOutputView);
+        vendingMachineController.run();
     }
 }
