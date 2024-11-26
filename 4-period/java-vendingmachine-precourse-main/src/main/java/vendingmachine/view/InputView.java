@@ -70,7 +70,7 @@ public class InputView {
     /**
      * (인풋) * 구매할 상품명을 입력해 주세요. * 콜라
      */
-    public String readProductName() {
+    public String requestProductName() {
         System.out.println(PRODUCT_NAME_MESSAGE);
         String input = Console.readLine();
         if (input == null || input.trim().isEmpty()) {
@@ -78,7 +78,7 @@ public class InputView {
         }
         return input;
     }
-    
+
     private void validateAmount(int amount) {
         if (amount < 0) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_REQUEST_AMOUNT_RANGE.getMessage());
