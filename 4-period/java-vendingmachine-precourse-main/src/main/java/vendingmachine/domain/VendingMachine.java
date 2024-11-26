@@ -26,6 +26,7 @@ public class VendingMachine {
         final Product product = productGroup.findByProductNameAndQuantity(name,
                 DEFAULT_PURCHASE_QUANTITY);
         product.subtractQuantity(DEFAULT_PURCHASE_QUANTITY);
+        money.subtractValue(product.getPrice());
     }
 
     public Map<Coin, Integer> getRemainingCoins() {

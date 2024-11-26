@@ -45,6 +45,10 @@ public class Product {
         return name;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
