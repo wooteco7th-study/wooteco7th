@@ -1,7 +1,9 @@
 package vendingmachine.controller;
 
+import java.util.List;
+import vendingmachine.dto.CoinDto;
 import vendingmachine.exception.ExceptionHandler;
-import vendingmachine.price.HoldingPrice;
+import vendingmachine.price.Price;
 import vendingmachine.service.VendingService;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
@@ -23,12 +25,13 @@ public class VendingController {
     }
 
     public void process(){
-        HoldingPrice holdingPrice = createHoldingPrice();
-
-
+        Price holdingPrice = createHoldingPrice();
+        List<CoinDto> randomCoins = service.createRandomCoins(holdingPrice);
+        outputView.informHoldingAmount(randomCoins);
     }
 
-    private HoldingPrice createHoldingPrice() {
+    private Price createHoldingPrice() {
+        outputView.requestHoldingAmount();
         return exceptionHandler.retryOn(() -> {
             long holdingAmount = inputView.readHoldingAmount();
             return service.createHoldingPrice(holdingAmount);

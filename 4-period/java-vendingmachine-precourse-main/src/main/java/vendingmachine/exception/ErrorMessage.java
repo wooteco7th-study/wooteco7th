@@ -13,7 +13,11 @@ public enum ErrorMessage {
     INVALID_HOLDING_AMOUNT("유효하지 않은 보유 금액입니다. 다시 입력해 주세요."),
     INVALID_ORDER("유효하지 않은 주문입니다. 다시 입력해 주세요."),
 
-    INVALID_HOLDING_PRICE_DIVIDE_BY_TEN("10원으로 나누어 떨어져야 합니다.")
+    INVALID_HOLDING_PRICE_UNDER_TEN("10원 미만일 수 없습니다."),
+    INVALID_HOLDING_PRICE_DIVIDE_BY_TEN("10원으로 나누어 떨어져야 합니다."),
+    INVALID_PRICE_AMOUNT("금액은 음수일 수 없습니다."),
+    COIN_NOT_EXIST("동전이 존재하지 않습니다"),
+    INVALID_PRICE_SUBTRACT("금액을 뺄 수 없습니다.")
     ;
 
     private final String message;
