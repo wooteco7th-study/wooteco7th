@@ -36,7 +36,6 @@ public class MachineController {
                 break;
             }
             makePayment(payment);
-            outputView.print(products.toString());
         }
         outputView.printlnMessage(PrintMessage.RETURN_CHANGE);
         Changes changes = coins.change(drinker.getMoney());
