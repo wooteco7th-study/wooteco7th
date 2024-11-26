@@ -75,6 +75,16 @@ class ProductGroupTest {
         assertThatIllegalArgumentException().isThrownBy(() -> productGroup.findByProductNameAndQuantity(name, quantity))
                 .withMessageContaining(
                         ErrorMessage.INVALID_CAN_NOT_PURCHASE_PRODUCT.getMessage());
+    }
 
+    @Test
+    @DisplayName("상품이 중복되어 예외가 발생한다.")
+    void validateDuplicateTest() throws Exception {
+        //given
+        final List<Product> products = Arrays.asList(new Product("콜라", 100, 10), new Product("콜라", 100, 10));
+
+        //should
+        assertThatIllegalArgumentException().isThrownBy(() -> new ProductGroup(products))
+                .withMessageContaining(ErrorMessage.INVALID_DUPLICATED_PRODUCT.getMessage());
     }
 }
