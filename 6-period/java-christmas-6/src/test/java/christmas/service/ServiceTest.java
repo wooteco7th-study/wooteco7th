@@ -5,8 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import christmas.domain.Menu;
-import christmas.domain.Order;
-import christmas.domain.Orders;
+import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 import christmas.domain.Quantity;
 import christmas.exception.ErrorMessage;
 import java.util.Arrays;

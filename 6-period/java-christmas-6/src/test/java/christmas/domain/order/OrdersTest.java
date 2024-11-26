@@ -1,9 +1,13 @@
-package christmas.domain;
+package christmas.domain.order;
 
 import static christmas.support.CustomExceptionAssertions.assertCustomIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.domain.Menu;
 import christmas.domain.Menu.MenuType;
+import christmas.domain.Quantity;
+import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 import christmas.exception.ErrorMessage;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;

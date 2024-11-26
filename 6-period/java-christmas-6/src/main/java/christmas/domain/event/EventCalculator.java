@@ -1,9 +1,12 @@
-package christmas.domain;
+package christmas.domain.event;
 
-import christmas.domain.discount.Discount;
-import christmas.domain.gift.Gift;
+import christmas.domain.event.Badge;
+import christmas.domain.event.discount.Discount;
+import christmas.domain.event.gift.Gift;
+import christmas.domain.order.Orders;
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class EventCalculator {
 
@@ -16,11 +19,9 @@ public class EventCalculator {
     }
 
     public BigDecimal calculateTotalBenefitPrice() {
-        BigDecimal price = BigDecimal.ZERO;
-        price = price.add(sumDiscountPrice());
-        return price.add(bonuses.stream()
-                .map(Gift::calculateAmount)
-                .reduce(BigDecimal.ZERO, BigDecimal::add));
+        return Stream.concat(discounts.stream().map(Discount::calculateAmount),
+                        bonuses.stream().map(Gift::calculateAmount))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     private BigDecimal sumDiscountPrice() {

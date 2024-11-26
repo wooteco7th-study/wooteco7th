@@ -1,6 +1,6 @@
 package christmas.dto;
 
-import christmas.domain.Order;
+import christmas.domain.order.Order;
 
 public record OrderMenuDto(String name, int quantity) {
 

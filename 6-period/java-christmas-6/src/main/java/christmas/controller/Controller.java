@@ -1,10 +1,10 @@
 package christmas.controller;
 
 import christmas.domain.Day;
-import christmas.domain.EventCalculator;
-import christmas.domain.Orders;
-import christmas.domain.discount.Discount;
-import christmas.domain.gift.Gift;
+import christmas.domain.event.EventCalculator;
+import christmas.domain.order.Orders;
+import christmas.domain.event.discount.Discount;
+import christmas.domain.event.gift.Gift;
 import christmas.dto.BenefitDto;
 import christmas.dto.GiftDto;
 import christmas.dto.OrderMenuDto;

@@ -1,8 +1,8 @@
-package christmas.domain.discount;
+package christmas.domain.event.discount;
 
 import christmas.domain.Day;
 import christmas.domain.Menu.MenuType;
-import christmas.domain.Orders;
+import christmas.domain.order.Orders;
 import java.math.BigDecimal;
 
 public class DayDiscount extends Discount {

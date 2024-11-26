@@ -1,6 +1,8 @@
-package christmas.domain;
+package christmas.domain.order;
 
+import christmas.domain.Menu;
 import christmas.domain.Menu.MenuType;
+import christmas.domain.Quantity;
 import java.math.BigDecimal;
 import java.util.Objects;
 

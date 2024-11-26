@@ -1,8 +1,8 @@
-package christmas.domain.gift;
+package christmas.domain.event.gift;
 
 import christmas.domain.Day;
 import christmas.domain.Menu;
-import christmas.domain.Orders;
+import christmas.domain.order.Orders;
 import christmas.domain.Quantity;
 import java.math.BigDecimal;
 import java.util.Collections;

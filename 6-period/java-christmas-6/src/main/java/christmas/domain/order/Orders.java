@@ -1,6 +1,8 @@
-package christmas.domain;
+package christmas.domain.order;
 
 import christmas.domain.Menu.MenuType;
+import christmas.domain.Quantity;
+import christmas.domain.order.Order;
 import christmas.exception.CustomIllegalArgumentException;
 import christmas.exception.ErrorMessage;
 import java.math.BigDecimal;
