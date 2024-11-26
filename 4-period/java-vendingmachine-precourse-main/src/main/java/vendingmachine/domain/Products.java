@@ -2,6 +2,7 @@ package vendingmachine.domain;
 
 import java.util.HashMap;
 import java.util.List;
+import vendingmachine.excpetion.InputException;
 
 public class Products {
 
@@ -22,7 +23,7 @@ public class Products {
 
     private void validateDuplication(HashMap<String, Product> newProducts, Product product) {
         if (newProducts.containsKey(product.getName())) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 

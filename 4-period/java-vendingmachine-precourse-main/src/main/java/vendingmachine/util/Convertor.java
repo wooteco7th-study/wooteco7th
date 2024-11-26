@@ -1,5 +1,7 @@
 package vendingmachine.util;
 
+import vendingmachine.excpetion.InputException;
+
 public class Convertor {
 
     private Convertor() {
@@ -10,7 +12,7 @@ public class Convertor {
         try {
             return Integer.parseInt(number);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import vendingmachine.domain.Product;
 import vendingmachine.domain.Products;
+import vendingmachine.excpetion.InputException;
 import vendingmachine.util.Convertor;
 import vendingmachine.util.Separator;
 
@@ -19,7 +20,7 @@ public class ProductsCreator {
 
     private void validate(String product) {
         if (product.indexOf("[") != 0 || product.indexOf("]") != product.length() - 1) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 
@@ -36,6 +37,7 @@ public class ProductsCreator {
     }
 
     private Product createProduct(String product) {
+        validateProduct(product);
         List<String> splitProduct = splitInfo(product);
         String name = splitProduct.get(0);
         int price = Convertor.changeType(splitProduct.get(1));
@@ -45,7 +47,7 @@ public class ProductsCreator {
 
     private void validateProduct(String product) {
         if (isNotContainSemiColon(product)) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 

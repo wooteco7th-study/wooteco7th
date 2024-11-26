@@ -2,6 +2,7 @@ package vendingmachine.service;
 
 import vendingmachine.Coin;
 import vendingmachine.domain.Coins;
+import vendingmachine.excpetion.InputException;
 import vendingmachine.util.Convertor;
 
 public class CoinCreator {
@@ -16,7 +17,7 @@ public class CoinCreator {
 
     private void validate(int coin) {
         if (coin < 10) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 

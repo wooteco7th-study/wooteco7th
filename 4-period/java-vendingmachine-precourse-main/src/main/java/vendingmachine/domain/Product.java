@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import vendingmachine.excpetion.InputException;
+
 public class Product {
 
     private final String name;
@@ -15,7 +17,7 @@ public class Product {
 
     private void validatePrice(int price) {
         if (price < 100) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
     }
 

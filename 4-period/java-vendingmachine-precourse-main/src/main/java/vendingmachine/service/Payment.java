@@ -3,6 +3,7 @@ package vendingmachine.service;
 import vendingmachine.domain.Drinker;
 import vendingmachine.domain.Product;
 import vendingmachine.domain.Products;
+import vendingmachine.excpetion.InputException;
 
 public class Payment {
 
@@ -17,7 +18,7 @@ public class Payment {
     public void pay(String buy) {
         Product product = findProduct(buy);
         if (product.getPrice() > drinker.getMoney()) {
-            throw new IllegalArgumentException();
+            throw new InputException();
         }
         product.setCount();
         drinker.setMoney(product.getPrice());
