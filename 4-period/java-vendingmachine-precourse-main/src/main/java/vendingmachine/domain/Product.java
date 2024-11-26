@@ -18,4 +18,9 @@ public class Product {
             throw new IllegalArgumentException();
         }
     }
+
+    @Override
+    public String toString() {
+        return name + " " + price + " " + count;
+    }
 }

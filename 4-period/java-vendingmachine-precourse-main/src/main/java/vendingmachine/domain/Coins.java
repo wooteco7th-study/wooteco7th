@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import vendingmachine.view.PrintMessage;
+
 public class Coins {
 
     private int coin500;
@@ -31,7 +33,8 @@ public class Coins {
 
     @Override
     public String toString() {
-        return "500원 - " + coin500 + "개\n"
+        return PrintMessage.HAVING_COIN.getMessage() + "\n"
+                + "500원 - " + coin500 + "개\n"
                 + "100원 - " + coin100 + "개\n"
                 + "50원 - " + coin50 + "개\n"
                 + "10원 - " + coin10 + "개\n";
