@@ -42,7 +42,7 @@ public class Coins {
             money %= 500;
         }
         if (money / 100 > 0) {
-            changes.add(new Change(500, money / 100));
+            changes.add(new Change(100, money / 100));
             money %= 100;
         }
         if (money / 50 > 0) {
