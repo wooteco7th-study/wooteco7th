@@ -33,9 +33,9 @@ public enum Coin {
         Coins coins = new Coins();
         while (coin > 0) {
             int getCoin = getRandomCoin();
-            if (coin % getCoin == 0) {
-                coins.setCoin(getCoin, coin / getCoin);
-                coin %= getCoin;
+            if (coin >= getCoin) {
+                coins.setCoin(getCoin, 1);
+                coin -= getCoin;
             }
         }
         return coins;
