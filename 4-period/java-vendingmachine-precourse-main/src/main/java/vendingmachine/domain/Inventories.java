@@ -1,8 +1,8 @@
 package vendingmachine.domain;
 
+import java.util.Comparator;
 import java.util.List;
 
-import static vendingmachine.exception.ExceptionMessage.OUT_OF_STOCK;
 import static vendingmachine.exception.ExceptionMessage.PRODUCT_NOT_EXIST;
 
 public class Inventories {
@@ -13,16 +13,14 @@ public class Inventories {
         this.inventories = inventories;
     }
 
-    //orderAmount = 투입 금액
-    public void update(final int orderAmount, final String orderProductName) {
-        Inventory inventory = findInventory(orderProductName);
-        validateStock(inventory);
+    public boolean keepOrder(final int orderAmount) {
+        return validateStock() && validateOrderAmount(orderAmount);
     }
 
-    private void validateStock(final Inventory inventory) {
-        if (inventory.getStock() < 0) {
-            throw new IllegalArgumentException(OUT_OF_STOCK.getMessage());
-        }
+    public int update(final int orderAmount, final String orderProductName) {
+        Inventory inventory = findInventory(orderProductName);
+        inventory.decreaseStock();
+        return orderAmount - inventory.getProductPrice();
     }
 
     private Inventory findInventory(final String orderProductName) {
@@ -30,5 +28,21 @@ public class Inventories {
                 .filter(inventory -> inventory.hasSameName(orderProductName))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(PRODUCT_NOT_EXIST.getMessage()));
+    }
+
+    private boolean validateStock() {
+        return inventories.stream()
+                .allMatch(inventory -> inventory.getStock() > 0);
+    }
+
+    private boolean validateOrderAmount(final int orderAmount) {
+        return orderAmount >= findLowestPrice();
+    }
+
+    private int findLowestPrice() {
+        return inventories.stream()
+                .min(Comparator.comparingInt(Inventory::getProductPrice))
+                .get()
+                .getProductPrice();
     }
 }

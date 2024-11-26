@@ -19,6 +19,14 @@ public class Inventory {
         return product.getName().equals(productName);
     }
 
+    public void decreaseStock() {
+        stock -= 1;
+    }
+
+    public int getProductPrice() {
+        return product.getPrice();
+    }
+
     public int getStock() {
         return stock;
     }
