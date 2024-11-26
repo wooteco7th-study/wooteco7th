@@ -24,7 +24,7 @@ public class InputView {
     }
 
     public InventoriesRequest readInventories() {
-        String input = getValidatedInput(AMOUNT_HELD_MSG);
+        String input = getValidatedInput(ORDER_MSG);
         validateInputFormat(input);
         return StringParser.parseInventories(input);
     }
