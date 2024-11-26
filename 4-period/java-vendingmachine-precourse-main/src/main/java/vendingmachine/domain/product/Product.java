@@ -1,6 +1,6 @@
 package vendingmachine.domain.product;
 
-import vendingmachine.Money;
+import vendingmachine.domain.money.Money;
 import vendingmachine.exception.InvalidProductNameException;
 import vendingmachine.exception.InvalidProductPriceException;
 import vendingmachine.exception.InvalidProductQuantityException;

@@ -6,7 +6,7 @@ import static vendingmachine.exception.ErrorMessage.INVALID_REQUEST_PRODUCT_FORM
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import vendingmachine.Money;
+import vendingmachine.domain.money.Money;
 import vendingmachine.domain.product.Product;
 
 public class ProductRegistrationRequest {

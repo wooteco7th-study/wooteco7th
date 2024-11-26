@@ -2,7 +2,7 @@ package vendingmachine.controller;
 
 
 import java.util.List;
-import vendingmachine.Money;
+import vendingmachine.domain.money.Money;
 import vendingmachine.service.VendingMachineService;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;

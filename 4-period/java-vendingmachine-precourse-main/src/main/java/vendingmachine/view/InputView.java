@@ -4,7 +4,7 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
-import vendingmachine.Money;
+import vendingmachine.domain.money.Money;
 import vendingmachine.exception.ErrorMessage;
 
 /**
