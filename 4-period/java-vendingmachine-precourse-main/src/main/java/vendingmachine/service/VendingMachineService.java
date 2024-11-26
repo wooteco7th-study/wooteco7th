@@ -1,8 +1,10 @@
 package vendingmachine.service;
 
 import java.util.List;
-import vendingmachine.Money;
+import java.util.Map;
 import vendingmachine.domain.machine.VendingMachine;
+import vendingmachine.domain.money.Coin;
+import vendingmachine.domain.money.Money;
 import vendingmachine.view.ProductRegistrationRequest;
 
 public class VendingMachineService {
@@ -17,4 +19,10 @@ public class VendingMachineService {
             vendingMachine.addProduct(request.toProduct());
         }
     }
+
+    public Map<Coin, Integer> getCoinStatus() {
+        return vendingMachine.getCoinStatus();
+
+    }
+
 }
