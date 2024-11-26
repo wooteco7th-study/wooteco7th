@@ -27,6 +27,6 @@ public class Drinker {
 
     @Override
     public String toString() {
-        return "투입 금액 : " + money + "원\n";
+        return "투입 금액: " + money + "원\n";
     }
 }

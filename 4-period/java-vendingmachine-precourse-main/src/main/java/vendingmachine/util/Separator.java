@@ -10,6 +10,6 @@ public class Separator {
     }
 
     public static List<String> split(String input, String separator, int limit) {
-        return Arrays.asList(input.split(separator, limit));
+        return Arrays.asList(input.trim().split(separator, limit));
     }
 }
