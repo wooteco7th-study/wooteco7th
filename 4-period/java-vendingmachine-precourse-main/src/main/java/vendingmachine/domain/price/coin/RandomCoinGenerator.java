@@ -1,10 +1,10 @@
-package vendingmachine.price.coin;
+package vendingmachine.domain.price.coin;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import vendingmachine.price.Price;
+import vendingmachine.domain.price.Price;
 
 public class RandomCoinGenerator implements CoinGenerator {
 

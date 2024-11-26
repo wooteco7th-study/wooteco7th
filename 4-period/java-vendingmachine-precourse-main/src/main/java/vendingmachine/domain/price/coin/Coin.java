@@ -1,4 +1,4 @@
-package vendingmachine.price.coin;
+package vendingmachine.domain.price.coin;
 
 import static vendingmachine.exception.ErrorMessage.COIN_NOT_EXIST;
 
@@ -6,8 +6,7 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import vendingmachine.exception.CustomIllegalArgumentException;
-import vendingmachine.price.CoinPrice;
-import vendingmachine.price.Price;
+import vendingmachine.domain.price.Price;
 
 public enum Coin {
 

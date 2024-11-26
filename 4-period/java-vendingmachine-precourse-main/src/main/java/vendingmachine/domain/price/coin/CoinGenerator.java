@@ -1,7 +1,7 @@
-package vendingmachine.price.coin;
+package vendingmachine.domain.price.coin;
 
 import java.util.Map;
-import vendingmachine.price.Price;
+import vendingmachine.domain.price.Price;
 
 public interface CoinGenerator {
 

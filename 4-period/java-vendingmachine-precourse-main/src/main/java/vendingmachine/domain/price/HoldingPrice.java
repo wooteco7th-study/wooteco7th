@@ -1,4 +1,4 @@
-package vendingmachine.price;
+package vendingmachine.domain.price;
 
 import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_PRICE_DIVIDE_BY_TEN;
 import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_PRICE_UNDER_TEN;

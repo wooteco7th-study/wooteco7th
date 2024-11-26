@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import vendingmachine.dto.CoinDto;
-import vendingmachine.price.HoldingPrice;
-import vendingmachine.price.Price;
-import vendingmachine.price.coin.Coin;
-import vendingmachine.price.coin.CoinGenerator;
+import vendingmachine.domain.price.HoldingPrice;
+import vendingmachine.domain.price.Price;
+import vendingmachine.domain.price.coin.Coin;
+import vendingmachine.domain.price.coin.CoinGenerator;
 
 public class VendingService {
 

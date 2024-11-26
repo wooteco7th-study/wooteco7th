@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vendingmachine.domain.price.HoldingPrice;
 import vendingmachine.exception.ErrorMessage;
 
 @DisplayName("보유 금액 테스트")

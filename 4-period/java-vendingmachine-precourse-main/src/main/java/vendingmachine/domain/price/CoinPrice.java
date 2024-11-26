@@ -1,4 +1,4 @@
-package vendingmachine.price;
+package vendingmachine.domain.price;
 
 public class CoinPrice extends Price {
 

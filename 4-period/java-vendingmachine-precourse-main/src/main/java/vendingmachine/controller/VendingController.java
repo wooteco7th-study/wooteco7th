@@ -3,7 +3,7 @@ package vendingmachine.controller;
 import java.util.List;
 import vendingmachine.dto.CoinDto;
 import vendingmachine.exception.ExceptionHandler;
-import vendingmachine.price.Price;
+import vendingmachine.domain.price.Price;
 import vendingmachine.service.VendingService;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;

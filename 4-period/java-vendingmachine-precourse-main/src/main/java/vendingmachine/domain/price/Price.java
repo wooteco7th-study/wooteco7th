@@ -1,4 +1,4 @@
-package vendingmachine.price;
+package vendingmachine.domain.price;
 
 import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_AMOUNT;
 import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_SUBTRACT;
