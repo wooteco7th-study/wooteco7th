@@ -18,6 +18,14 @@ public class Product {
         this.price = price;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
     private void validatePrice(final int price) {
         validatePriceRange(price);
         validateRemainder(price);
