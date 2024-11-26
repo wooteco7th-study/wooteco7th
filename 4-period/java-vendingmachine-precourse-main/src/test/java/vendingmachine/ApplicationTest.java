@@ -1,6 +1,9 @@
 package vendingmachine;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import camp.nextstep.edu.missionutils.test.NsTest;
+import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static camp.nextstep.edu.missionutils.test.Assertions.assertRandomNumberInListTest;
@@ -32,6 +35,18 @@ class ApplicationTest extends NsTest {
                 assertThat(output()).contains(ERROR_MESSAGE);
             }
         );
+    }
+
+    @Test
+    @DisplayName("랜덤 라이브러리 테스트")
+    void randomLibraryTest() throws Exception {
+        //given
+        final List<Integer> numbers = List.of(500, 100, 50, 10);
+        final int number = Randoms.pickNumberInList(numbers);
+
+        //should
+        System.out.println(number);
+
     }
 
     @Override
