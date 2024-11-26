@@ -3,6 +3,7 @@ package vendingmachine.domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +17,7 @@ class ProductGroupTest {
         //given
         final int money = 500;
         final int quantity = 1;
-        final List<Product> products = List.of(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
+        final List<Product> products = Arrays.asList(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
 
         //when
         final ProductGroup productGroup = new ProductGroup(products);
@@ -32,7 +33,7 @@ class ProductGroupTest {
         //given
         final int money = 10;
         final int quantity = 1;
-        final List<Product> products = List.of(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
+        final List<Product> products = Arrays.asList(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
 
         //when
         final ProductGroup productGroup = new ProductGroup(products);
@@ -48,7 +49,7 @@ class ProductGroupTest {
     void fail_findByProductNameAndQuantityTest1() {
         //given
         final String name = "물";
-        final List<Product> products = List.of(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
+        final List<Product> products = Arrays.asList(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
 
         //when
         final ProductGroup productGroup = new ProductGroup(products);
@@ -65,7 +66,7 @@ class ProductGroupTest {
         //given
         final String name = "콜라";
         final int quantity = 100;
-        final List<Product> products = List.of(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
+        final List<Product> products = Arrays.asList(new Product("콜라", 100, 10), new Product("사이다", 100, 10));
 
         //when
         final ProductGroup productGroup = new ProductGroup(products);

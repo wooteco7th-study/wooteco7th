@@ -2,6 +2,7 @@ package vendingmachine.util;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import vendingmachine.error.AppException;
 import vendingmachine.error.ErrorMessage;
 
@@ -28,6 +29,6 @@ public class StringParser {
 
     public static List<String> parseToTokens(final String value, final String delimiter) {
         return Arrays.stream(value.split(delimiter, SPLIT_LIMIT))
-                .toList();
+                .collect(Collectors.toList());
     }
 }

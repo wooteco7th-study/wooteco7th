@@ -54,9 +54,10 @@ public class Product {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof final Product product)) {
+        if (!(o instanceof Product)) {
             return false;
         }
+        Product product = (Product) o;
         return Objects.equals(name, product.name);
     }
 

@@ -2,6 +2,7 @@ package vendingmachine;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import camp.nextstep.edu.missionutils.test.NsTest;
+import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -41,7 +42,7 @@ class ApplicationTest extends NsTest {
     @DisplayName("랜덤 라이브러리 테스트")
     void randomLibraryTest() throws Exception {
         //given
-        final List<Integer> numbers = List.of(500, 100, 50, 10);
+        final List<Integer> numbers = Arrays.asList(500, 100, 50, 10);
         final int number = Randoms.pickNumberInList(numbers);
 
         //should

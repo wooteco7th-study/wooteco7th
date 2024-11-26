@@ -1,6 +1,7 @@
 package vendingmachine.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import vendingmachine.error.ErrorMessage;
 import vendingmachine.util.StringParser;
 import vendingmachine.util.StringValidator;
@@ -20,7 +21,7 @@ public class ProductsGenerator {
     public static List<Product> generate(final List<String> inputs) {
         return inputs.stream()
                 .map(ProductsGenerator::createProduct)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private static Product createProduct(final String input) {
