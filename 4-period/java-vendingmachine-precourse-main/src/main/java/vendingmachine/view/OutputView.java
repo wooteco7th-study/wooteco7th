@@ -1,8 +1,9 @@
 package vendingmachine.view;
 
-import java.math.BigDecimal;
 import java.util.List;
-import vendingmachine.domain.price.Price;
+import java.util.Map;
+import java.util.Map.Entry;
+import vendingmachine.domain.price.coin.Coin;
 import vendingmachine.dto.CoinDto;
 
 public class OutputView {
@@ -16,6 +17,7 @@ public class OutputView {
     private static final String REQUEST_INPUT_AMOUNT = "투입 금액을 입력해 주세요.";
     private static final String REQUEST_ORDER_PRODUCT = "구매할 상품명을 입력해 주세요.";
 
+    private static final String REMAINING = "잔돈";
 
     private static final String FORMAT_INPUT_PRICE = "투입 금액: %d원";
 
@@ -57,5 +59,12 @@ public class OutputView {
 
     public void showInputPrice(final long inputPrice) {
         showln(LINE + format(FORMAT_INPUT_PRICE, inputPrice));
+    }
+
+    public void showRemainingPrice(final Map<Coin, Long> leastCoins) {
+        showln(REMAINING);
+        for (Entry<Coin, Long> entry : leastCoins.entrySet()) {
+            showln(format(FORMAT_COIN, entry.getKey().getPrice().getAmount(), entry.getValue()));
+        }
     }
 }

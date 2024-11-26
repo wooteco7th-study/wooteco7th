@@ -6,5 +6,5 @@ import vendingmachine.domain.price.Price;
 @FunctionalInterface
 public interface CoinGenerator {
 
-    Map<Coin, Integer> generateCoins(Price price);
+    Map<Coin, Long> generateCoins(Price price);
 }

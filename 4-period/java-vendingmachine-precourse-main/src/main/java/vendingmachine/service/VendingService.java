@@ -35,13 +35,9 @@ public class VendingService {
         return new HoldingPrice(amount);
     }
 
-    public List<CoinDto> createRandomCoins(final Price holdingPrice) {
-        Map<Coin, Integer> coins = coinGenerator.generateCoins(holdingPrice);
-        List<CoinDto> coinDtos = new ArrayList<>();
-        for (Entry<Coin, Integer> entry : coins.entrySet()) {
-            coinDtos.add(new CoinDto(entry.getKey().getPrice().getAmount(), entry.getValue()));
-        }
-        return coinDtos;
+    public Map<Coin, Long> createRandomCoins(final Price holdingPrice) {
+        Map<Coin, Long> coins = coinGenerator.generateCoins(holdingPrice);
+        return coins;
     }
 
     public List<Product> createHoldingProducts(final List<String> inputs) {

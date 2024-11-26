@@ -5,8 +5,8 @@ import static vendingmachine.exception.ErrorMessage.COIN_NOT_EXIST;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import vendingmachine.exception.CustomIllegalArgumentException;
 import vendingmachine.domain.price.Price;
+import vendingmachine.exception.CustomIllegalArgumentException;
 
 public enum Coin {
 
@@ -31,6 +31,19 @@ public enum Coin {
     public static List<Coin> calculateAvailableCoinTypes(Price price) {
         return Arrays.stream(Coin.values())
                 .filter(coin -> price.isMoreThanEqual(coin.getPrice()))
+                .toList();
+    }
+
+    public static Coin calculateMaxCoin(Price price) {
+        return Arrays.stream(Coin.values())
+                .filter(coin -> price.isMoreThanEqual(coin.getPrice()))
+                .findFirst()
+                .orElseThrow(() -> new CustomIllegalArgumentException("해당 동전이 없습니다."));
+    }
+
+    public static List<Coin> sortedCoins() {
+        return Arrays.stream(Coin.values())
+                .sorted((coin1, coin2) -> Long.compare(coin2.getPrice().getAmount(), coin1.getPrice().getAmount()))
                 .toList();
     }
 

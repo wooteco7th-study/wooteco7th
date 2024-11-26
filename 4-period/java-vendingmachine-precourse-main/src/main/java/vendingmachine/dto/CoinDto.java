@@ -1,4 +1,4 @@
 package vendingmachine.dto;
 
-public record CoinDto(long coinType, int quantity) {
+public record CoinDto(long coinType, long quantity) {
 }

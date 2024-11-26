@@ -1,8 +1,13 @@
 package vendingmachine.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 import vendingmachine.domain.OrderProcessor;
 import vendingmachine.domain.price.Price;
+import vendingmachine.domain.price.coin.Coin;
+import vendingmachine.domain.price.coin.LeastCoinGenerator;
 import vendingmachine.domain.product.Product;
 import vendingmachine.domain.product.Products;
 import vendingmachine.dto.CoinDto;
@@ -29,8 +34,12 @@ public class VendingController {
 
     public void process() {
         Price holdingPrice = createHoldingPrice();
-        List<CoinDto> randomCoins = service.createRandomCoins(holdingPrice);
-        outputView.informHoldingAmount(randomCoins);
+        Map<Coin, Long> coins = service.createRandomCoins(holdingPrice);
+        List<CoinDto> coinDtos = new ArrayList<>();
+        for (Entry<Coin, Long> entry : coins.entrySet()) {
+            coinDtos.add(new CoinDto(entry.getKey().getPrice().getAmount(), entry.getValue()));
+        }
+        outputView.informHoldingAmount(coinDtos);
 
         Products holdingProducts = new Products(createHoldingProduct());
         Price inputPrice = createInputPrice();
@@ -43,7 +52,10 @@ public class VendingController {
                 break;
             }
         }
-
+        Price remainingPrice = orderProcessor.getInputPrice();
+        LeastCoinGenerator leastCoinGenerator = new LeastCoinGenerator();
+        Map<Coin, Long> leastCoins = leastCoinGenerator.generateCoins2(remainingPrice, coins);
+        outputView.showRemainingPrice(leastCoins);
     }
 
     private Product createOrderProduct(final Products holdingProducts) {

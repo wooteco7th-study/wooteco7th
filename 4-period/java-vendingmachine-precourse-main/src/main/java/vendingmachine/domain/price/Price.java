@@ -36,6 +36,14 @@ public class Price {
         return new Price(this.amount - price.amount);
     }
 
+    public Price multiply(final long price) {
+        return new Price(this.amount * price);
+    }
+
+    public Price getRemaining(Price coinPrice, long count) {
+        return subtract(new Price(coinPrice.amount * count));
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -55,5 +63,9 @@ public class Price {
 
     public long getAmount() {
         return amount;
+    }
+
+    public long divide(final Price price) {
+        return this.amount / price.amount;
     }
 }
