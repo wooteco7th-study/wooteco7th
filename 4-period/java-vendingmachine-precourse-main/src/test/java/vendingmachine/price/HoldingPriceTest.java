@@ -30,7 +30,7 @@ class HoldingPriceTest {
         // When & Then
         assertThatThrownBy(() -> new HoldingPrice(233))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ErrorMessage.INVALID_HOLDING_PRICE_DIVIDE_BY_TEN.getMessage());
+                .hasMessageContaining(ErrorMessage.INVALID_PRICE_DIVIDE_BY_TEN.getMessage());
     }
 
 }

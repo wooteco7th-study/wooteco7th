@@ -1,9 +1,10 @@
 package vendingmachine.controller;
 
 import java.util.List;
+import vendingmachine.domain.price.Price;
+import vendingmachine.domain.product.Product;
 import vendingmachine.dto.CoinDto;
 import vendingmachine.exception.ExceptionHandler;
-import vendingmachine.domain.price.Price;
 import vendingmachine.service.VendingService;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
@@ -24,10 +25,20 @@ public class VendingController {
         this.service = service;
     }
 
-    public void process(){
+    public void process() {
         Price holdingPrice = createHoldingPrice();
         List<CoinDto> randomCoins = service.createRandomCoins(holdingPrice);
         outputView.informHoldingAmount(randomCoins);
+
+        List<Product> holdingProducts = createHoldingProduct();
+    }
+
+    private List<Product> createHoldingProduct() {
+        outputView.requestHoldingProduct();
+        return exceptionHandler.retryOn(() -> {
+            List<String> products = inputView.readHoldingProduct();
+            return service.createHoldingProducts(products);
+        });
     }
 
     private Price createHoldingPrice() {

@@ -5,19 +5,19 @@ import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_UNDER_EQUAL_HU
 
 import vendingmachine.exception.CustomIllegalArgumentException;
 
-public class HoldingPrice extends Price {
+public class ProductPrice extends Price {
 
-    public HoldingPrice(final long amount) {
+    public ProductPrice(final long amount) {
         super(amount);
         validate(amount);
     }
 
     private void validate(final long amount) {
-        if (amount < 10) {
-            throw new CustomIllegalArgumentException(INVALID_PRICE_UNDER_EQUAL_HUNDRED);
-        }
         if (amount % 10 != 0) {
             throw new CustomIllegalArgumentException(INVALID_PRICE_DIVIDE_BY_TEN);
+        }
+        if (amount < 100) {
+            throw new CustomIllegalArgumentException(INVALID_PRICE_UNDER_EQUAL_HUNDRED);
         }
     }
 }
