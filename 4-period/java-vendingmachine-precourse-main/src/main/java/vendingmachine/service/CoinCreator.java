@@ -15,7 +15,7 @@ public class CoinCreator {
     }
 
     private void validate(int coin) {
-        if (coin < 100) {
+        if (coin < 10) {
             throw new IllegalArgumentException();
         }
     }
