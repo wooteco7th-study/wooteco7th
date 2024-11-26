@@ -61,22 +61,6 @@ public class OutputView {
         showln(INFORM_DISCOUNT_PRICE + LINE + message + LINE);
     }
 
-    public void informBonusMenu() {
-        System.out.println(INFORM_BONUS_MENU);
-    }
-
-    public void informBenefitDetails() {
-        System.out.println(INFORM_BENEFIT_DETAILS);
-    }
-
-    public void showException(Exception exception) {
-        System.out.println(exception.getMessage());
-    }
-
-    public void showln(String message) {
-        System.out.println(message);
-    }
-
     public void showBenefit(final List<BenefitDto> benefits) {
         showln(LINE + INFORM_BENEFIT_DETAILS);
         if (benefits.isEmpty()) {
@@ -116,6 +100,14 @@ public class OutputView {
     public void showBadgeName(final String badgeName) {
         showln(LINE + INFORM_BADGE);
         showln(badgeName);
+    }
+
+    public void showException(Exception exception) {
+        System.out.println(exception.getMessage());
+    }
+
+    private void showln(String message) {
+        System.out.println(message);
     }
 
     private String format(String format, Object... args) {

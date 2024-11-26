@@ -1,6 +1,5 @@
 package christmas.domain.event;
 
-import christmas.domain.event.Badge;
 import christmas.domain.event.discount.Discount;
 import christmas.domain.event.gift.Gift;
 import christmas.domain.order.Orders;
