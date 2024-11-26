@@ -1,6 +1,7 @@
 package vendingmachine.domain.coin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import vendingmachine.domain.change.Change;
 import vendingmachine.domain.change.Changes;
@@ -35,22 +36,37 @@ public class Coins {
         }
     }
 
+    private int getCoin(int coin) {
+        if (coin == 500) {
+            return coin500;
+        }
+        if (coin == 100) {
+            return coin100;
+        }
+        if (coin == 50) {
+            return coin50;
+        }
+        return coin10;
+    }
+
+    private int calculateCoin(int coin, int money) {
+        int canChange = money / coin;
+        return Math.min(getCoin(coin), canChange);
+    }
+
+    private int calculateMoney(int coin, int money) {
+        return money - calculateCoin(coin, money) * coin;
+    }
+
     public Changes change(int money) {
         List<Change> changes = new ArrayList<>();
-        if (money / 500 > 0) {
-            changes.add(new Change(500, money / 500));
-            money %= 500;
-        }
-        if (money / 100 > 0) {
-            changes.add(new Change(100, money / 100));
-            money %= 100;
-        }
-        if (money / 50 > 0) {
-            changes.add(new Change(50, money / 50));
-            money %= 50;
-        }
-        if (money / 10 > 0) {
-            changes.add(new Change(10, money / 10));
+        List<Integer> coins = Arrays.asList(500, 100, 50, 10);
+
+        for (int coin : coins) {
+            if (money / coin > 0) {
+                changes.add(new Change(coin, calculateCoin(coin, money)));
+                money = calculateMoney(coin, money);
+            }
         }
         return new Changes(changes);
     }
