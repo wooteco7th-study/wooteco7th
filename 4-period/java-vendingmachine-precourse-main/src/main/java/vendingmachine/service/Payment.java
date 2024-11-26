@@ -19,6 +19,7 @@ public class Payment {
         validateProduct(buy);
         Product product = findProduct(buy);
         validatePrice(product);
+        validateCount(product);
         product.setCount();
         drinker.setMoney(product.getPrice());
     }
@@ -31,6 +32,12 @@ public class Payment {
 
     private void validatePrice(Product product) {
         if (product.getPrice() > drinker.getMoney()) {
+            throw new InputException();
+        }
+    }
+
+    private void validateCount(Product product) {
+        if (product.getCount() <= 0) {
             throw new InputException();
         }
     }
