@@ -19,7 +19,6 @@ public class InputView {
     private static final String AMOUNT_HELD_MSG = "자판기가 보유하고 있는 금액을 입력해 주세요.";
     private static final String INVENTORIES_MSG = NEW_LINE + "상품명과 가격, 수량을 입력해 주세요.";
     private static final String ORDER_AMOUNT_MSG = NEW_LINE + "투입 금액을 입력해 주세요.";
-    private static final String LEFT_AMOUNT_MSG = NEW_LINE + "투입 금액: %d원";
     private static final String ORDER_PRODUCT_MSG = NEW_LINE + "구매할 상품명을 입력해 주세요.";
 
     public int readAmountHeld() {
@@ -38,8 +37,7 @@ public class InputView {
         return parseToValidNumber(input);
     }
 
-    public String readOrderProductName(final int leftAmount) {
-        System.out.printf(LEFT_AMOUNT_MSG, leftAmount);
+    public String readOrderProductName() {
         return getValidatedInput(ORDER_PRODUCT_MSG);
     }
 

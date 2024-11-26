@@ -32,4 +32,8 @@ public enum Coin {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(COIN_NOT_FOUND.getMessage()));
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }

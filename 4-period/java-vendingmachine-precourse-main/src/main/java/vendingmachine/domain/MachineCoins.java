@@ -30,6 +30,23 @@ public class MachineCoins {
         return coins;
     }
 
+    public Map<Coin, Integer> update(final int orderAmount) {
+        if (orderAmount == 0) {
+            return initCoins();
+        }
+        Map<Coin, Integer> changes = new EnumMap<>(Coin.class);
+        for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
+            if (entry.getValue() > 0) {
+                Coin coin = entry.getKey();
+                int quantity = orderAmount / coin.getAmount();
+                if (quantity > 0) {
+                    changes.put(coin, quantity);
+                }
+            }
+        }
+        return changes;
+    }
+
     public MachineCoinsResponse toResponse() {
         return new MachineCoinsResponse(
                 coins.get(COIN_500),
