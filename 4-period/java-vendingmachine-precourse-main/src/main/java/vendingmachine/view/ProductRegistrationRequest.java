@@ -1,11 +1,13 @@
 package vendingmachine.view;
 
-import static vendingmachine.ErrorMessage.INVALID_PARSE_TO_INT;
-import static vendingmachine.ErrorMessage.INVALID_REQUEST_PRODUCT_FORM;
+import static vendingmachine.exception.ErrorMessage.INVALID_PARSE_TO_INT;
+import static vendingmachine.exception.ErrorMessage.INVALID_REQUEST_PRODUCT_FORM;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import vendingmachine.Money;
+import vendingmachine.domain.product.Product;
 
 public class ProductRegistrationRequest {
     private final static int DEFAULT_SIZE = 3;
@@ -57,4 +59,7 @@ public class ProductRegistrationRequest {
     }
 
 
+    public Product toProduct() {
+        return Product.create(name, Money.of(price), quantity);
+    }
 }

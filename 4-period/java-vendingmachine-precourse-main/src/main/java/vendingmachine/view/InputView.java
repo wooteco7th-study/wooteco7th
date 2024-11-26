@@ -4,8 +4,8 @@ import static camp.nextstep.edu.missionutils.Console.readLine;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
-import vendingmachine.ErrorMessage;
 import vendingmachine.Money;
+import vendingmachine.exception.ErrorMessage;
 
 /**
  * (인풋) 자판기가 보유하고 있는 금액을 입력해 주세요. 450
