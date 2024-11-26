@@ -1,11 +1,13 @@
 package vendingmachine.service;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static vendingmachine.support.CustomExceptionAssertions.assertCustomIllegalArgumentException;
 
 import java.util.Arrays;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import vendingmachine.domain.price.InputPrice;
 import vendingmachine.domain.price.coin.RandomCoinGenerator;
 import vendingmachine.domain.product.Product;
 

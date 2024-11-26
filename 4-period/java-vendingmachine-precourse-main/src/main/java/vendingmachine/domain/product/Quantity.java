@@ -17,9 +17,17 @@ public class Quantity {
         return quantity == 0;
     }
 
+    public boolean hasStock() {
+        return quantity > 0;
+    }
+
     private void validate(final int quantity) {
         if (quantity < 0) {
             throw new CustomIllegalArgumentException(INVALID_ZERO_QUANTITY);
         }
+    }
+
+    public Quantity subtract(final int subtracted) {
+        return new Quantity(quantity - subtracted);
     }
 }

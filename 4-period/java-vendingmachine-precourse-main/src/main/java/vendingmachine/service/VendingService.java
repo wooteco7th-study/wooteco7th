@@ -12,6 +12,7 @@ import vendingmachine.domain.price.Price;
 import vendingmachine.domain.price.ProductPrice;
 import vendingmachine.domain.price.coin.Coin;
 import vendingmachine.domain.price.coin.CoinGenerator;
+import vendingmachine.domain.price.InputPrice;
 import vendingmachine.domain.product.Product;
 import vendingmachine.domain.product.Quantity;
 import vendingmachine.dto.CoinDto;
@@ -59,5 +60,9 @@ public class VendingService {
         ProductPrice price = new ProductPrice(Converter.convertToLong(group.get(1), INVALID_HOLDING_PRODUCT));
         Quantity quantity = new Quantity(Converter.convertToInteger(group.get(2), INVALID_HOLDING_PRODUCT));
         return new Product(group.get(0), price, quantity);
+    }
+
+    public InputPrice createInputPrice(final long inputPrice) {
+        return new InputPrice(inputPrice);
     }
 }

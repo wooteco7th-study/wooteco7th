@@ -1,8 +1,10 @@
 package vendingmachine.controller;
 
 import java.util.List;
+import vendingmachine.domain.OrderProcessor;
 import vendingmachine.domain.price.Price;
 import vendingmachine.domain.product.Product;
+import vendingmachine.domain.product.Products;
 import vendingmachine.dto.CoinDto;
 import vendingmachine.exception.ExceptionHandler;
 import vendingmachine.service.VendingService;
@@ -30,7 +32,31 @@ public class VendingController {
         List<CoinDto> randomCoins = service.createRandomCoins(holdingPrice);
         outputView.informHoldingAmount(randomCoins);
 
-        List<Product> holdingProducts = createHoldingProduct();
+        Products holdingProducts = new Products(createHoldingProduct());
+        Price inputPrice = createInputPrice();
+        OrderProcessor orderProcessor = new OrderProcessor(holdingProducts, inputPrice);
+        while (true) {
+            outputView.showInputPrice(orderProcessor.getInputPrice().getAmount());
+            Product orderProduct = createOrderProduct(holdingProducts);
+            if (orderProcessor.process(orderProduct)) {
+                outputView.showInputPrice(orderProcessor.getInputPrice().getAmount());
+                break;
+            }
+        }
+
+    }
+
+    private Product createOrderProduct(final Products holdingProducts) {
+        outputView.requestOrderProduct();
+        return exceptionHandler.retryOn(() -> holdingProducts.findByName(inputView.readOrderProduct()));
+    }
+
+    private Price createInputPrice() {
+        outputView.requestInputAmount();
+        return exceptionHandler.retryOn(() -> {
+            long inputPrice = inputView.readInputPrice();
+            return service.createInputPrice(inputPrice);
+        });
     }
 
     private List<Product> createHoldingProduct() {

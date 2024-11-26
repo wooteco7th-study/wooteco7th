@@ -2,6 +2,7 @@ package vendingmachine.view;
 
 import static vendingmachine.exception.ErrorMessage.BLANK;
 import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_AMOUNT;
+import static vendingmachine.exception.ErrorMessage.INVALID_INPUT_AMOUNT;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
@@ -15,6 +16,10 @@ public class InputView {
         return Converter.convertToLong(readLine(), INVALID_HOLDING_AMOUNT);
     }
 
+    public long readInputPrice() {
+        return Converter.convertToLong(readLine(), INVALID_INPUT_AMOUNT);
+    }
+
     public List<String> readHoldingProduct() {
         return StringParser.parseByDelimiter(readLine(), ";");
     }
@@ -23,5 +28,9 @@ public class InputView {
         String line = Console.readLine();
         InputValidator.validateNotNullOrBlank(line, BLANK);
         return line;
+    }
+
+    public String readOrderProduct() {
+        return readLine();
     }
 }
