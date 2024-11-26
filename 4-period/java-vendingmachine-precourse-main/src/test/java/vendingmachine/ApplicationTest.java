@@ -39,6 +39,17 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("금액이 숫자가 아니므로 예외가 발생한다.")
+    void applicationTest3() throws Exception {
+        assertSimpleTest(
+                () -> {
+                    runException("a");
+                    assertThat(output()).contains(ERROR_MESSAGE);
+                }
+        );
+    }
+
+    @Test
     @DisplayName("투입 금액이 0원 이므로 애플리케이션 종료 된다.")
     void applicationTest1() throws Exception {
         assertRandomNumberInListTest(
