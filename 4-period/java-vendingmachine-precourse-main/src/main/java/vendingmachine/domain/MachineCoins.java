@@ -12,7 +12,6 @@ import static vendingmachine.Coin.COIN_50;
 import static vendingmachine.Coin.COIN_500;
 import static vendingmachine.Coin.coins;
 import static vendingmachine.Coin.values;
-import static vendingmachine.exception.ExceptionMessage.AMOUNT_MUST_BE_POSITIVE;
 
 public class MachineCoins {
 
@@ -20,7 +19,6 @@ public class MachineCoins {
     private Map<Coin, Integer> coins = initCoins();
 
     public MachineCoins(final int amountHeld) {
-        validatePositiveAmount(amountHeld);
         this.amountHeld = amountHeld;
     }
 
@@ -56,11 +54,5 @@ public class MachineCoins {
             statistics.put(coin, 0);
         }
         return statistics;
-    }
-
-    private void validatePositiveAmount(final int amountHeld) {
-        if (amountHeld <= 0) {
-            throw new IllegalArgumentException(AMOUNT_MUST_BE_POSITIVE.getMessage());
-        }
     }
 }
