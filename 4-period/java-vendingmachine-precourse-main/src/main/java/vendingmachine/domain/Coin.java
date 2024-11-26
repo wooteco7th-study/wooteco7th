@@ -30,4 +30,8 @@ public enum Coin {
                 .filter(coin -> !Objects.equals(coin, Coin.NONE))
                 .toList();
     }
+
+    public int getAmount() {
+        return amount;
+    }
 }
