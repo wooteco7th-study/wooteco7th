@@ -25,7 +25,9 @@ public class MachineCoins {
     public Map<Coin, Integer> saveCoins() {
         while (amountHeld > 0) {
             int coinAmount = RandomNumberGenerator.generate(coins());
-            amountHeld = putCoinIfAvailable(amountHeld, coinAmount);
+            Coin coin = Coin.from(coinAmount);
+            amountHeld -= coinAmount;
+            coins.put(coin, coins.get(coin) + 1);
         }
         return coins;
     }
@@ -39,7 +41,10 @@ public class MachineCoins {
             if (entry.getValue() > 0) {
                 Coin coin = entry.getKey();
                 int quantity = orderAmount / coin.getAmount();
-                if (quantity > 0) {
+                if (quantity > entry.getValue()) {
+                    changes.put(coin, entry.getValue());
+                }
+                if (quantity <= entry.getValue()) {
                     changes.put(coin, quantity);
                 }
             }
@@ -54,15 +59,6 @@ public class MachineCoins {
                 coins.get(COIN_50),
                 coins.get(COIN_10)
         );
-    }
-
-    private int putCoinIfAvailable(int amountHeld, final int coinAmount) {
-        if (amountHeld % coinAmount == 0) {
-            Coin coin = Coin.from(coinAmount);
-            amountHeld -= coinAmount;
-            coins.put(coin, coins.get(coin) + 1);
-        }
-        return amountHeld;
     }
 
     private Map<Coin, Integer> initCoins() {
