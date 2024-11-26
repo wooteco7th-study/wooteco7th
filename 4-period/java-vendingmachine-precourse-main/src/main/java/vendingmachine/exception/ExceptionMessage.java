@@ -1,6 +1,8 @@
 package vendingmachine.exception;
 
 import static java.lang.String.format;
+import static vendingmachine.domain.Product.COIN_10_AMOUNT;
+import static vendingmachine.domain.Product.MINIMUM_PRICE;
 
 public enum ExceptionMessage {
 
@@ -14,7 +16,17 @@ public enum ExceptionMessage {
 
     INVALID_FORMAT("유효하지 않은 포맷입니다."),
 
-    AMOUNT_MUST_BE_POSITIVE("금액은 양수여야 합니다.");
+    AMOUNT_MUST_BE_POSITIVE("금액은 양수여야 합니다."),
+
+    PRICE_OUT_OF_RANGE(
+            format("상품 가격은 %d원 이상이어야 합니다.",
+                    MINIMUM_PRICE)
+    ),
+
+    REMAINDER_EXIST(
+            format("%d원으로 나누어 떨어져야 합니다.",
+                    COIN_10_AMOUNT)
+    );
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 
