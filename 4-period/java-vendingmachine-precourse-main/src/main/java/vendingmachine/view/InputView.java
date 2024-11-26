@@ -6,6 +6,7 @@ import vendingmachine.util.StringParser;
 
 import java.util.regex.Pattern;
 
+import static vendingmachine.exception.ExceptionMessage.AMOUNT_MUST_BE_POSITIVE;
 import static vendingmachine.exception.ExceptionMessage.INPUT_BLANK;
 import static vendingmachine.exception.ExceptionMessage.INVALID_AMOUNT;
 import static vendingmachine.exception.ExceptionMessage.INVALID_FORMAT;
@@ -16,7 +17,8 @@ public class InputView {
 
     private static final String NEW_LINE = System.lineSeparator();
     private static final String AMOUNT_HELD_MSG = "자판기가 보유하고 있는 금액을 입력해 주세요.";
-    private static final String ORDER_MSG = "상품명과 가격, 수량을 입력해 주세요.";
+    private static final String INVENTORIES_MSG = NEW_LINE + "상품명과 가격, 수량을 입력해 주세요.";
+    private static final String ORDER_AMOUNT_MSG = NEW_LINE + "투입 금액을 입력해 주세요.";
 
     public int readAmountHeld() {
         String input = getValidatedInput(AMOUNT_HELD_MSG);
@@ -24,9 +26,14 @@ public class InputView {
     }
 
     public Inventories readInventories() {
-        String input = getValidatedInput(ORDER_MSG);
+        String input = getValidatedInput(INVENTORIES_MSG);
         validateInputFormat(input);
         return StringParser.parseInventories(input);
+    }
+
+    public int readOrderAmount() {
+        String input = getValidatedInput(ORDER_AMOUNT_MSG);
+        return parseToValidNumber(input);
     }
 
     private String getValidatedInput(String message) {
@@ -44,9 +51,17 @@ public class InputView {
 
     private int parseToValidNumber(String input) {
         try {
-            return Integer.parseInt(input);
+            int number = Integer.parseInt(input);
+            validatePositiveNumber(number);
+            return number;
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException(INVALID_AMOUNT.getMessage());
+        }
+    }
+
+    private static void validatePositiveNumber(final int number) {
+        if (number <= 0) {
+            throw new IllegalArgumentException(AMOUNT_MUST_BE_POSITIVE.getMessage());
         }
     }
 
