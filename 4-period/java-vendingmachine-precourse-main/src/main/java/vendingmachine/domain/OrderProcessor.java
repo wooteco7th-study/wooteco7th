@@ -37,8 +37,6 @@ public class OrderProcessor {
     }
 
     private boolean checkInputPriceLowerThanLeastProductPrice() {
-        System.out.println(inputPrice);
-        System.out.println(holdingProducts.getLowestProcutPrice());
         return !inputPrice.isMoreThanEqual(holdingProducts.getLowestProcutPrice());
     }
 
