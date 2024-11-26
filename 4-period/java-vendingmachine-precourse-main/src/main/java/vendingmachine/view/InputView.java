@@ -2,7 +2,8 @@ package vendingmachine.view;
 
 import static camp.nextstep.edu.missionutils.Console.readLine;
 
-import camp.nextstep.edu.missionutils.Console;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.List;
 import vendingmachine.domain.money.Money;
 import vendingmachine.exception.ErrorMessage;
@@ -23,6 +24,7 @@ public class InputView {
     private static final String PRODUCT_REGISTRATION_MESSAGE = NEW_LINE + "상품명과 가격, 수량을 입력해 주세요.";
     private static final String INSERT_MONEY_MESSAGE = NEW_LINE + "투입 금액을 입력해 주세요.";
     private static final String PRODUCT_NAME_MESSAGE = "구매할 상품명을 입력해 주세요.";
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     //
 
     /**
@@ -58,7 +60,7 @@ public class InputView {
     public Money requestUserMoney() {
         println(INSERT_MONEY_MESSAGE);
         try {
-            String input = Console.readLine();
+            String input = readLine().trim();
             int amount = Integer.parseInt(input);
             validateAmount(amount);
             return Money.of(amount);
@@ -72,7 +74,7 @@ public class InputView {
      */
     public String requestProductName() {
         System.out.println(PRODUCT_NAME_MESSAGE);
-        String input = Console.readLine();
+        String input = readLine().trim();
         if (input == null || input.trim().isEmpty()) {
             throw new IllegalArgumentException(ErrorMessage.INVALID_REQUEST_PRODUCT_NAME.getMessage());
         }

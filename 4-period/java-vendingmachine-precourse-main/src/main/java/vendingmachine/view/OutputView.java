@@ -65,6 +65,7 @@ public class OutputView {
                 ))
                 .map(entry -> String.format(COIN_FORMAT, entry.getKey().getAmount(), entry.getValue()))
                 .collect(Collectors.joining(NEW_LINE));
+        println(formattedCoins);
     }
 
     private void println(String message) {
