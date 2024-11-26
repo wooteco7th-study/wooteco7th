@@ -3,15 +3,15 @@ package vendingmachine.domain;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class CoinsGenerator {
+public class CoinsConvertor {
 
     private static final int MIN_COIN_AMOUNT = Coin.COIN_10.getAmount();
 
-    private CoinsGenerator() {
+    private CoinsConvertor() {
 
     }
 
-    public static Map<Coin, Integer> generate(final Money money) {
+    public static Map<Coin, Integer> convert(final Money money) {
         final Map<Coin, Integer> coins = initializeCoins();
         while (money.isExceedsValue(MIN_COIN_AMOUNT)) {
             final Coin coin = RandomCoinGenerator.generate();
