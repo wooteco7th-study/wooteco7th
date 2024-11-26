@@ -4,7 +4,7 @@ public class Product {
 
     private final String name;
     private final int price;
-    private final int count;
+    private int count;
 
     public Product(String name, int price, int count) {
         validatePrice(price);
@@ -17,6 +17,22 @@ public class Product {
         if (price < 100) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public void setCount() {
+        this.count -= 1;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     @Override

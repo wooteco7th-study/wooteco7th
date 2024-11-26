@@ -5,9 +5,11 @@ import vendingmachine.domain.Drinker;
 import vendingmachine.domain.Products;
 import vendingmachine.service.CoinCreator;
 import vendingmachine.service.DrinkerCreator;
+import vendingmachine.service.Payment;
 import vendingmachine.service.ProductsCreator;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
+import vendingmachine.view.PrintMessage;
 
 public class MachineController {
 
@@ -26,13 +28,22 @@ public class MachineController {
 
         String productInfo = inputView.getProductInfo();
         Products products = new ProductsCreator(productInfo).create();
-        outputView.print(products.toString());
 
         String inputMoney = inputView.getMoney();
         Drinker drinker = new DrinkerCreator(inputMoney).create();
-        outputView.print(drinker.toString());
+        Payment payment = new Payment(products, drinker);
 
-        String buyProduct = inputView.getProductName();
-        //관련 로직 구현
+        while (true) {
+            outputView.print(drinker.toString());
+            if (products.isMoreThanMinPrice(drinker.getMoney())  || products.isProductsEmpty()) {
+                break;
+            }
+            String buyProduct = inputView.getProductName();
+            payment.pay(buyProduct);
+            outputView.print(products.toString());
+        }
+
+        outputView.printlnMessage(PrintMessage.RETURN_CHANGE);
+        //잔돈 계산
     }
 }

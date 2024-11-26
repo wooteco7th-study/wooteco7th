@@ -2,7 +2,7 @@ package vendingmachine.domain;
 
 public class Drinker {
 
-    private final int money;
+    private int money;
 
     public Drinker(int money) {
         validate(money);
@@ -13,6 +13,14 @@ public class Drinker {
         if (money < 10) {
             throw new IllegalArgumentException();
         }
+    }
+
+    public void setMoney(int price) {
+        this.money -= price;
+    }
+
+    public int getMoney() {
+        return money;
     }
 
     @Override

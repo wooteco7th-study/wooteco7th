@@ -9,4 +9,8 @@ public class OutputView {
     public void print(String input) {
         System.out.println(input);
     }
+
+    public void printlnMessage(PrintMessage printMessage) {
+        System.out.println(printMessage.getMessage());
+    }
 }
