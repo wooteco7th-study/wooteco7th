@@ -1,5 +1,9 @@
 package vendingmachine.role;
 
+import java.util.Map;
+import vendingmachine.domain.money.Coin;
+import vendingmachine.domain.money.Money;
+
 /*
 - 주어진 금액만큼 잔돈을 반환한다
 - [ ] 남은 금액이 상품의 최저 가격보다 적거나, 모든 상품이 (재고)소진된 경우 -> 바로 잔돈을 돌려준다.(애플리케이션 종료)
@@ -9,4 +13,5 @@ package vendingmachine.role;
     - 예를들어, 1000원이 남는데, 잔돈이 600원이라면, 600원을 표시한다.
  */
 public interface ChangeProvider {
+    Map<Coin, Integer> provideChange(Money change);
 }

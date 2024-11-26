@@ -2,8 +2,6 @@ package vendingmachine.view;
 
 import static camp.nextstep.edu.missionutils.Console.readLine;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.List;
 import vendingmachine.domain.money.Money;
 import vendingmachine.exception.ErrorMessage;
@@ -24,7 +22,6 @@ public class InputView {
     private static final String PRODUCT_REGISTRATION_MESSAGE = NEW_LINE + "상품명과 가격, 수량을 입력해 주세요.";
     private static final String INSERT_MONEY_MESSAGE = NEW_LINE + "투입 금액을 입력해 주세요.";
     private static final String PRODUCT_NAME_MESSAGE = "구매할 상품명을 입력해 주세요.";
-    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     //
 
     /**
@@ -32,10 +29,12 @@ public class InputView {
      */
     public Money requestInitialAmount() {
         println(INITIAL_AMOUNT_MESSAGE);
-        try {
-            return Money.of(Integer.parseInt(readLine().trim()));
-        } catch (Exception e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_REQUEST_AMOUNT.getMessage());
+        while (true) {
+            try {
+                return Money.of(Integer.parseInt(readLine().trim()));
+            } catch (Exception e) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_REQUEST_AMOUNT.getMessage());
+            }
         }
     }
 
@@ -44,12 +43,14 @@ public class InputView {
      */
     public List<ProductRegistrationRequest> requestProductRegistration() {
         println(PRODUCT_REGISTRATION_MESSAGE);
-        String input = readLine().trim();
-        try {
-            return ProductRegistrationRequest.from(input);
+        while (true) {
+            try {
+                String input = readLine().trim();
+                return ProductRegistrationRequest.from(input);
 
-        } catch (Exception e) {
-            throw new IllegalArgumentException(ErrorMessage.INVALID_REQUEST_PRODUCT_FORM.getMessage());
+            } catch (Exception e) {
+                throw new IllegalArgumentException(ErrorMessage.INVALID_REQUEST_PRODUCT_FORM.getMessage());
+            }
         }
     }
 

@@ -1,5 +1,7 @@
 package vendingmachine.role;
 
+import vendingmachine.domain.money.Money;
+
 /*
 
 > 투입 금액으로는 동전을 생성하지 않는다.
@@ -12,4 +14,13 @@ package vendingmachine.role;
 
  */
 public interface MoneyManager {
+    void add(Money money);
+
+    Money getMoney();
+
+    Money subtract(Money amount);
+
+    boolean hasEnough(Money amount);
+
+
 }

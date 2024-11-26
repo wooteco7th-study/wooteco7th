@@ -1,6 +1,8 @@
 package vendingmachine.controller;
 
 
+import static camp.nextstep.edu.missionutils.Console.readLine;
+
 import java.util.List;
 import vendingmachine.domain.money.Money;
 import vendingmachine.service.VendingMachineService;
@@ -58,8 +60,10 @@ public class VendingMachineController {
     public void run() {
         outputView.printCoinStatus(service.getCoinStatus());
 
+        String s = readLine();
+        System.out.println(":" + s);
 //        registerProducts();
-//
+
 //        insertMoneyToMachine();
 //
 //        //TODO: 반복
@@ -89,22 +93,16 @@ public class VendingMachineController {
 
     private void insertMoneyToMachine() {
         //  투입 금액을 입력해 주세요.
-        inputView.requestUserMoney();
+        Money money = inputView.requestUserMoney();
 
         //  투입 금액: 3000원
-        outputView.printInsertedMoney(null);
+        outputView.printInsertedMoney(money);
     }
 
     private Money initializeVendingMachine() {
-        while (true) {
-            try {
-                //  자판기가 보유하고 있는 금액을 입력해 주세요.
-                Money money = inputView.requestInitialAmount();
-                return money;
-            } catch (IllegalArgumentException e) {
-                outputView.printError(e.getMessage());
-            }
-        }
+
+        //  자판기가 보유하고 있는 금액을 입력해 주세요.
+        return inputView.requestInitialAmount();
     }
 
 }
