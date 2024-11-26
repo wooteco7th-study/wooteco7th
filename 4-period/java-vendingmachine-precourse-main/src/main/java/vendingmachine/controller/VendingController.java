@@ -3,7 +3,6 @@ package vendingmachine.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import vendingmachine.domain.OrderProcessor;
 import vendingmachine.domain.price.Price;
 import vendingmachine.domain.price.coin.Coin;
@@ -38,12 +37,11 @@ public class VendingController {
         List<CoinDto> coinDtos = new ArrayList<>();
         for (Coin coin : Coin.values()) {
             if (coins.containsKey(coin)) {
-                coinDtos.add(new CoinDto(coin.getPrice().getAmount(), coin.getPrice().getAmount()));
+                Long quantity = coins.get(coin);
+                coinDtos.add(new CoinDto(coin.getPrice().getAmount(), quantity));
+                continue;
             }
             coinDtos.add(new CoinDto(coin.getPrice().getAmount(), 0L));
-        }
-        for (Entry<Coin, Long> entry : coins.entrySet()) {
-            coinDtos.add(new CoinDto(entry.getKey().getPrice().getAmount(), entry.getValue()));
         }
         outputView.informHoldingAmount(coinDtos);
 
