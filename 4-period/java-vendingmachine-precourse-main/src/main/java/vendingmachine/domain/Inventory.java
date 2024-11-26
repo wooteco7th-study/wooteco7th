@@ -19,6 +19,10 @@ public class Inventory {
         return product.getName().equals(productName);
     }
 
+    public int getStock() {
+        return stock;
+    }
+
     private void validateStock(final int stock) {
         if (stock < MINIMUM_STOCK) {
             throw new IllegalArgumentException(STOCK_OUT_OF_RANGE.getMessage());

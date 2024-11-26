@@ -21,6 +21,8 @@ public enum ExceptionMessage {
 
     PRODUCT_NOT_EXIST("존재하지 않는 상품입니다."),
 
+    OUT_OF_STOCK("재고가 없습니다."),
+
     PRICE_OUT_OF_RANGE(
             format("상품 가격은 %d원 이상이어야 합니다.",
                     MINIMUM_PRICE)
