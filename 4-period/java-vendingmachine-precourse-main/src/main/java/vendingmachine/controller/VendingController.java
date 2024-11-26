@@ -36,6 +36,12 @@ public class VendingController {
         Price holdingPrice = createHoldingPrice();
         Map<Coin, Long> coins = service.createRandomCoins(holdingPrice);
         List<CoinDto> coinDtos = new ArrayList<>();
+        for (Coin coin : Coin.values()) {
+            if (coins.containsKey(coin)) {
+                coinDtos.add(new CoinDto(coin.getPrice().getAmount(), coin.getPrice().getAmount()));
+            }
+            coinDtos.add(new CoinDto(coin.getPrice().getAmount(), 0L));
+        }
         for (Entry<Coin, Long> entry : coins.entrySet()) {
             coinDtos.add(new CoinDto(entry.getKey().getPrice().getAmount(), entry.getValue()));
         }
