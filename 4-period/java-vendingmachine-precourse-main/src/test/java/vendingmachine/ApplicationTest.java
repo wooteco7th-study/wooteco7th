@@ -39,6 +39,38 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("투입 금액이 0원 이므로 애플리케이션 종료 된다.")
+    void applicationTest1() throws Exception {
+        assertRandomNumberInListTest(
+                () -> {
+                    run("450", "[콜라,1500,20];[사이다,1000,10]", "0");
+                    assertThat(output()).contains(
+                            "자판기가 보유한 동전", "500원 - 0개", "100원 - 4개", "50원 - 1개", "10원 - 0개",
+                            "투입 금액: 0원", "잔돈"
+                    );
+                },
+                100, 100, 100, 100, 50
+        );
+
+    }
+
+    @Test
+    @DisplayName("구입할 수 있는 상품이 없어 애플리케이션이 종료 된다.")
+    void applicationTest2() throws Exception {
+        assertRandomNumberInListTest(
+                () -> {
+                    run("450", "[콜라,1500,20];[사이다,1000,10]", "400");
+                    assertThat(output()).contains(
+                            "자판기가 보유한 동전", "500원 - 0개", "100원 - 4개", "50원 - 1개", "10원 - 0개",
+                            "투입 금액: 400원", "잔돈", "100원 - 4개"
+                    );
+                },
+                100, 100, 100, 100, 50
+        );
+
+    }
+
+    @Test
     @DisplayName("랜덤 라이브러리 테스트")
     void randomLibraryTest() throws Exception {
         //given
