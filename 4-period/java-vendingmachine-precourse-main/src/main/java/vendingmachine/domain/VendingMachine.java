@@ -8,18 +8,24 @@ public class VendingMachine {
 
     private static final int DEFAULT_PURCHASE_QUANTITY = 1;
 
-    private final ProductGroup productGroup;
     private final CoinGroup coinGroup;
+    private final ProductGroup productGroup;
     private final Money money;
 
-    public VendingMachine(final ProductGroup productGroup, final CoinGroup coinGroup, final Money money) {
-        this.productGroup = productGroup;
+    public VendingMachine(final CoinGroup coinGroup, final ProductGroup productGroup, final Money money) {
         this.coinGroup = coinGroup;
+        this.productGroup = productGroup;
         this.money = money;
     }
 
     public boolean hasPurchaseAbleProduct() {
         return productGroup.hasPurchaseAbleProduct(money.getValue(), DEFAULT_PURCHASE_QUANTITY);
+    }
+
+    public void purchaseProduct(final String name) {
+        final Product product = productGroup.findByProductNameAndQuantity(name,
+                DEFAULT_PURCHASE_QUANTITY);
+        product.subtractQuantity(DEFAULT_PURCHASE_QUANTITY);
     }
 
     public Map<Coin, Integer> getRemainingCoins() {
