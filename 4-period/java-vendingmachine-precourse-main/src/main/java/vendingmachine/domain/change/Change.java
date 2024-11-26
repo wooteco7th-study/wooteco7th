@@ -1,4 +1,4 @@
-package vendingmachine.domain;
+package vendingmachine.domain.change;
 
 public class Change {
 

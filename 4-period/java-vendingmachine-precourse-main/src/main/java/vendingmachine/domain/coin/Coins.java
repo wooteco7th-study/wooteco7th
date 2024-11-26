@@ -1,7 +1,9 @@
-package vendingmachine.domain;
+package vendingmachine.domain.coin;
 
 import java.util.ArrayList;
 import java.util.List;
+import vendingmachine.domain.change.Change;
+import vendingmachine.domain.change.Changes;
 import vendingmachine.view.PrintMessage;
 
 public class Coins {

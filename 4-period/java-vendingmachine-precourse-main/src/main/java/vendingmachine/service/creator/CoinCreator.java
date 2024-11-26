@@ -1,7 +1,7 @@
-package vendingmachine.service;
+package vendingmachine.service.creator;
 
-import vendingmachine.Coin;
-import vendingmachine.domain.Coins;
+import vendingmachine.domain.coin.Coin;
+import vendingmachine.domain.coin.Coins;
 import vendingmachine.excpetion.InputException;
 import vendingmachine.util.Convertor;
 

@@ -1,9 +1,9 @@
-package vendingmachine.service;
+package vendingmachine.service.creator;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import vendingmachine.domain.Product;
-import vendingmachine.domain.Products;
+import vendingmachine.domain.product.Product;
+import vendingmachine.domain.product.Products;
 import vendingmachine.excpetion.InputException;
 import vendingmachine.util.Convertor;
 import vendingmachine.util.Separator;

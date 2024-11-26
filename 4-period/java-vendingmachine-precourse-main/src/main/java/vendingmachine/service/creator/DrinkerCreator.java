@@ -1,4 +1,4 @@
-package vendingmachine.service;
+package vendingmachine.service.creator;
 
 import vendingmachine.domain.Drinker;
 import vendingmachine.util.Convertor;

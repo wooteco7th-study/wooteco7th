@@ -1,13 +1,13 @@
 package vendingmachine.controller;
 
-import vendingmachine.domain.Changes;
-import vendingmachine.domain.Coins;
+import vendingmachine.domain.change.Changes;
+import vendingmachine.domain.coin.Coins;
 import vendingmachine.domain.Drinker;
-import vendingmachine.domain.Products;
-import vendingmachine.service.CoinCreator;
-import vendingmachine.service.DrinkerCreator;
+import vendingmachine.domain.product.Products;
+import vendingmachine.service.creator.CoinCreator;
+import vendingmachine.service.creator.DrinkerCreator;
 import vendingmachine.service.Payment;
-import vendingmachine.service.ProductsCreator;
+import vendingmachine.service.creator.ProductsCreator;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
 import vendingmachine.view.PrintMessage;

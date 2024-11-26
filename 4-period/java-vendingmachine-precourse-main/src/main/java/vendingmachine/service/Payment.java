@@ -1,8 +1,8 @@
 package vendingmachine.service;
 
 import vendingmachine.domain.Drinker;
-import vendingmachine.domain.Product;
-import vendingmachine.domain.Products;
+import vendingmachine.domain.product.Product;
+import vendingmachine.domain.product.Products;
 import vendingmachine.excpetion.InputException;
 
 public class Payment {
