@@ -1,5 +1,6 @@
 package vendingmachine.controller;
 
+import vendingmachine.domain.Changes;
 import vendingmachine.domain.Coins;
 import vendingmachine.domain.Drinker;
 import vendingmachine.domain.Products;
@@ -42,8 +43,8 @@ public class MachineController {
             payment.pay(buyProduct);
             outputView.print(products.toString());
         }
-
         outputView.printlnMessage(PrintMessage.RETURN_CHANGE);
-        //잔돈 계산
+        Changes changes = coins.change(drinker.getMoney());
+        outputView.print(changes.toString());
     }
 }

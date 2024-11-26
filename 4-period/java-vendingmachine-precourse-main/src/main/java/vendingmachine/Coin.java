@@ -34,7 +34,7 @@ public enum Coin {
         while (coin > 0) {
             int getCoin = getRandomCoin();
             if (coin >= getCoin) {
-                coins.setCoin(getCoin, 1);
+                coins.setCoin(getCoin);
                 coin -= getCoin;
             }
         }
