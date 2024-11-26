@@ -13,7 +13,8 @@ public enum ExceptionMessage {
     COIN_NOT_FOUND("해당 종류의 코인이 존재하지 않습니다."),
 
     INVALID_FORMAT("유효하지 않은 포맷입니다."),
-    ;
+
+    AMOUNT_MUST_BE_POSITIVE("금액은 양수여야 합니다.");
 
     private static final String ERROR_PREFIX = "[ERROR] ";
 
