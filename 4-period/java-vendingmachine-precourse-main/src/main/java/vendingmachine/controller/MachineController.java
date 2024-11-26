@@ -1,8 +1,10 @@
 package vendingmachine.controller;
 
 import vendingmachine.domain.Coins;
+import vendingmachine.domain.Drinker;
 import vendingmachine.domain.Products;
 import vendingmachine.service.CoinCreator;
+import vendingmachine.service.DrinkerCreator;
 import vendingmachine.service.ProductsCreator;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
@@ -25,5 +27,12 @@ public class MachineController {
         String productInfo = inputView.getProductInfo();
         Products products = new ProductsCreator(productInfo).create();
         outputView.print(products.toString());
+
+        String inputMoney = inputView.getMoney();
+        Drinker drinker = new DrinkerCreator(inputMoney).create();
+        outputView.print(drinker.toString());
+
+        String buyProduct = inputView.getProductName();
+        //관련 로직 구현
     }
 }
