@@ -25,9 +25,11 @@ public class MachineCoins {
     public void saveCoins() {
         while (amountHeld > 0) {
             int coinAmount = RandomNumberGenerator.generate(coins());
-            Coin coin = Coin.from(coinAmount);
-            amountHeld -= coinAmount;
-            coins.put(coin, coins.get(coin) + 1);
+            if (amountHeld >= coinAmount) {
+                Coin coin = Coin.from(coinAmount);
+                amountHeld -= coinAmount;
+                coins.put(coin, coins.get(coin) + 1);
+            }
         }
     }
 
