@@ -26,7 +26,7 @@ public class MachineController {
         int orderAmount = retryOnInvalidInput(inputView::readOrderAmount);
         orderAmount = processOrders(orderAmount, inventories);
 
-        Map<Coin, Integer> change = machineCoins.update(orderAmount);
+        Map<Coin, Integer> change = machineCoins.getChange(orderAmount);
         outputView.printOrderAmount(orderAmount);
         outputView.printChange(change);
     }

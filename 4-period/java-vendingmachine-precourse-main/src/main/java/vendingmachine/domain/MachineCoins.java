@@ -22,33 +22,18 @@ public class MachineCoins {
         this.amountHeld = amountHeld;
     }
 
-    public Map<Coin, Integer> saveCoins() {
+    public void saveCoins() {
         while (amountHeld > 0) {
             int coinAmount = RandomNumberGenerator.generate(coins());
             Coin coin = Coin.from(coinAmount);
             amountHeld -= coinAmount;
             coins.put(coin, coins.get(coin) + 1);
         }
-        return coins;
     }
 
-    public Map<Coin, Integer> update(final int orderAmount) {
-        if (orderAmount == 0) {
-            return initCoins();
-        }
+    public Map<Coin, Integer> getChange(final int orderAmount) {
         Map<Coin, Integer> changes = new EnumMap<>(Coin.class);
-        for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
-            if (entry.getValue() > 0) {
-                Coin coin = entry.getKey();
-                int quantity = orderAmount / coin.getAmount();
-                if (quantity > entry.getValue()) {
-                    changes.put(coin, entry.getValue());
-                }
-                if (quantity <= entry.getValue()) {
-                    changes.put(coin, quantity);
-                }
-            }
-        }
+        updateChange(orderAmount, changes);
         return changes;
     }
 
@@ -59,6 +44,19 @@ public class MachineCoins {
                 coins.get(COIN_50),
                 coins.get(COIN_10)
         );
+    }
+
+    private void updateChange(final int orderAmount, final Map<Coin, Integer> changes) {
+        coins.forEach((coin, availableQuantity) -> {
+            int needQuantity = orderAmount / coin.getAmount();
+
+            if (needQuantity > availableQuantity) {
+                changes.put(coin, availableQuantity);
+            }
+            if (needQuantity <= availableQuantity) {
+                changes.put(coin, needQuantity);
+            }
+        });
     }
 
     private Map<Coin, Integer> initCoins() {
