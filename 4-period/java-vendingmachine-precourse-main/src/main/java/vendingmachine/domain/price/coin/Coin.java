@@ -26,16 +26,16 @@ public enum Coin {
         this.price = price;
     }
 
-    public static Coin createCoin(Price price) {
+    public static Coin createCoin(int price) {
         return VALUED_COINS.stream()
-                .filter(coin -> coin.getPrice().equals(price))
+                .filter(coin -> coin.getPrice().getAmount() == price)
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(COIN_NOT_EXIST));
     }
 
-    public static List<Coin> calculateAvailableCoinTypes(Price price) {
+    public static List<Coin> calculateAvailableCoinTypes(int price) {
         return VALUED_COINS.stream()
-                .filter(coin -> price.isMoreThanEqual(coin.getPrice()))
+                .filter(coin -> price >= coin.getPrice().getAmount())
                 .toList();
     }
 
@@ -43,8 +43,8 @@ public enum Coin {
         return VALUED_COINS;
     }
 
-    public static Coin getLowest() {
-        return VALUED_COINS.getLast();
+    public static int getLowestAmount() {
+        return VALUED_COINS.getLast().getPrice().getAmount();
     }
 
     public Price getPrice() {

@@ -7,12 +7,12 @@ import vendingmachine.exception.CustomIllegalArgumentException;
 
 public class HoldingPrice extends Price {
 
-    public HoldingPrice(final long amount) {
+    public HoldingPrice(final int amount) {
         super(amount);
         validate(amount);
     }
 
-    private void validate(final long amount) {
+    private void validate(final int amount) {
         if (amount < 10) {
             throw new CustomIllegalArgumentException(INVALID_PRICE_UNDER_TEN);
         }

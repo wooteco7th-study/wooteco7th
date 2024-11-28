@@ -7,12 +7,12 @@ import vendingmachine.exception.CustomIllegalArgumentException;
 
 public class ProductPrice extends Price {
 
-    public ProductPrice(final long amount) {
+    public ProductPrice(final int amount) {
         super(amount);
         validate(amount);
     }
 
-    private void validate(final long amount) {
+    private void validate(final int amount) {
         if (amount % 10 != 0) {
             throw new CustomIllegalArgumentException(INVALID_PRICE_DIVIDE_BY_TEN);
         }

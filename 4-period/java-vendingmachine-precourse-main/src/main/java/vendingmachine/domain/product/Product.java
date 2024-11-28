@@ -46,8 +46,8 @@ public class Product {
         return Objects.hash(name, price, quantity);
     }
 
-    public ProductPrice getPrice() {
-        return price;
+    public int getPriceAmount() {
+        return price.getAmount();
     }
 
     public Quantity getQuantity() {

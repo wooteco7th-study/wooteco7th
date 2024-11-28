@@ -20,18 +20,18 @@ class CoinTest {
         // Given
 
         // When
-        List<Coin> coins = Coin.calculateAvailableCoinTypes(new Price(150));
+        List<Coin> coins = Coin.calculateAvailableCoinTypes(150);
 
         // Then
         assertThat(coins).contains(Coin.COIN_100, Coin.COIN_50, Coin.COIN_10);
     }
 
     @Test
-    @DisplayName("가장 싼 동전을 반환한다.")
+    @DisplayName("가장 싼 동전 금액을 반환한다.")
     void getLowest() {
         // Given
 
         // When & Then
-        assertThat(Coin.getLowest()).isEqualTo(Coin.COIN_10);
+        assertThat(Coin.getLowestAmount()).isEqualTo(10);
     }
 }

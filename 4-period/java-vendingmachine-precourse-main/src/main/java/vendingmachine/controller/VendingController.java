@@ -33,11 +33,11 @@ public class VendingController {
 
     public void process() {
         Price holdingPrice = createHoldingPrice();
-        Map<Coin, Long> coins = service.createRandomCoins(holdingPrice);
+        Map<Coin, Integer> coins = service.createRandomCoins(holdingPrice);
         List<CoinDto> coinDtos = new ArrayList<>();
         for (Coin coin : Coin.values()) {
             if (coins.containsKey(coin)) {
-                Long quantity = coins.get(coin);
+                int quantity = coins.get(coin);
                 coinDtos.add(new CoinDto(coin.getPrice().getAmount(), quantity));
                 continue;
             }
@@ -58,7 +58,7 @@ public class VendingController {
         }
         Price remainingPrice = orderProcessor.getInputPrice();
         LeastCoinGenerator leastCoinGenerator = new LeastCoinGenerator(coins);
-        Map<Coin, Long> leastCoins = leastCoinGenerator.generateCoins(remainingPrice);
+        Map<Coin, Integer> leastCoins = leastCoinGenerator.generateCoins(remainingPrice);
         outputView.showRemainingPrice(leastCoins);
     }
 
@@ -70,7 +70,7 @@ public class VendingController {
     private Price createInputPrice() {
         outputView.requestInputAmount();
         return exceptionHandler.retryOn(() -> {
-            long inputPrice = inputView.readInputPrice();
+            int inputPrice = inputView.readInputPrice();
             return service.createInputPrice(inputPrice);
         });
     }
@@ -86,7 +86,7 @@ public class VendingController {
     private Price createHoldingPrice() {
         outputView.requestHoldingAmount();
         return exceptionHandler.retryOn(() -> {
-            long holdingAmount = inputView.readHoldingAmount();
+            int holdingAmount = inputView.readHoldingAmount();
             return service.createHoldingPrice(holdingAmount);
         });
     }

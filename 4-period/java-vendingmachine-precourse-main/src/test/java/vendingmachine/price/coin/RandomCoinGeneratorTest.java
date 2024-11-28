@@ -20,11 +20,11 @@ class RandomCoinGeneratorTest {
         Price price = new Price(5000);
 
         // When
-        Map<Coin, Long> coins = generator.generateCoins(price);
+        Map<Coin, Integer> coins = generator.generateCoins(price);
 
         // Then
-        long sum = 0;
-        for (Entry<Coin, Long> entry : coins.entrySet()) {
+        int sum = 0;
+        for (Entry<Coin, Integer> entry : coins.entrySet()) {
             sum += entry.getKey().getPrice().getAmount() * entry.getValue();
         }
         assertThat(sum).isEqualTo(5000);

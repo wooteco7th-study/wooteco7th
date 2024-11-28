@@ -29,11 +29,11 @@ public class VendingService {
         this.coinGenerator = coinGenerator;
     }
 
-    public HoldingPrice createHoldingPrice(long amount) {
+    public HoldingPrice createHoldingPrice(int amount) {
         return new HoldingPrice(amount);
     }
 
-    public Map<Coin, Long> createRandomCoins(final Price holdingPrice) {
+    public Map<Coin, Integer> createRandomCoins(final Price holdingPrice) {
         return coinGenerator.generateCoins(holdingPrice);
     }
 
@@ -50,12 +50,12 @@ public class VendingService {
 
     private Product createHoldingProduct(final String input) {
         List<String> group = StringParser.extractByGroup(input, HOLDING_PRODUCT_PATTERN);
-        ProductPrice price = new ProductPrice(Converter.convertToLong(group.get(1), INVALID_HOLDING_PRODUCT));
+        ProductPrice price = new ProductPrice(Converter.convertToInteger(group.get(1), INVALID_HOLDING_PRODUCT));
         Quantity quantity = new Quantity(Converter.convertToInteger(group.get(2), INVALID_HOLDING_PRODUCT));
         return new Product(group.get(0), price, quantity);
     }
 
-    public InputPrice createInputPrice(final long inputPrice) {
+    public InputPrice createInputPrice(final int inputPrice) {
         return new InputPrice(inputPrice);
     }
 }

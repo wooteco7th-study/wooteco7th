@@ -12,12 +12,12 @@ import vendingmachine.util.StringParser;
 
 public class InputView {
 
-    public long readHoldingAmount() {
-        return Converter.convertToLong(readLine(), INVALID_HOLDING_AMOUNT);
+    public int readHoldingAmount() {
+        return Converter.convertToInteger(readLine(), INVALID_HOLDING_AMOUNT);
     }
 
-    public long readInputPrice() {
-        return Converter.convertToLong(readLine(), INVALID_INPUT_AMOUNT);
+    public int readInputPrice() {
+        return Converter.convertToInteger(readLine(), INVALID_INPUT_AMOUNT);
     }
 
     public List<String> readHoldingProduct() {

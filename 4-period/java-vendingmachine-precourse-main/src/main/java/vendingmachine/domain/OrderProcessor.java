@@ -26,8 +26,8 @@ public class OrderProcessor {
         checkAvailablePrice(orderProduct);
         checkOutOfStock(orderProduct);
         // 구매
-        Price productPrice = holdingProducts.buy(orderProduct);
-        inputPrice = inputPrice.subtract(productPrice);
+        int productPrice = holdingProducts.buy(orderProduct);
+        inputPrice = new Price(inputPrice.getAmount() - productPrice);
         // 종료 조건 (true이면 종료)
         return checkAllOutOfStock() || checkInputPriceLowerThanLeastProductPrice();
     }
@@ -37,7 +37,7 @@ public class OrderProcessor {
     }
 
     private boolean checkInputPriceLowerThanLeastProductPrice() {
-        return !inputPrice.isMoreThanEqual(holdingProducts.getLowestProcutPrice());
+        return inputPrice.getAmount() < holdingProducts.getLowestProductPrice();
     }
 
     private boolean checkAllOutOfStock() {
@@ -51,7 +51,7 @@ public class OrderProcessor {
     }
 
     private void checkAvailablePrice(final Product orderProduct) {
-        if (inputPrice.isMoreThanEqual(orderProduct.getPrice())) {
+        if (inputPrice.getAmount() >= orderProduct.getPriceAmount()) {
             return;
         }
         throw new CustomIllegalArgumentException(INVALID_ORDER_PRICE);

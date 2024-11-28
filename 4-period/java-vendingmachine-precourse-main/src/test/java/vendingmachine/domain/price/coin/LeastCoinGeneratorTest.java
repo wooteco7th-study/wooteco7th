@@ -13,12 +13,12 @@ class LeastCoinGeneratorTest {
     @DisplayName("보유 동전을 가지고 최소한의 동전 개수로 잔돈을 반환한다.")
     void generateCoins() {
         // Given
-        LeastCoinGenerator generator = new LeastCoinGenerator(Map.of(Coin.COIN_500, 8L, Coin.COIN_50, 3L));
+        LeastCoinGenerator generator = new LeastCoinGenerator(Map.of(Coin.COIN_500, 8, Coin.COIN_50, 3));
 
         // When
-        Map<Coin, Long> coins = generator.generateCoins(new Price(2900));
+        Map<Coin, Integer> coins = generator.generateCoins(new Price(2900));
 
         // Then
-        assertThat(coins).containsExactlyInAnyOrderEntriesOf(Map.of(Coin.COIN_500, 5L, Coin.COIN_50, 3L));
+        assertThat(coins).containsExactlyInAnyOrderEntriesOf(Map.of(Coin.COIN_500, 5, Coin.COIN_50, 3));
     }
 }

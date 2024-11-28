@@ -2,7 +2,6 @@ package vendingmachine.view;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import vendingmachine.domain.price.coin.Coin;
 import vendingmachine.dto.CoinDto;
 
@@ -61,10 +60,8 @@ public class OutputView {
         showln(LINE + format(FORMAT_INPUT_PRICE, inputPrice));
     }
 
-    public void showRemainingPrice(final Map<Coin, Long> leastCoins) {
+    public void showRemainingPrice(final Map<Coin, Integer> leastCoins) {
         showln(REMAINING);
-        for (Entry<Coin, Long> entry : leastCoins.entrySet()) {
-            showln(format(FORMAT_COIN, entry.getKey().getPrice().getAmount(), entry.getValue()));
-        }
+        leastCoins.forEach((key, value) -> showln(format(FORMAT_COIN, key.getPrice().getAmount(), value)));
     }
 }

@@ -9,24 +9,26 @@ import vendingmachine.domain.price.Price;
 public class RandomCoinGenerator implements CoinGenerator {
 
     @Override
-    public Map<Coin, Long> generateCoins(final Price price) {
-        Map<Coin, Long> coins = new HashMap<>();
-        Price target = price;
-        while (target.isMoreThanEqual(Coin.getLowest().getPrice())) {
-            List<Integer> coinTypes = getCoinTypes(target);
-            Price coinAmount = new Price(pickNumber(coinTypes));
-            target = target.subtract(coinAmount);
-            Coin coin = Coin.createCoin(coinAmount);
-            coins.put(coin, coins.getOrDefault(coin, 0L) + 1);
+    public Map<Coin, Integer> generateCoins(final Price price) {
+        Map<Coin, Integer> coins = new HashMap<>();
+        int target = price.getAmount();
+        while (target >= Coin.getLowestAmount()) {
+            int pickAmount = pickCoinAmount(target);
+            target -= pickAmount;
+            coins.merge(Coin.createCoin(pickAmount), 1, Integer::sum);
         }
         return coins;
     }
 
-    private List<Integer> getCoinTypes(final Price price) {
+    private int pickCoinAmount(final int target) {
+        List<Integer> coinTypes = getCoinTypes(target);
+        return pickNumber(coinTypes);
+    }
+
+    private List<Integer> getCoinTypes(final int price) {
         return Coin.calculateAvailableCoinTypes(price).stream()
                 .map(Coin::getPrice)
                 .map(Price::getAmount)
-                .map(Long::intValue)
                 .toList();
     }
 
