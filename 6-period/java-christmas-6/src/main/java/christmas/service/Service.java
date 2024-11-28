@@ -2,8 +2,6 @@ package christmas.service;
 
 import christmas.domain.Day;
 import christmas.domain.Menu;
-import christmas.domain.order.Order;
-import christmas.domain.order.Orders;
 import christmas.domain.Quantity;
 import christmas.domain.event.discount.ChristmasDdayDiscount;
 import christmas.domain.event.discount.DayDiscount;
@@ -11,13 +9,15 @@ import christmas.domain.event.discount.Discount;
 import christmas.domain.event.discount.SpecialDiscount;
 import christmas.domain.event.gift.BonusGift;
 import christmas.domain.event.gift.Gift;
+import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
 import christmas.dto.BenefitDto;
 import christmas.dto.GiftDto;
 import christmas.dto.OrderMenuDto;
 import christmas.exception.CustomIllegalArgumentException;
 import christmas.exception.ErrorMessage;
 import christmas.util.Converter;
-import christmas.util.StringParser;
+import christmas.util.InputValidator;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
@@ -43,7 +43,7 @@ public class Service {
 
     private Order createOrder(final String order) {
         checkSuitablePattern(order);
-        List<String> splitted = StringParser.extractByGroup(order, PATTERN);
+        List<String> splitted = InputValidator.findMatchingGroups(order, PATTERN);
         Menu menu = Menu.from(splitted.get(0));
         Quantity quantity = new Quantity(
                 Converter.convertToInteger(splitted.get(1), ErrorMessage.INVALID_DAY));
@@ -51,7 +51,7 @@ public class Service {
     }
 
     private void checkSuitablePattern(final String order) {
-        if (StringParser.isNotSuitablePattern(order, PATTERN)) {
+        if (InputValidator.isInvalidPattern(order, PATTERN)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_ORDER);
         }
     }

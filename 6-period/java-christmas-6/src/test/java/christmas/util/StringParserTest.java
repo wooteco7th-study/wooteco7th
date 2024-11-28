@@ -1,101 +1,106 @@
 package christmas.util;
 
+import static christmas.support.CustomExceptionAssertions.assertCustomIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import christmas.exception.ErrorMessage;
 import java.util.List;
-import java.util.regex.Pattern;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 class StringParserTest {
 
-    @Test
-    @DisplayName("정규식 패턴으로 문자열에서 그룹을 추출할 수 있다")
-    void extractByGroup() {
-        // given
-        String input = "티본스테이크-1";
-        Pattern pattern = Pattern.compile("^([가-힣]+)-(\\d+)$");
+    @Nested
+    @DisplayName("문자열을 정수로 변환하는 기능")
+    class ParseToInteger {
 
-        // when
-        List<String> result = StringParser.extractByGroup(input, pattern);
+        @Test
+        @DisplayName("정상적인 숫자 문자열을 정수로 변환한다")
+        void parseValidNumber() {
+            assertThat(StringParser.parseToInteger("123", ErrorMessage.INVALID_NUMBER)).isEqualTo(123);
+        }
 
-        // then
-        assertThat(result).containsExactly("티본스테이크", "1");
+        @Test
+        @DisplayName("앞뒤 공백이 있는 숫자 문자열을 정수로 변환한다")
+        void parseNumberWithWhitespace() {
+            assertThat(StringParser.parseToInteger(" 123 ", ErrorMessage.INVALID_NUMBER)).isEqualTo(123);
+        }
+
+        @ParameterizedTest
+        @ValueSource(strings = {"abc", "12.34", "123a", ""})
+        @DisplayName("숫자가 아닌 문자열은 예외가 발생한다")
+        void parseInvalidNumber(String input) {
+            assertCustomIllegalArgumentException(() -> StringParser.parseToInteger(input, ErrorMessage.INVALID_NUMBER),
+                    ErrorMessage.INVALID_NUMBER);
+        }
     }
 
-    @Test
-    @DisplayName("정규식 패턴으로 여러 매칭 그룹을 추출할 수 있다")
-    void extractMultipleGroups() {
-        // given
-        String input = "이름: 홍길동, 나이: 20\n이름: 김철수, 나이: 25";
-        Pattern pattern = Pattern.compile("이름: (.*), 나이: (\\d+)");
+    @Nested
+    @DisplayName("문자열에서 특정 패턴을 제거하는 기능")
+    class RemovePattern {
 
-        // when
-        List<String> result = StringParser.extractByGroup(input, pattern);
+        @Test
+        @DisplayName("특수문자를 제거한다")
+        void removeSpecialCharacters() {
+            String input = "Hello! @#$ World";
+            String result = StringParser.removePattern(input, "[^a-zA-Z ]");
+            assertThat(result).isEqualTo("Hello  World");
+        }
 
-        // then
-        assertThat(result).containsExactly("홍길동", "20", "김철수", "25");
+        @Test
+        @DisplayName("숫자만 남기고 모두 제거한다")
+        void keepOnlyNumbers() {
+            String input = "abc123def456";
+            String result = StringParser.removePattern(input, "[^0-9]");
+            assertThat(result).isEqualTo("123456");
+        }
+
+        @Test
+        @DisplayName("정규식과 일치하는 부분이 없으면 원본 문자열을 반환한다")
+        void returnOriginalWhenNoMatch() {
+            String input = "abcdef";
+            String result = StringParser.removePattern(input, "[0-9]");
+            assertThat(result).isEqualTo("abcdef");
+        }
     }
 
-    @Test
-    @DisplayName("패턴이 매칭되지 않으면 빈 리스트를 반환한다")
-    void returnEmptyListWhenNoMatch() {
-        // given
-        String input = "잘못된 형식의 문자열";
-        Pattern pattern = Pattern.compile("이름: (.*), 나이: (\\d+)");
+    @Nested
+    @DisplayName("문자열을 구분자로 분리하는 기능")
+    class ParseByDelimiter {
 
-        // when
-        List<String> result = StringParser.extractByGroup(input, pattern);
+        @Test
+        @DisplayName("쉼표로 구분된 문자열을 분리한다")
+        void parseCommaDelimitedString() {
+            String input = "apple,banana,orange";
+            List<String> result = StringParser.parseByDelimiter(input, ",");
+            assertThat(result).containsExactly("apple", "banana", "orange");
+        }
 
-        // then
-        assertThat(result).isEmpty();
-    }
+        @Test
+        @DisplayName("공백이 포함된 문자열을 분리하고 trim 처리한다")
+        void parseAndTrimString() {
+            String input = "apple , banana , orange";
+            List<String> result = StringParser.parseByDelimiter(input, ",");
+            assertThat(result).containsExactly("apple", "banana", "orange");
+        }
 
-    @Test
-    @DisplayName("주어진 패턴이 입력 문자열과 일치하지 않는지 확인할 수 있다")
-    void isNotSuitablePattern() {
-        // given
-        String input = "잘못된 형식의 문자열";
-        Pattern pattern = Pattern.compile("이름: (.*), 나이: (\\d+)");
+        @Test
+        @DisplayName("빈 값을 포함한 문자열을 분리한다")
+        void parseWithEmptyValues() {
+            String input = "apple,,orange";
+            List<String> result = StringParser.parseByDelimiter(input, ",");
+            assertThat(result).containsExactly("apple", "", "orange");
+        }
 
-        // when & then
-        assertThat(StringParser.isNotSuitablePattern(input, pattern)).isTrue();
-    }
-
-    @Test
-    @DisplayName("주어진 패턴이 입력 문자열과 일치하는지 확인할 수 있다")
-    void isSuitablePattern() {
-        // given
-        String input = "이름: 홍길동, 나이: 20";
-        Pattern pattern = Pattern.compile("이름: (.*), 나이: (\\d+)");
-
-        // when & then
-        assertThat(StringParser.isNotSuitablePattern(input, pattern)).isFalse();
-    }
-
-    @Test
-    @DisplayName("구분자로 문자열을 분리하여 리스트로 변환할 수 있다")
-    void parseByDelimiter() {
-        // given
-        String input = "apple, banana, orange";
-
-        // when
-        List<String> result = StringParser.parseByDelimiter(input, ",");
-
-        // then
-        assertThat(result).containsExactly("apple", "banana", "orange");
-    }
-
-    @Test
-    @DisplayName("구분자로 문자열을 분리할 때 앞뒤 공백을 제거한다")
-    void parseByDelimiterWithStrip() {
-        // given
-        String input = "apple ,  banana  ,   orange  ";
-
-        // when
-        List<String> result = StringParser.parseByDelimiter(input, ",");
-
-        // then
-        assertThat(result).containsExactly("apple", "banana", "orange");
+        @Test
+        @DisplayName("구분자가 없는 문자열은 단일 요소 리스트를 반환한다")
+        void parseWithNoDelimiter() {
+            String input = "apple";
+            List<String> result = StringParser.parseByDelimiter(input, ",");
+            assertThat(result).containsExactly("apple");
+        }
     }
 }
