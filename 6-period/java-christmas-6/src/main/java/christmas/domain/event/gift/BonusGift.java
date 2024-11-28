@@ -2,12 +2,11 @@ package christmas.domain.event.gift;
 
 import christmas.domain.Day;
 import christmas.domain.Menu;
-import christmas.domain.order.Orders;
 import christmas.domain.Quantity;
+import christmas.domain.order.Orders;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Map;
-import java.util.Map.Entry;
 
 public class BonusGift implements Gift {
 
@@ -29,13 +28,13 @@ public class BonusGift implements Gift {
 
     @Override
     public BigDecimal calculateAmount() {
-        BigDecimal price = BigDecimal.ZERO;
-        if (isApplicable()) {
-            for (Entry<Menu, Quantity> entry : provideGiftItems().entrySet()) {
-                price = price.add(entry.getKey().getPrice().multiply(BigDecimal.valueOf(entry.getValue().getValue())));
-            }
+        if (!isApplicable()) {
+            return BigDecimal.ZERO;
         }
-        return price;
+        return provideGiftItems().entrySet()
+                .stream()
+                .map(entry -> entry.getKey().getPrice().multiply(new BigDecimal(entry.getValue().getValue())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     @Override
