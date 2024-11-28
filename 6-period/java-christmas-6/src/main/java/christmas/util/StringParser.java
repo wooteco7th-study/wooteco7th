@@ -38,7 +38,7 @@ public class StringParser {
      */
     public static List<String> parseByDelimiter(String input, String delimiter) {
         return Arrays.stream(input.split(delimiter, CONTAINS_EMPTY))
-                .map(String::trim)
+                .map(String::strip)
                 .toList();
     }
 }

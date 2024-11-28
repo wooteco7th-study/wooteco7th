@@ -88,7 +88,7 @@ class StringParserTest {
 
     @Test
     @DisplayName("구분자로 문자열을 분리할 때 앞뒤 공백을 제거한다")
-    void parseByDelimiterWithTrim() {
+    void parseByDelimiterWithStrip() {
         // given
         String input = "apple ,  banana  ,   orange  ";
 
