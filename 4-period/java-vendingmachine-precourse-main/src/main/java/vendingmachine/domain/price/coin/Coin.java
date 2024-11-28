@@ -34,13 +34,6 @@ public enum Coin {
                 .toList();
     }
 
-    public static Coin calculateMaxCoin(Price price) {
-        return Arrays.stream(Coin.values())
-                .filter(coin -> price.isMoreThanEqual(coin.getPrice()))
-                .findFirst()
-                .orElseThrow(() -> new CustomIllegalArgumentException("해당 동전이 없습니다."));
-    }
-
     public static List<Coin> sortedCoins() {
         return Arrays.stream(Coin.values())
                 .sorted((coin1, coin2) -> Long.compare(coin2.getPrice().getAmount(), coin1.getPrice().getAmount()))

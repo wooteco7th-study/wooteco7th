@@ -1,7 +1,6 @@
 package vendingmachine.domain.price;
 
 import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_DIVIDE_BY_TEN;
-import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_UNDER_EQUAL_HUNDRED;
 import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_UNDER_TEN;
 
 import vendingmachine.exception.CustomIllegalArgumentException;

@@ -5,6 +5,7 @@ import static vendingmachine.exception.ErrorMessage.INVALID_STATE_ORDER;
 import static vendingmachine.exception.ErrorMessage.NO_PRODUCT_EXIST;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import vendingmachine.domain.price.Price;
 import vendingmachine.exception.CustomIllegalArgumentException;
@@ -44,7 +45,7 @@ public class Products {
     public Price getLowestProcutPrice() {
         return products.stream()
                 .map(Product::getPrice)
-                .min((p1, p2) -> Long.compare(p1.getAmount(), p2.getAmount()))
+                .min(Comparator.comparingLong(Price::getAmount))
                 .orElseThrow(() -> new CustomIllegalArgumentException(NO_PRODUCT_EXIST));
     }
 

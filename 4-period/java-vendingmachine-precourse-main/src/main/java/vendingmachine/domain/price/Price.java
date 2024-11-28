@@ -36,10 +36,6 @@ public class Price {
         return new Price(this.amount - price.amount);
     }
 
-    public Price multiply(final long price) {
-        return new Price(this.amount * price);
-    }
-
     public Price subtractByCount(Price coinPrice, long count) {
         return subtract(new Price(coinPrice.amount * count));
     }
