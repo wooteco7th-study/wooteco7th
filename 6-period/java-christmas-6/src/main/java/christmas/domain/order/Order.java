@@ -3,7 +3,6 @@ package christmas.domain.order;
 import christmas.domain.Menu;
 import christmas.domain.Menu.MenuType;
 import christmas.domain.Quantity;
-import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Order {
@@ -24,10 +23,6 @@ public class Order {
         return menu.getType().equals(menuType);
     }
 
-    public BigDecimal getPrice() {
-        return menu.getPrice().multiply(new BigDecimal(quantity.getValue()));
-    }
-
     public String getMenuName() {
         return menu.name();
     }
@@ -45,15 +40,14 @@ public class Order {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Order order)) {
             return false;
         }
-        Order order = (Order) o;
-        return menu == order.menu && Objects.equals(quantity, order.quantity);
+        return getMenu() == order.getMenu() && Objects.equals(getQuantity(), order.getQuantity());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(menu, quantity);
+        return Objects.hash(getMenu(), getQuantity());
     }
 }

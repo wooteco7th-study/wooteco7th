@@ -26,16 +26,15 @@ public class Quantity {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Quantity quantity)) {
             return false;
         }
-        Quantity quantity = (Quantity) o;
-        return value == quantity.value;
+        return getValue() == quantity.getValue();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(value);
+        return Objects.hash(getValue());
     }
 
     public int getValue() {
