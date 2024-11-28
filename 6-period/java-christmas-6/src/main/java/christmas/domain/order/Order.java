@@ -3,6 +3,7 @@ package christmas.domain.order;
 import christmas.domain.Menu;
 import christmas.domain.Menu.MenuType;
 import christmas.domain.Quantity;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class Order {
@@ -15,10 +16,6 @@ public class Order {
         this.quantity = quantity;
     }
 
-    public boolean hasSameMenu(final Order order) {
-        return this.menu.equals(order.getMenu());
-    }
-
     public boolean hasMenuType(MenuType menuType) {
         return menu.getType().equals(menuType);
     }
@@ -27,8 +24,8 @@ public class Order {
         return menu.name();
     }
 
-    public Menu getMenu() {
-        return menu;
+    public BigDecimal calculateTotalPrice() {
+        return menu.getPrice().multiply(BigDecimal.valueOf(quantity.getValue()));
     }
 
     public Quantity getQuantity() {
@@ -43,11 +40,11 @@ public class Order {
         if (!(o instanceof Order order)) {
             return false;
         }
-        return getMenu() == order.getMenu() && Objects.equals(getQuantity(), order.getQuantity());
+        return menu == order.menu;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getMenu(), getQuantity());
+        return Objects.hash(menu);
     }
 }

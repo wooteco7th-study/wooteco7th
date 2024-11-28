@@ -20,7 +20,7 @@ class OrderTest {
         Order order = new Order(Menu.바비큐립, new Quantity(2));
 
         // When
-        boolean isSameMenu = order.hasSameMenu(new Order(Menu.from(menu), new Quantity(1)));
+        boolean isSameMenu = order.equals(new Order(Menu.from(menu), new Quantity(1)));
 
         // Then
         assertThat(isSameMenu).isEqualTo(expected);

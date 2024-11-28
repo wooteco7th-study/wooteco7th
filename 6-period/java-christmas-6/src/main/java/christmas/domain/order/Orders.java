@@ -24,7 +24,6 @@ public class Orders {
 
     private void checkDuplicated(final List<Order> orders) {
         int uniqueMenuCount = (int) orders.stream()
-                .map(Order::getMenu)
                 .distinct()
                 .count();
         if (uniqueMenuCount != orders.size()) {
@@ -33,7 +32,7 @@ public class Orders {
     }
 
     private void checkHasDrinkMenus(final List<Order> orders) {
-        if (countDrinkMenu(orders) == countTotalMenu(orders)) {
+        if (countDrinkMenu(orders) == orders.size()) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_ORDER);
         }
     }
@@ -54,12 +53,6 @@ public class Orders {
                 .count();
     }
 
-    private int countTotalMenu(final List<Order> orders) {
-        return (int) orders.stream()
-                .map(Order::getMenu)
-                .count();
-    }
-
     public int countSameTypeMenu(MenuType menuType) {
         int count = 0;
         for (Order order : orders) {
@@ -73,16 +66,16 @@ public class Orders {
     public BigDecimal calculateTotalPrice() {
         BigDecimal price = BigDecimal.ZERO;
         for (Order order : orders) {
-            price = price.add(order.getMenu().getPrice().multiply(new BigDecimal(order.getQuantity().getValue())));
+            price = price.add(order.calculateTotalPrice());
         }
         return price;
     }
 
-    public List<Order> getOrders() {
-        return Collections.unmodifiableList(orders);
-    }
-
     public boolean isTotalPriceOverThan(final BigDecimal compared) {
         return calculateTotalPrice().compareTo(compared) >= 0;
+    }
+
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders);
     }
 }
