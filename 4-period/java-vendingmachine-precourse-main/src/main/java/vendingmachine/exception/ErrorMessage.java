@@ -33,6 +33,7 @@ public enum ErrorMessage {
 
     INVALID_HOLDING_PRODUCT_QUANTITY("보유 상품 수량은 0개일 수 없습니다."),
     INVALID_PRODUCT_NAME("존재하는 상품이 아닙니다."),
+    DUPLICATED_PRODUCT_NAME("중복 상품을 입력할 수 없습니다."),
     INVALID_ORDER_PRICE("투입 금액보다 비싼 상품을 구매할 수 없습니다."),
     OUT_OF_STOCK("해당 상품의 재고가 없습니다."),
     ALL_OUT_OF_STOCK("모든 상품의 재고가 없습니다."),
