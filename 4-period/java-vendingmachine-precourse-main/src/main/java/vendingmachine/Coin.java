@@ -2,6 +2,7 @@ package vendingmachine;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static vendingmachine.exception.ExceptionMessage.COIN_NOT_FOUND;
@@ -24,6 +25,14 @@ public enum Coin {
             coins.add(coin.amount);
         }
         return coins;
+    }
+
+    public static int getLowestCoin() {
+        return Arrays.stream(values())
+                .sorted(Comparator.comparingInt(Coin::getAmount))
+                .toList()
+                .getFirst()
+                .amount;
     }
 
     public static Coin from(int input) {

@@ -12,6 +12,7 @@ import static vendingmachine.Coin.COIN_50;
 import static vendingmachine.Coin.COIN_500;
 import static vendingmachine.Coin.coins;
 import static vendingmachine.Coin.values;
+import static vendingmachine.exception.ExceptionMessage.REMAINDER_EXIST;
 
 public class MachineCoins {
 
@@ -19,16 +20,17 @@ public class MachineCoins {
     private Map<Coin, Integer> coins = initCoins();
 
     public MachineCoins(final int amountHeld) {
+        validateAmountHold(amountHeld);
         this.amountHeld = amountHeld;
     }
 
     public void saveCoins() {
-        while (amountHeld > 0) {
+        while (amountHeld >= Coin.getLowestCoin()) {
             int coinAmount = RandomNumberGenerator.generate(coins());
             if (amountHeld >= coinAmount) {
                 Coin coin = Coin.from(coinAmount);
                 amountHeld -= coinAmount;
-                coins.put(coin, coins.get(coin) + 1);
+                coins.merge(coin, 1, Integer::sum);
             }
         }
     }
@@ -67,5 +69,11 @@ public class MachineCoins {
             statistics.put(coin, 0);
         }
         return statistics;
+    }
+
+    private void validateAmountHold(final int amountHeld) {
+        if (amountHeld % Coin.getLowestCoin() != 0) {
+            throw new IllegalArgumentException(REMAINDER_EXIST.getMessage());
+        }
     }
 }

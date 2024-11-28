@@ -32,13 +32,13 @@ public class MachineController {
     }
 
     private MachineCoins saveMachineCoins() {
-        MachineCoins machineCoins = retryOnInvalidInput(this::getMachineCoins);
+        MachineCoins machineCoins = retryOnInvalidInput(this::createMachineCoins);
         machineCoins.saveCoins();
         outputView.printMachineCoins(machineCoins.toResponse());
         return machineCoins;
     }
 
-    private MachineCoins getMachineCoins() {
+    private MachineCoins createMachineCoins() {
         int amountHeld = inputView.readAmountHeld();
         return new MachineCoins(amountHeld);
     }
