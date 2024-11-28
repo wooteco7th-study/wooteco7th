@@ -1,6 +1,6 @@
 package vendingmachine.view;
 
-import vendingmachine.Coin;
+import vendingmachine.domain.Coin;
 import vendingmachine.dto.response.MachineCoinsResponse;
 
 import java.util.Map;

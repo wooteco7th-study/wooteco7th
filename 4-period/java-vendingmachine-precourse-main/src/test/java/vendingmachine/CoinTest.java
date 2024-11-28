@@ -1,6 +1,7 @@
 package vendingmachine;
 
 import org.junit.jupiter.api.Test;
+import vendingmachine.domain.Coin;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

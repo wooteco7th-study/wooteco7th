@@ -1,17 +1,16 @@
 package vendingmachine.domain;
 
-import vendingmachine.Coin;
 import vendingmachine.dto.response.MachineCoinsResponse;
 
 import java.util.EnumMap;
 import java.util.Map;
 
-import static vendingmachine.Coin.COIN_10;
-import static vendingmachine.Coin.COIN_100;
-import static vendingmachine.Coin.COIN_50;
-import static vendingmachine.Coin.COIN_500;
-import static vendingmachine.Coin.coins;
-import static vendingmachine.Coin.values;
+import static vendingmachine.domain.Coin.COIN_10;
+import static vendingmachine.domain.Coin.COIN_100;
+import static vendingmachine.domain.Coin.COIN_50;
+import static vendingmachine.domain.Coin.COIN_500;
+import static vendingmachine.domain.Coin.coins;
+import static vendingmachine.domain.Coin.values;
 import static vendingmachine.exception.ExceptionMessage.REMAINDER_EXIST;
 
 public class MachineCoins {

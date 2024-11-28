@@ -1,6 +1,6 @@
 package vendingmachine.controller;
 
-import vendingmachine.Coin;
+import vendingmachine.domain.Coin;
 import vendingmachine.domain.Inventories;
 import vendingmachine.domain.MachineCoins;
 import vendingmachine.view.InputView;
