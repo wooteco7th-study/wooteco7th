@@ -26,19 +26,19 @@ public class OrderProcessor {
     }
 
     public boolean canContinue() {
-        return !checkAllOutOfStock() || !checkInputPriceLowerThanLeastProductPrice();
+        return hasStock() && hasEnoughPrice();
     }
 
     public Price getInputPrice() {
         return inputPrice;
     }
 
-    private boolean checkInputPriceLowerThanLeastProductPrice() {
-        return inputPrice.getAmount() < holdingProducts.getLowestProductPrice();
+    private boolean hasStock() {
+        return !holdingProducts.isAllOutOfStock();
     }
 
-    private boolean checkAllOutOfStock() {
-        return holdingProducts.isAllOutOfStock();
+    private boolean hasEnoughPrice() {
+        return inputPrice.getAmount() >= holdingProducts.getLowestProductPrice();
     }
 
     private void checkOutOfStock(final Product orderProduct) {
