@@ -18,18 +18,15 @@ public class OrderProcessor {
         this.inputPrice = inputPrice;
     }
 
-    public boolean process(final Product orderProduct) {
-        // 구매할 수 있는지 확인
-        if (checkAllOutOfStock() || checkInputPriceLowerThanLeastProductPrice()) {
-            return true;
-        }
+    public void process(final Product orderProduct) {
         checkAvailablePrice(orderProduct);
         checkOutOfStock(orderProduct);
-        // 구매
         int productPrice = holdingProducts.buy(orderProduct);
         inputPrice = new Price(inputPrice.getAmount() - productPrice);
-        // 종료 조건 (true이면 종료)
-        return checkAllOutOfStock() || checkInputPriceLowerThanLeastProductPrice();
+    }
+
+    public boolean canContinue() {
+        return !checkAllOutOfStock() || !checkInputPriceLowerThanLeastProductPrice();
     }
 
     public Price getInputPrice() {

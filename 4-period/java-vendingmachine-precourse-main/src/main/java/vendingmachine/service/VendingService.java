@@ -24,10 +24,10 @@ public class VendingService {
     private static final String HOLDING_PRODUCT_REGEX = "^\\[([가-힣]+),(\\d+),(\\d+)\\]$";
     private static final Pattern HOLDING_PRODUCT_PATTERN = Pattern.compile(HOLDING_PRODUCT_REGEX);
 
-    private final CoinGenerator coinGenerator;
+    private final CoinGenerator randomCoinGenerator;
 
     public VendingService(final CoinGenerator coinGenerator) {
-        this.coinGenerator = coinGenerator;
+        this.randomCoinGenerator = coinGenerator;
     }
 
     public HoldingPrice createHoldingPrice(int amount) {
@@ -35,7 +35,7 @@ public class VendingService {
     }
 
     public Map<Coin, Integer> createRandomCoins(final Price holdingPrice) {
-        return coinGenerator.generateCoins(holdingPrice);
+        return randomCoinGenerator.generateCoins(holdingPrice);
     }
 
     public Products createHoldingProducts(final List<String> inputs) {
