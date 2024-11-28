@@ -5,8 +5,6 @@ import vendingmachine.view.OutputView;
 
 public class ExceptionHandler {
 
-    private static final int MAX_RETRY = 3;
-
     private final OutputView outputView;
 
     public ExceptionHandler(final OutputView outputView) {
@@ -15,21 +13,24 @@ public class ExceptionHandler {
 
     // 최대 시도 횟수만큼 재시도하며 결과를 반환
     public <T> T retryOn(Supplier<T> action) {
-        for (int attempt = 0; attempt < MAX_RETRY; attempt++) {
+        while (true) {
             try {
                 return action.get();
             } catch (IllegalArgumentException e) {
-                handleError(e, attempt);
+                outputView.showExceptionMessage(e.getMessage());
             }
         }
-        throw new IllegalArgumentException();
     }
 
-    private void handleError(Exception e, int attempt) {
-        if (attempt == MAX_RETRY - 1) {
-            throw new IllegalArgumentException();
+    public void retryOn(Runnable callback) {
+        while (true) {
+            try {
+                callback.run();
+                return;
+            } catch (IllegalArgumentException e) {
+                outputView.showExceptionMessage(e.getMessage());
+            }
         }
-        outputView.showExceptionMessage((e.getMessage()));
     }
 
     // 실패시 false를 반환하고 계속 진행
