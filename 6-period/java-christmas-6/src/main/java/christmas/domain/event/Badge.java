@@ -2,6 +2,7 @@ package christmas.domain.event;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.List;
 
 public enum Badge {
 
@@ -10,6 +11,11 @@ public enum Badge {
     트리(new BigDecimal(10000)),
     산타(new BigDecimal(20000));
 
+    private static final List<Badge> VALUED_BADGES = Arrays.stream(Badge.values())
+            .filter(badge -> badge != 없음)
+            .sorted((b1, b2) -> b2.minimumValue.compareTo(b1.minimumValue))
+            .toList();
+
     private final BigDecimal minimumValue;
 
     Badge(final BigDecimal atLeastPrice) {
@@ -17,8 +23,7 @@ public enum Badge {
     }
 
     public static String showName(BigDecimal totalPrice) {
-        return Arrays.stream(Badge.values())
-                .sorted((v1, v2) -> v2.minimumValue.compareTo(v1.minimumValue))
+        return VALUED_BADGES.stream()
                 .filter(badge -> totalPrice.compareTo(badge.minimumValue) >= 0)
                 .findFirst()
                 .map(Badge::name)
