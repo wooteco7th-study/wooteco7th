@@ -5,17 +5,15 @@ import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_PRODUCT;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.regex.Pattern;
 import vendingmachine.domain.price.HoldingPrice;
+import vendingmachine.domain.price.InputPrice;
 import vendingmachine.domain.price.Price;
 import vendingmachine.domain.price.ProductPrice;
 import vendingmachine.domain.price.coin.Coin;
 import vendingmachine.domain.price.coin.CoinGenerator;
-import vendingmachine.domain.price.InputPrice;
 import vendingmachine.domain.product.Product;
 import vendingmachine.domain.product.Quantity;
-import vendingmachine.dto.CoinDto;
 import vendingmachine.exception.CustomIllegalArgumentException;
 import vendingmachine.util.Converter;
 import vendingmachine.util.StringParser;
@@ -36,8 +34,7 @@ public class VendingService {
     }
 
     public Map<Coin, Long> createRandomCoins(final Price holdingPrice) {
-        Map<Coin, Long> coins = coinGenerator.generateCoins(holdingPrice);
-        return coins;
+        return coinGenerator.generateCoins(holdingPrice);
     }
 
     public List<Product> createHoldingProducts(final List<String> inputs) {

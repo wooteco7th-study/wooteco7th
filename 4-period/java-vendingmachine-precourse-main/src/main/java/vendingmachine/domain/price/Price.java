@@ -40,7 +40,7 @@ public class Price {
         return new Price(this.amount * price);
     }
 
-    public Price getRemaining(Price coinPrice, long count) {
+    public Price subtractByCount(Price coinPrice, long count) {
         return subtract(new Price(coinPrice.amount * count));
     }
 

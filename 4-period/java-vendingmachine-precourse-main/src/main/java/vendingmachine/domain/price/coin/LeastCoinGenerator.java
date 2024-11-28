@@ -1,46 +1,38 @@
 package vendingmachine.domain.price.coin;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import vendingmachine.domain.price.Price;
 
 public class LeastCoinGenerator implements CoinGenerator {
+
+    private final Map<Coin, Long> holdingCoins;
+
+    public LeastCoinGenerator(final Map<Coin, Long> holdingCoins) {
+        this.holdingCoins = new HashMap<>(holdingCoins);
+    }
+
     @Override
     public Map<Coin, Long> generateCoins(final Price price) {
         Map<Coin, Long> coins = new HashMap<>();
         Price target = price;
-        while (target.isMoreThanEqual(Coin.getLowest().getPrice())) {
-            Coin maxPriceCoin = Coin.calculateMaxCoin(target);
-            long count = target.divide(maxPriceCoin.getPrice());
-            target = target.getRemaining(maxPriceCoin.getPrice(), count);
-            coins.put(maxPriceCoin, coins.getOrDefault(maxPriceCoin, 0L) + count);
-        }
-        return coins;
-    }
-
-    public Map<Coin, Long> generateCoins2(final Price price, final Map<Coin, Long> randomCoins) {
-        Map<Coin, Long> coins = new HashMap<>();
-        Price target = price;
-
         for (Coin maxPriceCoin : Coin.sortedCoins()) {
-            if (randomCoins.containsKey(maxPriceCoin)) {
-                Long quantity = randomCoins.get(maxPriceCoin);
-                target = target.getRemaining(maxPriceCoin.getPrice(), quantity);
-                coins.put(maxPriceCoin, coins.getOrDefault(maxPriceCoin, 0L) + quantity);
-                if (maxPriceCoin.equals(Coin.COIN_10)) {
-                    break;
-                }
-            }
+            target = processCoin(coins, target, maxPriceCoin);
         }
         return coins;
     }
 
-    private List<Integer> getCoinTypes(final Price price) {
-        return Coin.calculateAvailableCoinTypes(price).stream()
-                .map(Coin::getPrice)
-                .map(Price::getAmount)
-                .map(Long::intValue)
-                .toList();
+    private Price processCoin(final Map<Coin, Long> coins, Price target, final Coin maxPriceCoin) {
+        if (holdingCoins.containsKey(maxPriceCoin)) {
+            long count = Math.min(target.divide(maxPriceCoin.getPrice()), holdingCoins.get(maxPriceCoin));
+            target = target.subtractByCount(maxPriceCoin.getPrice(), count);
+            updateCoins(coins, maxPriceCoin, count);
+        }
+        return target;
+    }
+
+    private void updateCoins(final Map<Coin, Long> coins, final Coin maxPriceCoin, final long count) {
+        coins.merge(maxPriceCoin, count, Long::sum);
+        holdingCoins.merge(maxPriceCoin, -count, Long::sum);
     }
 }

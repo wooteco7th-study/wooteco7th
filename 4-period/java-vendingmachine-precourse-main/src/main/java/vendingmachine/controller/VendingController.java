@@ -57,8 +57,8 @@ public class VendingController {
             }
         }
         Price remainingPrice = orderProcessor.getInputPrice();
-        LeastCoinGenerator leastCoinGenerator = new LeastCoinGenerator();
-        Map<Coin, Long> leastCoins = leastCoinGenerator.generateCoins2(remainingPrice, coins);
+        LeastCoinGenerator leastCoinGenerator = new LeastCoinGenerator(coins);
+        Map<Coin, Long> leastCoins = leastCoinGenerator.generateCoins(remainingPrice);
         outputView.showRemainingPrice(leastCoins);
     }
 
