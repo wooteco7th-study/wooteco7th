@@ -22,7 +22,7 @@ class DayTest {
         void 생성_성공(int value) {
             // When & Then
             assertThatCode(() -> {
-                new Day(2024, 12, value);
+                new Day(YEAR, MONTH, value);
             }).doesNotThrowAnyException();
         }
 
@@ -30,7 +30,7 @@ class DayTest {
         @ValueSource(ints = {-1, 0, 32})
         void 생성_실패(int value) {
             // When & Then
-            assertThatThrownBy(() -> new Day(2024, 12, value))
+            assertThatThrownBy(() -> new Day(YEAR, MONTH, value))
                     .isInstanceOf(IllegalArgumentException.class)
                     .hasMessageContaining(ErrorMessage.INVALID_DAY.getMessage());
         }
