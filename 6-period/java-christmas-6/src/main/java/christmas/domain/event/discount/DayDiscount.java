@@ -9,6 +9,7 @@ public class DayDiscount extends Discount {
 
     private static final int DISCOUNT_AMOUNT = 2_023;
     private static final String WEEKDAYS_DISCOUNT = "평일 할인";
+    private static final String WEEKEND_DISCOUNT = "주말 할인";
 
     public DayDiscount(final Day day, final Orders orders) {
         super(day, orders);
@@ -27,7 +28,10 @@ public class DayDiscount extends Discount {
 
     @Override
     public String getName() {
-        return WEEKDAYS_DISCOUNT;
+        if (day.isWeekday()) {
+            return WEEKDAYS_DISCOUNT;
+        }
+        return WEEKEND_DISCOUNT;
     }
 
     @Override
