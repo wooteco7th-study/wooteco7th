@@ -6,9 +6,7 @@ import vendingmachine.util.StringParser;
 
 import java.util.regex.Pattern;
 
-import static vendingmachine.exception.ExceptionMessage.AMOUNT_MUST_BE_POSITIVE;
 import static vendingmachine.exception.ExceptionMessage.INPUT_BLANK;
-import static vendingmachine.exception.ExceptionMessage.INVALID_AMOUNT;
 import static vendingmachine.exception.ExceptionMessage.INVALID_FORMAT;
 
 public class InputView {
@@ -23,7 +21,7 @@ public class InputView {
 
     public int readAmountHeld() {
         String input = getValidatedInput(AMOUNT_HELD_MSG);
-        return parseToValidNumber(input);
+        return StringParser.parseToValidNumber(input);
     }
 
     public Inventories readInventories() {
@@ -34,7 +32,7 @@ public class InputView {
 
     public int readOrderAmount() {
         String input = getValidatedInput(ORDER_AMOUNT_MSG);
-        return parseToValidNumber(input);
+        return StringParser.parseToValidNumber(input);
     }
 
     public String readOrderProductName() {
@@ -51,22 +49,6 @@ public class InputView {
     private void validateInput(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException(INPUT_BLANK.getMessage());
-        }
-    }
-
-    private int parseToValidNumber(String input) {
-        try {
-            int number = Integer.parseInt(input);
-            validatePositiveNumber(number);
-            return number;
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(INVALID_AMOUNT.getMessage());
-        }
-    }
-
-    private static void validatePositiveNumber(final int number) {
-        if (number <= 0) {
-            throw new IllegalArgumentException(AMOUNT_MUST_BE_POSITIVE.getMessage());
         }
     }
 

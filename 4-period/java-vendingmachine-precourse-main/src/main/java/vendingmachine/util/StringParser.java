@@ -7,6 +7,9 @@ import vendingmachine.domain.Product;
 import java.util.Arrays;
 import java.util.List;
 
+import static vendingmachine.exception.ExceptionMessage.AMOUNT_MUST_BE_POSITIVE;
+import static vendingmachine.exception.ExceptionMessage.INVALID_AMOUNT;
+
 public class StringParser {
 
     private static final String PRODUCTS_DELIMITER = ";";
@@ -15,6 +18,22 @@ public class StringParser {
     private static final String BLANK = "";
 
     private StringParser() {
+    }
+
+    public static int parseToValidNumber(String input) {
+        try {
+            int number = Integer.parseInt(input);
+            validatePositiveNumber(number);
+            return number;
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INVALID_AMOUNT.getMessage());
+        }
+    }
+
+    private static void validatePositiveNumber(final int number) {
+        if (number <= 0) {
+            throw new IllegalArgumentException(AMOUNT_MUST_BE_POSITIVE.getMessage());
+        }
     }
 
     public static Inventories parseInventories(String input) {
