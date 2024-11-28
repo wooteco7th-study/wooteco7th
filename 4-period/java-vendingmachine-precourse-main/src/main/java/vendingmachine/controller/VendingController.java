@@ -45,7 +45,7 @@ public class VendingController {
         }
         outputView.informHoldingAmount(coinDtos);
 
-        Products holdingProducts = new Products(createHoldingProduct());
+        Products holdingProducts = createHoldingProduct();
         Price inputPrice = createInputPrice();
         OrderProcessor orderProcessor = new OrderProcessor(holdingProducts, inputPrice);
         while (true) {
@@ -75,7 +75,7 @@ public class VendingController {
         });
     }
 
-    private List<Product> createHoldingProduct() {
+    private Products createHoldingProduct() {
         outputView.requestHoldingProduct();
         return exceptionHandler.retryOn(() -> {
             List<String> products = inputView.readHoldingProduct();

@@ -22,6 +22,10 @@ public class Product {
         return this.name.equals(name);
     }
 
+    public void subtractQuantity() {
+        this.quantity = quantity.subtract(1);
+    }
+
     private void validate(final Quantity quantity) {
         if (quantity.isZero()) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_HOLDING_PRODUCT_QUANTITY);
@@ -33,17 +37,15 @@ public class Product {
         if (this == o) {
             return true;
         }
-        if (o == null || getClass() != o.getClass()) {
+        if (!(o instanceof Product product)) {
             return false;
         }
-        Product product = (Product) o;
-        return Objects.equals(name, product.name) && Objects.equals(price, product.price)
-                && Objects.equals(quantity, product.quantity);
+        return Objects.equals(name, product.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, price, quantity);
+        return Objects.hash(name);
     }
 
     public int getPriceAmount() {
@@ -52,9 +54,5 @@ public class Product {
 
     public Quantity getQuantity() {
         return quantity;
-    }
-
-    public void subtractQuantity() {
-        this.quantity = quantity.subtract(1);
     }
 }

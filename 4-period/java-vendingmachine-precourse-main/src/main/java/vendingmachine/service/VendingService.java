@@ -13,6 +13,7 @@ import vendingmachine.domain.price.ProductPrice;
 import vendingmachine.domain.price.coin.Coin;
 import vendingmachine.domain.price.coin.CoinGenerator;
 import vendingmachine.domain.product.Product;
+import vendingmachine.domain.product.Products;
 import vendingmachine.domain.product.Quantity;
 import vendingmachine.exception.CustomIllegalArgumentException;
 import vendingmachine.util.Converter;
@@ -37,7 +38,7 @@ public class VendingService {
         return coinGenerator.generateCoins(holdingPrice);
     }
 
-    public List<Product> createHoldingProducts(final List<String> inputs) {
+    public Products createHoldingProducts(final List<String> inputs) {
         List<Product> products = new ArrayList<>();
         for (String input : inputs) {
             if (StringParser.isNotSuitablePattern(input, HOLDING_PRODUCT_PATTERN)) {
@@ -45,7 +46,7 @@ public class VendingService {
             }
             products.add(createHoldingProduct(input));
         }
-        return products;
+        return new Products(products);
     }
 
     private Product createHoldingProduct(final String input) {
