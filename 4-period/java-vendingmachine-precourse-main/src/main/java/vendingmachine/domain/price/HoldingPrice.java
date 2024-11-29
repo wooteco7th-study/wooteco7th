@@ -1,9 +1,8 @@
 package vendingmachine.domain.price;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_DIVIDE_BY_TEN;
-import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_ZERO;
+import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_AMOUNT;
 
-import vendingmachine.exception.CustomIllegalArgumentException;
+import vendingmachine.util.NumberValidator;
 
 public class HoldingPrice extends Price {
 
@@ -13,11 +12,7 @@ public class HoldingPrice extends Price {
     }
 
     private void validate(final int amount) {
-        if (amount == 0) {
-            throw new CustomIllegalArgumentException(INVALID_PRICE_ZERO);
-        }
-        if (amount % 10 != 0) {
-            throw new CustomIllegalArgumentException(INVALID_PRICE_DIVIDE_BY_TEN);
-        }
+        NumberValidator.validateRange(amount, 0, Integer.MAX_VALUE, INVALID_HOLDING_AMOUNT);
+        NumberValidator.validateUnit(amount, 10, INVALID_HOLDING_AMOUNT);
     }
 }

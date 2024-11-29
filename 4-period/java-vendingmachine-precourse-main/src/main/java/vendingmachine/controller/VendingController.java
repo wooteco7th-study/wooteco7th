@@ -1,5 +1,7 @@
 package vendingmachine.controller;
 
+import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_AMOUNT;
+
 import java.util.List;
 import java.util.Map;
 import vendingmachine.domain.OrderProcessor;
@@ -11,6 +13,7 @@ import vendingmachine.domain.product.Products;
 import vendingmachine.dto.CoinDto;
 import vendingmachine.exception.ExceptionHandler;
 import vendingmachine.service.VendingService;
+import vendingmachine.util.NumberValidator;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
 

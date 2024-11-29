@@ -1,12 +1,12 @@
 package vendingmachine.price;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_AMOUNT;
+import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import vendingmachine.domain.price.HoldingPrice;
-import vendingmachine.exception.ErrorMessage;
 
 @DisplayName("보유 금액 테스트")
 class HoldingPriceTest {
@@ -28,9 +28,6 @@ class HoldingPriceTest {
         // Given
 
         // When & Then
-        assertThatThrownBy(() -> new HoldingPrice(233))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining(ErrorMessage.INVALID_PRICE_DIVIDE_BY_TEN.getMessage());
+        assertIllegalArgument(() -> new HoldingPrice(233), INVALID_HOLDING_AMOUNT);
     }
-
 }
