@@ -49,17 +49,16 @@ public class MachineCoins {
         );
     }
 
-    private void updateChange(final int orderAmount, final Map<Coin, Integer> changes) {
-        coins.forEach((coin, availableQuantity) -> {
+    private void updateChange(int orderAmount, final Map<Coin, Integer> changes) {
+        for (Map.Entry<Coin, Integer> entry : coins.entrySet()) {
+            Coin coin = entry.getKey();
+            Integer availableQuantity = entry.getValue();
             int needQuantity = orderAmount / coin.getAmount();
 
-            if (needQuantity > availableQuantity) {
-                changes.put(coin, availableQuantity);
-            }
-            if (needQuantity <= availableQuantity) {
-                changes.put(coin, needQuantity);
-            }
-        });
+            int useQuantity = Math.min(needQuantity, availableQuantity);
+            changes.put(coin, useQuantity);
+            orderAmount -= useQuantity * coin.getAmount();
+        }
     }
 
     private Map<Coin, Integer> initCoins() {
