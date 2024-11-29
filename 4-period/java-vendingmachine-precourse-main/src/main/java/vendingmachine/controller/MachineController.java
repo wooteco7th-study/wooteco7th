@@ -44,11 +44,11 @@ public class MachineController {
     }
 
     private int processOrders(int orderAmount, final Inventories inventories) {
-        do {
+        while (inventories.keepOrder(orderAmount)) {
             outputView.printOrderAmount(orderAmount);
             final int currentOrderAmount = orderAmount;
             orderAmount = retryOnInvalidInput(() -> getOrderAmount(currentOrderAmount, inventories));
-        } while (inventories.keepOrder(orderAmount));
+        }
         return orderAmount;
     }
 

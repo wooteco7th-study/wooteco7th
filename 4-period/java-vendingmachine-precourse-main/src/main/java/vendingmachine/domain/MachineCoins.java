@@ -16,7 +16,7 @@ import static vendingmachine.exception.ExceptionMessage.REMAINDER_EXIST;
 public class MachineCoins {
 
     private int amountHeld;
-    private Map<Coin, Integer> coins = initCoins();
+    private final Map<Coin, Integer> coins = initCoins();
 
     public MachineCoins(final int amountHeld) {
         validateAmountHold(amountHeld);
