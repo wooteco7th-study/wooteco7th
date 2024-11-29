@@ -6,18 +6,17 @@ import static vendingmachine.exception.ErrorMessage.INVALID_INPUT_AMOUNT;
 
 import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
-import vendingmachine.util.Converter;
 import vendingmachine.util.InputValidator;
 import vendingmachine.util.StringParser;
 
 public class InputView {
 
     public int readHoldingAmount() {
-        return Converter.convertToInteger(readLine(), INVALID_HOLDING_AMOUNT);
+        return StringParser.parseToInteger(readLine(), INVALID_HOLDING_AMOUNT);
     }
 
     public int readInputPrice() {
-        return Converter.convertToInteger(readLine(), INVALID_INPUT_AMOUNT);
+        return StringParser.parseToInteger(readLine(), INVALID_INPUT_AMOUNT);
     }
 
     public List<String> readHoldingProduct() {

@@ -3,7 +3,7 @@ package vendingmachine.domain;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static vendingmachine.exception.ErrorMessage.INVALID_ORDER_PRICE;
 import static vendingmachine.exception.ErrorMessage.OUT_OF_STOCK;
-import static vendingmachine.support.CustomExceptionAssertions.assertCustomIllegalArgumentException;
+import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
@@ -37,7 +37,7 @@ class OrderProcessorTest {
         OrderProcessor processor = new OrderProcessor(holdingProducts, new InputPrice(900));
 
         // When & Then
-        assertCustomIllegalArgumentException(() -> processor.process(holdingProducts.findByName("콜라"))
+        assertIllegalArgument(() -> processor.process(holdingProducts.findByName("콜라"))
                 , INVALID_ORDER_PRICE);
     }
 
@@ -50,7 +50,7 @@ class OrderProcessorTest {
 
         // When & Then
         processor.process(holdingProducts.findByName("콜라"));
-        assertCustomIllegalArgumentException(() -> processor.process(holdingProducts.findByName("콜라"))
+        assertIllegalArgument(() -> processor.process(holdingProducts.findByName("콜라"))
                 , OUT_OF_STOCK);
     }
 

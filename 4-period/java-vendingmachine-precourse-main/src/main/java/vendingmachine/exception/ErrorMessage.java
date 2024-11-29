@@ -2,8 +2,6 @@ package vendingmachine.exception;
 
 public enum ErrorMessage {
 
-    ERROR_PREFIX("[ERROR] "),
-
     NULL("입력값은(는) null일 수 없습니다."),
     BLANK("입력값은(는) 빈 문자열이거나 공백일 수 없습니다."),
     EMPTY("입력값은(는) 비어있을 수 없습니다."),
@@ -15,7 +13,9 @@ public enum ErrorMessage {
 
     INVALID_ORDER("유효하지 않은 주문입니다. 다시 입력해 주세요."),
 
-    INVALID_PRICE_UNDER_TEN("10원 미만일 수 없습니다."),
+    INVALID_PRICE_ZERO("0원일 수 없습니다."),
+    INVALID_RANGE("유효하지 않은 범위입니다"),
+    INVALID_UNIT("유효하지 않은 단위입니다"),
 
     INVALID_PRICE_UNDER_EQUAL_HUNDRED("100원 미만일 수 없습니다."),
 

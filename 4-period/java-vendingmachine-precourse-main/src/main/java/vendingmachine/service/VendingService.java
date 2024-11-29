@@ -16,12 +16,12 @@ import vendingmachine.domain.product.Product;
 import vendingmachine.domain.product.Products;
 import vendingmachine.domain.product.Quantity;
 import vendingmachine.exception.CustomIllegalArgumentException;
-import vendingmachine.util.Converter;
+import vendingmachine.util.InputValidator;
 import vendingmachine.util.StringParser;
 
 public class VendingService {
 
-    private static final String HOLDING_PRODUCT_REGEX = "^\\[([가-힣]+),(\\d+),(\\d+)\\]$";
+    private static final String HOLDING_PRODUCT_REGEX = "^\\[([가-힣a-zA-Z]+),([1-9]\\d*),([1-9]\\d*)\\]$";
     private static final Pattern HOLDING_PRODUCT_PATTERN = Pattern.compile(HOLDING_PRODUCT_REGEX);
 
     private final CoinGenerator randomCoinGenerator;
@@ -41,7 +41,7 @@ public class VendingService {
     public Products createHoldingProducts(final List<String> inputs) {
         List<Product> products = new ArrayList<>();
         for (String input : inputs) {
-            if (StringParser.isNotSuitablePattern(input, HOLDING_PRODUCT_PATTERN)) {
+            if (InputValidator.isInvalidPattern(input, HOLDING_PRODUCT_PATTERN)) {
                 throw new CustomIllegalArgumentException(INVALID_HOLDING_PRODUCT);
             }
             products.add(createHoldingProduct(input));
@@ -50,9 +50,9 @@ public class VendingService {
     }
 
     private Product createHoldingProduct(final String input) {
-        List<String> group = StringParser.extractByGroup(input, HOLDING_PRODUCT_PATTERN);
-        ProductPrice price = new ProductPrice(Converter.convertToInteger(group.get(1), INVALID_HOLDING_PRODUCT));
-        Quantity quantity = new Quantity(Converter.convertToInteger(group.get(2), INVALID_HOLDING_PRODUCT));
+        List<String> group = InputValidator.findMatchingGroups(input, HOLDING_PRODUCT_PATTERN);
+        ProductPrice price = new ProductPrice(StringParser.parseToInteger(group.get(1), INVALID_HOLDING_PRODUCT));
+        Quantity quantity = new Quantity(StringParser.parseToInteger(group.get(2), INVALID_HOLDING_PRODUCT));
         return new Product(group.get(0), price, quantity);
     }
 

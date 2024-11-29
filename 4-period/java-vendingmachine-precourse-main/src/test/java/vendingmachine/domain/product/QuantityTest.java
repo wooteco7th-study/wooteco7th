@@ -1,7 +1,7 @@
 package vendingmachine.domain.product;
 
 import static vendingmachine.exception.ErrorMessage.INVALID_ZERO_QUANTITY;
-import static vendingmachine.support.CustomExceptionAssertions.assertCustomIllegalArgumentException;
+import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ class QuantityTest {
         // Given
 
         // When & Then
-        assertCustomIllegalArgumentException(() -> new Quantity(-1))
+        assertIllegalArgument(() -> new Quantity(-1))
                 .hasMessageContaining(INVALID_ZERO_QUANTITY.getMessage());
     }
 
