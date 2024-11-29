@@ -32,7 +32,7 @@ public class Inventories {
 
     private boolean validateStock() {
         return inventories.stream()
-                .allMatch(inventory -> inventory.getStock() > 0);
+                .anyMatch(Inventory::hasStock);
     }
 
     private boolean validateOrderAmount(final int orderAmount) {
@@ -41,6 +41,7 @@ public class Inventories {
 
     private int findLowestPrice() {
         return inventories.stream()
+                .filter(Inventory::hasStock)
                 .min(Comparator.comparingInt(Inventory::getProductPrice))
                 .get()
                 .getProductPrice();

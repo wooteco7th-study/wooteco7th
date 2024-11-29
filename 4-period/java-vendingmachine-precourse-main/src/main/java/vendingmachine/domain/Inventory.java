@@ -1,5 +1,6 @@
 package vendingmachine.domain;
 
+import static vendingmachine.exception.ExceptionMessage.OUT_OF_STOCK;
 import static vendingmachine.exception.ExceptionMessage.STOCK_OUT_OF_RANGE;
 
 public class Inventory {
@@ -20,15 +21,18 @@ public class Inventory {
     }
 
     public void decreaseStock() {
+        if (!hasStock()) {
+            throw new IllegalArgumentException(OUT_OF_STOCK.getMessage());
+        }
         stock -= 1;
+    }
+
+    public boolean hasStock() {
+        return stock >= MINIMUM_STOCK;
     }
 
     public int getProductPrice() {
         return product.getPrice();
-    }
-
-    public int getStock() {
-        return stock;
     }
 
     private void validateStock(final int stock) {
