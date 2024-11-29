@@ -8,7 +8,6 @@ import vendingmachine.exception.ErrorMessage;
 public class StringParser {
 
     private static final int CONTAINS_EMPTY = -1;
-    private static final String BLANK = "";
 
     private StringParser() {
     }
@@ -19,10 +18,6 @@ public class StringParser {
         } catch (NumberFormatException exception) {
             throw new CustomIllegalArgumentException(message);
         }
-    }
-
-    public static String removePattern(final String value, final String regex) {
-        return value.replaceAll(regex, BLANK);
     }
 
     /**
