@@ -1,8 +1,8 @@
 package vendingmachine.domain;
 
-import java.util.Comparator;
 import java.util.List;
 
+import static vendingmachine.exception.ExceptionMessage.INVENTORY_DUPLICATED;
 import static vendingmachine.exception.ExceptionMessage.PRODUCT_NOT_EXIST;
 
 public class Inventories {
@@ -10,6 +10,7 @@ public class Inventories {
     private List<Inventory> inventories;
 
     public Inventories(final List<Inventory> inventories) {
+        validateDuplicatedInventory(inventories);
         this.inventories = inventories;
     }
 
@@ -42,8 +43,20 @@ public class Inventories {
     private int findLowestPrice() {
         return inventories.stream()
                 .filter(Inventory::hasStock)
-                .min(Comparator.comparingInt(Inventory::getProductPrice))
-                .get()
-                .getProductPrice();
+                .mapToInt(Inventory::getProductPrice)
+                .min()
+                .orElseThrow(() -> new IllegalArgumentException(PRODUCT_NOT_EXIST.getMessage()));
+    }
+
+    private void validateDuplicatedInventory(final List<Inventory> inventories) {
+        if (isDuplicated(inventories)) {
+            throw new IllegalArgumentException(INVENTORY_DUPLICATED.getMessage());
+        }
+    }
+
+    private boolean isDuplicated(final List<Inventory> inventories) {
+        return inventories.stream()
+                .distinct()
+                .count() != inventories.size();
     }
 }

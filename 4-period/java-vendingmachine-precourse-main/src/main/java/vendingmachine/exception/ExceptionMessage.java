@@ -23,6 +23,8 @@ public enum ExceptionMessage {
 
     OUT_OF_STOCK("재고가 없습니다."),
 
+    INVENTORY_DUPLICATED("중복된 상품이 존재합니다"),
+
     PRICE_OUT_OF_RANGE(
             format("상품 가격은 %d원 이상이어야 합니다.",
                     MINIMUM_PRICE)

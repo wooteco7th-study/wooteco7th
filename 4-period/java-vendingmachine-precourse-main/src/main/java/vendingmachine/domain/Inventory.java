@@ -1,5 +1,7 @@
 package vendingmachine.domain;
 
+import java.util.Objects;
+
 import static vendingmachine.exception.ExceptionMessage.OUT_OF_STOCK;
 import static vendingmachine.exception.ExceptionMessage.STOCK_OUT_OF_RANGE;
 
@@ -39,5 +41,21 @@ public class Inventory {
         if (stock < MINIMUM_STOCK) {
             throw new IllegalArgumentException(STOCK_OUT_OF_RANGE.getMessage());
         }
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final Inventory inventory)) {
+            return false;
+        }
+        return Objects.equals(product.getName(), inventory.product.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(product.getName());
     }
 }
