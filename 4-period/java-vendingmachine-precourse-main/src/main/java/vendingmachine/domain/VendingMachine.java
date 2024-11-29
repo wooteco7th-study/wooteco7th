@@ -3,22 +3,28 @@ package vendingmachine.domain;
 import static vendingmachine.exception.ErrorMessage.INVALID_ORDER_PRICE;
 import static vendingmachine.exception.ErrorMessage.OUT_OF_STOCK;
 
+import java.util.Map;
 import vendingmachine.domain.price.Price;
+import vendingmachine.domain.price.coin.Coin;
+import vendingmachine.domain.price.coin.CoinGenerator;
+import vendingmachine.domain.price.coin.LeastCoinGenerator;
 import vendingmachine.domain.product.Product;
 import vendingmachine.domain.product.Products;
 import vendingmachine.exception.CustomIllegalArgumentException;
 
-public class OrderProcessor {
+public class VendingMachine {
 
     private final Products holdingProducts;
     private Price inputPrice;
+    private final CoinGenerator leastCoinGenerator;
 
-    public OrderProcessor(final Products holdingProducts, final Price inputPrice) {
+    public VendingMachine(final Map<Coin, Integer> coins, final Products holdingProducts, final Price inputPrice) {
         this.holdingProducts = holdingProducts;
         this.inputPrice = inputPrice;
+        this.leastCoinGenerator = new LeastCoinGenerator(coins);
     }
 
-    public void process(final Product orderProduct) {
+    public void purchase(final Product orderProduct) {
         checkAvailablePrice(orderProduct);
         checkOutOfStock(orderProduct);
         int productPrice = holdingProducts.buy(orderProduct);
@@ -27,10 +33,6 @@ public class OrderProcessor {
 
     public boolean canContinue() {
         return hasStock() && hasEnoughPrice();
-    }
-
-    public Price getInputPrice() {
-        return inputPrice;
     }
 
     private boolean hasStock() {
@@ -52,5 +54,17 @@ public class OrderProcessor {
             return;
         }
         throw new CustomIllegalArgumentException(INVALID_ORDER_PRICE);
+    }
+
+    public int getInputPriceValue() {
+        return inputPrice.getAmount();
+    }
+
+    public Product findByName(final String name) {
+        return holdingProducts.findByName(name);
+    }
+
+    public Map<Coin, Integer> getLeastCoins() {
+        return leastCoinGenerator.generateCoins(inputPrice);
     }
 }

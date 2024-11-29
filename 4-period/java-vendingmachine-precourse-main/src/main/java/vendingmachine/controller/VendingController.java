@@ -1,19 +1,15 @@
 package vendingmachine.controller;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_AMOUNT;
-
 import java.util.List;
 import java.util.Map;
-import vendingmachine.domain.OrderProcessor;
+import vendingmachine.domain.VendingMachine;
 import vendingmachine.domain.price.Price;
 import vendingmachine.domain.price.coin.Coin;
-import vendingmachine.domain.price.coin.LeastCoinGenerator;
 import vendingmachine.domain.product.Product;
 import vendingmachine.domain.product.Products;
 import vendingmachine.dto.CoinDto;
 import vendingmachine.exception.ExceptionHandler;
 import vendingmachine.service.VendingService;
-import vendingmachine.util.NumberValidator;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
 
@@ -34,40 +30,41 @@ public class VendingController {
     }
 
     public void process() {
-        Map<Coin, Integer> coins = createVendingMachineCoins();
+        VendingMachine vendingMachine = createVendingMachine();
+        while (vendingMachine.canContinue()) {
+            purchase(vendingMachine);
+        }
+        makeRemainingCoins(vendingMachine);
+    }
+
+    private VendingMachine createVendingMachine() {
+        Map<Coin, Integer> coins = createHoldingCoins();
         Products holdingProducts = createHoldingProduct();
         Price inputPrice = createInputPrice();
-        OrderProcessor orderProcessor = new OrderProcessor(holdingProducts, inputPrice);
-        while (orderProcessor.canContinue()) {
-            order(holdingProducts, orderProcessor);
-        }
-        makeRemainingCoins(coins, orderProcessor);
+        return new VendingMachine(coins, holdingProducts, inputPrice);
     }
 
-    private void makeRemainingCoins(final Map<Coin, Integer> coins, final OrderProcessor orderProcessor) {
-        outputView.showInputPrice(orderProcessor.getInputPrice().getAmount());
-        Price remainingPrice = orderProcessor.getInputPrice();
-        LeastCoinGenerator leastCoinGenerator = new LeastCoinGenerator(coins);
-        Map<Coin, Integer> leastCoins = leastCoinGenerator.generateCoins(remainingPrice);
-        outputView.showRemainingPrice(leastCoins);
+    private void makeRemainingCoins(final VendingMachine vendingMachine) {
+        outputView.showInputPrice(vendingMachine.getInputPriceValue());
+        outputView.showRemainingPrice(vendingMachine.getLeastCoins());
     }
 
-    private void order(final Products holdingProducts, final OrderProcessor orderProcessor) {
-        outputView.showInputPrice(orderProcessor.getInputPrice().getAmount());
-        Product orderProduct = createOrderProduct(holdingProducts);
-        orderProcessor.process(orderProduct);
+    private void purchase(final VendingMachine vendingMachine) {
+        outputView.showInputPrice(vendingMachine.getInputPriceValue());
+        Product orderProduct = createOrderProduct(vendingMachine);
+        vendingMachine.purchase(orderProduct);
     }
 
-    private Map<Coin, Integer> createVendingMachineCoins() {
+    private Map<Coin, Integer> createHoldingCoins() {
         Price holdingPrice = createHoldingPrice();
         Map<Coin, Integer> coins = service.createRandomCoins(holdingPrice);
         outputView.informHoldingAmount(CoinDto.from(coins));
         return coins;
     }
 
-    private Product createOrderProduct(final Products holdingProducts) {
+    private Product createOrderProduct(final VendingMachine vendingMachine) {
         outputView.requestOrderProduct();
-        return exceptionHandler.retryOn(() -> holdingProducts.findByName(inputView.readOrderProduct()));
+        return exceptionHandler.retryOn(() -> vendingMachine.findByName(inputView.readOrderProduct()));
     }
 
     private Price createInputPrice() {
