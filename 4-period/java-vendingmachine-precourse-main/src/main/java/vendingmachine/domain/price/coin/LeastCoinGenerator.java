@@ -1,6 +1,7 @@
 package vendingmachine.domain.price.coin;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import vendingmachine.domain.price.Price;
 
@@ -14,7 +15,7 @@ public class LeastCoinGenerator implements CoinGenerator {
 
     @Override
     public Map<Coin, Integer> generateCoins(final Price price) {
-        Map<Coin, Integer> coins = new HashMap<>();
+        Map<Coin, Integer> coins = new LinkedHashMap<>();
         int target = price.getAmount();
         for (Coin coin : Coin.sortedCoins()) {
             target = processCoin(coins, target, coin);
@@ -23,7 +24,7 @@ public class LeastCoinGenerator implements CoinGenerator {
     }
 
     private int processCoin(final Map<Coin, Integer> coins, int target, final Coin coin) {
-        if (holdingCoins.containsKey(coin)) {
+        if (holdingCoins.getOrDefault(coin, 0) > 0) {
             int coinAmount = coin.getPrice().getAmount();
             int possibleCount = target / coinAmount;
             int count = Math.min(possibleCount, holdingCoins.get(coin));
