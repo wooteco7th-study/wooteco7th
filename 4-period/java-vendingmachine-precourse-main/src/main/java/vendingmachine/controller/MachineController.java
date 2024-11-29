@@ -2,6 +2,7 @@ package vendingmachine.controller;
 
 import vendingmachine.domain.Coin;
 import vendingmachine.domain.Inventories;
+import vendingmachine.domain.InventoriesGenerator;
 import vendingmachine.domain.MachineCoins;
 import vendingmachine.view.InputView;
 import vendingmachine.view.OutputView;
@@ -22,7 +23,7 @@ public class MachineController {
     public void run() {
         MachineCoins machineCoins = saveMachineCoins();
 
-        Inventories inventories = retryOnInvalidInput(inputView::readInventories);
+        Inventories inventories = retryOnInvalidInput(this::createInventories);
         int orderAmount = retryOnInvalidInput(inputView::readOrderAmount);
         orderAmount = processOrders(orderAmount, inventories);
 
@@ -41,6 +42,11 @@ public class MachineController {
     private MachineCoins createMachineCoins() {
         int amountHeld = inputView.readAmountHeld();
         return new MachineCoins(amountHeld);
+    }
+
+    private Inventories createInventories() {
+        String inventories = inputView.readInventories();
+        return InventoriesGenerator.parseInventories(inventories);
     }
 
     private int processOrders(int orderAmount, final Inventories inventories) {

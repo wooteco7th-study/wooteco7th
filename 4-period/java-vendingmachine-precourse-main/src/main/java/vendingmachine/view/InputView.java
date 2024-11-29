@@ -1,7 +1,6 @@
 package vendingmachine.view;
 
 import camp.nextstep.edu.missionutils.Console;
-import vendingmachine.domain.Inventories;
 import vendingmachine.util.StringParser;
 
 import java.util.regex.Pattern;
@@ -24,10 +23,10 @@ public class InputView {
         return StringParser.parseToValidNumber(input);
     }
 
-    public Inventories readInventories() {
+    public String readInventories() {
         String input = getValidatedInput(INVENTORIES_MSG);
         validateInputFormat(input);
-        return StringParser.parseInventories(input);
+        return input;
     }
 
     public int readOrderAmount() {
