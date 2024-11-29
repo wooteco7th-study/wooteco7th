@@ -12,7 +12,6 @@ public class HoldingPrice extends Price {
     }
 
     private void validate(final int amount) {
-        NumberValidator.validateRange(amount, 0, Integer.MAX_VALUE, INVALID_AMOUNT);
         NumberValidator.validateUnit(amount, 10, INVALID_AMOUNT);
     }
 }
