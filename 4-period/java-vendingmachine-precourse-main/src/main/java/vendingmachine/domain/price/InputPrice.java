@@ -1,6 +1,6 @@
 package vendingmachine.domain.price;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_INPUT_AMOUNT;
+import static vendingmachine.exception.ErrorMessage.INVALID_AMOUNT;
 
 import vendingmachine.exception.CustomIllegalArgumentException;
 
@@ -12,7 +12,7 @@ public class InputPrice extends Price {
 
     private void validate(final int amount) {
         if (amount == 0) {
-            throw new CustomIllegalArgumentException(INVALID_INPUT_AMOUNT);
+            throw new CustomIllegalArgumentException(INVALID_AMOUNT);
         }
     }
 }

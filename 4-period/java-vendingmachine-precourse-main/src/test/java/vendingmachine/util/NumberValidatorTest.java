@@ -1,7 +1,7 @@
 package vendingmachine.util;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static vendingmachine.exception.ErrorMessage.INVALID_UNIT;
+import static vendingmachine.exception.ErrorMessage.INVALID_AMOUNT;
 import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import vendingmachine.exception.ErrorMessage;
 
 class NumberValidatorTest {
 
@@ -28,7 +27,7 @@ class NumberValidatorTest {
 
             // When & Then
             assertThatCode(() -> {
-                NumberValidator.validateRange(value, min, max, ErrorMessage.INVALID_RANGE);
+                NumberValidator.validateRange(value, min, max, INVALID_AMOUNT);
             }).doesNotThrowAnyException();
         }
 
@@ -38,7 +37,8 @@ class NumberValidatorTest {
             // Given
 
             // When & Then
-            assertIllegalArgument(() -> NumberValidator.validateRange(-1, min, max, ErrorMessage.INVALID_RANGE));
+            assertIllegalArgument(
+                    () -> NumberValidator.validateRange(-1, min, max, INVALID_AMOUNT));
         }
 
         @Test
@@ -47,7 +47,8 @@ class NumberValidatorTest {
             // Given
 
             // When & Then
-            assertIllegalArgument(() -> NumberValidator.validateRange(11, min, max, ErrorMessage.INVALID_RANGE));
+            assertIllegalArgument(
+                    () -> NumberValidator.validateRange(11, min, max, INVALID_AMOUNT));
         }
     }
 
@@ -64,7 +65,7 @@ class NumberValidatorTest {
 
             // When & Then
             assertThatCode(() -> {
-                NumberValidator.validateUnit(10, unit, INVALID_UNIT);
+                NumberValidator.validateUnit(10, unit, INVALID_AMOUNT);
             }).doesNotThrowAnyException();
         }
 
@@ -74,8 +75,8 @@ class NumberValidatorTest {
             // Given
 
             // When & Then
-            assertIllegalArgument(() -> NumberValidator.validateUnit(12, unit, INVALID_UNIT),
-                    INVALID_UNIT);
+            assertIllegalArgument(() -> NumberValidator.validateUnit(12, unit, INVALID_AMOUNT),
+                    INVALID_AMOUNT);
         }
     }
 }

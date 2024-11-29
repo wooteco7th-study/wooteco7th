@@ -1,6 +1,6 @@
 package vendingmachine.service;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_PRODUCT;
+import static vendingmachine.exception.ErrorMessage.INVALID_PRODUCT_FORMAT;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,7 +42,7 @@ public class VendingService {
         List<Product> products = new ArrayList<>();
         for (String input : inputs) {
             if (InputValidator.isInvalidPattern(input, HOLDING_PRODUCT_PATTERN)) {
-                throw new CustomIllegalArgumentException(INVALID_HOLDING_PRODUCT);
+                throw new CustomIllegalArgumentException(INVALID_PRODUCT_FORMAT);
             }
             products.add(createHoldingProduct(input));
         }
@@ -51,8 +51,8 @@ public class VendingService {
 
     private Product createHoldingProduct(final String input) {
         List<String> group = InputValidator.findMatchingGroups(input, HOLDING_PRODUCT_PATTERN);
-        ProductPrice price = new ProductPrice(StringParser.parseToInteger(group.get(1), INVALID_HOLDING_PRODUCT));
-        Quantity quantity = new Quantity(StringParser.parseToInteger(group.get(2), INVALID_HOLDING_PRODUCT));
+        ProductPrice price = new ProductPrice(StringParser.parseToInteger(group.get(1), INVALID_PRODUCT_FORMAT));
+        Quantity quantity = new Quantity(StringParser.parseToInteger(group.get(2), INVALID_PRODUCT_FORMAT));
         return new Product(group.get(0), price, quantity);
     }
 

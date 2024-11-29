@@ -1,6 +1,6 @@
 package vendingmachine.domain;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_ORDER_PRICE;
+import static vendingmachine.exception.ErrorMessage.INSUFFICIENT_PRICE;
 import static vendingmachine.exception.ErrorMessage.OUT_OF_STOCK;
 
 import java.util.Map;
@@ -53,7 +53,7 @@ public class VendingMachine {
         if (inputPrice.getAmount() >= orderProduct.getPriceAmount()) {
             return;
         }
-        throw new CustomIllegalArgumentException(INVALID_ORDER_PRICE);
+        throw new CustomIllegalArgumentException(INSUFFICIENT_PRICE);
     }
 
     public int getInputPriceValue() {

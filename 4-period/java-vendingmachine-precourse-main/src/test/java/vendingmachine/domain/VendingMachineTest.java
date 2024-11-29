@@ -1,7 +1,7 @@
 package vendingmachine.domain;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static vendingmachine.exception.ErrorMessage.INVALID_ORDER_PRICE;
+import static vendingmachine.exception.ErrorMessage.INSUFFICIENT_PRICE;
 import static vendingmachine.exception.ErrorMessage.OUT_OF_STOCK;
 import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
@@ -41,7 +41,7 @@ class VendingMachineTest {
 
         // When & Then
         assertIllegalArgument(() -> processor.purchase(holdingProducts.findByName("콜라"))
-                , INVALID_ORDER_PRICE);
+                , INSUFFICIENT_PRICE);
     }
 
     @Test

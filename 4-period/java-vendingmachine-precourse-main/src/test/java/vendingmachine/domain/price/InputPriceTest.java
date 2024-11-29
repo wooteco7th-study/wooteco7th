@@ -1,6 +1,6 @@
 package vendingmachine.domain.price;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_INPUT_AMOUNT;
+import static vendingmachine.exception.ErrorMessage.INVALID_AMOUNT;
 import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
 import org.junit.jupiter.api.DisplayName;
@@ -15,6 +15,6 @@ class InputPriceTest {
 
         // When & Then
         assertIllegalArgument(() -> new InputPrice(0))
-                .hasMessageContaining(INVALID_INPUT_AMOUNT.getMessage());
+                .hasMessageContaining(INVALID_AMOUNT.getMessage());
     }
 }

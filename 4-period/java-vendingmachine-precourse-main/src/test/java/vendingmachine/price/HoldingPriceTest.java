@@ -1,6 +1,6 @@
 package vendingmachine.price;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_AMOUNT;
+import static vendingmachine.exception.ErrorMessage.INVALID_AMOUNT;
 import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
 import org.assertj.core.api.Assertions;
@@ -28,6 +28,6 @@ class HoldingPriceTest {
         // Given
 
         // When & Then
-        assertIllegalArgument(() -> new HoldingPrice(233), INVALID_HOLDING_AMOUNT);
+        assertIllegalArgument(() -> new HoldingPrice(233), INVALID_AMOUNT);
     }
 }

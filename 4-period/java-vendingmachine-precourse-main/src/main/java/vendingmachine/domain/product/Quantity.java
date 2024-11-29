@@ -1,6 +1,6 @@
 package vendingmachine.domain.product;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_ZERO_QUANTITY;
+import static vendingmachine.exception.ErrorMessage.INVALID_PRODUCT_QUANTITY;
 
 import vendingmachine.exception.CustomIllegalArgumentException;
 
@@ -23,7 +23,7 @@ public class Quantity {
 
     private void validate(final int quantity) {
         if (quantity < 0) {
-            throw new CustomIllegalArgumentException(INVALID_ZERO_QUANTITY);
+            throw new CustomIllegalArgumentException(INVALID_PRODUCT_QUANTITY);
         }
     }
 

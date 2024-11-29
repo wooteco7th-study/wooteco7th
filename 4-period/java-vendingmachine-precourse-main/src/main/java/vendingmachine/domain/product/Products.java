@@ -1,8 +1,8 @@
 package vendingmachine.domain.product;
 
-import static vendingmachine.exception.ErrorMessage.DUPLICATED_PRODUCT_NAME;
+import static vendingmachine.exception.ErrorMessage.DUPLICATED_PRODUCT;
+import static vendingmachine.exception.ErrorMessage.INVALID_ORDER_STATE;
 import static vendingmachine.exception.ErrorMessage.INVALID_PRODUCT_NAME;
-import static vendingmachine.exception.ErrorMessage.INVALID_STATE_ORDER;
 import static vendingmachine.exception.ErrorMessage.NO_PRODUCT_EXIST;
 
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class Products {
         int distinctSize = (int) products.stream()
                 .distinct()
                 .count();
-        if (products.size() != distinctSize) {
-            throw new CustomIllegalArgumentException(DUPLICATED_PRODUCT_NAME);
+        if (distinctSize != products.size()) {
+            throw new CustomIllegalArgumentException(DUPLICATED_PRODUCT);
         }
     }
 
@@ -49,7 +49,7 @@ public class Products {
                 return product.getPriceAmount();
             }
         }
-        throw new CustomIllegalStateException(INVALID_STATE_ORDER);
+        throw new CustomIllegalStateException(INVALID_ORDER_STATE);
     }
 
     public int getLowestProductPrice() {

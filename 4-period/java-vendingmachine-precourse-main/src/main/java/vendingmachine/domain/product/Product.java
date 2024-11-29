@@ -28,7 +28,7 @@ public class Product {
 
     private void validate(final Quantity quantity) {
         if (quantity.isZero()) {
-            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_HOLDING_PRODUCT_QUANTITY);
+            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_PRODUCT_QUANTITY);
         }
     }
 

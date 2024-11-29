@@ -1,8 +1,7 @@
 package vendingmachine.domain.product;
 
-import static vendingmachine.exception.ErrorMessage.INVALID_HOLDING_PRODUCT_QUANTITY;
-import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_DIVIDE_BY_TEN;
-import static vendingmachine.exception.ErrorMessage.INVALID_PRICE_UNDER_EQUAL_HUNDRED;
+import static vendingmachine.exception.ErrorMessage.INVALID_AMOUNT;
+import static vendingmachine.exception.ErrorMessage.INVALID_PRODUCT_QUANTITY;
 import static vendingmachine.support.CustomExceptionAssertions.assertIllegalArgument;
 
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +17,7 @@ class ProductTest {
 
         // When & Then
         assertIllegalArgument(() -> new Product("밀키스", new ProductPrice(90), new Quantity(10)))
-                .hasMessageContaining(INVALID_PRICE_UNDER_EQUAL_HUNDRED.getMessage());
+                .hasMessageContaining(INVALID_AMOUNT.getMessage());
     }
 
     @Test
@@ -28,7 +27,7 @@ class ProductTest {
 
         // When & Then
         assertIllegalArgument(() -> new Product("밀키스", new ProductPrice(199), new Quantity(10)))
-                .hasMessageContaining(INVALID_PRICE_DIVIDE_BY_TEN.getMessage());
+                .hasMessageContaining(INVALID_AMOUNT.getMessage());
     }
 
     @Test
@@ -38,6 +37,6 @@ class ProductTest {
 
         // When & Then
         assertIllegalArgument(() -> new Product("밀키스", new ProductPrice(100), new Quantity(0)))
-                .hasMessageContaining(INVALID_HOLDING_PRODUCT_QUANTITY.getMessage());
+                .hasMessageContaining(INVALID_PRODUCT_QUANTITY.getMessage());
     }
 }
