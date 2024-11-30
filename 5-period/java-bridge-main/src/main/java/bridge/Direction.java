@@ -52,4 +52,8 @@ public class Direction {
     public int hashCode() {
         return Objects.hash(direction);
     }
+
+    public char getDirection() {
+        return direction;
+    }
 }

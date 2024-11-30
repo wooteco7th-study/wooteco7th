@@ -1,12 +1,16 @@
 package bridge.controller;
 
 import bridge.Bridge;
+import bridge.BridgeGame;
 import bridge.BridgeMaker;
 import bridge.Direction;
+import bridge.dto.MoveResultDto;
 import bridge.exception.ExceptionHandler;
 import bridge.generator.BridgeRandomNumberGenerator;
 import bridge.view.InputView;
 import bridge.view.OutputView;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BridgeController {
 
@@ -25,8 +29,23 @@ public class BridgeController {
         // 다리 입력
         outputView.startMessage();
         Bridge bridge = makeBridge();
-        Direction direction = makeDirection();
+        BridgeGame game = new BridgeGame(bridge);
+        move(game);
+    }
 
+    private void move(final BridgeGame game) {
+        int pos = 0;
+        List<MoveResultDto> moveResultDtos = new ArrayList<>();
+        while (game.canContinue(pos)) {
+            Direction direction = makeDirection();
+            boolean isRightmove = game.move(direction, pos);
+            moveResultDtos.add(MoveResultDto.of(isRightmove, direction));
+            outputView.printMap(moveResultDtos);
+            if (!isRightmove) {
+                break;
+            }
+            pos++;
+        }
     }
 
     private Direction makeDirection() {
