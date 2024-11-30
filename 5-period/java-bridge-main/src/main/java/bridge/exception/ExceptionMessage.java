@@ -9,6 +9,8 @@ public enum ExceptionMessage {
 
     INVALID_FORMAT("유효하지 않은 포맷입니다."),
 
+    COMMAND_NOT_FOUND("존재하지 않는 게임 명령어 입니다."),
+
 
     ;
     private static final String ERROR_PREFIX = "[ERROR] ";
