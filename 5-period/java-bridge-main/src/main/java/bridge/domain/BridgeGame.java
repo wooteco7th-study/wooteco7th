@@ -12,35 +12,22 @@ public class BridgeGame {
     private static final int INITIAL_ATTEMPT = 0;
 
     private final Bridge bridge;
-    private final UpBridgeLog upBridgeLog;
-    private final DownBridgeLog downBridgeLog;
+    private final BridgeLogGroup bridgeLogGroup;
     private int turn;
     private int attempt;
 
-    public BridgeGame(final DownBridgeLog downBridgeLog, final UpBridgeLog upBridgeLog, final Bridge bridge) {
-        this.downBridgeLog = downBridgeLog;
-        this.upBridgeLog = upBridgeLog;
+    public BridgeGame(final BridgeLogGroup bridgeLogGroup, final Bridge bridge) {
         this.bridge = bridge;
+        this.bridgeLogGroup = bridgeLogGroup;
         turn = INITIAL_TURN;
         attempt = INITIAL_ATTEMPT;
     }
 
-    /**
-     * 사용자가 칸을 이동할 때 사용하는 메서드
-     * <p>
-     * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
     public void move(final MoveCommand moveCommand) {
         final boolean matchedMoveCommand = bridge.isMatchedMoveCommand(turn++, moveCommand);
-        upBridgeLog.updateLog(moveCommand, matchedMoveCommand);
-        downBridgeLog.updateLog(moveCommand, matchedMoveCommand);
+        bridgeLogGroup.updateBridgeLogs(matchedMoveCommand, moveCommand);
     }
 
-    /**
-     * 사용자가 게임을 다시 시도할 때 사용하는 메서드
-     * <p>
-     * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
-     */
     public boolean retry(final GameCommand gameCommand) {
         return Objects.equals(gameCommand, GameCommand.RETRY);
     }
@@ -50,7 +37,7 @@ public class BridgeGame {
     }
 
     public boolean isClear() {
-        return upBridgeLog.countPass() + downBridgeLog.countPass() == turn;
+        return bridgeLogGroup.countTotalPass() == turn;
     }
 
     public boolean isEnd() {
@@ -58,11 +45,11 @@ public class BridgeGame {
     }
 
     public List<BridgeLogType> getUpBridgeLogs() {
-        return upBridgeLog.getValues();
+        return bridgeLogGroup.getUpBridgeLogs();
     }
 
     public List<BridgeLogType> getDownBridgeLogs() {
-        return downBridgeLog.getValues();
+        return bridgeLogGroup.getDownBridgeLogs();
     }
 
     public GameResult getGameResult() {
@@ -78,7 +65,6 @@ public class BridgeGame {
 
     public void clear() {
         turn = INITIAL_TURN;
-        upBridgeLog.clear();
-        downBridgeLog.clear();
+        bridgeLogGroup.clear();
     }
 }

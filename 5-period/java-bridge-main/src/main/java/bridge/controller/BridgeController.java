@@ -4,11 +4,11 @@ import bridge.domain.Bridge;
 import bridge.domain.BridgeGame;
 import bridge.domain.BridgeGenerator;
 import bridge.domain.BridgeLength;
+import bridge.domain.BridgeLogGroup;
 import bridge.domain.BridgeLogType;
-import bridge.domain.DownBridgeLog;
+import bridge.domain.BridgeLogsGenerator;
 import bridge.domain.GameCommand;
 import bridge.domain.MoveCommand;
-import bridge.domain.UpBridgeLog;
 import bridge.util.LoopTemplate;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -28,7 +28,8 @@ public class BridgeController {
         outputView.printIntro();
         final BridgeLength bridgeLength = requestBridgeLength();
         final Bridge bridge = BridgeGenerator.generate(bridgeLength);
-        final BridgeGame bridgeGame = new BridgeGame(new DownBridgeLog(), new UpBridgeLog(), bridge);
+        final BridgeLogGroup bridgeLogGroup = BridgeLogsGenerator.generate();
+        final BridgeGame bridgeGame = new BridgeGame(bridgeLogGroup, bridge);
         start(bridgeGame);
     }
 
