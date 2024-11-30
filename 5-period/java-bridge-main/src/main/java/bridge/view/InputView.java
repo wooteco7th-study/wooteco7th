@@ -14,21 +14,21 @@ public class InputView {
      */
     public int readBridgeSize() {
         final String input = readInput();
-        return StringParser.parseToInt(input, ErrorMessage.INVALID_BRIDGE_LENGTH_FORMAT);
+        return StringParser.parseToInt(input.strip(), ErrorMessage.INVALID_BRIDGE_LENGTH_FORMAT);
     }
 
     /**
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMoving() {
-        return readInput();
+        return readInput().strip();
     }
 
     /**
      * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
      */
     public String readGameCommand() {
-        return readInput();
+        return readInput().strip();
     }
 
     private String readInput() {
