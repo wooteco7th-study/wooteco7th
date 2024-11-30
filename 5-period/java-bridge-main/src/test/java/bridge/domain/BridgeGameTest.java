@@ -2,8 +2,8 @@ package bridge.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import bridge.domain.bridgeLog.BridgeLogGroup;
-import bridge.domain.bridgeLog.BridgeLogsGenerator;
+import bridge.domain.log.BridgeLogGroup;
+import bridge.domain.log.BridgeLogsGenerator;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package bridge.domain.bridgeLog;
+package bridge.domain.log;
 import bridge.domain.MoveCommand;
 import bridge.error.CustomIllegalStateException;
 import bridge.error.ErrorMessage;

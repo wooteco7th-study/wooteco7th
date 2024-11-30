@@ -1,19 +1,18 @@
-package bridge.domain.bridgeLog;
+package bridge.domain.log;
 
 import bridge.domain.MoveCommand;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class UpBridgeLog extends BridgeLog {
+public class DownBridgeLog extends BridgeLog {
 
-    public UpBridgeLog() {
+    public DownBridgeLog() {
         super(new ArrayList<>());
     }
 
-    @Override
     public void updateLog(final MoveCommand moveCommand, final boolean isPassed) {
         BridgeLogType bridgeLogType = BridgeLogType.NONE;
-        if (Objects.equals(moveCommand, MoveCommand.UP)) {
+        if (Objects.equals(moveCommand, MoveCommand.DOWN)) {
             if (isPassed) {
                 bridgeLogType = BridgeLogType.PASS;
             }

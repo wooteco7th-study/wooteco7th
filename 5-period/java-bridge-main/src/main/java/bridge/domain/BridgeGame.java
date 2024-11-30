@@ -1,7 +1,7 @@
 package bridge.domain;
 
-import bridge.domain.bridgeLog.BridgeLogGroup;
-import bridge.domain.bridgeLog.BridgeLogType;
+import bridge.domain.log.BridgeLogGroup;
+import bridge.domain.log.BridgeLogType;
 import java.util.List;
 import java.util.Objects;
 
