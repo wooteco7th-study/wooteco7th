@@ -3,8 +3,8 @@ package bridge.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bridge.domain.GameCommand.D;
-import static bridge.domain.GameCommand.U;
+import static bridge.domain.GameCommand.DOWN;
+import static bridge.domain.GameCommand.UP;
 
 public class CurrentMap {
     private static final String RIGHT_MARK = "O";
@@ -37,22 +37,22 @@ public class CurrentMap {
     }
 
     private void putWrongMark(final String moving) {
-        if (moving.equals(U.toString())) {
+        if (moving.equals(UP.getCommand())) {
             upMap.add(WRONG_MARK);
             downMap.add(BLANK);
         }
-        if (moving.equals(D.toString())) {
+        if (moving.equals(DOWN.getCommand())) {
             upMap.add(BLANK);
             downMap.add(WRONG_MARK);
         }
     }
 
     private void putRightMark(final String moving) {
-        if (moving.equals(U.toString())) {
+        if (moving.equals(UP.getCommand())) {
             upMap.add(RIGHT_MARK);
             downMap.add(BLANK);
         }
-        if (moving.equals(D.toString())) {
+        if (moving.equals(DOWN.getCommand())) {
             upMap.add(BLANK);
             downMap.add(RIGHT_MARK);
         }

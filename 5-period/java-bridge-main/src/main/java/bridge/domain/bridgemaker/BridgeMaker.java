@@ -14,7 +14,7 @@ public class BridgeMaker {
 
     public static final int MIN_SIZE = 3;
     public static final int MAX_SIZE = 20;
-    
+
     private final BridgeNumberGenerator bridgeNumberGenerator;
 
     public BridgeMaker(BridgeNumberGenerator bridgeNumberGenerator) {
@@ -40,7 +40,7 @@ public class BridgeMaker {
         List<String> bridgeAnswer = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             int randomNumber = bridgeNumberGenerator.generate();
-            bridgeAnswer.add(GameCommand.from(String.valueOf(randomNumber)).name());
+            bridgeAnswer.add(GameCommand.from(randomNumber));
         }
         return bridgeAnswer;
     }

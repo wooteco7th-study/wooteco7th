@@ -5,8 +5,8 @@ import java.util.Arrays;
 import static bridge.exception.ExceptionMessage.COMMAND_NOT_FOUND;
 
 public enum GameCommand {
-    U("1"),
-    D("0"),
+    UP("U"),
+    DOWN("D"),
     RESTART("R"),
     QUIT("Q"),
     ;
@@ -24,10 +24,17 @@ public enum GameCommand {
                 .orElseThrow(() -> new IllegalArgumentException(COMMAND_NOT_FOUND.getMessage()));
     }
 
-    public static GameCommand fromName(String name) {
-        return Arrays.stream(GameCommand.values())
-                .filter(element -> element.name().equals(name))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(COMMAND_NOT_FOUND.getMessage()));
+    public static String from(int number) {
+        if (number == 1) {
+            return UP.command;
+        }
+        if (number == 0) {
+            return DOWN.command;
+        }
+        throw new IllegalStateException(COMMAND_NOT_FOUND.getMessage());
+    }
+
+    public String getCommand() {
+        return command;
     }
 }
