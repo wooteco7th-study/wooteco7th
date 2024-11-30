@@ -10,8 +10,8 @@ public class BridgeMaker {
 
     private static final String UP = "U";
     private static final String DOWN = "D";
-    private static final int UP_NUMBER = 0;
-    private static final int DOWN_NUMBER = 1;
+    private static final int UP_NUMBER = 1;
+    private static final int DOWN_NUMBER = 0;
 
     private final BridgeNumberGenerator bridgeNumberGenerator;
 
