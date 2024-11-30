@@ -1,8 +1,10 @@
 package bridge.controller;
 
 import bridge.Bridge;
+import bridge.BridgeMaker;
 import bridge.Direction;
 import bridge.exception.ExceptionHandler;
+import bridge.generator.BridgeRandomNumberGenerator;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 
@@ -35,9 +37,10 @@ public class BridgeController {
     }
 
     private Bridge makeBridge() {
+        BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
         return exceptionHandler.retryOn(() -> {
             int bridgeSize = inputView.readBridgeSize();
-            return new Bridge(bridgeSize);
+            return new Bridge(bridgeSize, bridgeMaker);
         });
     }
 }
