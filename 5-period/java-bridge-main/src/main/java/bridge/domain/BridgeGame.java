@@ -46,6 +46,10 @@ public class BridgeGame {
         return turn == bridge.getSize();
     }
 
+    public boolean hasFail() {
+        return bridgeLogGroup.hasFail();
+    }
+
     public List<BridgeLogType> getUpBridgeLogs() {
         return bridgeLogGroup.getUpBridgeLogs();
     }

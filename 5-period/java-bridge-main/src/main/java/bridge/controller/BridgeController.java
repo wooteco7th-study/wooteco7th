@@ -48,7 +48,7 @@ public class BridgeController {
     }
 
     private void move(final BridgeGame bridgeGame) {
-        while (!bridgeGame.isEnd()) {
+        while (!bridgeGame.isEnd() && !bridgeGame.hasFail()) {
             final MoveCommand moveCommand = requestMoveCommand();
             bridgeGame.move(moveCommand);
             responseBridgeLog(bridgeGame);

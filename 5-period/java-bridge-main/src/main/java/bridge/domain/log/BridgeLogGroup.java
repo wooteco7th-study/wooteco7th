@@ -45,4 +45,9 @@ public class BridgeLogGroup {
                 .mapToInt(BridgeLog::countPass)
                 .sum();
     }
+
+    public boolean hasFail() {
+        return bridgeLogs.stream()
+                .anyMatch(BridgeLog::hasFail);
+    }
 }

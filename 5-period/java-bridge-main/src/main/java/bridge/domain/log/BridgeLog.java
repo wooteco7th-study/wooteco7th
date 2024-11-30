@@ -3,6 +3,7 @@ package bridge.domain.log;
 import bridge.domain.MoveCommand;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class BridgeLog {
 
@@ -22,6 +23,11 @@ public abstract class BridgeLog {
         return (int) values.stream()
                 .filter(BridgeLogType::isPassed)
                 .count();
+    }
+
+    public boolean hasFail() {
+        return values.stream()
+                .anyMatch(value -> Objects.equals(value, BridgeLogType.FAIL));
     }
 
     public void clear() {

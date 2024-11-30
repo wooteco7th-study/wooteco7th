@@ -93,7 +93,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 예외_테스트() {
         assertSimpleTest(() -> {
-            runException("a");
+            runException("3");
             assertThat(output()).contains(ERROR_MESSAGE);
         });
     }
