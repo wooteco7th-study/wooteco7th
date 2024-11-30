@@ -1,9 +1,10 @@
-package bridge.domain;
+package bridge.domain.bridgeLog;
 
+import bridge.domain.MoveCommand;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class UpBridgeLog extends BridgeLog{
+public class UpBridgeLog extends BridgeLog {
 
     public UpBridgeLog() {
         super(new ArrayList<>());
