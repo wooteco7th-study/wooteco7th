@@ -1,3 +1,7 @@
+
+- 기능 구현 목록 초안 작성 : 29분
+- 구현 완료 및 테스트 통과: 2시간 28분
+
 ## 🎯 비즈니스 로직 분석
 
 - 위아래 두칸으로 이루어진 다리를 건넘
@@ -31,69 +35,86 @@
 ### ✅ domain
 
 #### Bridge
-- [] 생성된 다리의 정보를 저장
-- [] 인덱스에 해당하는 요소가 U,D 인지 확인
+- [X] 생성된 다리의 정보를 저장
+- [X] 인덱스에 해당하는 요소가 U,D 인지 확인
 
 #### BridgeMaker
-- [] 사이즈 만큼 다리를 생성
+- [X] 사이즈 만큼 다리를 생성
 
 #### BridgeRandomNumberGenerator
-- [] 0,1 숫자를 무작위로 생성
+- [X] 0,1 숫자를 무작위로 생성
+
+#### BridgeLength
+- [X] 다리 길이 정보를 저장
+
+##### 예외처리
+- [X] 다리 길이가 3 ~ 20 사이를 벗어난 경우
+
+#### BridgeGenerator
+- [X] 다리 길이에 따라 다리를 생성 
 
 #### UpBridgeLog
-- [] 위 다리 기록을 저장
+- [X] 위 다리 기록을 저장
+- [X] 로그 업데이트
 
 #### DownBridgeLog
-- [] 아래 다리 기록을 저장
+- [X] 아래 다리 기록을 저장
+- [X] 로그 업데이트
 
 #### BridgeGame
-- [] 사용자의 입력에 따라 다리를 이동
-- [] 현재 라운드 정보를 저장
-- [] 재시작 여부를 판단
-    - [] 다리 길이와 위 다리, 아래 다리의 성공 횟수가 같다면 성공
-    - [] 아니라면 재시작
+- [X] 사용자의 입력에 따라 다리를 이동
+- [X] 현재 라운드 정보를 저장
+- [X] 재시작 여부를 판단
+- [X] 게임 성공 여부 판단
+- [X] 게임 종료 여부 판단
+- [X] 게임 초기화
+- [X] 시도 횟수 업데이트
 
 #### MoveCommand
-- [] 이동 명령을 정의
+- [X] 이동 명령을 정의
 
 #### GameCommand
-- [] 게임 재시작, 종료 명령을 정의
+- [X] 게임 재시작, 종료 명령을 정의
 
 #### BridgeStatus
-- [] O,X,빈문자열을 정의
+- [X] O,X,공백을 정의
+
+#### GameResult
+- [X] 게임 성공, 실패 정의
 
 ### ✅ util
 
 #### NumberValidator
-- [] 숫자 범위 검증
+- [X] 숫자 범위 검증
 
 #### StringParser
-- [] 문자열을 숫자로 변환
+- [X] 문자열을 숫자로 변환
 
 #### LoopTemplate
-- [] try-catch 루프
+- [X] try-catch 루프
 
 ### ✅ error
 
 #### CustomIllegalArgumentException
-- [] IllegalArgumentException의 하위 클래스
+- [X] IllegalArgumentException의 하위 클래스
 
 #### CustomIllegalStateException
-- [] IllegalStateException의 하위 클래스
+- [X] IllegalStateException의 하위 클래스
 
 #### ErrorMessage
-- [] 에러 메세지를 정의
+- [X] 에러 메세지를 정의
 
 ### ✅ view
 
 #### InputView
-- [] 사용자가 입력한 다리 길이를 읽음
-- [] 사용자가 입력한 재시작 여부를 읽음
+- [X] 사용자가 입력한 다리 길이를 읽음
+- [X] 사용자가 입력한 재시작 여부를 읽음
+- [X] 사용자가 입력한 무빙 커멘드를 읽음
 
 #### OutputView
-- [] 게임 진행 관련 메세지를 출력
+- [X] 게임 진행 관련 메세지를 출력
 
 ### ✅ controller
 
 #### BridgeController
-- [] 애플리케이션의 흐름을 제어하는 클래스
+- [X] 애플리케이션의 흐름을 제어하는 클래스
