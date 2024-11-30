@@ -12,9 +12,9 @@ public class BridgeLogGroup {
         this.bridgeLogs = List.of(bridgeLogs);
     }
 
-    public void updateBridgeLogs(final boolean matchedMoveCommand, final MoveCommand moveCommand) {
+    public void updateBridgeLogs(final boolean isMatchedMoveCommand, final MoveCommand moveCommand) {
         for (BridgeLog bridgeLog : bridgeLogs) {
-            bridgeLog.updateLog(moveCommand, matchedMoveCommand);
+            bridgeLog.updateLog(moveCommand, isMatchedMoveCommand);
         }
     }
 
