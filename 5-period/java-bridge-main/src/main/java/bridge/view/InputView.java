@@ -1,6 +1,7 @@
 package bridge.view;
 
 import static bridge.exception.ErrorMessage.INVALID_BRIDGE_LENGTH;
+import static bridge.exception.ErrorMessage.INVALID_DIRECTION;
 
 import bridge.exception.ErrorMessage;
 import bridge.util.InputValidator;
@@ -23,7 +24,7 @@ public class InputView {
      * 사용자가 이동할 칸을 입력받는다.
      */
     public String readMoving() {
-        return null;
+        return readLine(INVALID_DIRECTION);
     }
 
     /**

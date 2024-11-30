@@ -8,7 +8,7 @@ public enum ErrorMessage {
     INVALID_NUMBER("숫자만 입력할 수 있습니다."),
 
     INVALID_BRIDGE_LENGTH("유효하지 않은 다리 길이입니다. 다시 입력해 주세요."),
-    INVALID_ORDER("유효하지 않은 주문입니다. 다시 입력해 주세요.");
+    INVALID_DIRECTION("유효하지 않은 방향입니다. 다시 입력해 주세요.");
 
     private final String message;
 

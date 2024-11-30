@@ -1,6 +1,7 @@
 package bridge.controller;
 
 import bridge.Bridge;
+import bridge.Direction;
 import bridge.exception.ExceptionHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -22,6 +23,15 @@ public class BridgeController {
         // 다리 입력
         outputView.startMessage();
         Bridge bridge = makeBridge();
+        Direction direction = makeDirection();
+
+    }
+
+    private Direction makeDirection() {
+        return exceptionHandler.retryOn(() -> {
+            outputView.selectDirection();
+            return new Direction(inputView.readMoving().charAt(0));
+        });
     }
 
     private Bridge makeBridge() {
