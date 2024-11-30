@@ -72,4 +72,10 @@ public class BridgeGame {
     public int getAttempt() {
         return attempt;
     }
+
+    public void clear() {
+        turn = INITIAL_TURN;
+        upBridgeLog.clear();
+        downBridgeLog.clear();
+    }
 }
