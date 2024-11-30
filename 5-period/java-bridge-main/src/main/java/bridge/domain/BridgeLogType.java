@@ -6,7 +6,7 @@ public enum BridgeLogType {
 
     PASS("O"),
     FAIL("X"),
-    NONE("");
+    NONE(" ");
 
     private final String expression;
 
