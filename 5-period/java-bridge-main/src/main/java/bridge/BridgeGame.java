@@ -11,8 +11,12 @@ public class BridgeGame {
         this.bridge = bridge;
     }
 
-    public boolean canContinue(final int pos) {
+    public boolean isNotEnd(final int pos) {
         return !bridge.isEnd(pos);
+    }
+
+    public boolean canContinue(final int pos, final boolean isRightMove) {
+        return !bridge.isEnd(pos) && isRightMove;
     }
 
     /**

@@ -122,7 +122,7 @@ public class OutputView {
     }
 
     public void selectDirection() {
-        showln(selectSquare);
+        showln(LINE + selectSquare);
     }
 
     public void showException(Exception exception) {
