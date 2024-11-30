@@ -14,14 +14,16 @@ public class DownBridgeLog {
     }
 
     public void updateLog(final MoveCommand moveCommand, final boolean isPassed) {
+        BridgeLogType bridgeLogType = BridgeLogType.NONE;
         if (Objects.equals(moveCommand, MoveCommand.DOWN)) {
             if (isPassed) {
-                values.add(BridgeLogType.PASS);
+                bridgeLogType = BridgeLogType.PASS;
             }
-            values.add(BridgeLogType.FAIL);
-            return;
+            if (!isPassed) {
+                bridgeLogType = BridgeLogType.FAIL;
+            }
         }
-        values.add(BridgeLogType.NONE);
+        values.add(bridgeLogType);
     }
 
     public int countPass() {
@@ -32,5 +34,9 @@ public class DownBridgeLog {
 
     public List<BridgeLogType> getValues() {
         return Collections.unmodifiableList(values);
+    }
+
+    public void clear() {
+        values.clear();
     }
 }
