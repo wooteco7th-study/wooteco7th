@@ -2,6 +2,7 @@ package bridge.view;
 
 import static bridge.exception.ErrorMessage.INVALID_BRIDGE_LENGTH;
 import static bridge.exception.ErrorMessage.INVALID_DIRECTION;
+import static bridge.exception.ErrorMessage.INVALID_RESTART_COMMAND;
 
 import bridge.exception.ErrorMessage;
 import bridge.util.InputValidator;
@@ -31,7 +32,7 @@ public class InputView {
      * 사용자가 게임을 다시 시도할지 종료할지 여부를 입력받는다.
      */
     public String readGameCommand() {
-        return null;
+        return readLine(INVALID_RESTART_COMMAND);
     }
 
 

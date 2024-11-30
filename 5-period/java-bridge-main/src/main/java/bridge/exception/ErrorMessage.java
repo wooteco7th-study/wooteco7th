@@ -9,7 +9,9 @@ public enum ErrorMessage {
 
     INVALID_BRIDGE_LENGTH("유효하지 않은 다리 길이입니다. 다시 입력해 주세요."),
     INVALID_DIRECTION("유효하지 않은 방향입니다. 다시 입력해 주세요."),
-    INVALID_DIRECTION_VALUE("유효하지 않은 방향값입니다. 다시 입력해 주세요.");;
+    INVALID_DIRECTION_VALUE("유효하지 않은 방향값입니다. 다시 입력해 주세요."),
+    INVALID_RESTART_COMMAND("유효하지 않은 커맨드입니다. 다시 입력해 주세요."),
+    ;
 
     private final String message;
 
