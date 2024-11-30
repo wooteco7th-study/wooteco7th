@@ -9,6 +9,7 @@ import bridge.domain.bridge.BridgeMaker;
 import bridge.domain.generator.BridgeNumberGenerator;
 import camp.nextstep.edu.missionutils.test.NsTest;
 import java.util.List;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest extends NsTest {
@@ -44,6 +45,52 @@ class ApplicationTest extends NsTest {
     }
 
     @Test
+    @DisplayName("게임 실패 테스트")
+    void gameFailTest() throws Exception {
+        assertRandomNumberInRangeTest(() -> {
+            run("3", "U", "U", "Q");
+            assertThat(output()).contains(
+                    "게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)",
+                    "최종 게임 결과",
+                    "[ O | X ]",
+                    "[   |   ]",
+                    "게임 성공 여부: 실패",
+                    "총 시도한 횟수: 1"
+            );
+
+            int upSideIndex = output().indexOf("[ O | X ]");
+            int downSideIndex = output().indexOf("[   |   ]");
+            assertThat(upSideIndex).isLessThan(downSideIndex);
+        }, 1, 0, 1);
+    }
+
+    @Test
+    @DisplayName("시도 횟수 증가 테스트")
+    void attemptTest() throws Exception {
+        assertRandomNumberInRangeTest(() -> {
+            run("3", "U", "U", "R", "U", "D", "U");
+            assertThat(output()).contains(
+                    "게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)",
+                    "[ O | X ]",
+                    "[   |   ]",
+                    "최종 게임 결과",
+                    "[ O |   | O ]",
+                    "[   | O |   ]",
+                    "게임 성공 여부: 성공",
+                    "총 시도한 횟수: 2"
+            );
+
+            int upSideIndex1 = output().indexOf("[ O | X ]");
+            int downSideIndex1 = output().indexOf("[   |   ]");
+            int upSideIndex2 = output().indexOf("[ O |   | O ]");
+            int downSideIndex2 = output().indexOf("[   | O |   ]");
+            assertThat(upSideIndex1).isLessThan(downSideIndex1);
+            assertThat(upSideIndex2).isLessThan(downSideIndex2);
+        }, 1, 0, 1);
+
+    }
+
+    @Test
     void 예외_테스트() {
         assertSimpleTest(() -> {
             runException("a");
@@ -54,7 +101,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 게임_재시도_후_성공_테스트() {
         assertRandomNumberInRangeTest(() -> {
-            run("3", "U", "U", "R", "U", "D", "D");
+            run("3", "U", "U", "U", "R", "U", "D", "D", "Q");
             assertThat(output()).contains(
                     "최종 게임 결과",
                     "[ O |   |   ]",
@@ -68,7 +115,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 게임_실패_후_종료_테스트() {
         assertRandomNumberInRangeTest(() -> {
-            run("3", "U", "D", "D", "Q");
+            run("3", "U", "D", "Q");
             assertThat(output()).contains(
                     "최종 게임 결과",
                     "[ O |   ]",
@@ -122,7 +169,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 게임_성공시_재시도_메시지_없음_테스트() {
         assertRandomNumberInRangeTest(() -> {
-            run("3", "U", "D", "D");
+            run("3", "U", "D", "D", "Q");
             assertThat(output())
                     .contains("게임 성공 여부: 성공")
                     .doesNotContain(RETRY_MESSAGE);
@@ -132,7 +179,7 @@ class ApplicationTest extends NsTest {
     @Test
     void 게임_실패시_재시도_메시지_출력_테스트() {
         assertRandomNumberInRangeTest(() -> {
-            run("3", "U", "U", "Q");
+            run("3", "U", "U", "D", "Q");
             assertThat(output())
                     .contains(RETRY_MESSAGE)
                     .doesNotContain("게임 성공 여부: 성공");
