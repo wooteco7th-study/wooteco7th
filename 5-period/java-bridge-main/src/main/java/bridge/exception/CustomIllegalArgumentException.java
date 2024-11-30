@@ -1,6 +1,6 @@
 package bridge.exception;
 
-public class CustomIllegalArgumentException extends IllegalArgumentException{
+public class CustomIllegalArgumentException extends IllegalArgumentException {
 
     public CustomIllegalArgumentException(final String message) {
         super(ErrorPrefix.format(message));

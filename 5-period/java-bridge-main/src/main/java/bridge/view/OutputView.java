@@ -32,15 +32,17 @@ public class OutputView {
     private StringBuilder makeBridgeText(final List<MoveResultDto> resultDtos, final char direction) {
         StringBuilder totalText = new StringBuilder(bridgeStart);
         for (int i = 0; i < resultDtos.size(); i++) {
-            MoveResultDto resultDto = resultDtos.get(i);
-            totalText.append(makeEachSquare(direction, resultDto));
-            if (i == resultDtos.size() - 1) {
-                totalText.append(bridgeEnd);
-                continue;
-            }
-            totalText.append(bridgeAppended);
+            totalText.append(makeEachSquare(direction, resultDtos.get(i)));
+            totalText.append(makeAppend(resultDtos, i));
         }
         return totalText;
+    }
+
+    private String makeAppend(final List<MoveResultDto> resultDtos, final int i) {
+        if (i == resultDtos.size() - 1) {
+            return bridgeEnd;
+        }
+        return bridgeAppended;
     }
 
     private StringBuilder makeEachSquare(final char direction, final MoveResultDto resultDto) {

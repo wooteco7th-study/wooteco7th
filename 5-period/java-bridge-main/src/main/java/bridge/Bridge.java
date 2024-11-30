@@ -1,8 +1,8 @@
 package bridge;
 
+import static bridge.exception.ErrorMessage.INVALID_BRIDGE_LENGTH;
+
 import bridge.exception.CustomIllegalArgumentException;
-import bridge.exception.ErrorMessage;
-import bridge.util.NumberValidator;
 import java.util.List;
 
 public class Bridge {
@@ -27,7 +27,10 @@ public class Bridge {
     }
 
     private void validate(final int size) {
-        NumberValidator.validateRange(size, 3, 20, ErrorMessage.INVALID_BRIDGE_LENGTH);
+        if (3 <= size && size <= 20) {
+            return;
+        }
+        throw new CustomIllegalArgumentException(INVALID_BRIDGE_LENGTH);
     }
 
     public Direction getDirection(final int pos) {
