@@ -6,6 +6,7 @@ import bridge.BridgeMaker;
 import bridge.Direction;
 import bridge.RestartCommand;
 import bridge.dto.MoveResultDto;
+import bridge.dto.TotalResultDto;
 import bridge.exception.ExceptionHandler;
 import bridge.generator.BridgeRandomNumberGenerator;
 import bridge.view.InputView;
@@ -32,9 +33,15 @@ public class BridgeController {
         Bridge bridge = makeBridge();
         BridgeGame game = new BridgeGame(bridge);
         int pos = 0;
+        TotalResultDto totalResultDto;
+        int tryCount = 0;
         do {
-            pos = move(game);
+            tryCount++;
+            totalResultDto = move(game);
+            pos = totalResultDto.pos();
         } while (game.canContinue(pos) && wantRestart());
+        outputView.showFinalResultMessage();
+        outputView.printResult(totalResultDto, tryCount);
     }
 
     private boolean wantRestart() {
@@ -45,8 +52,9 @@ public class BridgeController {
         });
     }
 
-    private int move(final BridgeGame game) {
+    private TotalResultDto move(final BridgeGame game) {
         int pos = 0;
+        boolean isSuccess = true;
         List<MoveResultDto> moveResultDtos = new ArrayList<>();
         while (game.canContinue(pos)) {
             Direction direction = makeDirection();
@@ -54,11 +62,12 @@ public class BridgeController {
             moveResultDtos.add(MoveResultDto.of(isRightmove, direction));
             outputView.printMap(moveResultDtos);
             if (!isRightmove) {
+                isSuccess = false;
                 break;
             }
             pos++;
         }
-        return pos;
+        return new TotalResultDto(pos, moveResultDtos, isSuccess);
     }
 
     private Direction makeDirection() {
