@@ -1,4 +1,4 @@
-package bridge.domain;
+package bridge.domain.bridgeLog;
 
 import java.util.Objects;
 

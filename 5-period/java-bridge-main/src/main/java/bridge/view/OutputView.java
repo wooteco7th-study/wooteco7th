@@ -1,6 +1,6 @@
 package bridge.view;
 
-import bridge.domain.BridgeLogType;
+import bridge.domain.bridgeLog.BridgeLogType;
 import bridge.domain.GameResult;
 import java.util.List;
 import java.util.stream.Collectors;

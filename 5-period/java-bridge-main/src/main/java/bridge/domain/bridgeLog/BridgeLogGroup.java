@@ -1,4 +1,5 @@
-package bridge.domain;
+package bridge.domain.bridgeLog;
+import bridge.domain.MoveCommand;
 import bridge.error.CustomIllegalStateException;
 import bridge.error.ErrorMessage;
 import java.util.List;
