@@ -36,14 +36,6 @@ public class BridgeGame {
         downBridgeLog.updateLog(moveCommand, matchedMoveCommand);
     }
 
-    public List<BridgeLogType> getUpBridgeLogs() {
-        return upBridgeLog.getValues();
-    }
-
-    public List<BridgeLogType> getDownBridgeLogs() {
-        return downBridgeLog.getValues();
-    }
-
     /**
      * 사용자가 게임을 다시 시도할 때 사용하는 메서드
      * <p>
@@ -54,6 +46,22 @@ public class BridgeGame {
         return Objects.equals(gameCommand, GameCommand.RETRY);
     }
 
+    public boolean isClear() {
+        return upBridgeLog.countPass() + downBridgeLog.countPass() == turn;
+    }
+
+    public boolean isEnd() {
+        return turn == bridge.getSize();
+    }
+
+    public List<BridgeLogType> getUpBridgeLogs() {
+        return upBridgeLog.getValues();
+    }
+
+    public List<BridgeLogType> getDownBridgeLogs() {
+        return downBridgeLog.getValues();
+    }
+
     public GameResult getGameResult() {
         if (isClear()) {
             return GameResult.CLEAR;
@@ -61,11 +69,7 @@ public class BridgeGame {
         return GameResult.FAIL;
     }
 
-    public boolean isClear() {
-        return upBridgeLog.countPass() + downBridgeLog.countPass() == turn;
-    }
-
-    public boolean isEnd() {
-        return turn == bridge.getSize();
+    public int getAttempt() {
+        return attempt;
     }
 }
