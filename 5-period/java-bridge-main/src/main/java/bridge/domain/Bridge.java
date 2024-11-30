@@ -5,14 +5,18 @@ import java.util.Objects;
 
 public class Bridge {
 
-    private final List<String> values;
+    private final List<MoveCommand> values;
 
-    public Bridge(final List<String> values) {
+    public Bridge(final List<MoveCommand> values) {
         this.values = values;
     }
 
-    public boolean isMatchedMoveCommand(final int idx, final String moveCommand) {
+    public boolean isMatchedMoveCommand(final int idx, final MoveCommand moveCommand) {
         return Objects.equals(values.get(idx), moveCommand);
+    }
+
+    public int getSize() {
+        return values.size();
     }
 
 }
