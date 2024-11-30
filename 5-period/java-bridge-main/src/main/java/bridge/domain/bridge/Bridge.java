@@ -1,7 +1,8 @@
-package bridge;
+package bridge.domain.bridge;
 
 import static bridge.exception.ErrorMessage.INVALID_BRIDGE_LENGTH;
 
+import bridge.domain.Direction;
 import bridge.exception.CustomIllegalArgumentException;
 import java.util.List;
 

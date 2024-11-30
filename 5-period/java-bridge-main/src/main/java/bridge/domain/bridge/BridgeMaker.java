@@ -1,8 +1,8 @@
-package bridge;
+package bridge.domain.bridge;
 
 import bridge.exception.CustomIllegalStateException;
 import bridge.exception.ErrorMessage;
-import bridge.generator.BridgeNumberGenerator;
+import bridge.domain.generator.BridgeNumberGenerator;
 import java.util.ArrayList;
 import java.util.List;
 

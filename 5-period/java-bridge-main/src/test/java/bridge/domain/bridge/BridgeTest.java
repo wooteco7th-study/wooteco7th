@@ -1,8 +1,10 @@
-package bridge;
+package bridge.domain.bridge;
 
 import static bridge.exception.ErrorMessage.INVALID_BRIDGE_LENGTH;
 import static bridge.support.CustomAssertions.assertIllegalArgument;
 
+import bridge.domain.bridge.Bridge;
+import bridge.domain.bridge.BridgeMaker;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
