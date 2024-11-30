@@ -10,6 +10,7 @@ public class OutputView {
 
     private static final String NEW_LINE = System.lineSeparator();
     private static final String DELIMITER = " | ";
+    private static final String MAP_FORMAT = "[ %s ]" + NEW_LINE;
     private static final String RESULT_MSG = NEW_LINE + "최종 게임 결과";
     private static final String STATISTICS_MSG = """
             
@@ -33,12 +34,7 @@ public class OutputView {
     public void printResult(final BridgeGame bridgeGame, final CurrentMap currentMap) {
         System.out.println(RESULT_MSG);
         getMap(currentMap);
-        if (bridgeGame.isSuccess()) {
-            System.out.printf(STATISTICS_MSG, "성공", bridgeGame.getTotalTrialCount());
-        }
-        if (!bridgeGame.isSuccess()) {
-            System.out.printf(STATISTICS_MSG, "실패", bridgeGame.getTotalTrialCount());
-        }
+        printStatistics(bridgeGame);
     }
 
     public void printError(String error) {
@@ -46,7 +42,16 @@ public class OutputView {
     }
 
     private void getMap(final CurrentMap currentMap) {
-        System.out.println("[ " + String.join(DELIMITER, currentMap.getUpMap()) + " ]");
-        System.out.println("[ " + String.join(DELIMITER, currentMap.getDownMap()) + " ]");
+        System.out.printf(MAP_FORMAT, String.join(DELIMITER, currentMap.getUpMap()));
+        System.out.printf(MAP_FORMAT, String.join(DELIMITER, currentMap.getDownMap()));
+    }
+
+    private static void printStatistics(final BridgeGame bridgeGame) {
+        if (bridgeGame.isSuccess()) {
+            System.out.printf(STATISTICS_MSG, "성공", bridgeGame.getTotalTrialCount());
+        }
+        if (!bridgeGame.isSuccess()) {
+            System.out.printf(STATISTICS_MSG, "실패", bridgeGame.getTotalTrialCount());
+        }
     }
 }
