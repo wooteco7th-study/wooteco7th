@@ -23,4 +23,11 @@ public enum GameCommand {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(COMMAND_NOT_FOUND.getMessage()));
     }
+
+    public static GameCommand fromName(String name) {
+        return Arrays.stream(GameCommand.values())
+                .filter(element -> element.name().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(COMMAND_NOT_FOUND.getMessage()));
+    }
 }

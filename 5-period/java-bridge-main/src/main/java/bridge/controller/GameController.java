@@ -31,13 +31,12 @@ public class GameController {
 
     private void processGame(final BridgeGame bridgeGame, final CurrentMap currentMap) {
         while (bridgeGame.keepGame()) {
-            String moving = inputView.readMoving();
-            bridgeGame.move(moving);
+            String moving = retryOnInvalidInput(() -> getMoving(bridgeGame));
             boolean isSame = bridgeGame.compare();
             currentMap.addMap(moving, isSame);
             outputView.printMap(currentMap);
             if (!isSame) {
-                boolean isRetry = bridgeGame.retry(inputView.readGameCommand());
+                boolean isRetry = bridgeGame.retry(retryOnInvalidInput(inputView::readGameCommand));
                 if (isRetry) {
                     currentMap.clearMap();
                     processGame(bridgeGame, currentMap);
@@ -51,6 +50,12 @@ public class GameController {
         int bridgeSize = inputView.readBridgeSize();
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
         return bridgeMaker.makeBridge(bridgeSize);
+    }
+
+    private String getMoving(final BridgeGame bridgeGame) {
+        String moving = inputView.readMoving();
+        bridgeGame.move(moving);
+        return moving;
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {
