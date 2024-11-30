@@ -23,8 +23,4 @@ public enum MoveCommand {
                 .findAny()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_MOVE_COMMAND_FORMAT));
     }
-
-    public String getExpression() {
-        return expression;
-    }
 }

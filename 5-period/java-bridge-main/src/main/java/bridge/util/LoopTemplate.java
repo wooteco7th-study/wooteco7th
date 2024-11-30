@@ -16,15 +16,4 @@ public class LoopTemplate {
             }
         }
     }
-
-    public static void tryCatchLoop(Runnable callback) {
-        while (true) {
-            try {
-                callback.run();
-                return;
-            } catch (IllegalArgumentException | IllegalStateException e) {
-                System.out.println(e.getMessage());
-            }
-        }
-    }
 }
