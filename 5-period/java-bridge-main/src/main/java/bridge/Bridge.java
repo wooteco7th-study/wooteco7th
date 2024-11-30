@@ -27,7 +27,7 @@ public class Bridge {
     }
 
     private void validate(final int size) {
-        NumberValidator.validateRange(size, 0, Integer.MAX_VALUE, ErrorMessage.INVALID_BRIDGE_LENGTH);
+        NumberValidator.validateRange(size, 3, 20, ErrorMessage.INVALID_BRIDGE_LENGTH);
     }
 
     public Direction getDirection(final int pos) {
