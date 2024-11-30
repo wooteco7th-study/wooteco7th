@@ -32,14 +32,44 @@ public class BridgeController {
         outputView.startMessage();
         Bridge bridge = makeBridge();
         BridgeGame game = new BridgeGame(bridge);
-        int pos = 0;
-        TotalResultDto totalResultDto;
+        processGame(game);
+    }
+
+    private void processGame(final BridgeGame game) {
         int tryCount = 0;
-        do {
+        processEachGame(game, tryCount);
+    }
+
+    private void processEachGame(final BridgeGame game, int tryCount) {
+        while (true) {
             tryCount++;
-            totalResultDto = move(game);
-            pos = totalResultDto.pos();
-        } while (game.canContinue(pos) && wantRestart());
+            TotalResultDto totalResultDto = move(game);
+            if (gameFail(tryCount, totalResultDto) || gameSuccess(tryCount, totalResultDto,
+                    !game.isNotEnd(totalResultDto.pos()))) {
+                break;
+            }
+        }
+    }
+
+    private boolean gameSuccess(final int tryCount, final TotalResultDto totalResultDto, final boolean gameEnd) {
+        if (gameEnd && totalResultDto.isSuccess()) {
+            showResult(totalResultDto, tryCount);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean gameFail(final int tryCount, final TotalResultDto totalResultDto) {
+        if (!totalResultDto.isSuccess()) {
+            if (!wantRestart()) {
+                showResult(totalResultDto, tryCount);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void showResult(final TotalResultDto totalResultDto, final int tryCount) {
         outputView.showFinalResultMessage();
         outputView.printResult(totalResultDto, tryCount);
     }
@@ -54,20 +84,13 @@ public class BridgeController {
 
     private TotalResultDto move(final BridgeGame game) {
         int pos = 0;
-        boolean isSuccess = true;
         List<MoveResultDto> moveResultDtos = new ArrayList<>();
-        while (game.canContinue(pos)) {
+        do {
             Direction direction = makeDirection();
-            boolean isRightmove = game.move(direction, pos);
-            moveResultDtos.add(MoveResultDto.of(isRightmove, direction));
+            moveResultDtos.add(MoveResultDto.of(game.move(direction, pos++), direction));
             outputView.printMap(moveResultDtos);
-            if (!isRightmove) {
-                isSuccess = false;
-                break;
-            }
-            pos++;
-        }
-        return new TotalResultDto(pos, moveResultDtos, isSuccess);
+        } while (game.canContinue(pos, moveResultDtos.getLast().isRightMove()));
+        return TotalResultDto.from(pos, moveResultDtos);
     }
 
     private Direction makeDirection() {
