@@ -34,8 +34,10 @@ public class BridgeController {
 
     private void start(final BridgeGame bridgeGame) {
         do {
+            bridgeGame.clear();
+            bridgeGame.addAttempt();
             move(bridgeGame);
-        } while (bridgeGame.retry(requestGameCommand()));
+        } while (isRetry(bridgeGame));
         responseGameResult(bridgeGame);
     }
 
@@ -50,7 +52,6 @@ public class BridgeController {
             bridgeGame.move(moveCommand);
             responseBridgeLog(bridgeGame);
         }
-
     }
 
     private void responseBridgeLog(final BridgeGame bridgeGame) {
@@ -81,5 +82,12 @@ public class BridgeController {
             final String input = inputView.readGameCommand();
             return GameCommand.findByExpression(input);
         });
+    }
+
+    private boolean isRetry(final BridgeGame bridgeGame) {
+        if (bridgeGame.isClear()) {
+            return false;
+        }
+        return bridgeGame.retry(requestGameCommand());
     }
 }
