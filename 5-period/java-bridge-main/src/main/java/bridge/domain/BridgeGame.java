@@ -54,6 +54,13 @@ public class BridgeGame {
         return Objects.equals(gameCommand, GameCommand.RETRY);
     }
 
+    public GameResult getGameResult() {
+        if (isClear()) {
+            return GameResult.CLEAR;
+        }
+        return GameResult.FAIL;
+    }
+
     public boolean isClear() {
         return upBridgeLog.countPass() + downBridgeLog.countPass() == turn;
     }
