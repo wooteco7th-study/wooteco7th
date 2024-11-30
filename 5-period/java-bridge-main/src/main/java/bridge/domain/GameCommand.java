@@ -6,7 +6,10 @@ import static bridge.exception.ExceptionMessage.COMMAND_NOT_FOUND;
 
 public enum GameCommand {
     U("1"),
-    D("0");
+    D("0"),
+    RESTART("R"),
+    QUIT("Q"),
+    ;
 
     private final String command;
 

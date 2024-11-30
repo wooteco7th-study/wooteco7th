@@ -18,6 +18,7 @@ public class CurrentMap {
                 downMap.add("O");
             }
         }
+
         if (!isSame) {
             if (moving.equals("U")) {
                 upMap.add("X");
@@ -28,6 +29,11 @@ public class CurrentMap {
                 downMap.add("X");
             }
         }
+    }
+
+    public void clearMap() {
+        upMap.clear();
+        downMap.clear();
     }
 
     public List<String> getUpMap() {
