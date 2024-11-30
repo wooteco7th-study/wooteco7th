@@ -9,17 +9,20 @@ import java.util.Objects;
 public class BridgeGame {
 
     private static final int INITIAL_TURN = 0;
+    private static final int INITIAL_ATTEMPT = 0;
 
     private final Bridge bridge;
     private final UpBridgeLog upBridgeLog;
     private final DownBridgeLog downBridgeLog;
     private int turn;
+    private int attempt;
 
     public BridgeGame(final DownBridgeLog downBridgeLog, final UpBridgeLog upBridgeLog, final Bridge bridge) {
         this.downBridgeLog = downBridgeLog;
         this.upBridgeLog = upBridgeLog;
         this.bridge = bridge;
         turn = INITIAL_TURN;
+        attempt = INITIAL_ATTEMPT;
     }
 
     /**
@@ -47,10 +50,15 @@ public class BridgeGame {
      * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public boolean retry(final GameCommand gameCommand) {
+        attempt++;
         return Objects.equals(gameCommand, GameCommand.RETRY);
     }
 
-    public boolean isEnd() {
+    public boolean isClear() {
         return upBridgeLog.countPass() + downBridgeLog.countPass() == turn;
+    }
+
+    public boolean isEnd() {
+        return turn == bridge.getSize();
     }
 }

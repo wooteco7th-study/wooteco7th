@@ -23,7 +23,7 @@ class BridgeGameTest {
         bridgeGame.move(MoveCommand.UP);
 
         //then
-        assertThat(bridgeGame.isEnd()).isTrue();
+        assertThat(bridgeGame.isClear()).isTrue();
         
     }
     @Test
@@ -41,7 +41,7 @@ class BridgeGameTest {
         bridgeGame.move(MoveCommand.DOWN);
 
         //then
-        assertThat(bridgeGame.isEnd()).isFalse();
+        assertThat(bridgeGame.isClear()).isFalse();
 
     }
 }
