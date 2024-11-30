@@ -1,5 +1,6 @@
 package bridge.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -8,8 +9,8 @@ public class DownBridgeLog {
 
     private final List<BridgeLogType> values;
 
-    public DownBridgeLog(final List<BridgeLogType> values) {
-        this.values = values;
+    public DownBridgeLog() {
+        this.values = new ArrayList<>();
     }
 
     public void updateLog(final MoveCommand moveCommand, final boolean isPassed) {
