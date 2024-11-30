@@ -60,11 +60,16 @@ public class GameController {
     }
 
     private void retryOrNot(final BridgeGame bridgeGame, final CurrentMap currentMap) {
-        boolean isRetry = bridgeGame.retry(retryOnInvalidInput(inputView::readGameCommand));
+        boolean isRetry = retryOnInvalidInput(() -> isRetry(bridgeGame));
         if (isRetry) {
             currentMap.clearMap();
             processGame(bridgeGame, currentMap);
         }
+    }
+
+    private boolean isRetry(final BridgeGame bridgeGame) {
+        String retryOrNot = inputView.readGameCommand();
+        return bridgeGame.retry(retryOrNot);
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {
