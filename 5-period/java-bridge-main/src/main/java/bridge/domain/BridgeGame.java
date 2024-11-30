@@ -3,8 +3,8 @@ package bridge.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bridge.domain.GameCommand.RESTART;
-import static bridge.domain.GameCommand.from;
+import static bridge.domain.BridgeCommand.from;
+import static bridge.domain.RetryCommand.RESTART;
 
 /**
  * 다리 건너기 게임을 관리하는 클래스
@@ -29,8 +29,8 @@ public class BridgeGame {
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public void move(String moving) {
-        GameCommand gameCommand = from(moving);
-        bridgeInput.add(gameCommand.getCommand());
+        BridgeCommand bridgeCommand = from(moving);
+        bridgeInput.add(bridgeCommand.getCommand());
     }
 
     public boolean compare() {
@@ -44,8 +44,8 @@ public class BridgeGame {
      * 재시작을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public boolean retry(final String retryOrNot) {
-        GameCommand gameCommand = from(retryOrNot);
-        if (gameCommand == RESTART) {
+        RetryCommand retryCommand = RetryCommand.from(retryOrNot);
+        if (retryCommand == RESTART) {
             totalTrialCount++;
             bridgeInput.clear();
             return true;

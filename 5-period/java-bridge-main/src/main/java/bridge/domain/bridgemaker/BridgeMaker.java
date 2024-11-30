@@ -1,6 +1,6 @@
 package bridge.domain.bridgemaker;
 
-import bridge.domain.GameCommand;
+import bridge.domain.BridgeCommand;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +40,7 @@ public class BridgeMaker {
         List<String> bridgeAnswer = new ArrayList<>();
         for (int i = 0; i < size; i++) {
             int randomNumber = bridgeNumberGenerator.generate();
-            bridgeAnswer.add(GameCommand.from(randomNumber));
+            bridgeAnswer.add(BridgeCommand.getCommand(randomNumber));
         }
         return bridgeAnswer;
     }

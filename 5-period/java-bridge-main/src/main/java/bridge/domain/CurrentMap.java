@@ -3,8 +3,8 @@ package bridge.domain;
 import java.util.ArrayList;
 import java.util.List;
 
-import static bridge.domain.GameCommand.DOWN;
-import static bridge.domain.GameCommand.UP;
+import static bridge.domain.BridgeCommand.DOWN;
+import static bridge.domain.BridgeCommand.UP;
 
 public class CurrentMap {
     private static final String RIGHT_MARK = "O";
