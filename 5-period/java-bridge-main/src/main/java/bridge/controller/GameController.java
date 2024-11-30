@@ -25,6 +25,11 @@ public class GameController {
         BridgeGame bridgeGame = new BridgeGame(bridgeAnswer);
         CurrentMap currentMap = new CurrentMap();
 
+        processGame(bridgeGame, currentMap);
+        outputView.printResult(bridgeGame, currentMap);
+    }
+
+    private void processGame(final BridgeGame bridgeGame, final CurrentMap currentMap) {
         while (bridgeGame.keepGame()) {
             String moving = inputView.readMoving();
             bridgeGame.move(moving);
@@ -32,6 +37,11 @@ public class GameController {
             currentMap.addMap(moving, isSame);
             outputView.printMap(currentMap);
             if (!isSame) {
+                boolean isRetry = bridgeGame.retry(inputView.readGameCommand());
+                if (isRetry) {
+                    currentMap.clearMap();
+                    processGame(bridgeGame, currentMap);
+                }
                 break;
             }
         }
