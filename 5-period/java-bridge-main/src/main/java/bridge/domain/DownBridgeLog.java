@@ -1,5 +1,6 @@
 package bridge.domain;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -26,5 +27,9 @@ public class DownBridgeLog {
         return (int) values.stream()
                 .filter(BridgeLogType::isPassed)
                 .count();
+    }
+
+    public List<BridgeLogType> getValues() {
+        return Collections.unmodifiableList(values);
     }
 }
