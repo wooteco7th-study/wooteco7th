@@ -8,8 +8,9 @@ import bridge.domain.CurrentMap;
  */
 public class OutputView {
 
+    private static final String NEW_LINE = System.lineSeparator();
     private static final String DELIMITER = " | ";
-    private static final String RESULT_MSG = "최종 게임 결과";
+    private static final String RESULT_MSG = NEW_LINE + "최종 게임 결과";
     private static final String STATISTICS_MSG = """
             
             게임 성공 여부: %s
