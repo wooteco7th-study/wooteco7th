@@ -29,33 +29,42 @@ public class GameController {
         outputView.printResult(bridgeGame, currentMap);
     }
 
-    private void processGame(final BridgeGame bridgeGame, final CurrentMap currentMap) {
-        while (bridgeGame.keepGame()) {
-            String moving = retryOnInvalidInput(() -> getMoving(bridgeGame));
-            boolean isSame = bridgeGame.compare();
-            currentMap.addMap(moving, isSame);
-            outputView.printMap(currentMap);
-            if (!isSame) {
-                boolean isRetry = bridgeGame.retry(retryOnInvalidInput(inputView::readGameCommand));
-                if (isRetry) {
-                    currentMap.clearMap();
-                    processGame(bridgeGame, currentMap);
-                }
-                break;
-            }
-        }
-    }
-
     private List<String> getBridgeAnswer() {
         int bridgeSize = inputView.readBridgeSize();
         BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
         return bridgeMaker.makeBridge(bridgeSize);
     }
 
+    private void processGame(final BridgeGame bridgeGame, final CurrentMap currentMap) {
+        while (bridgeGame.keepGame()) {
+            boolean isSame = moveAndCompare(bridgeGame, currentMap);
+            if (!isSame) {
+                retryOrNot(bridgeGame, currentMap);
+                break;
+            }
+        }
+    }
+
+    private boolean moveAndCompare(final BridgeGame bridgeGame, final CurrentMap currentMap) {
+        String moving = retryOnInvalidInput(() -> getMoving(bridgeGame));
+        boolean isSame = bridgeGame.compare();
+        currentMap.addMap(moving, isSame);
+        outputView.printMap(currentMap);
+        return isSame;
+    }
+
     private String getMoving(final BridgeGame bridgeGame) {
         String moving = inputView.readMoving();
         bridgeGame.move(moving);
         return moving;
+    }
+
+    private void retryOrNot(final BridgeGame bridgeGame, final CurrentMap currentMap) {
+        boolean isRetry = bridgeGame.retry(retryOnInvalidInput(inputView::readGameCommand));
+        if (isRetry) {
+            currentMap.clearMap();
+            processGame(bridgeGame, currentMap);
+        }
     }
 
     private <T> T retryOnInvalidInput(Supplier<T> input) {
