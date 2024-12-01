@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static bridge.domain.BridgeCommand.from;
+import static bridge.domain.GameResult.FAIL;
+import static bridge.domain.GameResult.SUCCESS;
 import static bridge.domain.RetryCommand.RESTART;
 
 /**
@@ -13,7 +15,7 @@ public class BridgeGame {
     private final List<String> bridgeAnswer;
     private final List<String> bridgeInput = new ArrayList<>();
     private int totalTrialCount = 1;
-    private boolean isSuccess = true;
+    private GameResult gameResult = SUCCESS;
 
     public BridgeGame(final List<String> bridgeAnswer) {
         this.bridgeAnswer = bridgeAnswer;
@@ -28,6 +30,7 @@ public class BridgeGame {
      * <p>
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
+    //TODO: move & compare 순서 고려 인덱스 예외 처리
     public void move(String moving) {
         BridgeCommand bridgeCommand = from(moving);
         bridgeInput.add(bridgeCommand.getCommand());
@@ -50,7 +53,7 @@ public class BridgeGame {
             bridgeInput.clear();
             return true;
         }
-        isSuccess = false;
+        gameResult = FAIL;
         return false;
     }
 
@@ -58,7 +61,7 @@ public class BridgeGame {
         return totalTrialCount;
     }
 
-    public boolean isSuccess() {
-        return isSuccess;
+    public String getResult() {
+        return gameResult.getDescription();
     }
 }

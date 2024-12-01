@@ -47,11 +47,6 @@ public class OutputView {
     }
 
     private static void printStatistics(final BridgeGame bridgeGame) {
-        if (bridgeGame.isSuccess()) {
-            System.out.printf(STATISTICS_MSG, "성공", bridgeGame.getTotalTrialCount());
-        }
-        if (!bridgeGame.isSuccess()) {
-            System.out.printf(STATISTICS_MSG, "실패", bridgeGame.getTotalTrialCount());
-        }
+        System.out.printf(STATISTICS_MSG, bridgeGame.getResult(), bridgeGame.getTotalTrialCount());
     }
 }

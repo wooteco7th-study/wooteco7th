@@ -26,6 +26,7 @@ public class GameController {
         CurrentMap currentMap = new CurrentMap();
 
         processGame(bridgeGame, currentMap);
+        //TODO: output dto 고려
         outputView.printResult(bridgeGame, currentMap);
     }
 
@@ -37,8 +38,8 @@ public class GameController {
 
     private void processGame(final BridgeGame bridgeGame, final CurrentMap currentMap) {
         while (bridgeGame.keepGame()) {
-            boolean isSame = moveAndCompare(bridgeGame, currentMap);
-            if (!isSame) {
+            boolean isCorrect = moveAndCompare(bridgeGame, currentMap);
+            if (!isCorrect) {
                 retryOrNot(bridgeGame, currentMap);
                 break;
             }
