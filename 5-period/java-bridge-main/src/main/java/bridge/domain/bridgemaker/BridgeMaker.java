@@ -2,8 +2,8 @@ package bridge.domain.bridgemaker;
 
 import bridge.domain.BridgeCommand;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import static bridge.exception.ExceptionMessage.SIZE_OUT_OF_RANGE;
 
@@ -37,11 +37,9 @@ public class BridgeMaker {
     }
 
     private List<String> createBridgeAnswer(final int size) {
-        List<String> bridgeAnswer = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            int randomNumber = bridgeNumberGenerator.generate();
-            bridgeAnswer.add(BridgeCommand.getCommand(randomNumber));
-        }
-        return bridgeAnswer;
+        return IntStream.range(0, size)
+                .map(idx -> bridgeNumberGenerator.generate())
+                .mapToObj(BridgeCommand::getCommand)
+                .toList();
     }
 }
