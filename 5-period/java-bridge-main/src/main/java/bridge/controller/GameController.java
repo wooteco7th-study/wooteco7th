@@ -4,6 +4,7 @@ import bridge.domain.BridgeGame;
 import bridge.domain.CurrentMap;
 import bridge.domain.bridgemaker.BridgeMaker;
 import bridge.domain.bridgemaker.BridgeRandomNumberGenerator;
+import bridge.dto.response.ResultResponse;
 import bridge.view.InputView;
 import bridge.view.OutputView;
 
@@ -26,8 +27,8 @@ public class GameController {
         CurrentMap currentMap = new CurrentMap();
 
         processGame(bridgeGame, currentMap);
-        //TODO: output dto 고려
-        outputView.printResult(bridgeGame, currentMap);
+        ResultResponse resultResponse = ResultResponse.of(currentMap, bridgeGame);
+        outputView.printResult(resultResponse);
     }
 
     private List<String> getBridgeAnswer() {
