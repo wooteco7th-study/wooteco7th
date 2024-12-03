@@ -23,10 +23,6 @@ public class LottoController {
         this.responseView = new ResponseView();
     }
 
-    public static void main(String[] args) {
-        new LottoController().run();
-    }
-
     public void run() {
         var userLottos = createUserLottoTransaction();
         var winningNumbers = createWinningNumbersTransaction();
