@@ -11,7 +11,7 @@ import subway.domain.LineRepository;
 import subway.domain.Order;
 import subway.domain.Repositories;
 import subway.domain.Route;
-import subway.domain.RouteRepository;
+import subway.domain.RoutesRepository;
 import subway.domain.Station;
 import subway.domain.StationRepository;
 import subway.exception.ErrorMessage;
@@ -64,7 +64,7 @@ public class SubwayController {
     }
 
     private void processMinimumTime(final Repositories repositories, final Order order) {
-        RouteRepository routeRepository = repositories.getRouteRepository();
+        RoutesRepository routeRepository = repositories.getRouteRepository();
         Station departureStation = order.getDepartureStation();
         Station arrivalStation = order.getArrivalStation();
         Integer shortestTime = routeRepository.getShortestTime(departureStation, arrivalStation);
@@ -74,7 +74,7 @@ public class SubwayController {
     }
 
     private void processShortestDistance(final Repositories repositories, final Order order) {
-        RouteRepository routeRepository = repositories.getRouteRepository();
+        RoutesRepository routeRepository = repositories.getRouteRepository();
         Station departureStation = order.getDepartureStation();
         Station arrivalStation = order.getArrivalStation();
         Integer shortestDistance = routeRepository.getShortestDistance(departureStation, arrivalStation);
@@ -84,11 +84,11 @@ public class SubwayController {
     }
 
     private Order makeArrivalStation(final Station departureStation, final StationRepository stationRepository,
-                                     final RouteRepository routeRepository) {
+                                     final RoutesRepository routeRepository) {
         outputView.askArrivalStation();
         return exceptionHandler.retryOn(() -> {
             Station arrivalStation = stationRepository.findByName(inputView.readDeparture());
-            return new Order(departureStation, arrivalStation, routeRepository);
+            return new Order(departureStation, arrivalStation, routeRepository, stationRepository);
         });
     }
 
@@ -103,12 +103,12 @@ public class SubwayController {
         StationRepository stationRepository = initializeStations();
         LineRepository lineRepository = initilaizeLines();
         // 교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역
-        RouteRepository routeRepository = initializeRoutes(stationRepository, lineRepository);
+        RoutesRepository routeRepository = initializeRoutes(stationRepository, lineRepository);
         return new Repositories(lineRepository, routeRepository, stationRepository);
     }
 
-    private RouteRepository initializeRoutes(final StationRepository stationRepository,
-                                             final LineRepository lineRepository) {
+    private RoutesRepository initializeRoutes(final StationRepository stationRepository,
+                                              final LineRepository lineRepository) {
         List<Route> routes = new ArrayList<>();
         List<Line> lines = makeLines(lineRepository);
         List<List<String>> stations = makeStationList();
@@ -119,7 +119,7 @@ public class SubwayController {
             List<String> station = stations.get(i);
             makeRoute(routes, line, path, station);
         }
-        return new RouteRepository(routes, stationRepository.stations());
+        return new RoutesRepository(routes, stationRepository.stations());
     }
 
     private void makeRoute(final List<Route> routes, final Line line, final List<String> path,
@@ -128,7 +128,7 @@ public class SubwayController {
             String[] pathInfo = path.get(j).split(",");
             Station start = new Station(station.get(j));
             Station end = new Station(station.get(j + 1));
-            Route route = new Route(line, start, end, parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT),
+            Route route = new Route(start, end, parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT),
                     parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT));
             routes.add(route);
         }

@@ -2,7 +2,6 @@ package subway.domain;
 
 import static subway.exception.ErrorMessage.INVALID_STATION_PATH;
 
-import java.util.Collections;
 import java.util.List;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -16,31 +15,26 @@ import subway.exception.ErrorMessage;
 //- 종료 지하철역
 //- 걸린 시간
 //- 이동 거리
-public class RouteRepository {
+public class RoutesRepository {
 
     private final List<Route> routes;
-
     private final DijkstraShortestPath shortestTimePath;
     private final DijkstraShortestPath shortestDistancePath;
 
-    public RouteRepository(final List<Route> routes, final List<Station> stations) {
+    public RoutesRepository(final List<Route> routes, final List<Station> stations) {
         this.routes = routes;
         this.shortestTimePath = initializeTimeGraph(stations);
         this.shortestDistancePath = initializeDistanceGraph(stations);
     }
 
     public int getTime(final String start, final String end) {
-        int time = getAdjacentDistance(start, end);
-        if (time != 0) {
-            return time;
-        }
-        return getAdjacentDistance(end, start);
+        return getAdjacentDistance(start, end);
     }
 
     private Integer getAdjacentDistance(final String start, final String end) {
         return routes.stream()
-                .filter(route -> route.getDepartureStation().getName().equals(end))
-                .filter(route -> route.getArrivalStation().getName().equals(start))
+                .filter(route -> route.getDepartureStation().getName().equals(start))
+                .filter(route -> route.getArrivalStation().getName().equals(end))
                 .map(Route::getTakenTime)
                 .findFirst()
                 .orElse(0);
@@ -55,7 +49,7 @@ public class RouteRepository {
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_ARGUMENT));
     }
 
-    public DijkstraShortestPath initializeDistanceGraph(final List<Station> stations) {
+    private DijkstraShortestPath initializeDistanceGraph(final List<Station> stations) {
         WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph(
                 DefaultWeightedEdge.class);
         for (Station station : stations) {
@@ -70,7 +64,7 @@ public class RouteRepository {
         return new DijkstraShortestPath(distanceGraph);
     }
 
-    public DijkstraShortestPath initializeTimeGraph(final List<Station> stations) {
+    private DijkstraShortestPath initializeTimeGraph(final List<Station> stations) {
         WeightedMultigraph<String, DefaultWeightedEdge> timesGraph = new WeightedMultigraph(DefaultWeightedEdge.class);
         for (Station station : stations) {
             timesGraph.addVertex(station.getName());
@@ -110,18 +104,22 @@ public class RouteRepository {
         return path.getVertexList();
     }
 
-
-    public List<Route> routes() {
-        return Collections.unmodifiableList(routes);
-    }
-
     public void add(final Route route) {
         routes.add(route);
     }
 
-    public void validatePathConnected(final Station departureStation, final Station arrivalStation) {
-        if (getShortestTime(departureStation, arrivalStation) == null) {
-            throw new CustomIllegalArgumentException(INVALID_STATION_PATH);
+    public void validatePathConnected(final Station departureStation, final Station arrivalStation,
+                                      final StationRepository stationRepository) {
+        List<String> paths = getShortestDistancePath(departureStation, arrivalStation);
+        for (int i = 0; i < paths.size() - 1; i++) {
+            String start = paths.get(i);
+            String end = paths.get(i + 1);
+            boolean isConnected = routes.stream()
+                    .anyMatch(route -> route.findRoute(stationRepository.findByName(start),
+                            stationRepository.findByName(end)));
+            if (!isConnected) {
+                throw new CustomIllegalArgumentException(INVALID_STATION_PATH);
+            }
         }
     }
 
