@@ -33,65 +33,75 @@
 
 ### ✅ domain
 
+#### Initializer
+- [X] 데이터 초기화 클래스
+
 #### Station
-- [] 지하철 역의 정보를 저장
+- [X] 지하철 역의 정보를 저장
 
 #### Line
-- [] 노선의 정보를 저장
+- [X] 노선의 정보를 저장
 
 #### Edge
-- [] 간선의 정보를 저장
-- [] 시작역, 도착역, 노선
-- [] 거리 및 소요 시간
+- [X] 간선의 정보를 저장
+- [X] 시작역, 도착역, 노선
+- [X] 거리 및 소요 시간
+
+#### EdgeGroup
+- [X] 간선 정보들을 저장
+- [X] 다익스트라 그래프를 그림
+
+#### EdgeGroupGenerator
+- [X] EdgeGroup을 생성
 
 #### EdgeInfo
-- [] 초기화를 위한 간선 데이터 정의
+- [X] 초기화를 위한 간선 데이터 정의
 
 #### Subway
-- [] 간선들의 정보를 저장
-- [] 다익스트라를 통해 최단 거리를 찾음
-- [] 다익스트라를 통해 최단 시간을 찾음
+- [X] 간선들의 정보를 저장
+- [X] 다익스트라를 통해 최단 거리를 찾음
+- [X] 다익스트라를 통해 최단 시간을 찾음
 
 #### MainCommand
-- [] 메인 화면의 동작을 정의
+- [X] 메인 화면의 동작을 정의
 
 #### PathCommand
-- [] 경로 기준 동작을 정의
+- [X] 경로 기준 동작을 정의
 
 #### StationType
-- [] 역 타입을 정의
+- [X] 역 타입을 정의
 
 #### LineType
-- [] 노선 타입을 정의
+- [X] 노선 타입을 정의
 
 ### ✅ util
 
 #### ListValidator
-- [] 리스트 중복 검증
+- [X] 리스트 중복 검증
 
 #### LoopTemplate
-- [] try-catch 루프 템플릿
+- [X] try-catch 루프 템플릿
 
 ### ✅ view
 
 #### ConsoleInputView
-- [] 사용자가 입력한 문자열을 읽음
+- [X] 사용자가 입력한 문자열을 읽음
 
 #### ConsoleOutputView
-- [] 사용자에게 메세지들을 출력
+- [X] 사용자에게 메세지들을 출력
 
 ### ✅ controller
 
 #### SubwayController
-- [] 애플리케이션의 흐름을 제어하는 클래스
+- [X] 애플리케이션의 흐름을 제어하는 클래스
 
 ### ✅ error
 
 #### ErrorMessage
-- [] 에러 메세지 정의
+- [X] 에러 메세지 정의
 
 #### CustomIllegalArgumentException
-- [] IllegalArgumentException의 하위 클래스
+- [X] IllegalArgumentException의 하위 클래스
 
 #### CustomIllegalStateException
-- [] IllegalStateException의 하위 클래스
+- [X] IllegalStateException의 하위 클래스
