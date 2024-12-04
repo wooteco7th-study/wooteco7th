@@ -2,7 +2,10 @@ package subway.controller;
 
 import subway.domain.Line;
 import subway.domain.LineRepository;
+import subway.domain.ShortestDistanceRepository;
+import subway.domain.ShortestTimeRepository;
 import subway.domain.Station;
+import subway.domain.StationConnection;
 import subway.domain.StationRepository;
 import subway.view.InputView;
 import subway.view.OutputView;
@@ -21,6 +24,8 @@ public class SubwayController {
     public void run() {
         saveLines();
         saveStations();
+        saveTimeConnections();
+        saveDistanceConnections();
     }
 
     private void saveLines() {
@@ -37,5 +42,25 @@ public class SubwayController {
             Station station = new Station(stationName);
             StationRepository.addStation(station);
         }
+    }
+
+    private void saveTimeConnections() {
+        ShortestTimeRepository.addTime(new StationConnection(StationRepository.findLineByName("교대역"), StationRepository.findLineByName("강남역")), 3);
+        ShortestTimeRepository.addTime(new StationConnection(StationRepository.findLineByName("강남역"), StationRepository.findLineByName("역삼역")), 3);
+        ShortestTimeRepository.addTime(new StationConnection(StationRepository.findLineByName("교대역"), StationRepository.findLineByName("남부터미널역")), 2);
+        ShortestTimeRepository.addTime(new StationConnection(StationRepository.findLineByName("남부터미널역"), StationRepository.findLineByName("양재역")), 5);
+        ShortestTimeRepository.addTime(new StationConnection(StationRepository.findLineByName("양재역"), StationRepository.findLineByName("매봉역")), 1);
+        ShortestTimeRepository.addTime(new StationConnection(StationRepository.findLineByName("강남역"), StationRepository.findLineByName("양재역")), 8);
+        ShortestTimeRepository.addTime(new StationConnection(StationRepository.findLineByName("양재역"), StationRepository.findLineByName("양재시민의숲역")), 3);
+    }
+
+    private void saveDistanceConnections() {
+        ShortestDistanceRepository.addDistance(new StationConnection(StationRepository.findLineByName("교대역"), StationRepository.findLineByName("강남역")), 2);
+        ShortestDistanceRepository.addDistance(new StationConnection(StationRepository.findLineByName("강남역"), StationRepository.findLineByName("역삼역")), 2);
+        ShortestDistanceRepository.addDistance(new StationConnection(StationRepository.findLineByName("교대역"), StationRepository.findLineByName("남부터미널역")), 3);
+        ShortestDistanceRepository.addDistance(new StationConnection(StationRepository.findLineByName("남부터미널역"), StationRepository.findLineByName("양재역")), 6);
+        ShortestDistanceRepository.addDistance(new StationConnection(StationRepository.findLineByName("양재역"), StationRepository.findLineByName("매봉역")), 1);
+        ShortestDistanceRepository.addDistance(new StationConnection(StationRepository.findLineByName("강남역"), StationRepository.findLineByName("양재역")), 2);
+        ShortestDistanceRepository.addDistance(new StationConnection(StationRepository.findLineByName("양재역"), StationRepository.findLineByName("양재시민의숲역")), 10);
     }
 }
