@@ -1,10 +1,10 @@
 package subway.service;
 
-import static subway.domain.PathCriteriaOption.MINIMUM_TIME;
-import static subway.domain.PathCriteriaOption.SHORTEST_DISTANCE;
+import static subway.domain.option.PathCriteriaOption.MINIMUM_TIME;
+import static subway.domain.option.PathCriteriaOption.SHORTEST_DISTANCE;
 
 import java.util.List;
-import subway.domain.PathCriteriaOption;
+import subway.domain.option.PathCriteriaOption;
 import subway.dto.PathSearchResult;
 
 public class PathService {

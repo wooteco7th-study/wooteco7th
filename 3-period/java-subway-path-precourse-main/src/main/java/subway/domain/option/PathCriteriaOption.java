@@ -1,4 +1,6 @@
-package subway.domain;
+package subway.domain.option;
+
+import static subway.message.ExceptionMessage.INVALID_FORMAT;
 
 public enum PathCriteriaOption {
     SHORTEST_DISTANCE("1"),
@@ -17,6 +19,6 @@ public enum PathCriteriaOption {
                 return option;
             }
         }
-        throw new IllegalArgumentException("올바른 기준을 선택하세요.");
+        throw new IllegalArgumentException(INVALID_FORMAT.getMessage());
     }
 }
