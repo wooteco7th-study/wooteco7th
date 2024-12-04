@@ -1,17 +1,14 @@
 package bridge.controller;
 
-import bridge.domain.Direction;
 import bridge.domain.RestartCommand;
-import bridge.domain.bridge.Bridge;
 import bridge.domain.bridge.BridgeGame;
-import bridge.domain.bridge.BridgeMaker;
-import bridge.domain.generator.BridgeRandomNumberGenerator;
-import bridge.dto.MoveResultDto;
+import bridge.domain.bridge.Result;
+import bridge.domain.generator.BridgeNumberGenerator;
+import bridge.dto.ResultDto;
 import bridge.dto.TotalResultDto;
 import bridge.exception.ExceptionHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BridgeController {
@@ -19,19 +16,22 @@ public class BridgeController {
     private final InputView inputView;
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
+    private final BridgeNumberGenerator bridgeNumberGenerator;
 
     public BridgeController(final InputView inputView, final OutputView outputView,
-                            final ExceptionHandler exceptionHandler) {
+                            final ExceptionHandler exceptionHandler,
+                            final BridgeNumberGenerator bridgeNumberGenerator) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
+        this.bridgeNumberGenerator = bridgeNumberGenerator;
     }
 
     public void process() {
         // 다리 입력
         outputView.startMessage();
-        Bridge bridge = makeBridge();
-        BridgeGame game = new BridgeGame(bridge);
+        int size = makeBridgeSize();
+        BridgeGame game = new BridgeGame(size, bridgeNumberGenerator);
         processGame(game);
     }
 
@@ -41,70 +41,47 @@ public class BridgeController {
     }
 
     private void processEachGame(final BridgeGame game, int tryCount) {
-        while (true) {
+        do {
             tryCount++;
-            TotalResultDto totalResultDto = move(game);
-            if (gameFail(tryCount, totalResultDto) || gameSuccess(tryCount, totalResultDto,
-                    !game.isNotEnd(totalResultDto.pos()))) {
-                break;
-            }
-        }
+            game.clear();
+            move(game);
+        } while (!shouldNotContinue(game));
     }
 
-    private boolean gameSuccess(final int tryCount, final TotalResultDto totalResultDto, final boolean gameEnd) {
-        if (gameEnd && totalResultDto.isSuccess()) {
-            showResult(totalResultDto, tryCount);
-            return true;
-        }
-        return false;
+    private boolean shouldNotContinue(final BridgeGame game) {
+        return game.isSuccess() || !wantRestart(game);
     }
 
-    private boolean gameFail(final int tryCount, final TotalResultDto totalResultDto) {
-        if (!totalResultDto.isSuccess()) {
-            if (!wantRestart()) {
-                showResult(totalResultDto, tryCount);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void showResult(final TotalResultDto totalResultDto, final int tryCount) {
-        outputView.showFinalResultMessage();
-        outputView.printResult(totalResultDto, tryCount);
-    }
-
-    private boolean wantRestart() {
+    private boolean wantRestart(final BridgeGame game) {
         outputView.restartMessage();
         return exceptionHandler.retryOn(() -> {
             RestartCommand restartCommand = new RestartCommand(inputView.readGameCommand().charAt(0));
-            return restartCommand.doesContinue();
+            return game.retry(restartCommand);
         });
     }
 
-    private TotalResultDto move(final BridgeGame game) {
-        int pos = 0;
-        List<MoveResultDto> moveResultDtos = new ArrayList<>();
+    private void move(final BridgeGame game) {
         do {
-            Direction direction = makeDirection();
-            moveResultDtos.add(MoveResultDto.of(game.move(direction, pos++), direction));
-            outputView.printMap(moveResultDtos);
-        } while (game.canContinue(pos, moveResultDtos.getLast().isRightMove()));
-        return TotalResultDto.from(pos, moveResultDtos);
+            String direction = makeDirection();
+            game.move(direction);
+            outputView.printMap(toResultDto(game.getResults()));
+        } while (game.canContinue());
     }
 
-    private Direction makeDirection() {
+    public List<ResultDto> toResultDto(List<Result> results) {
+        return results.stream()
+                .map(ResultDto::from)
+                .toList();
+    }
+
+    private String makeDirection() {
         return exceptionHandler.retryOn(() -> {
             outputView.selectDirection();
-            return new Direction(inputView.readMoving().charAt(0));
+            return inputView.readMoving();
         });
     }
 
-    private Bridge makeBridge() {
-        BridgeMaker bridgeMaker = new BridgeMaker(new BridgeRandomNumberGenerator());
-        return exceptionHandler.retryOn(() -> {
-            int bridgeSize = inputView.readBridgeSize();
-            return new Bridge(bridgeSize, bridgeMaker);
-        });
+    private int makeBridgeSize() {
+        return exceptionHandler.retryOn(inputView::readBridgeSize);
     }
 }

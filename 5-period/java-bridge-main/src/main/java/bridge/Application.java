@@ -1,6 +1,8 @@
 package bridge;
 
 import bridge.controller.BridgeController;
+import bridge.domain.generator.BridgeNumberGenerator;
+import bridge.domain.generator.BridgeRandomNumberGenerator;
 import bridge.exception.ExceptionHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -21,6 +23,7 @@ public class Application {
         InputView inputView = new InputView();
         OutputView outputView = new OutputView();
         ExceptionHandler exceptionHandler = new ExceptionHandler(outputView);
-        return new BridgeController(inputView, outputView, exceptionHandler);
+        BridgeNumberGenerator numberGenerator = new BridgeRandomNumberGenerator();
+        return new BridgeController(inputView, outputView, exceptionHandler, numberGenerator);
     }
 }

@@ -4,6 +4,7 @@ public enum ErrorMessage {
 
     NULL("입력값은(는) null일 수 없습니다."),
     BLANK("입력값은(는) 빈 문자열이거나 공백일 수 없습니다."),
+    ILLEGAL_STATE("유효하지 않은 상태입니다."),
 
     INVALID_NUMBER("숫자만 입력할 수 있습니다."),
 
