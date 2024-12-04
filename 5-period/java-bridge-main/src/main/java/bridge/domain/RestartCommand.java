@@ -2,28 +2,26 @@ package bridge.domain;
 
 import bridge.exception.CustomIllegalArgumentException;
 import bridge.exception.ErrorMessage;
+import java.util.Arrays;
 
-public class RestartCommand {
+public enum RestartCommand {
 
-    private final char command;
+    RESTART("R"), QUIT("Q");
 
-    public RestartCommand(final char command) {
-        validate(command);
+    private final String command;
+
+    RestartCommand(final String command) {
         this.command = command;
     }
 
-    private void validate(final char command) {
-        if (command == 'R' || command == 'Q') {
-            return;
-        }
-        throw new CustomIllegalArgumentException(ErrorMessage.INVALID_RESTART_COMMAND);
+    public static RestartCommand from(String command) {
+        return Arrays.stream(RestartCommand.values())
+                .filter(restartCommand -> restartCommand.command.equals(command))
+                .findFirst()
+                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_RESTART_COMMAND));
     }
 
     public boolean doesContinue() {
-        return command == 'R';
-    }
-
-    public char getCommand() {
-        return command;
+        return this == RESTART;
     }
 }
