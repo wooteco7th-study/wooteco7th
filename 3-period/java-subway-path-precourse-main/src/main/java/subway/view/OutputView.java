@@ -11,8 +11,20 @@ public class OutputView {
                         
             ## 원하는 기능을 선택하세요.""";
 
-    public void welcome(){
+    private static final String SELECT_ROUTE_CRITERIA = """
+            ## 경로 기준
+            1. 최단 거리
+            2. 최소 시간
+            B. 돌아가기
+
+            ## 원하는 기능을 선택하세요.""";
+
+    public void welcome() {
         showln(WELCOME);
+    }
+
+    public void selectRouteCriteria() {
+        showln(LINE + SELECT_ROUTE_CRITERIA);
     }
 
     public void showException(Exception exception) {
@@ -21,6 +33,10 @@ public class OutputView {
 
     private String format(String format, Object... args) {
         return String.format(format, args);
+    }
+
+    public void showBlank() {
+        System.out.println();
     }
 
     private void showln(String message) {

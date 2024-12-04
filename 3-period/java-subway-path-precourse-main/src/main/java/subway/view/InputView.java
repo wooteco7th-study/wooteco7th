@@ -3,7 +3,6 @@ package subway.view;
 import static subway.exception.ErrorMessage.INVALID_COMMAND;
 
 import java.util.Scanner;
-import subway.exception.CustomIllegalArgumentException;
 import subway.exception.ErrorMessage;
 import subway.util.InputValidator;
 
@@ -22,6 +21,10 @@ public class InputView {
     }
 
     public String informFunction() {
+        return readLine(INVALID_COMMAND);
+    }
+
+    public String readRouteCriteria() {
         return readLine(INVALID_COMMAND);
     }
 }
