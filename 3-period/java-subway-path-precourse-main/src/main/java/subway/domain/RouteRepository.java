@@ -30,12 +30,20 @@ public class RouteRepository {
     }
 
     public int getTime(final String start, final String end) {
+        int time = getAdjacentDistance(start, end);
+        if (time != 0) {
+            return time;
+        }
+        return getAdjacentDistance(end, start);
+    }
+
+    private Integer getAdjacentDistance(final String start, final String end) {
         return routes.stream()
-                .filter(route -> route.getDepartureStation().getName().equals(start))
-                .filter(route -> route.getArrivalStation().getName().equals(end))
+                .filter(route -> route.getDepartureStation().getName().equals(end))
+                .filter(route -> route.getArrivalStation().getName().equals(start))
                 .map(Route::getTakenTime)
                 .findFirst()
-                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_ARGUMENT));
+                .orElse(0);
     }
 
     public int getDistance(final String start, final String end) {

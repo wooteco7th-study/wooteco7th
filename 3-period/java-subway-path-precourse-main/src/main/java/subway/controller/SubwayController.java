@@ -35,7 +35,6 @@ public class SubwayController {
     public void process() {
         Repositories repositories = initialize();
         processCommand(repositories);
-
     }
 
     private void processCommand(final Repositories repositories) {
