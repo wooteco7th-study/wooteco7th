@@ -1,23 +1,23 @@
 package subway;
 
-import static subway.domain.SubwayStation.values;
-import static subway.domain.SubwayStation.강남역;
-import static subway.domain.SubwayStation.교대역;
-import static subway.domain.SubwayStation.남부터미널역;
-import static subway.domain.SubwayStation.매봉역;
-import static subway.domain.SubwayStation.양재시민의숲역;
-import static subway.domain.SubwayStation.양재역;
-import static subway.domain.SubwayStation.역삼역;
+import static subway.domain.vo.SubwayStation.values;
+import static subway.domain.vo.SubwayStation.강남역;
+import static subway.domain.vo.SubwayStation.교대역;
+import static subway.domain.vo.SubwayStation.남부터미널역;
+import static subway.domain.vo.SubwayStation.매봉역;
+import static subway.domain.vo.SubwayStation.양재시민의숲역;
+import static subway.domain.vo.SubwayStation.양재역;
+import static subway.domain.vo.SubwayStation.역삼역;
 
 import java.util.Arrays;
 import java.util.List;
 import subway.domain.Line;
 import subway.domain.Station;
-import subway.domain.SubwayStation;
 import subway.domain.repository.DistanceShortestPathGraph;
 import subway.domain.repository.LineRepository;
 import subway.domain.repository.StationRepository;
 import subway.domain.repository.TimeShortestPathGraph;
+import subway.domain.vo.SubwayStation;
 
 /*
 ### 초기 설정

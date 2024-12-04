@@ -10,17 +10,17 @@
 
 ---
 
-## [ ] ⛔️ 제한 사항 검증 기능
+## ✅ ⛔️ 제한 사항 검증 기능
 
 - 사용자가 입력한 값에 대한 검증 한다. 다음 사항들을 예외로 판단한다.
 - 예외 사항에 대해서는 `IllegalArgumentException`을 발생시킨다.
 
-  ### [ ] RouteSearchValidator
+  ### [x] RouteSearchValidator
     - 입력받은 **출발역**, **도착역**이 다름을 검증한다.
     - 입력받은 **출발역**, **도착역**이 연결되어 있음을 검증한다.
-  ### [ ] DepartureStation
-    - 입력받은 **출발역**이 존재함을 검증한다.
-  ### [ ] ArrivalStation
+  ### [x] DepartureStationValidator
+    - 입력받은 **출발역**이 존재함을 현검증한다.
+  ### [x] ArrivalStationValidator
     - 입력받은 **도착역**이 존재함을 검증한다.
 
 ---

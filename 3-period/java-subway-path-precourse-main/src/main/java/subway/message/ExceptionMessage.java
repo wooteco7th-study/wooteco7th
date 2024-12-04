@@ -6,6 +6,8 @@ public enum ExceptionMessage {
     CANT_BE_SAME_STATION("같은 역일 수 없습니다."),
     DEPARTURE_STATION_CANT_BE_FOUND("찾을 수 없는 출발역 입니다."),
     ARRIVAL_STATION_CANT_BE_FOUND("찾을 수 없는 도착역 입니다."),
+    NO_LINK_FROM_TO("연결되지 않은 출발역과 도착역입니다"),
+
     INVALID_FORMAT("잘못된 형식 입니다");
 
 

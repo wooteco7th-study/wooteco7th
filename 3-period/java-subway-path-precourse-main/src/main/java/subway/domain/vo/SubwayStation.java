@@ -1,4 +1,4 @@
-package subway.domain;
+package subway.domain.vo;
 
 public enum SubwayStation {
     교대역("교대역"),
