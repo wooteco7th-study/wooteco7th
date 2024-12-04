@@ -3,17 +3,18 @@ package subway.domain;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EdgesGenerator {
+public class EdgeGroupGenerator {
 
-    private EdgesGenerator() {
+    private EdgeGroupGenerator() {
 
     }
 
-    public static List<Edge> generate() {
+    public static EdgeGroup generate() {
         final List<EdgeInfo> edgeInfos = EdgeInfo.findAll();
-        return edgeInfos.stream()
+        final List<Edge> edges = edgeInfos.stream()
                 .flatMap(edgeInfo -> createEdges(edgeInfo).stream())
                 .collect(Collectors.toList());
+        return new EdgeGroup(edges);
     }
 
     private static List<Edge> createEdges(final EdgeInfo edgeInfo) {
