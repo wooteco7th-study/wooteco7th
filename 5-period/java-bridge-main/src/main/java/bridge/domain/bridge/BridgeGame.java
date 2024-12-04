@@ -51,10 +51,8 @@ public class BridgeGame {
         return restartCommand.doesContinue();
     }
 
-
-
     public boolean isSuccess() {
-        return !isInMiddle() && isRightEnd();
+        return bridgeLog.isSuccess(bridge.size());
     }
 
     public void clear() {
