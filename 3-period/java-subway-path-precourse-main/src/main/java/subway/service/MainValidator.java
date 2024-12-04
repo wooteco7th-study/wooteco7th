@@ -22,7 +22,7 @@ public class MainValidator {
         return !choices.contains(main);
     }
 
-    public boolean isTrue() {
-        return main.equals("1");
+    public boolean isNotTrue() {
+        return main.equals("Q");
     }
 }
