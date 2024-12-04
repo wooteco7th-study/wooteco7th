@@ -14,24 +14,33 @@ public class Subway {
         this.path = path;
     }
 
-    public int calculateShortestWeight(final PathCommand pathCommand) {
-        if (Objects.equals(pathCommand, PathCommand.SHORTEST_TIME)) {
-            final DijkstraShortestPath dijkstraShortestTimePath = edgeGroup.getDijkstraShortestTimePath();
-            return (int) dijkstraShortestTimePath.getPathWeight(path.getStart(), path.getEnd());
+    public int calculateTime(final List<String> shortestPath) {
+        int time = 0;
+        for (int i = 0; i < shortestPath.size() - 1; i++) {
+            final Station start = StationRepository.findByName(shortestPath.get(i));
+            final Station end = StationRepository.findByName(shortestPath.get(i + 1));
+            time += edgeGroup.getTimeByStartAndEnd(start, end);
         }
-        final DijkstraShortestPath dijkstraShortestDistancePath = edgeGroup.getDijkstraShortestDistancePath();
-        return (int) dijkstraShortestDistancePath.getPathWeight(path.getStart(), path.getEnd());
+        return time;
+    }
 
+    public int calculateDistance(final List<String> shortestPath) {
+        int distance = 0;
+        for (int i = 0; i < shortestPath.size() - 1; i++) {
+            final Station start = StationRepository.findByName(shortestPath.get(i));
+            final Station end = StationRepository.findByName(shortestPath.get(i + 1));
+            distance += edgeGroup.getDistanceByStartAndEnd(start, end);
+        }
+        return distance;
     }
 
     public List<String> getShortestPath(final PathCommand pathCommand) {
         if (Objects.equals(pathCommand, PathCommand.SHORTEST_TIME)) {
             final DijkstraShortestPath dijkstraShortestTimePath = edgeGroup.getDijkstraShortestTimePath();
-            return (List<String>) dijkstraShortestTimePath.getPath(path.getStart(), path.getEnd());
+            return (List<String>) dijkstraShortestTimePath.getPath(path.getStart(), path.getEnd()).getVertexList();
         }
         final DijkstraShortestPath dijkstraShortestDistancePath = edgeGroup.getDijkstraShortestDistancePath();
-        return (List<String>) dijkstraShortestDistancePath.getPath(path.getStart(), path.getEnd());
+        return dijkstraShortestDistancePath.getPath(path.getStart(), path.getEnd()).getVertexList();
     }
-
 
 }
