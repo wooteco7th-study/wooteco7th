@@ -69,6 +69,9 @@
 #### ListValidator
 - [] 리스트 중복 검증
 
+#### LoopTemplate
+- [] try-catch 루프 템플릿
+
 ### ✅ view
 
 #### ConsoleInputView
@@ -81,3 +84,14 @@
 
 #### SubwayController
 - [] 애플리케이션의 흐름을 제어하는 클래스
+
+### ✅ error
+
+#### ErrorMessage
+- [] 에러 메세지 정의
+
+#### CustomIllegalArgumentException
+- [] IllegalArgumentException의 하위 클래스
+
+#### CustomIllegalStateException
+- [] IllegalStateException의 하위 클래스
