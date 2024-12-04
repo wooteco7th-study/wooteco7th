@@ -1,6 +1,7 @@
 package subway.domain;
 
 import java.util.List;
+import java.util.Objects;
 import subway.error.ErrorMessage;
 import subway.util.ListValidator;
 
@@ -23,6 +24,10 @@ public class Edge {
 
     private void validate(final Station start, final Station end) {
         ListValidator.validateDuplicate(List.of(start, end), ErrorMessage.INVALID_DUPLICATED_STATION);
+    }
+
+    public boolean hasStartAndEnd(final Station start, final Station end) {
+        return Objects.equals(this.start, start) && Objects.equals(this.end, end);
     }
 
     public String getStartStationName() {
