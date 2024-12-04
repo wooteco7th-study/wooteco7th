@@ -13,6 +13,7 @@ import subway.view.InputView;
 import subway.view.OutputView;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 import static subway.exception.ExceptionMessage.DUPLICATED_STATION;
 
@@ -35,16 +36,22 @@ public class SubwayController {
     }
 
     private void process() {
-        MainCommand mainCommand = MainCommand.from(inputView.readFirstGameCommand());
+        MainCommand mainCommand = retryOnInvalidInput(() -> MainCommand.from(inputView.readFirstGameCommand()));
         while (mainCommand == MainCommand.경로조회) {
-            PathCommand pathCommand = PathCommand.from(inputView.readPathCommand());
-            if (pathCommand == PathCommand.돌아가기) {
-                mainCommand = MainCommand.from(inputView.readFirstGameCommand());
-                continue;
-            }
-            findPath(pathCommand);
-            mainCommand = MainCommand.from(inputView.readFirstGameCommand());
+            mainCommand = retryOnInvalidInput(this::getCommand);
         }
+    }
+
+    private MainCommand getCommand() {
+        MainCommand mainCommand;
+        PathCommand pathCommand = PathCommand.from(inputView.readPathCommand());
+        if (pathCommand == PathCommand.돌아가기) {
+            mainCommand = retryOnInvalidInput(() -> MainCommand.from(inputView.readFirstGameCommand()));
+            return mainCommand;
+        }
+        findPath(pathCommand);
+        mainCommand = retryOnInvalidInput(() -> MainCommand.from(inputView.readFirstGameCommand()));
+        return mainCommand;
     }
 
     private void validateDuplicatedStation(final Station startStation, final Station endStation) {
@@ -78,6 +85,16 @@ public class SubwayController {
             int totalDistance = ShortestDistanceRepository.getTotalDistance(stations);
             int totalTime = ShortestDistanceRepository.getTotalTime(stations);
             outputView.printResult(stations, totalDistance, totalTime);
+        }
+    }
+
+    private <T> T retryOnInvalidInput(Supplier<T> input) {
+        while (true) {
+            try {
+                return input.get();
+            } catch (IllegalArgumentException e) {
+                outputView.printError(e.getMessage());
+            }
         }
     }
 }
