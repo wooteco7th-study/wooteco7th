@@ -13,7 +13,7 @@ public class ArrivalStationValidator {
 
     public static void validate(String input) {
         validateNullOrEmpty(input);
-        boolean result = Arrays.stream(SubwayStation.values()).anyMatch(i -> i.getValue() == input);
+        boolean result = Arrays.stream(SubwayStation.values()).anyMatch(i -> i.getValue().equals(input));
         if (result == false) {
             throw new IllegalArgumentException(ARRIVAL_STATION_CANT_BE_FOUND.getMessage());
         }

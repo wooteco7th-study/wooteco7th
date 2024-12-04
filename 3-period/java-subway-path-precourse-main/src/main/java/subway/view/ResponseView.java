@@ -19,4 +19,7 @@ public class ResponseView {
         System.out.println(builder.toString());
     }
 
+    public void printError(final String message) {
+        System.out.println(message);
+    }
 }

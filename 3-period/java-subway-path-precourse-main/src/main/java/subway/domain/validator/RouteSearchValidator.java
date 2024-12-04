@@ -13,14 +13,20 @@ public class RouteSearchValidator {
     private RouteSearchValidator() {
     }
 
-    public static void notSameValidate(final DepartureStation from, final ArrivalStation to) {
+    public static void validate(final DepartureStation from, final ArrivalStation to,
+                                final WeightedMultigraph<String, DefaultWeightedEdge> graph) {
+        notSameValidate(from, to);
+        linkValidate(from, to, graph);
+    }
+
+    private static void notSameValidate(final DepartureStation from, final ArrivalStation to) {
         if (from.getValue() == to.getValue()) {
             throw new IllegalArgumentException(CANT_BE_SAME_STATION.getMessage());
         }
     }
 
-    public static void linkValidate(final DepartureStation from, final ArrivalStation to,
-                                    final WeightedMultigraph<String, DefaultWeightedEdge> graph) {
+    private static void linkValidate(final DepartureStation from, final ArrivalStation to,
+                                     final WeightedMultigraph<String, DefaultWeightedEdge> graph) {
         boolean result = graph.containsEdge(from.getValue(), to.getValue());
         if (result == false) {
             throw new IllegalArgumentException(NO_LINK_FROM_TO.getMessage());

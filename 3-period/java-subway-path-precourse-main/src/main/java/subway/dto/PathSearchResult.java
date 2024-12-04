@@ -3,34 +3,34 @@ package subway.dto;
 import java.util.List;
 
 public class PathSearchResult {
-    private final int distanceSum;
-    private final int timeSum;
-    private final List<String> path;
+    private final int totalDistance;
+    private final int totalTime;
+    private final List<String> stations;
 
-    public PathSearchResult(final int distanceSum, final int timeSum, final List<String> path) {
-        this.distanceSum = distanceSum;
-        this.timeSum = timeSum;
-        this.path = path;
+    public PathSearchResult(final int totalDistance, final int totalTime, final List<String> stations) {
+        this.totalDistance = totalDistance;
+        this.totalTime = totalTime;
+        this.stations = stations;
     }
 
-    public int getDistanceSum() {
-        return distanceSum;
+    public int getTotalDistance() {
+        return totalDistance;
     }
 
-    public int getTimeSum() {
-        return timeSum;
+    public int getTotalTime() {
+        return totalTime;
     }
 
-    public List<String> getPath() {
-        return path;
+    public List<String> getStations() {
+        return stations;
     }
 
     @Override
     public String toString() {
         return "PathSearchResult{" +
-                "distanceSum=" + distanceSum +
-                ", timeSum=" + timeSum +
-                ", path=" + path +
+                "distanceSum=" + totalDistance +
+                ", timeSum=" + totalTime +
+                ", path=" + stations +
                 '}';
     }
 }
