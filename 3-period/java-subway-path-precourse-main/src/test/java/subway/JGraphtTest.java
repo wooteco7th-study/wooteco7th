@@ -3,7 +3,6 @@ package subway;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.List;
-import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
@@ -22,13 +21,6 @@ public class JGraphtTest {
 
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
         List<String> shortestPath = dijkstraShortestPath.getPath("v3", "v1").getVertexList();
-        for (String s : shortestPath) {
-            System.out.println(s); // v3->v2->v1 : 최단 경로
-        }
-
-        GraphPath path = dijkstraShortestPath.getPath("v3", "v1");
-        double weight = path.getWeight(); // 가중치 (4)
-
         assertThat(shortestPath.size()).isEqualTo(3);
     }
 }
