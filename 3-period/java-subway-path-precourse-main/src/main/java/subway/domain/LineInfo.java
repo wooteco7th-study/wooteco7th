@@ -13,4 +13,20 @@ public class LineInfo {
         this.betweenDistance = betweenDistance;
         this.betweenMinute = betweenMinute;
     }
+
+    public String getPreStation() {
+        return preStation.getName();
+    }
+
+    public String getPostStation() {
+        return postStation.getName();
+    }
+
+    public int getBetweenDistance() {
+        return betweenDistance;
+    }
+
+    public int getBetweenMinute() {
+        return betweenMinute;
+    }
 }

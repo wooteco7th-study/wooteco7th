@@ -4,6 +4,7 @@ import java.util.List;
 import subway.domain.Info;
 import subway.domain.Line;
 import subway.domain.LineInfo;
+import subway.domain.LineInfoRepository;
 import subway.domain.LineRepository;
 import subway.domain.Station;
 import subway.domain.StationRepository;
@@ -36,6 +37,7 @@ public class SubwayCreator {
             Line line = LineRepository.findLine(info.getLine());
 
             LineInfo lineInfo = new LineInfo(startStation, endStation, info.getDistance(), info.getMinute());
+            LineInfoRepository.addLineInfo(lineInfo);
             LineRepository.addLineInfo(line, lineInfo);
         }
     }

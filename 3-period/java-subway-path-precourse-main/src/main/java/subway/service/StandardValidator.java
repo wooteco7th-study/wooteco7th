@@ -25,4 +25,8 @@ public class StandardValidator {
     public boolean isBack() {
         return standard.equals("B");
     }
+
+    public boolean isOne() {
+        return standard.equals("1");
+    }
 }

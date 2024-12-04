@@ -3,11 +3,14 @@ package subway.controller;
 import java.util.List;
 import subway.domain.Line;
 import subway.domain.LineRepository;
+import subway.domain.Result;
 import subway.service.MainValidator;
 import subway.service.StandardValidator;
 import subway.service.SubwayCreator;
 import subway.service.SubwayValidator;
+import subway.service.WayFinder;
 import subway.view.InputView;
+import subway.view.OutputView;
 
 public class SubwayController {
 
@@ -24,6 +27,7 @@ public class SubwayController {
             if (mainValidator.isNotTrue()) {
                 break;
             }
+
             StandardValidator standardValidator = new StandardValidator(inputView.getWayStandard());
             if (standardValidator.isBack()) {
                 continue;
@@ -32,6 +36,10 @@ public class SubwayController {
             String start = inputView.getStartSubway();
             String end = inputView.getEndSubway();
             SubwayValidator subwayValidator = new SubwayValidator(start, end);
+
+            WayFinder wayFinder = new WayFinder(standardValidator.isOne());
+            Result result = wayFinder.find(start, end);
+            OutputView.printResult(result.toString());
         }
     }
 }
