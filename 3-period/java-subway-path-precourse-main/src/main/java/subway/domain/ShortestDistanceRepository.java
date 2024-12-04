@@ -1,17 +1,17 @@
 package subway.domain;
 
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class ShortestDistanceRepository {
-    private static final Map<StationConnection, Integer> connections = new HashMap<>();
+    private static final List<StationDistanceConnection> connections = new ArrayList<>();
 
-    public static Map<StationConnection, Integer> connections() {
-        return new LinkedHashMap<>(connections);
+    public static List<StationDistanceConnection> connections() {
+        return Collections.unmodifiableList(connections);
     }
 
-    public static void addDistance(StationConnection stationConnection, int distance) {
-        connections.put(stationConnection, distance);
+    public static void addDistance(StationDistanceConnection stationConnection) {
+        connections.add(stationConnection);
     }
 }
