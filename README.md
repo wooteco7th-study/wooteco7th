@@ -6,9 +6,9 @@
 
 ## 🚀 3기
 
-3주차 - [🚈 지하철 노선도](https://github.com/woowacourse/java-subway-path-precourse)
+3주차 - [🚈 지하철 노선도](https://github.com/woowacourse/java-subway-map-precourse)
 
-최종 - [🚈 지하철 노선도](https://github.com/woowacourse/java-subway-map-precourse)
+최종 - [🚈 지하철 노선도](https://github.com/woowacourse/java-subway-path-precourse)
 
 <br>
 
