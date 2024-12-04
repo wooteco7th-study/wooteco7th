@@ -2,9 +2,6 @@ package bridge.domain.bridge;
 
 import bridge.domain.command.RestartCommand;
 import bridge.domain.command.UpDown;
-import bridge.exception.CustomIllegalArgumentException;
-import bridge.exception.ErrorMessage;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,20 +9,14 @@ import java.util.List;
  */
 public class BridgeGame {
 
-    private final List<String> bridge;
-    private final List<Result> results;
+    private final List<String> bridge; // 다리 길이
+    private final BridgeLog bridgeLog; // 다리를 사용자가 움직인 기록
     private int attempt;
 
     public BridgeGame(final List<String> bridge) {
         this.bridge = bridge;
-        this.results = new ArrayList<>();
+        this.bridgeLog = new BridgeLog();
         this.attempt = 0;
-    }
-
-    private void validate(final int size) {
-        if (size < 3 || size > 20) {
-            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_BRIDGE_LENGTH);
-        }
     }
 
     public boolean canContinue() {
@@ -33,11 +24,11 @@ public class BridgeGame {
     }
 
     private boolean isRightEnd() {
-        return results.getLast().isRight();
+        return bridgeLog.isRightEnd();
     }
 
     private boolean isInMiddle() {
-        return bridge.size() != results.size();
+        return bridge.size() != bridgeLog.getSize();
     }
 
     /**
@@ -46,9 +37,9 @@ public class BridgeGame {
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
     public void move(final UpDown direction) {
-        int pos = results.size();
+        int pos = bridgeLog.getSize();
         boolean isRight = bridge.get(pos).equals(direction.getDirection());
-        results.add(Result.from(direction, isRight));
+        bridgeLog.add(direction, isRight);
     }
 
     /**
@@ -60,20 +51,22 @@ public class BridgeGame {
         return restartCommand.doesContinue();
     }
 
-    public List<Result> getResults() {
-        return results;
-    }
+
 
     public boolean isSuccess() {
         return !isInMiddle() && isRightEnd();
     }
 
     public void clear() {
-        results.clear();
+        bridgeLog.clear();
         attempt++;
     }
 
     public int getAttempt() {
         return attempt;
+    }
+
+    public BridgeLog getBridgeLog() {
+        return bridgeLog;
     }
 }

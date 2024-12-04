@@ -1,6 +1,7 @@
 package bridge.view;
 
-import bridge.dto.ResultDto;
+import bridge.domain.bridge.BridgeLog;
+import bridge.domain.bridge.LogType;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,8 +17,6 @@ public class OutputView {
     private static final String RESTART = "게임을 다시 시도할지 여부를 입력해주세요. (재시도: R, 종료: Q)";
     private static final String FINAL_RESULT = "최종 게임 결과";
     private static final String SUCCESS_RESULT = "게임 성공 여부: %s";
-    private static final String SUCCESS = "성공";
-    private static final String FAIL = "실패";
     private static final String RETRYCOUNT = "총 시도한 횟수: %d";
     private static final String DELIMITER = " | ";
     private static final String PREFIX = "[ ";
@@ -28,15 +27,16 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printMap(final List<ResultDto> results) {
-        String upText = results.stream()
-                .map(ResultDto::up)
-                .collect(Collectors.joining(DELIMITER, PREFIX, SUFFIX));
-
-        String downText = results.stream()
-                .map(ResultDto::down)
-                .collect(Collectors.joining(DELIMITER, PREFIX, SUFFIX));
+    public void printMap(final BridgeLog results) {
+        String upText = makeLogText(results.getUpBridge());
+        String downText = makeLogText(results.getDownBridge());
         showln(upText + LINE + downText);
+    }
+
+    private String makeLogText(final List<LogType> results) {
+        return results.stream()
+                .map(LogType::getMark)
+                .collect(Collectors.joining(DELIMITER, PREFIX, SUFFIX));
     }
 
     public void startMessage() {
@@ -49,10 +49,10 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printResult(final List<ResultDto> results, final int tryCount) {
+    public void printResult(final BridgeLog results, final int tryCount, final String isSuccess) {
         showln(LINE + FINAL_RESULT);
         printMap(results);
-        showAnalysis(results, tryCount);
+        showAnalysis(tryCount, isSuccess);
     }
 
     public void restartMessage() {
@@ -67,16 +67,9 @@ public class OutputView {
         showln(exception.getMessage());
     }
 
-    private void showAnalysis(final List<ResultDto> results, final int tryCount) {
-        showln(LINE + format(SUCCESS_RESULT, getLastResult(results.getLast())));
+    private void showAnalysis(final int tryCount, final String isSuccess) {
+        showln(LINE + format(SUCCESS_RESULT, isSuccess));
         showln(format(RETRYCOUNT, tryCount));
-    }
-
-    private String getLastResult(final ResultDto last) {
-        if (last.isSuccess()) {
-            return SUCCESS;
-        }
-        return FAIL;
     }
 
     private String format(String format, Object... args) {
