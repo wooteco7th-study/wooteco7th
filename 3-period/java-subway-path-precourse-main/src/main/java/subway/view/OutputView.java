@@ -18,4 +18,8 @@ public class OutputView {
         System.out.printf(RESULT_MSG, totalDistance, totalTime);
         stations.forEach(station -> System.out.println(station.getName()));
     }
+
+    public void printError(String error) {
+        System.out.println(error);
+    }
 }

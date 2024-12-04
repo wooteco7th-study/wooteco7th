@@ -26,8 +26,9 @@ public class InputView {
             ## 원하는 기능을 선택하세요.""";
 
 
-    private static final String START_STATION_MSG = "## 출발역을 입력하세요.";
-    private static final String END_STATION_MSG = "## 도착역을 입력하세요.";
+    private static final String NEW_LINE = System.lineSeparator();
+    private static final String START_STATION_MSG = NEW_LINE + "## 출발역을 입력하세요.";
+    private static final String END_STATION_MSG = NEW_LINE + "## 도착역을 입력하세요.";
 
 
     public InputView(final Scanner scanner) {

@@ -13,8 +13,8 @@
 
 - 잘못된 입력 받을 시 IllegalArgumentException 을 발생시키고,
   "[ERROR]"로 시작하는 에러 메시지를 출력
-    - [] 경로 조회 시 출발역과 도착역이 같을 때 `[ERROR] 출발역과 도착역이 동일합니다.`
-    - [] 경로 조회 시 출발역과 도착역이 연결되어 있지 않을 때
+    - [x] 경로 조회 시 출발역과 도착역이 같을 때 `[ERROR] 출발역과 도착역이 동일합니다.`
+    - [x] 경로 조회 시 출발역과 도착역이 연결되어 있지 않을 때
 - 초기 설정 (repo 등록)
     - [x] 지하철역: 교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역 등록
     - [x] 노선: 2, 3, 신분당선
@@ -27,7 +27,7 @@
 - 경로 조회
     - [x] 최단 거리
     - [x] 최소 시간
-- [] 명령어 입력에 따른 프로그램 실행
+- [x] 명령어 입력에 따른 프로그램 실행
 
 ## 출력 기능
 
@@ -43,6 +43,3 @@
 - 메서드 라인 최대 15라인
 - if-else 사용x
 - enum 활용하기
-- camp.nextstep.edu.missionutils 에서 제공하는 Randoms 및 Console API 사용하기
-    - Random 값 추출은 camp.nextstep.edu.missionutils.Randoms 의 pickUniqueNumbersInRange() 활용
-    - 사용자가 입력하는 값은 camp.nextstep.edu.missionutils.Console 의 readLine() 활용
