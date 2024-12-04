@@ -1,5 +1,8 @@
 package subway.domain;
 
+import subway.exception.CustomIllegalArgumentException;
+import subway.exception.ErrorMessage;
+
 // 출발 지하철역(정점)에서 도착 지하철역까지의 거리, 시간
 // - 출발 지하철역
 //- 종료 지하철역
@@ -30,5 +33,25 @@ public class Route {
                 ", takenTime=" + takenTime +
                 ", distance=" + distance +
                 '}';
+    }
+
+    public Line getLine() {
+        return line;
+    }
+
+    public Station getDepartureStation() {
+        return departureStation;
+    }
+
+    public Station getArrivalStation() {
+        return arrivalStation;
+    }
+
+    public int getTakenTime() {
+        return takenTime;
+    }
+
+    public int getDistance() {
+        return distance;
     }
 }

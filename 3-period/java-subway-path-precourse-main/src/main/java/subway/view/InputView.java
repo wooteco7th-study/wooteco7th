@@ -1,6 +1,7 @@
 package subway.view;
 
 import static subway.exception.ErrorMessage.INVALID_COMMAND;
+import static subway.exception.ErrorMessage.INVALID_STATION_NAME;
 
 import java.util.Scanner;
 import subway.exception.ErrorMessage;
@@ -26,5 +27,9 @@ public class InputView {
 
     public String readRouteCriteria() {
         return readLine(INVALID_COMMAND);
+    }
+
+    public String readDeparture() {
+        return readLine(INVALID_STATION_NAME);
     }
 }

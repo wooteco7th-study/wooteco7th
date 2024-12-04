@@ -2,11 +2,14 @@ package subway.controller;
 
 import static subway.util.StringParser.parseToInteger;
 
+import java.util.ArrayList;
 import java.util.List;
 import subway.command.FunctionCommand;
 import subway.command.RouteCriteriaCommand;
 import subway.domain.Line;
 import subway.domain.LineRepository;
+import subway.domain.Order;
+import subway.domain.Repositories;
 import subway.domain.Route;
 import subway.domain.RouteRepository;
 import subway.domain.Station;
@@ -30,12 +33,12 @@ public class SubwayController {
     }
 
     public void process() {
-        initialize();
-        processCommand();
+        Repositories repositories = initialize();
+        processCommand(repositories);
 
     }
 
-    private void processCommand() {
+    private void processCommand(final Repositories repositories) {
         while (true) {
             if (isQuit()) {
                 break;
@@ -45,15 +48,39 @@ public class SubwayController {
                 outputView.showBlank();
                 continue;
             }
+            processRoute(repositories);
         }
     }
 
-    private void initialize() {
+    private void processRoute(final Repositories repositories) {
+        // 출발역, 도착역 입력
+        StationRepository stationRepository = repositories.getStationRepository();
+        Station departureStation = makeDepartureStation(stationRepository);
+        Order order = makeArrivalStation(departureStation, stationRepository, repositories.getRouteRepository());
+    }
+
+    private Order makeArrivalStation(final Station departureStation, final StationRepository stationRepository,
+                                     final RouteRepository routeRepository) {
+        outputView.askArrivalStation();
+        return exceptionHandler.retryOn(() -> {
+            Station arrivalStation = stationRepository.findByName(inputView.readDeparture());
+            return new Order(departureStation, arrivalStation, routeRepository);
+        });
+    }
+
+    private Station makeDepartureStation(final StationRepository stationRepository) {
+        return exceptionHandler.retryOn(() -> {
+            outputView.askDepartureStation();
+            return stationRepository.findByName(inputView.readDeparture());
+        });
+    }
+
+    private Repositories initialize() {
         StationRepository stationRepository = initializeStations();
         LineRepository lineRepository = initilaizeLines();
         // 교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역
         RouteRepository routeRepository = initializeRoutes(stationRepository, lineRepository);
-
+        return new Repositories(lineRepository, routeRepository, stationRepository);
     }
 
     private RouteRepository initializeRoutes(final StationRepository stationRepository,
@@ -64,7 +91,7 @@ public class SubwayController {
         //    - `교대역` - ( 3km / 2분 ) - `남부터미널역` - ( 6km / 5분 ) - `양재역` - ( 1km / 1분 ) - `매봉역`
         //- `신분당선`
         //    - `강남역` - ( 2km / 8분 ) - `양재역` - ( 10km / 3분 ) - `양재시민의숲역`
-        RouteRepository routeRepository = new RouteRepository();
+        List<Route> routes = new ArrayList<>();
         List<Line> lines = makeLines(lineRepository);
 
         List<List<String>> stations = List.of(List.of("교대역", "강남역", "역삼역"), List.of("교대역", "남부터미널역", "양재역", "매봉역"),
@@ -80,9 +107,10 @@ public class SubwayController {
                 Station end = new Station(station.get(j + 1));
                 Route route = new Route(line, start, end, parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT),
                         parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT));
-                routeRepository.add(route);
+                routes.add(route);
             }
         }
+        RouteRepository routeRepository = new RouteRepository(routes, stationRepository.stations());
         return routeRepository;
     }
 

@@ -9,6 +9,7 @@ public enum ErrorMessage {
     INVALID_COMMAND("입력이 잘못되었습니다."),
     INVALID_ARGUMENT("인자가 잘못되었습니다."),
 
+    INVALID_STATION_NAME("존재하지 않은 역 이름입니다."),
     INVALID_STATION_DUPLICATED("출발역과 도착역이 동일합니다."),
     INVALID_STATION_PATH("출발역과 도착역이 연결되어 있지 않습니다."),
 

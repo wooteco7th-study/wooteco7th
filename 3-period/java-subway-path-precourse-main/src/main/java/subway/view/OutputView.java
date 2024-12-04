@@ -19,9 +19,20 @@ public class OutputView {
 
             ## 원하는 기능을 선택하세요.""";
 
+    private static final String ASK_DEPARTURE_STATION = "## 출발역을 입력하세요.";
+    private static final String ASK_ARRIVAL_STATION= "## 도착역을 입력하세요.";
     public void welcome() {
         showln(WELCOME);
     }
+
+    public void askDepartureStation() {
+        showln(LINE + ASK_DEPARTURE_STATION);
+    }
+
+    public void askArrivalStation(){
+        showln(LINE + ASK_ARRIVAL_STATION);
+    }
+
 
     public void selectRouteCriteria() {
         showln(LINE + SELECT_ROUTE_CRITERIA);
