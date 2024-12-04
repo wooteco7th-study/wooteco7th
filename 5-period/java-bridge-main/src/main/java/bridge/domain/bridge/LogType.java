@@ -13,8 +13,8 @@ public enum LogType {
     private final String mark;
     private final boolean isRight;
 
-    private static final List<LogType> VALUED_RIGHT_WRONG = Arrays.stream(LogType.values())
-            .filter(rightwrong -> rightwrong != NONE)
+    private static final List<LogType> VALUED_LOG_TYPES = Arrays.stream(LogType.values())
+            .filter(logType -> logType != NONE)
             .toList();
 
     LogType(final String mark, final boolean isRight) {
@@ -23,18 +23,10 @@ public enum LogType {
     }
 
     public static LogType from(boolean isRight) {
-        return VALUED_RIGHT_WRONG.stream()
+        return VALUED_LOG_TYPES.stream()
                 .filter(logType -> logType.isRight == isRight)
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ILLEGAL_STATE));
-    }
-
-    public static String findMark(boolean isRight) {
-        return VALUED_RIGHT_WRONG.stream()
-                .filter(logType -> logType.isRight == isRight)
-                .map(LogType::getMark)
-                .findFirst()
-                .orElse(NONE.mark);
     }
 
     public boolean isRight() {
