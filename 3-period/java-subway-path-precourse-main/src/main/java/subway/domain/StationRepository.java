@@ -1,11 +1,15 @@
 package subway.domain;
 
+import static subway.exception.ErrorMessage.INVALID_ARGUMENT;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import subway.exception.CustomIllegalArgumentException;
 
 public class StationRepository {
+
     private static final List<Station> stations = new ArrayList<>();
 
     public static List<Station> stations() {
@@ -14,6 +18,13 @@ public class StationRepository {
 
     public static void addStation(Station station) {
         stations.add(station);
+    }
+
+    public Station findByName(final String name) {
+        return stations.stream()
+                .filter(station -> station.getName().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new CustomIllegalArgumentException(INVALID_ARGUMENT));
     }
 
     public static boolean deleteStation(String name) {
