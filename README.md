@@ -6,7 +6,7 @@
 
 ## 🚀 3기
 
-최종 - [🚈 지하철 노선도](https://github.com/woowacourse/java-subway-path-precourse)
+최종 - [🚈 지하철 노선도](https://github.com/woowacourse/java-subway-map-precourse)
 
 <br>
 
