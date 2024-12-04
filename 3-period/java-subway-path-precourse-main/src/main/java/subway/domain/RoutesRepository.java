@@ -10,11 +10,6 @@ import org.jgrapht.graph.WeightedMultigraph;
 import subway.exception.CustomIllegalArgumentException;
 import subway.exception.ErrorMessage;
 
-// 출발 지하철역(정점)에서 도착 지하철역까지의 거리, 시간
-// - 출발 지하철역
-//- 종료 지하철역
-//- 걸린 시간
-//- 이동 거리
 public class RoutesRepository {
 
     private final List<Route> routes;
@@ -95,13 +90,11 @@ public class RoutesRepository {
     }
 
     public List<String> getShortestTimePath(final Station start, final Station end) {
-        GraphPath path = shortestTimePath.getPath(start.getName(), end.getName());
-        return path.getVertexList();
+        return shortestTimePath.getPath(start.getName(), end.getName()).getVertexList();
     }
 
     public List<String> getShortestDistancePath(final Station start, final Station end) {
-        GraphPath path = shortestDistancePath.getPath(start.getName(), end.getName());
-        return path.getVertexList();
+        return shortestDistancePath.getPath(start.getName(), end.getName()).getVertexList();
     }
 
     public void add(final Route route) {

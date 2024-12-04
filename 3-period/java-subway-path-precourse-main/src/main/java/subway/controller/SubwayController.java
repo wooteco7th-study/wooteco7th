@@ -102,7 +102,6 @@ public class SubwayController {
     private Repositories initialize() {
         StationRepository stationRepository = initializeStations();
         LineRepository lineRepository = initilaizeLines();
-        // 교대역, 강남역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역
         RoutesRepository routeRepository = initializeRoutes(stationRepository, lineRepository);
         return new Repositories(lineRepository, routeRepository, stationRepository);
     }
