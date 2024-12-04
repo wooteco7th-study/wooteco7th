@@ -1,5 +1,12 @@
 package subway.domain;
 
+import subway.domain.pathconnection.StationDistanceConnection;
+import subway.domain.pathconnection.StationTimeConnection;
+import subway.domain.repository.LineRepository;
+import subway.domain.repository.ShortestDistanceRepository;
+import subway.domain.repository.ShortestTimeRepository;
+import subway.domain.repository.StationRepository;
+
 import java.util.List;
 
 public class DataInitializer {

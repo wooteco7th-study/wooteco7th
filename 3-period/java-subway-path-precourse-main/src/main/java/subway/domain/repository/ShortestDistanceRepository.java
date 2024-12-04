@@ -1,4 +1,7 @@
-package subway.domain;
+package subway.domain.repository;
+
+import subway.domain.Station;
+import subway.domain.pathconnection.StationDistanceConnection;
 
 import java.util.ArrayList;
 import java.util.Collections;

@@ -1,4 +1,4 @@
-package subway.domain;
+package subway.domain.gamecommand;
 
 import java.util.Arrays;
 

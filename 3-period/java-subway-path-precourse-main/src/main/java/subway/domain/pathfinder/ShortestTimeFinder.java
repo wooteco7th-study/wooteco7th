@@ -1,9 +1,12 @@
-package subway.domain;
+package subway.domain.pathfinder;
 
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
+import subway.domain.Station;
+import subway.domain.pathconnection.StationTimeConnection;
+import subway.domain.repository.ShortestTimeRepository;
 
 public class ShortestTimeFinder {
     private final DijkstraShortestPath<Station, DefaultWeightedEdge> dijkstraShortestPath;

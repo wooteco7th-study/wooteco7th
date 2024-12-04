@@ -1,12 +1,14 @@
-package subway.domain;
+package subway.domain.pathconnection;
 
-public class StationDistanceConnection {
+import subway.domain.Station;
+
+public class StationTimeConnection {
     private final Station startStation;
     private final Station endStation;
     private final int distance;
     private final int time;
 
-    public StationDistanceConnection(final Station startStation, final Station endStation, final int distance, final int time) {
+    public StationTimeConnection(final Station startStation, final Station endStation, final int distance, final int time) {
         this.startStation = startStation;
         this.endStation = endStation;
         this.distance = distance;

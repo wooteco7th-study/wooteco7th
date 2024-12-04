@@ -1,14 +1,14 @@
 package subway.controller;
 
 import subway.domain.DataInitializer;
-import subway.domain.MainCommand;
-import subway.domain.PathCommand;
-import subway.domain.ShortestDistanceFinder;
-import subway.domain.ShortestDistanceRepository;
-import subway.domain.ShortestTimeFinder;
-import subway.domain.ShortestTimeRepository;
 import subway.domain.Station;
-import subway.domain.StationRepository;
+import subway.domain.gamecommand.MainCommand;
+import subway.domain.gamecommand.PathCommand;
+import subway.domain.pathfinder.ShortestDistanceFinder;
+import subway.domain.pathfinder.ShortestTimeFinder;
+import subway.domain.repository.ShortestDistanceRepository;
+import subway.domain.repository.ShortestTimeRepository;
+import subway.domain.repository.StationRepository;
 import subway.view.InputView;
 import subway.view.OutputView;
 
