@@ -10,8 +10,6 @@ import subway.domain.repository.ShortestDistanceRepository;
 
 public class ShortestDistanceFinder {
     private final DijkstraShortestPath<Station, DefaultWeightedEdge> dijkstraShortestPath;
-    private int totalDistance;
-    private int totalTime;
 
     public ShortestDistanceFinder() {
         WeightedMultigraph<Station, DefaultWeightedEdge> graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
