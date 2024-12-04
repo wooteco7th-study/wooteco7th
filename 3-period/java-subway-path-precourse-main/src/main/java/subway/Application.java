@@ -5,6 +5,8 @@ import subway.controller.SubwayController;
 import subway.domain.repository.LineRepository;
 import subway.domain.repository.StationRepository;
 import subway.service.DistanceShortestPath;
+import subway.service.PathFinder;
+import subway.service.PathResultCalculator;
 import subway.service.PathService;
 import subway.service.TimeShortestPath;
 import subway.view.RequestView;
@@ -12,29 +14,46 @@ import subway.view.ResponseView;
 
 public class Application {
     public static void main(String[] args) {
-        final Scanner scanner = new Scanner(System.in);
-        // TODO: 프로그램 구현
-        var stationRepository = new StationRepository();
-        var lineRepository = new LineRepository();
-        var initializeApplication = new InitializeApplication(stationRepository, lineRepository);
-        initializeApplication.initialize();
+        SubwayController controller = createSubwayController(new Scanner(System.in));
+        controller.run();
+    }
 
-        var distanceGraph = initializeApplication.getDistanceGraph();
-        var timeGraph = initializeApplication.getTimeGraph();
+    private static SubwayController createSubwayController(Scanner scanner) {
+        InitializeApplication initApp = createInitializedApp();
+        PathService pathService = createPathService(initApp);
 
-        DistanceShortestPath distanceShortestPath = new DistanceShortestPath(distanceGraph.getGraph());
-        TimeShortestPath timeShortestPath = new TimeShortestPath(timeGraph.getGraph());
-
-        new SubwayController(
+        return new SubwayController(
                 new RequestView(scanner),
                 new ResponseView(),
-                new PathService(
+                pathService
+        );
+    }
+
+    private static InitializeApplication createInitializedApp() {
+        var initApp = new InitializeApplication(
+                new StationRepository(),
+                new LineRepository()
+        );
+        initApp.initialize();
+        return initApp;
+    }
+
+    private static PathService createPathService(InitializeApplication initApp) {
+        var distanceShortestPath = new DistanceShortestPath(initApp.getDistanceGraph().getGraph());
+        var timeShortestPath = new TimeShortestPath(initApp.getTimeGraph().getGraph());
+
+        return new PathService(
+                new PathFinder(
                         distanceShortestPath,
                         timeShortestPath,
-                        distanceGraph,
-                        timeGraph
+                        initApp.getDistanceGraph(),
+                        initApp.getTimeGraph()
+                ),
+                new PathResultCalculator(
+                        distanceShortestPath,
+                        timeShortestPath
                 )
-        ).run();
-
+        );
     }
 }
+
