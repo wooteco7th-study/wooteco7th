@@ -9,7 +9,7 @@ public enum ExceptionMessage {
 
     COMMAND_NOT_FOUND("존재하지 않는 명령어입니다."),
 
-    DUPLICATED_STATION("출발역과 도착역이 중복되었습니다."),
+    DUPLICATED_STATION("출발역과 도착역이 동일합니다."),
     ;
     private static final String ERROR_PREFIX = "[ERROR] ";
 
