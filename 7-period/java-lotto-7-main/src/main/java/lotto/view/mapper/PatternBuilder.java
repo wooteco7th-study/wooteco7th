@@ -16,7 +16,9 @@ public class PatternBuilder {
         INTEGER("\\d+"),
         DOUBLE("\\d+(\\.\\d+)?"),
         LOCAL_DATE("\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])"),
-        POSITIVE_INTEGER("[1-9]\\d*");
+        POSITIVE_INTEGER("[1-9]\\d*"),
+        EMAIL("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-z]{2,}"),
+        PHONE_NUMBER("\\+?\\d{1,3}-\\d{1,4}-\\d{4}");
 
 
         private final String pattern;
@@ -53,14 +55,16 @@ public class PatternBuilder {
 
     public String build() {
         if (dataTypes.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] 최소 하나의 데이터 타입이 필요합니다.");
+            throw new IllegalArgumentException("[ERROR] 빌더에러 - 최소 하나의 데이터 타입이 필요합니다.");
         }
         StringBuilder patternBuilder = new StringBuilder("^");
         String itemPattern = createItemPattern();
         patternBuilder.append(itemPattern);
         if (!itemDelimiter.isEmpty()) {
             patternBuilder.append("(?:")
+                    .append("\\s*")
                     .append(itemDelimiter)
+                    .append("\\s*")
                     .append(itemPattern)
                     .append(")*");
         }
@@ -75,9 +79,10 @@ public class PatternBuilder {
             if (i > 0) {
                 itemPattern.append("\\s*").append(dataDelimiter).append("\\s*");
             }
-            itemPattern.append(dataTypes.get(i).getPattern());
+            itemPattern.append("(").append(dataTypes.get(i).getPattern()).append(")");
         }
         itemPattern.append("\\s*").append(wrapperEnd);
         return itemPattern.toString();
     }
 }
+

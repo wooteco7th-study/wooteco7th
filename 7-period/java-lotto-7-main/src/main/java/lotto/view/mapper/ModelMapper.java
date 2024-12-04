@@ -12,6 +12,7 @@ public class ModelMapper {
     private ModelMapper() {
     }
 
+
     public static PurchaseAmount toPurchaseAmount(String input) {
         // 패턴 제작
         String pattern = RequestPattern.createPurchaseAmountPattern();
@@ -33,7 +34,7 @@ public class ModelMapper {
         RequestValidator.validateInput(input, pattern, INVALID_INPUT_FORM.getMessage());
 
         // 팟싱해서 매핑시작
-        List<Integer> lottoNumbers = RequestParser.parserList(input);
+        List<Integer> lottoNumbers = RequestParser.parseIntegerList(input);
         return new Lotto(lottoNumbers);
     }
 
