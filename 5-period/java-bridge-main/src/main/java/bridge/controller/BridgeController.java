@@ -36,17 +36,15 @@ public class BridgeController {
     }
 
     private void processGame(final BridgeGame game) {
-        int tryCount = 0;
-        processEachGame(game, tryCount);
+        processEachGame(game);
     }
 
-    private void processEachGame(final BridgeGame game, int tryCount) {
+    private void processEachGame(final BridgeGame game) {
         do {
-            tryCount++;
             game.clear();
             move(game);
         } while (!shouldNotContinue(game));
-        outputView.printResult(toResultDto(game.getResults()), tryCount);
+        outputView.printResult(toResultDto(game.getResults()), game.getAttempt());
     }
 
     private boolean shouldNotContinue(final BridgeGame game) {

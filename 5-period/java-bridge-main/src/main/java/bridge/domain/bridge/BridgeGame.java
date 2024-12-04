@@ -13,10 +13,12 @@ public class BridgeGame {
 
     private final List<String> bridge;
     private final List<Result> results;
+    private int attempt;
 
     public BridgeGame(final List<String> bridge) {
         this.bridge = bridge;
         this.results = new ArrayList<>();
+        this.attempt = 0;
     }
 
     private void validate(final int size) {
@@ -67,5 +69,10 @@ public class BridgeGame {
 
     public void clear() {
         results.clear();
+        attempt++;
+    }
+
+    public int getAttempt() {
+        return attempt;
     }
 }
