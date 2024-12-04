@@ -1,5 +1,9 @@
 package subway.domain;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum StationType {
 
     GANGNAM("강남역"),
@@ -14,6 +18,12 @@ public enum StationType {
 
     StationType(final String name) {
         this.name = name;
+    }
+
+    public static List<String> findAll() {
+        return Arrays.stream(StationType.values())
+                .map(stationType -> stationType.name)
+                .collect(Collectors.toList());
     }
 
     public String getName() {
