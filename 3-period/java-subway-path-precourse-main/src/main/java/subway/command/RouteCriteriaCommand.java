@@ -22,7 +22,11 @@ public enum RouteCriteriaCommand {
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_COMMAND));
     }
 
-    public boolean isGoBack(){
+    public boolean isGoBack() {
         return this == 돌아가기;
+    }
+
+    public boolean isShortestDistance() {
+        return this == 최단거리;
     }
 }

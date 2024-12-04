@@ -1,5 +1,7 @@
 package subway.view;
 
+import java.util.List;
+
 public class OutputView {
 
     private static final String LINE = System.lineSeparator();
@@ -18,9 +20,25 @@ public class OutputView {
             B. 돌아가기
 
             ## 원하는 기능을 선택하세요.""";
+    private static final String TOTAL_RESULT = """
+            ## 조회 결과
+            [INFO] ---
+            [INFO] 총 거리: %dkm
+            [INFO] 총 소요 시간: %d분
+            [INFO] ---""";
+
+    private static final String STATION_RESULT = "[INFO] %s";
 
     private static final String ASK_DEPARTURE_STATION = "## 출발역을 입력하세요.";
-    private static final String ASK_ARRIVAL_STATION= "## 도착역을 입력하세요.";
+    private static final String ASK_ARRIVAL_STATION = "## 도착역을 입력하세요.";
+
+    public void showTotalResult(int totalDistance, int totalTime, List<String> results) {
+        showln(LINE + format(TOTAL_RESULT, totalDistance, totalTime));
+        results.stream()
+                .map(result -> format(STATION_RESULT, result))
+                .forEach(this::showln);
+    }
+
     public void welcome() {
         showln(WELCOME);
     }
@@ -29,7 +47,7 @@ public class OutputView {
         showln(LINE + ASK_DEPARTURE_STATION);
     }
 
-    public void askArrivalStation(){
+    public void askArrivalStation() {
         showln(LINE + ASK_ARRIVAL_STATION);
     }
 

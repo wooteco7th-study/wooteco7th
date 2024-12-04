@@ -48,15 +48,40 @@ public class SubwayController {
                 outputView.showBlank();
                 continue;
             }
-            processRoute(repositories);
+            processRoute(repositories, command);
+            outputView.showBlank();
         }
     }
 
-    private void processRoute(final Repositories repositories) {
-        // 출발역, 도착역 입력
+    private void processRoute(final Repositories repositories, final RouteCriteriaCommand command) {
         StationRepository stationRepository = repositories.getStationRepository();
         Station departureStation = makeDepartureStation(stationRepository);
         Order order = makeArrivalStation(departureStation, stationRepository, repositories.getRouteRepository());
+        if (command.isShortestDistance()) {
+            processShortestDistance(repositories, order);
+            return;
+        }
+        processMinimumTime(repositories, order);
+    }
+
+    private void processMinimumTime(final Repositories repositories, final Order order) {
+        RouteRepository routeRepository = repositories.getRouteRepository();
+        Station departureStation = order.getDepartureStation();
+        Station arrivalStation = order.getArrivalStation();
+        Integer shortestTime = routeRepository.getShortestTime(departureStation, arrivalStation);
+        List<String> shortestTimePath = routeRepository.getShortestTimePath(departureStation, arrivalStation);
+        int totalDistance = routeRepository.getTotalDistance(shortestTimePath);
+        outputView.showTotalResult(totalDistance, shortestTime, shortestTimePath);
+    }
+
+    private void processShortestDistance(final Repositories repositories, final Order order) {
+        RouteRepository routeRepository = repositories.getRouteRepository();
+        Station departureStation = order.getDepartureStation();
+        Station arrivalStation = order.getArrivalStation();
+        Integer shortestDistance = routeRepository.getShortestDistance(departureStation, arrivalStation);
+        List<String> shortestDistancePath = routeRepository.getShortestDistancePath(departureStation, arrivalStation);
+        int totalTime = routeRepository.getTotalTime(shortestDistancePath);
+        outputView.showTotalResult(shortestDistance, totalTime, shortestDistancePath);
     }
 
     private Order makeArrivalStation(final Station departureStation, final StationRepository stationRepository,
@@ -85,12 +110,6 @@ public class SubwayController {
 
     private RouteRepository initializeRoutes(final StationRepository stationRepository,
                                              final LineRepository lineRepository) {
-        // - `2호선`
-        //    - `교대역` - ( 2km / 3분 ) - `강남역` - ( 2km / 3분 ) - `역삼역`
-        //- `3호선`
-        //    - `교대역` - ( 3km / 2분 ) - `남부터미널역` - ( 6km / 5분 ) - `양재역` - ( 1km / 1분 ) - `매봉역`
-        //- `신분당선`
-        //    - `강남역` - ( 2km / 8분 ) - `양재역` - ( 10km / 3분 ) - `양재시민의숲역`
         List<Route> routes = new ArrayList<>();
         List<Line> lines = makeLines(lineRepository);
 
@@ -105,8 +124,8 @@ public class SubwayController {
                 String[] pathInfo = path.get(j).split(",");
                 Station start = new Station(station.get(j));
                 Station end = new Station(station.get(j + 1));
-                Route route = new Route(line, start, end, parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT),
-                        parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT));
+                Route route = new Route(line, start, end, parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT),
+                        parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT));
                 routes.add(route);
             }
         }

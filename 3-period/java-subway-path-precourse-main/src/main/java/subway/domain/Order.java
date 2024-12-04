@@ -21,4 +21,12 @@ public class Order {
         }
         routeRepository.validatePathConnected(departureStation, arrivalStation);
     }
+
+    public Station getDepartureStation() {
+        return departureStation;
+    }
+
+    public Station getArrivalStation() {
+        return arrivalStation;
+    }
 }
