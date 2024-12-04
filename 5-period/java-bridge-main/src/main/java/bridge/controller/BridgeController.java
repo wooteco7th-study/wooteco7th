@@ -2,10 +2,11 @@ package bridge.controller;
 
 import bridge.domain.RestartCommand;
 import bridge.domain.bridge.BridgeGame;
+import bridge.domain.bridge.BridgeMaker;
 import bridge.domain.bridge.Result;
+import bridge.domain.bridge.UpDown;
 import bridge.domain.generator.BridgeNumberGenerator;
 import bridge.dto.ResultDto;
-import bridge.dto.TotalResultDto;
 import bridge.exception.ExceptionHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -28,10 +29,9 @@ public class BridgeController {
     }
 
     public void process() {
-        // 다리 입력
         outputView.startMessage();
-        int size = makeBridgeSize();
-        BridgeGame game = new BridgeGame(size, bridgeNumberGenerator);
+        List<String> bridge = makeBridge();
+        BridgeGame game = new BridgeGame(bridge);
         processGame(game);
     }
 
@@ -46,6 +46,7 @@ public class BridgeController {
             game.clear();
             move(game);
         } while (!shouldNotContinue(game));
+        outputView.printResult(toResultDto(game.getResults()), tryCount);
     }
 
     private boolean shouldNotContinue(final BridgeGame game) {
@@ -55,15 +56,15 @@ public class BridgeController {
     private boolean wantRestart(final BridgeGame game) {
         outputView.restartMessage();
         return exceptionHandler.retryOn(() -> {
-            RestartCommand restartCommand = new RestartCommand(inputView.readGameCommand().charAt(0));
+            RestartCommand restartCommand = RestartCommand.from(inputView.readGameCommand());
             return game.retry(restartCommand);
         });
     }
 
     private void move(final BridgeGame game) {
         do {
-            String direction = makeDirection();
-            game.move(direction);
+            UpDown upDown = makeUpDown();
+            game.move(upDown);
             outputView.printMap(toResultDto(game.getResults()));
         } while (game.canContinue());
     }
@@ -74,14 +75,18 @@ public class BridgeController {
                 .toList();
     }
 
-    private String makeDirection() {
+    private UpDown makeUpDown() {
         return exceptionHandler.retryOn(() -> {
             outputView.selectDirection();
-            return inputView.readMoving();
+            return UpDown.from(inputView.readMoving());
         });
     }
 
-    private int makeBridgeSize() {
-        return exceptionHandler.retryOn(inputView::readBridgeSize);
+    private List<String> makeBridge() {
+        return exceptionHandler.retryOn(() -> {
+            Integer size = exceptionHandler.retryOn(inputView::readBridgeSize);
+            BridgeMaker bridgeMaker = new BridgeMaker(bridgeNumberGenerator);
+            return bridgeMaker.makeBridge(size);
+        });
     }
 }

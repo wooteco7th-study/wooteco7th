@@ -1,12 +1,10 @@
 package bridge.domain.bridge;
 
 import bridge.domain.RestartCommand;
-import bridge.domain.generator.BridgeNumberGenerator;
 import bridge.exception.CustomIllegalArgumentException;
 import bridge.exception.ErrorMessage;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 /**
  * 다리 건너기 게임을 관리하는 클래스
@@ -14,15 +12,10 @@ import java.util.stream.IntStream;
 public class BridgeGame {
 
     private final List<String> bridge;
-    private final BridgeMaker bridgeMaker;
-    private final BridgeNumberGenerator numberGenerator;
     private final List<Result> results;
 
-    public BridgeGame(final int size, final BridgeNumberGenerator numberGenerator) {
-        validate(size);
-        this.bridgeMaker = new BridgeMaker();
-        this.numberGenerator = numberGenerator;
-        this.bridge = makeBridge(size);
+    public BridgeGame(final List<String> bridge) {
+        this.bridge = bridge;
         this.results = new ArrayList<>();
     }
 
@@ -30,13 +23,6 @@ public class BridgeGame {
         if (size < 3 || size > 20) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_BRIDGE_LENGTH);
         }
-    }
-
-    private List<String> makeBridge(int size) {
-        List<Integer> numbers = IntStream.range(0, size)
-                .mapToObj(n -> numberGenerator.generate())
-                .toList();
-        return bridgeMaker.makeBridge(numbers);
     }
 
     public boolean canContinue() {
@@ -56,9 +42,9 @@ public class BridgeGame {
      * <p>
      * 이동을 위해 필요한 메서드의 반환 타입(return type), 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void move(final String direction) {
+    public void move(final UpDown direction) {
         int pos = results.size();
-        boolean isRight = bridge.get(pos).equals(direction);
+        boolean isRight = bridge.get(pos).equals(direction.getDirection());
         results.add(Result.from(direction, isRight));
     }
 
