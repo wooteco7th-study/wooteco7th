@@ -21,7 +21,7 @@ public enum FunctionCommand {
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_COMMAND));
     }
 
-    public boolean isQuit(){
+    public boolean isQuit() {
         return this == QUIT;
     }
 }

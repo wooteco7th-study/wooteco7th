@@ -112,25 +112,36 @@ public class SubwayController {
                                              final LineRepository lineRepository) {
         List<Route> routes = new ArrayList<>();
         List<Line> lines = makeLines(lineRepository);
-
-        List<List<String>> stations = List.of(List.of("교대역", "강남역", "역삼역"), List.of("교대역", "남부터미널역", "양재역", "매봉역"),
-                List.of("강남역", "양재역", "양재시민의숲역"));
-        List<List<String>> paths = List.of(List.of("2,3", "2,3"), List.of("3,2", "6,5", "1,1"), List.of("2,8", "10,3"));
+        List<List<String>> stations = makeStationList();
+        List<List<String>> paths = makeInfoList();
         for (int i = 0; i < stations.size(); i++) {
             Line line = lines.get(i);
             List<String> path = paths.get(i);
             List<String> station = stations.get(i);
-            for (int j = 0; j < path.size(); j++) {
-                String[] pathInfo = path.get(j).split(",");
-                Station start = new Station(station.get(j));
-                Station end = new Station(station.get(j + 1));
-                Route route = new Route(line, start, end, parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT),
-                        parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT));
-                routes.add(route);
-            }
+            makeRoute(routes, line, path, station);
         }
-        RouteRepository routeRepository = new RouteRepository(routes, stationRepository.stations());
-        return routeRepository;
+        return new RouteRepository(routes, stationRepository.stations());
+    }
+
+    private void makeRoute(final List<Route> routes, final Line line, final List<String> path,
+                           final List<String> station) {
+        for (int j = 0; j < path.size(); j++) {
+            String[] pathInfo = path.get(j).split(",");
+            Station start = new Station(station.get(j));
+            Station end = new Station(station.get(j + 1));
+            Route route = new Route(line, start, end, parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT),
+                    parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT));
+            routes.add(route);
+        }
+    }
+
+    private List<List<String>> makeInfoList() {
+        return List.of(List.of("2,3", "2,3"), List.of("3,2", "6,5", "1,1"), List.of("2,8", "10,3"));
+    }
+
+    private List<List<String>> makeStationList() {
+        return List.of(List.of("교대역", "강남역", "역삼역"), List.of("교대역", "남부터미널역", "양재역", "매봉역"),
+                List.of("강남역", "양재역", "양재시민의숲역"));
     }
 
     private List<Line> makeLines(final LineRepository lineRepository) {

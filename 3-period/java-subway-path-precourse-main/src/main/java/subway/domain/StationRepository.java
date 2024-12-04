@@ -1,6 +1,5 @@
 package subway.domain;
 
-import static subway.exception.ErrorMessage.INVALID_ARGUMENT;
 import static subway.exception.ErrorMessage.INVALID_STATION_NAME;
 
 import java.util.ArrayList;
