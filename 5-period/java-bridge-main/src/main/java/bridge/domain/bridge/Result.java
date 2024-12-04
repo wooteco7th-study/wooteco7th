@@ -1,5 +1,7 @@
 package bridge.domain.bridge;
 
+import bridge.domain.command.UpDown;
+
 public class Result {
 
     private final UpDown upDown;

@@ -1,8 +1,9 @@
-package bridge.domain.bridge;
+package bridge.domain.command;
 
 import bridge.exception.CustomIllegalArgumentException;
 import bridge.exception.ErrorMessage;
 import java.util.Arrays;
+import java.util.Objects;
 
 public enum UpDown {
 
@@ -16,9 +17,9 @@ public enum UpDown {
         this.value = value;
     }
 
-    public static UpDown from(String value) {
+    public static UpDown from(String direction) {
         return Arrays.stream(UpDown.values())
-                .filter(upDown -> upDown.direction.equals(value))
+                .filter(upDown -> Objects.equals(upDown.direction, direction))
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_DIRECTION));
     }

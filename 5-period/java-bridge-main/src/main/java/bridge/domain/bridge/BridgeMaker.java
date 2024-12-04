@@ -1,5 +1,6 @@
 package bridge.domain.bridge;
 
+import bridge.domain.command.UpDown;
 import bridge.domain.generator.BridgeNumberGenerator;
 import bridge.exception.CustomIllegalArgumentException;
 import bridge.exception.ErrorMessage;

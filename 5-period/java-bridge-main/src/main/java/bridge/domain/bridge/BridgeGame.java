@@ -1,6 +1,7 @@
 package bridge.domain.bridge;
 
-import bridge.domain.RestartCommand;
+import bridge.domain.command.RestartCommand;
+import bridge.domain.command.UpDown;
 import bridge.exception.CustomIllegalArgumentException;
 import bridge.exception.ErrorMessage;
 import java.util.ArrayList;

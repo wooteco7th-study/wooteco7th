@@ -1,10 +1,10 @@
 package bridge.controller;
 
-import bridge.domain.RestartCommand;
+import bridge.domain.command.RestartCommand;
 import bridge.domain.bridge.BridgeGame;
 import bridge.domain.bridge.BridgeMaker;
 import bridge.domain.bridge.Result;
-import bridge.domain.bridge.UpDown;
+import bridge.domain.command.UpDown;
 import bridge.domain.generator.BridgeNumberGenerator;
 import bridge.dto.ResultDto;
 import bridge.exception.ExceptionHandler;

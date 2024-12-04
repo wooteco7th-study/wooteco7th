@@ -1,4 +1,4 @@
-package bridge.domain;
+package bridge.domain.command;
 
 import bridge.exception.CustomIllegalArgumentException;
 import bridge.exception.ErrorMessage;
