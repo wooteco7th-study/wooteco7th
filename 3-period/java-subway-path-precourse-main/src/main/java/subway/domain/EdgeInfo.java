@@ -10,7 +10,7 @@ public enum EdgeInfo {
     INFO_2(LineType.TWO_LINE, StationType.GANGNAM, StationType.YEOKSAM, 2, 3),
     INFO_3(LineType.TREE_LINE, StationType.GYODAE, StationType.NAMBU_TERMINAL, 3, 2),
     INFO_4(LineType.TREE_LINE, StationType.NAMBU_TERMINAL, StationType.YANGJAE, 6, 5),
-    INFO_5(LineType.TREE_LINE, StationType.NAMBU_TERMINAL, StationType.MAEBONG, 1, 1),
+    INFO_5(LineType.TREE_LINE, StationType.YANGJAE, StationType.MAEBONG, 1, 1),
     INFO_6(LineType.SHINBUNDANG_LINE, StationType.GANGNAM, StationType.YANGJAE, 2, 8),
     INFO_7(LineType.SHINBUNDANG_LINE, StationType.YANGJAE, StationType.YANGJAE_CITIZEN_FOREST, 10, 3);
 
