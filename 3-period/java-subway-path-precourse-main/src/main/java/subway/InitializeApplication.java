@@ -62,6 +62,11 @@ public class InitializeApplication {
         return timeGraph;
     }
 
+    public void initialize() {
+        initializeStationAndLine();
+        initializeGraphVertex();
+    }
+
     private void initializeStationAndLine() {
         List<SubwayStation> stations = List.of(강남역, 교대역, 역삼역, 남부터미널역, 양재역, 양재시민의숲역, 매봉역);
         for (SubwayStation station : stations) {

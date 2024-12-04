@@ -14,4 +14,8 @@ public class DistanceShortestPathGraph {
         graph.setEdgeWeight(graph.addEdge(fromVertex, toVertex), weight);
     }
 
+    public WeightedMultigraph<String, DefaultWeightedEdge> getGraph() {
+        return graph;
+    }
+
 }
