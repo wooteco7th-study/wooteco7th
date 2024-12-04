@@ -26,6 +26,5 @@ public class ShortestTimeFinder {
         int time = connection.getTime();
 
         graph.setEdgeWeight(graph.addEdge(connection.getStartStation(), connection.getEndStation()), time);
-        graph.setEdgeWeight(graph.addEdge(connection.getStartStation(), connection.getEndStation()), time);
     }
 }

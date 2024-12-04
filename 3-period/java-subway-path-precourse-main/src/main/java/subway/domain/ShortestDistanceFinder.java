@@ -7,6 +7,8 @@ import org.jgrapht.graph.WeightedMultigraph;
 
 public class ShortestDistanceFinder {
     private final DijkstraShortestPath<Station, DefaultWeightedEdge> dijkstraShortestPath;
+    private int totalDistance;
+    private int totalTime;
 
     public ShortestDistanceFinder() {
         WeightedMultigraph<Station, DefaultWeightedEdge> graph = new WeightedMultigraph<>(DefaultWeightedEdge.class);
@@ -20,13 +22,19 @@ public class ShortestDistanceFinder {
         return dijkstraShortestPath.getPath(start, end);
     }
 
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    public int getTotalDistance() {
+        return totalDistance;
+    }
+
     private void addPathToGraph(WeightedMultigraph<Station, DefaultWeightedEdge> graph, StationDistanceConnection connection) {
         graph.addVertex(connection.getStartStation());
         graph.addVertex(connection.getEndStation());
         int distance = connection.getDistance();
 
         graph.setEdgeWeight(graph.addEdge(connection.getStartStation(), connection.getEndStation()), distance);
-        graph.setEdgeWeight(graph.addEdge(connection.getStartStation(), connection.getEndStation()), distance);
     }
-
 }
