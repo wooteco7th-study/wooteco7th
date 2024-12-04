@@ -1,5 +1,6 @@
 package subway.controller;
 
+import subway.service.MainValidator;
 import subway.view.InputView;
 
 public class SubwayController {
@@ -11,7 +12,10 @@ public class SubwayController {
     }
 
     public void run() {
-        String inputMain = inputView.getMain();
-        // 입력 검증 및 기능 구현
+        MainValidator mainValidator = new MainValidator(inputView.getMain());
+        if (mainValidator.isTrue()) {
+            //다음 동작 수행
+        }
+        //아니라면 종료
     }
 }
