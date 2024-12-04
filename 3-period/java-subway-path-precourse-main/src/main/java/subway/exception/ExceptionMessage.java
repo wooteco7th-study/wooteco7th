@@ -5,7 +5,7 @@ public enum ExceptionMessage {
 
     STATION_NOT_FOUND("존재하지 않는 역입니다."),
 
-    ;
+    COMMAND_NOT_FOUND("존재하지 않는 명령어입니다.");
     private static final String ERROR_PREFIX = "[ERROR] ";
 
     private final String message;
