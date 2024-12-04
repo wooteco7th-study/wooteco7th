@@ -22,14 +22,6 @@ public class ShortestDistanceFinder {
         return dijkstraShortestPath.getPath(start, end);
     }
 
-    public int getTotalTime() {
-        return totalTime;
-    }
-
-    public int getTotalDistance() {
-        return totalDistance;
-    }
-
     private void addPathToGraph(WeightedMultigraph<Station, DefaultWeightedEdge> graph, StationDistanceConnection connection) {
         graph.addVertex(connection.getStartStation());
         graph.addVertex(connection.getEndStation());
