@@ -38,29 +38,41 @@ public class SubwayController {
     }
 
     private void processCommand(final Repositories repositories) {
-        while (true) {
-            if (isQuit()) {
-                break;
-            }
+        boolean isInMiddle = false;
+        while (isInMiddle || !isQuit()) {
             RouteCriteriaCommand command = makeCriteria();
             if (command.isGoBack()) {
                 outputView.showBlank();
                 continue;
             }
-            processRoute(repositories, command);
-            outputView.showBlank();
+            isInMiddle = !processRoute(repositories, command);
         }
     }
 
-    private void processRoute(final Repositories repositories, final RouteCriteriaCommand command) {
+    private boolean processRoute(final Repositories repositories, final RouteCriteriaCommand command) {
         StationRepository stationRepository = repositories.getStationRepository();
         Station departureStation = makeDepartureStation(stationRepository);
-        Order order = makeArrivalStation(departureStation, stationRepository, repositories.getRouteRepository());
+        Station arrivalStation = makeArrivalStation(stationRepository);
+        Order order = makeOrder(repositories, departureStation, arrivalStation);
+        if (order == null) {
+            return false;
+        }
         if (command.isShortestDistance()) {
             processShortestDistance(repositories, order);
-            return;
+            return true;
         }
         processMinimumTime(repositories, order);
+        return true;
+    }
+
+    private Order makeOrder(final Repositories repositories, final Station departureStation,
+                            final Station arrivalStation) {
+        try {
+            return new Order(departureStation, arrivalStation, repositories);
+        } catch (IllegalArgumentException e) {
+            outputView.showException(e);
+            return null;
+        }
     }
 
     private void processMinimumTime(final Repositories repositories, final Order order) {
@@ -83,13 +95,9 @@ public class SubwayController {
         outputView.showTotalResult(shortestDistance, totalTime, shortestDistancePath);
     }
 
-    private Order makeArrivalStation(final Station departureStation, final StationRepository stationRepository,
-                                     final RoutesRepository routeRepository) {
+    private Station makeArrivalStation(final StationRepository stationRepository) {
         outputView.askArrivalStation();
-        return exceptionHandler.retryOn(() -> {
-            Station arrivalStation = stationRepository.findByName(inputView.readDeparture());
-            return new Order(departureStation, arrivalStation, routeRepository, stationRepository);
-        });
+        return exceptionHandler.retryOn(() -> stationRepository.findByName(inputView.readDeparture()));
     }
 
     private Station makeDepartureStation(final StationRepository stationRepository) {

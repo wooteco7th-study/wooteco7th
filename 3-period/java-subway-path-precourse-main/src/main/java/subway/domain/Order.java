@@ -8,9 +8,9 @@ public class Order {
     private final Station departureStation;
     private final Station arrivalStation;
 
-    public Order(final Station departureStation, final Station arrivalStation, final RoutesRepository routeRepository,
-                 final StationRepository stationRepository) {
-        validate(departureStation, arrivalStation, routeRepository, stationRepository);
+    public Order(final Station departureStation, final Station arrivalStation, final Repositories repositories) {
+        validate(departureStation, arrivalStation, repositories.getRouteRepository(),
+                repositories.getStationRepository());
         this.departureStation = departureStation;
         this.arrivalStation = arrivalStation;
     }

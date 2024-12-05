@@ -37,6 +37,7 @@ public class OutputView {
         results.stream()
                 .map(result -> format(STATION_RESULT, result))
                 .forEach(this::showln);
+        showln("");
     }
 
     public void welcome() {
@@ -57,7 +58,7 @@ public class OutputView {
     }
 
     public void showException(Exception exception) {
-        showln(exception.getMessage());
+        showln(LINE + exception.getMessage());
     }
 
     private String format(String format, Object... args) {
@@ -65,7 +66,7 @@ public class OutputView {
     }
 
     public void showBlank() {
-        System.out.println();
+        showln("");
     }
 
     private void showln(String message) {
