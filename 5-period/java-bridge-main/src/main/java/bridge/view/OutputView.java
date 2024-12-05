@@ -34,11 +34,6 @@ public class OutputView {
         showln(upText + LINE + downText);
     }
 
-    private String makeLogText(final List<String> results) {
-        return results.stream()
-                .collect(Collectors.joining(DELIMITER, PREFIX, SUFFIX));
-    }
-
     public void startMessage() {
         showln(START);
         showln(LINE + START_LENGTH);
@@ -65,6 +60,11 @@ public class OutputView {
 
     public void showException(Exception exception) {
         showln(exception.getMessage());
+    }
+
+    private String makeLogText(final List<String> results) {
+        return results.stream()
+                .collect(Collectors.joining(DELIMITER, PREFIX, SUFFIX));
     }
 
     private void showAnalysis(final boolean isSuccess, final int tryCount) {
