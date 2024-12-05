@@ -4,6 +4,7 @@ import static subway.util.StringParser.parseToInteger;
 
 import java.util.ArrayList;
 import java.util.List;
+import subway.command.ProcessingState;
 import subway.command.FunctionCommand;
 import subway.command.RouteCriteriaCommand;
 import subway.domain.Line;
@@ -34,45 +35,49 @@ public class SubwayController {
 
     public void process() {
         Repositories repositories = initialize();
-        processCommand(repositories);
+        processCommands(repositories);
     }
 
-    private void processCommand(final Repositories repositories) {
-        boolean isInMiddle = false;
-        while (isInMiddle || !isQuit()) {
+    private void processCommands(final Repositories repositories) {
+        ProcessingState status = ProcessingState.START_FROM_BEGINNING;
+        while (shouldContinue(status)) {
             RouteCriteriaCommand command = makeCriteria();
-            if (command.isGoBack()) {
-                outputView.showBlank();
-                continue;
-            }
-            isInMiddle = !processRoute(repositories, command);
+            status = processCommand(repositories, command);
         }
     }
 
-    private boolean processRoute(final Repositories repositories, final RouteCriteriaCommand command) {
+    private boolean shouldContinue(final ProcessingState status) {
+        return status.shouldContinue() || !isQuit();
+    }
+
+    private ProcessingState processCommand(final Repositories repositories, final RouteCriteriaCommand command) {
+        if (command.isGoBack()) {
+            outputView.showBlank();
+            return ProcessingState.START_FROM_BEGINNING;
+        }
+        try {
+            Order order = createOrder(repositories);
+            processRoute(repositories, command, order);
+            return ProcessingState.START_FROM_BEGINNING;
+        } catch (IllegalArgumentException exception) {
+            outputView.showException(exception);
+            return ProcessingState.CONTINUE_IN_THE_MIDDLE;
+        }
+    }
+
+    private Order createOrder(final Repositories repositories) {
         StationRepository stationRepository = repositories.getStationRepository();
         Station departureStation = makeDepartureStation(stationRepository);
         Station arrivalStation = makeArrivalStation(stationRepository);
-        Order order = makeOrder(repositories, departureStation, arrivalStation);
-        if (order == null) {
-            return false;
-        }
-        if (command.isShortestDistance()) {
-            processShortestDistance(repositories, order);
-            return true;
-        }
-        processMinimumTime(repositories, order);
-        return true;
+        return new Order(departureStation, arrivalStation, repositories);
     }
 
-    private Order makeOrder(final Repositories repositories, final Station departureStation,
-                            final Station arrivalStation) {
-        try {
-            return new Order(departureStation, arrivalStation, repositories);
-        } catch (IllegalArgumentException e) {
-            outputView.showException(e);
-            return null;
+    private void processRoute(final Repositories repositories, final RouteCriteriaCommand command, final Order order) {
+        if (command.isShortestDistance()) {
+            processShortestDistance(repositories, order);
+            return;
         }
+        processMinimumTime(repositories, order);
     }
 
     private void processMinimumTime(final Repositories repositories, final Order order) {
