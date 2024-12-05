@@ -11,12 +11,11 @@ public class ExceptionHandler {
         this.outputView = outputView;
     }
 
-    // 최대 시도 횟수만큼 재시도하며 결과를 반환
     public <T> T retryOn(Supplier<T> action) {
         while (true) {
             try {
                 return action.get();
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IllegalStateException e) {
                 outputView.showException(e);
             }
         }
@@ -27,24 +26,13 @@ public class ExceptionHandler {
             try {
                 callback.run();
                 return;
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IllegalStateException e) {
                 outputView.showException(e);
             }
         }
     }
 
-    // 실패시 false를 반환하고 계속 진행
-    public boolean tryWithoutThrow(Supplier<Boolean> action) {
-        try {
-            return action.get();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            outputView.showException(e);
-            return false;
-        }
-    }
-
-    // 예외 발생시 메시지 출력 후 예외를 다시 던짐
-    public <T> T tryWithThrow(Supplier<T> action) {
+    public <T> T handle(Supplier<T> action) {
         try {
             return action.get();
         } catch (IllegalArgumentException | IllegalStateException e) {
@@ -53,8 +41,7 @@ public class ExceptionHandler {
         }
     }
 
-    // 반환값이 없는 작업 실행, 예외 발생시 메시지 출력 후 예외를 다시 던짐
-    public void tryVoid(Runnable action) {
+    public void handle(Runnable action) {
         try {
             action.run();
         } catch (IllegalArgumentException | IllegalStateException e) {

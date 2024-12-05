@@ -31,10 +31,6 @@ public enum UpDown {
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_DIRECTION));
     }
 
-    public boolean isUp() {
-        return this == UP;
-    }
-
     public String getDirection() {
         return direction;
     }
