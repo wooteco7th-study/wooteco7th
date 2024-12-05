@@ -1,7 +1,8 @@
 package bridge.view;
 
-import bridge.domain.bridge.BridgeLog;
-import bridge.domain.bridge.LogType;
+import bridge.domain.bridge.GameResult;
+import bridge.dto.GameBoardDto;
+import bridge.dto.GameResultDto;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,15 +28,14 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printMap(final BridgeLog results) {
-        String upText = makeLogText(results.getUpBridge());
-        String downText = makeLogText(results.getDownBridge());
+    public void printMap(final GameBoardDto results) {
+        String upText = makeLogText(results.upBridgeLogs());
+        String downText = makeLogText(results.downBridgeLogs());
         showln(upText + LINE + downText);
     }
 
-    private String makeLogText(final List<LogType> results) {
+    private String makeLogText(final List<String> results) {
         return results.stream()
-                .map(LogType::getMark)
                 .collect(Collectors.joining(DELIMITER, PREFIX, SUFFIX));
     }
 
@@ -49,10 +49,10 @@ public class OutputView {
      * <p>
      * 출력을 위해 필요한 메서드의 인자(parameter)는 자유롭게 추가하거나 변경할 수 있다.
      */
-    public void printResult(final BridgeLog results, final int tryCount, final String isSuccess) {
+    public void printResult(final GameResultDto dto) {
         showln(LINE + FINAL_RESULT);
-        printMap(results);
-        showAnalysis(tryCount, isSuccess);
+        printMap(dto.gameBoardDto());
+        showAnalysis(dto.isSuccess(), dto.attempt());
     }
 
     public void restartMessage() {
@@ -67,8 +67,8 @@ public class OutputView {
         showln(exception.getMessage());
     }
 
-    private void showAnalysis(final int tryCount, final String isSuccess) {
-        showln(LINE + format(SUCCESS_RESULT, isSuccess));
+    private void showAnalysis(final boolean isSuccess, final int tryCount) {
+        showln(LINE + format(SUCCESS_RESULT, GameResult.from(isSuccess)));
         showln(format(RETRYCOUNT, tryCount));
     }
 

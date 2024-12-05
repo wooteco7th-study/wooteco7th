@@ -2,10 +2,11 @@ package bridge.controller;
 
 import bridge.domain.bridge.BridgeGame;
 import bridge.domain.bridge.BridgeMaker;
-import bridge.domain.bridge.GameResult;
 import bridge.domain.command.RestartCommand;
 import bridge.domain.command.UpDown;
 import bridge.domain.generator.BridgeNumberGenerator;
+import bridge.dto.GameBoardDto;
+import bridge.dto.GameResultDto;
 import bridge.exception.ExceptionHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
@@ -39,7 +40,8 @@ public class BridgeController {
             game.clear();
             move(game);
         } while (shouldContinue(game));
-        outputView.printResult(game.getBridgeLog(), game.getAttempt(), GameResult.from(game.isSuccess()));
+        outputView.printResult(
+                new GameResultDto(GameBoardDto.from(game.getBridgeLog()), game.isSuccess(), game.getAttempt()));
     }
 
     private boolean shouldContinue(final BridgeGame game) {
@@ -58,7 +60,7 @@ public class BridgeController {
         do {
             UpDown upDown = makeUpDown();
             game.move(upDown);
-            outputView.printMap(game.getBridgeLog());
+            outputView.printMap(GameBoardDto.from(game.getBridgeLog()));
         } while (game.canContinue());
     }
 

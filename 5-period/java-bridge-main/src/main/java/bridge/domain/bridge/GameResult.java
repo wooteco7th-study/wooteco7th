@@ -1,13 +1,22 @@
 package bridge.domain.bridge;
 
+import java.util.Arrays;
+import java.util.Objects;
+
 public enum GameResult {
 
-    성공, 실패;
+    성공(true), 실패(false);
 
-    public static String from(boolean isSuccess) {
-        if (isSuccess) {
-            return 성공.name();
-        }
-        return 실패.name();
+    private final boolean isSuccess;
+
+    GameResult(final boolean isSuccess) {
+        this.isSuccess = isSuccess;
+    }
+
+    public static GameResult from(boolean isSuccess) {
+        return Arrays.stream(GameResult.values())
+                .filter(upDown -> Objects.equals(upDown.isSuccess, isSuccess))
+                .findFirst()
+                .get();
     }
 }
