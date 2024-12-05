@@ -11,7 +11,7 @@ public enum PathCommand {
     SHORTEST_TIME("2"),
     BACK("B");
 
-    private String command;
+    private final String command;
 
     PathCommand(final String command) {
         this.command = command;

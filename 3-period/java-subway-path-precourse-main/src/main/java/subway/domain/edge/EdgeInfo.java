@@ -17,11 +17,11 @@ public enum EdgeInfo {
     INFO_7(LineType.SHINBUNDANG_LINE, StationType.YANGJAE, StationType.YANGJAE_CITIZEN_FOREST, 10, 3);
 
 
-    private LineType lineType;
-    private StationType start;
-    private StationType end;
-    private int distance;
-    private int time;
+    private final LineType lineType;
+    private final StationType start;
+    private final StationType end;
+    private final int distance;
+    private final int time;
 
     EdgeInfo(final LineType lineType, final StationType start, final StationType end, final int distance,
              final int time) {

@@ -33,7 +33,7 @@ public class EdgeGroup {
                 .orElseThrow(() -> new CustomIllegalStateException(ErrorMessage.INVALID_NOT_LINKED_STATION));
     }
 
-    public  DijkstraShortestPath getDijkstraShortestTimePath() {
+    public DijkstraShortestPath getDijkstraShortestTimePath() {
         WeightedMultigraph<String, DefaultWeightedEdge> graph
                 = new WeightedMultigraph<>(DefaultWeightedEdge.class);
         for (Edge edge : edges) {
