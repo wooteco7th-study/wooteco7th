@@ -19,7 +19,7 @@ public class OutputView {
         stations.forEach(station -> System.out.println(station.getName()));
     }
 
-    public void printError(String error) {
+    public static void printError(String error) {
         System.out.println(error);
     }
 }
