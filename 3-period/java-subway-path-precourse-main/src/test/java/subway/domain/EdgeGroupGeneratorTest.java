@@ -20,6 +20,6 @@ class EdgeGroupGeneratorTest {
         final EdgeGroup edgeGroup = EdgeGroupGenerator.generate();
         final List<Edge> edges = edgeGroup.getEdges();
         //then
-        assertThat(edges).hasSize(EdgeInfo.findAll().size() * 2);
+        assertThat(edges).hasSize(EdgeInfo.findAll().size());
     }
 }
