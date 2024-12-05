@@ -8,7 +8,6 @@ import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
 import subway.exception.CustomIllegalArgumentException;
-import subway.exception.ErrorMessage;
 
 public class RoutesRepository {
 
@@ -26,7 +25,7 @@ public class RoutesRepository {
         return getAdjacentDistance(start, end);
     }
 
-    private Integer getAdjacentDistance(final String start, final String end) {
+    private int getAdjacentDistance(final String start, final String end) {
         return routes.stream()
                 .filter(route -> route.getDepartureStation().getName().equals(start))
                 .filter(route -> route.getArrivalStation().getName().equals(end))
@@ -41,7 +40,7 @@ public class RoutesRepository {
                 .filter(route -> route.getArrivalStation().getName().equals(end))
                 .map(Route::getDistance)
                 .findFirst()
-                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_ARGUMENT));
+                .orElse(0);
     }
 
     private DijkstraShortestPath initializeDistanceGraph(final List<Station> stations) {
@@ -73,19 +72,13 @@ public class RoutesRepository {
         return new DijkstraShortestPath(timesGraph);
     }
 
-    public Integer getShortestTime(final Station start, final Station end) {
+    public int getShortestTime(final Station start, final Station end) {
         GraphPath path = shortestTimePath.getPath(start.getName(), end.getName());
-        if (path == null) {
-            return null;
-        }
         return (int) path.getWeight();
     }
 
-    public Integer getShortestDistance(final Station start, final Station end) {
+    public int getShortestDistance(final Station start, final Station end) {
         GraphPath path = shortestDistancePath.getPath(start.getName(), end.getName());
-        if (path == null) {
-            return null;
-        }
         return (int) path.getWeight();
     }
 
