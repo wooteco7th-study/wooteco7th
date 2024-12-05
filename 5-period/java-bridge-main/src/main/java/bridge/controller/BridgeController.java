@@ -19,15 +19,12 @@ public class BridgeController {
 
     private final InputView inputView;
     private final OutputView outputView;
-    private final ExceptionHandler exceptionHandler;
     private final BridgeNumberGenerator bridgeNumberGenerator;
 
     public BridgeController(final InputView inputView, final OutputView outputView,
-                            final ExceptionHandler exceptionHandler,
                             final BridgeNumberGenerator bridgeNumberGenerator) {
         this.inputView = inputView;
         this.outputView = outputView;
-        this.exceptionHandler = exceptionHandler;
         this.bridgeNumberGenerator = bridgeNumberGenerator;
     }
 
@@ -52,7 +49,7 @@ public class BridgeController {
 
     private boolean wantRestart(final BridgeGame game) {
         outputView.restartMessage();
-        return exceptionHandler.retryOn(() -> {
+        return ExceptionHandler.retryOn(() -> {
             RestartCommand restartCommand = RestartCommand.from(inputView.readGameCommand());
             return game.retry(restartCommand);
         });
@@ -67,15 +64,15 @@ public class BridgeController {
     }
 
     private UpDown makeUpDown() {
-        return exceptionHandler.retryOn(() -> {
+        return ExceptionHandler.retryOn(() -> {
             outputView.selectDirection();
             return UpDown.from(inputView.readMoving());
         });
     }
 
     private List<String> makeBridge() {
-        return exceptionHandler.retryOn(() -> {
-            BridgeSize size = exceptionHandler.retryOn(() -> new BridgeSize(inputView.readBridgeSize()));
+        return ExceptionHandler.retryOn(() -> {
+            BridgeSize size = ExceptionHandler.retryOn(() -> new BridgeSize(inputView.readBridgeSize()));
             BridgeMaker bridgeMaker = new BridgeMaker(bridgeNumberGenerator);
             return bridgeMaker.makeBridge(size.getSize());
         });
