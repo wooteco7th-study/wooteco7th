@@ -35,26 +35,22 @@ public class SubwayController {
     }
 
     private void start(final EdgeGroup edgeGroup) {
-        while (true) {
+        LoopTemplate.tryCatchLoop(() -> {
             final PathCommand pathCommand = requestPathCommand();
             if (Objects.equals(pathCommand, PathCommand.BACK)) {
                 return;
             }
-            final Optional<Path> path = requestPath();
-            if (path.isEmpty()) {
-                continue;
-            }
-            final Subway subway = new Subway(edgeGroup, path.get());
+            final Path path = requestPath();
+            final Subway subway = new Subway(edgeGroup, path);
             final List<String> shortestPath = subway.getShortestPath(pathCommand);
             outputView.printResult(shortestPath, subway.calculateDistance(shortestPath),
                     subway.calculateTime(shortestPath));
-            return;
-        }
+        });
     }
 
 
-    private Optional<Path> requestPath() {
-        return LoopTemplate.tryCatchLoopOptional(() -> {
+    private Path requestPath() {
+        return LoopTemplate.tryCatchLoop(() -> {
             outputView.printAskStartStation();
             final String start = inputView.readInput();
             final Station startStation = StationRepository.findByName(start);
