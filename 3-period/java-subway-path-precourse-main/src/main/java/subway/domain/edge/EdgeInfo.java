@@ -1,8 +1,10 @@
-package subway.domain;
+package subway.domain.edge;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import subway.domain.line.LineType;
+import subway.domain.station.StationType;
 
 public enum EdgeInfo {
 

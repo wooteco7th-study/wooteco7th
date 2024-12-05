@@ -1,10 +1,11 @@
-package subway.domain;
+package subway.domain.edge;
 
 import java.util.Collections;
 import java.util.List;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
+import subway.domain.station.Station;
 import subway.error.CustomIllegalStateException;
 import subway.error.ErrorMessage;
 

@@ -1,6 +1,8 @@
-package subway.domain;
+package subway.domain.edge;
 
 import java.util.Objects;
+import subway.domain.line.Line;
+import subway.domain.station.Station;
 
 public class Edge {
 

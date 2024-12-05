@@ -1,6 +1,7 @@
 package subway.domain;
 
 import java.util.List;
+import subway.domain.station.Station;
 import subway.error.ErrorMessage;
 import subway.util.ListValidator;
 

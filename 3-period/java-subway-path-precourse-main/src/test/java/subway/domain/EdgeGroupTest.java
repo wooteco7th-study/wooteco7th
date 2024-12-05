@@ -5,12 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
-import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
-import org.jgrapht.graph.DefaultWeightedEdge;
-import org.jgrapht.graph.WeightedMultigraph;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import subway.domain.edge.EdgeGroup;
+import subway.domain.edge.EdgeGroupGenerator;
+import subway.domain.station.Station;
 import subway.error.ErrorMessage;
 
 class EdgeGroupTest {

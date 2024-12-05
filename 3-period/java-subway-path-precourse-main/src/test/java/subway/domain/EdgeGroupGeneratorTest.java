@@ -1,11 +1,14 @@
 package subway.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import subway.domain.edge.Edge;
+import subway.domain.edge.EdgeGroup;
+import subway.domain.edge.EdgeGroupGenerator;
+import subway.domain.edge.EdgeInfo;
 
 class EdgeGroupGeneratorTest {
 

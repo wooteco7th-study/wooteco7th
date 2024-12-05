@@ -3,6 +3,9 @@ package subway.domain;
 import java.util.List;
 import java.util.Objects;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import subway.domain.edge.EdgeGroup;
+import subway.domain.station.Station;
+import subway.domain.station.StationRepository;
 
 public class Subway {
 
