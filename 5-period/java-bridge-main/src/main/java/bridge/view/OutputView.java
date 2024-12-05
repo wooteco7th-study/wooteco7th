@@ -1,6 +1,6 @@
 package bridge.view;
 
-import bridge.domain.bridge.GameResult;
+import bridge.domain.GameResult;
 import bridge.dto.GameBoardDto;
 import bridge.dto.GameResultDto;
 import java.util.List;

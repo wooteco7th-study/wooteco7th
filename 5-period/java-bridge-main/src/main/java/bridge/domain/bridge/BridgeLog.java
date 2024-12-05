@@ -1,7 +1,6 @@
 package bridge.domain.bridge;
 
 import bridge.domain.command.UpDown;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -11,14 +10,29 @@ public class BridgeLog {
     final List<LogType> upBridge;
     final List<LogType> downBridge;
 
-    public BridgeLog() {
-        this.upBridge = new ArrayList<>();
-        this.downBridge = new ArrayList<>();
+    public BridgeLog(final List<LogType> upBridge, final List<LogType> downBridge) {
+        this.upBridge = upBridge;
+        this.downBridge = downBridge;
     }
 
     public void add(final UpDown upDown, boolean isPass) {
         updateUpBridge(upDown, isPass);
         updateDownBridge(upDown, isPass);
+    }
+
+    public boolean isSuccess(int size) {
+        return size == Stream.concat(upBridge.stream(), downBridge.stream())
+                .filter(LogType::isRight)
+                .count();
+    }
+
+    public boolean isRightEnd() {
+        return upBridge.getLast().isRight() || downBridge.getLast().isRight();
+    }
+
+    public void clear() {
+        upBridge.clear();
+        downBridge.clear();
     }
 
     private void updateUpBridge(final UpDown upDown, final boolean isPass) {
@@ -37,23 +51,8 @@ public class BridgeLog {
         downBridge.add(LogType.NONE);
     }
 
-    public boolean isSuccess(int size) {
-        return size == Stream.concat(upBridge.stream(), downBridge.stream())
-                .filter(LogType::isRight)
-                .count();
-    }
-
     public int getSize() {
         return upBridge.size();
-    }
-
-    public boolean isRightEnd() {
-        return upBridge.getLast().isRight() || downBridge.getLast().isRight();
-    }
-
-    public void clear() {
-        upBridge.clear();
-        downBridge.clear();
     }
 
     public List<LogType> getUpBridge() {

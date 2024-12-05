@@ -13,22 +13,14 @@ public class BridgeGame {
     private final BridgeLog bridgeLog; // 다리를 사용자가 움직인 기록
     private int attempt;
 
-    public BridgeGame(final List<String> bridge) {
+    public BridgeGame(final List<String> bridge, final BridgeLog bridgeLog) {
         this.bridge = bridge;
-        this.bridgeLog = new BridgeLog();
+        this.bridgeLog = bridgeLog;
         this.attempt = 0;
     }
 
     public boolean canContinue() {
         return isInMiddle() && isRightEnd();
-    }
-
-    private boolean isRightEnd() {
-        return bridgeLog.isRightEnd();
-    }
-
-    private boolean isInMiddle() {
-        return bridge.size() != bridgeLog.getSize();
     }
 
     /**
@@ -58,6 +50,14 @@ public class BridgeGame {
     public void clear() {
         bridgeLog.clear();
         attempt++;
+    }
+
+    private boolean isRightEnd() {
+        return bridgeLog.isRightEnd();
+    }
+
+    private boolean isInMiddle() {
+        return bridge.size() != bridgeLog.getSize();
     }
 
     public int getAttempt() {

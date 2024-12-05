@@ -1,7 +1,9 @@
 package bridge.controller;
 
 import bridge.domain.bridge.BridgeGame;
+import bridge.domain.bridge.BridgeLog;
 import bridge.domain.bridge.BridgeMaker;
+import bridge.domain.bridge.BridgeSize;
 import bridge.domain.command.RestartCommand;
 import bridge.domain.command.UpDown;
 import bridge.domain.generator.BridgeNumberGenerator;
@@ -10,6 +12,7 @@ import bridge.dto.GameResultDto;
 import bridge.exception.ExceptionHandler;
 import bridge.view.InputView;
 import bridge.view.OutputView;
+import java.util.ArrayList;
 import java.util.List;
 
 public class BridgeController {
@@ -31,7 +34,7 @@ public class BridgeController {
     public void process() {
         outputView.startMessage();
         List<String> bridge = makeBridge();
-        BridgeGame game = new BridgeGame(bridge);
+        BridgeGame game = new BridgeGame(bridge, new BridgeLog(new ArrayList<>(), new ArrayList<>()));
         processGame(game);
     }
 
@@ -40,8 +43,7 @@ public class BridgeController {
             game.clear();
             move(game);
         } while (shouldContinue(game));
-        outputView.printResult(
-                new GameResultDto(GameBoardDto.from(game.getBridgeLog()), game.isSuccess(), game.getAttempt()));
+        outputView.printResult(GameResultDto.from(game));
     }
 
     private boolean shouldContinue(final BridgeGame game) {
@@ -73,9 +75,9 @@ public class BridgeController {
 
     private List<String> makeBridge() {
         return exceptionHandler.retryOn(() -> {
-            Integer size = exceptionHandler.retryOn(inputView::readBridgeSize);
+            BridgeSize size = exceptionHandler.retryOn(() -> new BridgeSize(inputView.readBridgeSize()));
             BridgeMaker bridgeMaker = new BridgeMaker(bridgeNumberGenerator);
-            return bridgeMaker.makeBridge(size);
+            return bridgeMaker.makeBridge(size.getSize());
         });
     }
 }
