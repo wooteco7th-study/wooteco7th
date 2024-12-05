@@ -4,8 +4,8 @@ import static subway.util.StringParser.parseToInteger;
 
 import java.util.ArrayList;
 import java.util.List;
-import subway.command.ProcessingState;
 import subway.command.FunctionCommand;
+import subway.command.ProcessingState;
 import subway.command.RouteCriteriaCommand;
 import subway.domain.Line;
 import subway.domain.LineRepository;
@@ -114,36 +114,29 @@ public class SubwayController {
 
     private Repositories initialize() {
         StationRepository stationRepository = initializeStations();
-        LineRepository lineRepository = initilaizeLines();
-        RoutesRepository routeRepository = initializeRoutes(stationRepository, lineRepository);
-        return new Repositories(lineRepository, routeRepository, stationRepository);
+        LineRepository lineRepository = initializeLines();
+        RoutesRepository routeRepository = initializeRoutes();
+        return new Repositories(routeRepository, stationRepository);
     }
 
-    private RoutesRepository initializeRoutes(final StationRepository stationRepository,
-                                              final LineRepository lineRepository) {
+    private RoutesRepository initializeRoutes() {
         List<Route> routes = new ArrayList<>();
-        List<Line> lines = makeLines(lineRepository);
+        List<Line> lines = makeLines();
         List<List<String>> stations = makeStationList();
         List<List<String>> paths = makeInfoList();
         for (int i = 0; i < stations.size(); i++) {
-            Line line = lines.get(i);
             List<String> path = paths.get(i);
             List<String> station = stations.get(i);
-            makeRoute(routes, line, path, station);
+            makeRoute(routes, path, station);
         }
-        return new RoutesRepository(routes, stationRepository.stations());
+        return new RoutesRepository(routes, StationRepository.stations());
     }
 
-    private void makeRoute(final List<Route> routes, final Line line, final List<String> path,
-                           final List<String> station) {
-        for (int j = 0; j < path.size(); j++) {
-            String[] pathInfo = path.get(j).split(",");
-            Station start = new Station(station.get(j));
-            Station end = new Station(station.get(j + 1));
-            Route route = new Route(start, end, parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT),
-                    parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT));
-            routes.add(route);
-        }
+    private List<Line> makeLines() {
+        List<String> lineInputs = List.of("2호선", "3호선", "신분당선");
+        return lineInputs.stream()
+                .map(LineRepository::findLineByName)
+                .toList();
     }
 
     private List<List<String>> makeInfoList() {
@@ -155,14 +148,19 @@ public class SubwayController {
                 List.of("강남역", "양재역", "양재시민의숲역"));
     }
 
-    private List<Line> makeLines(final LineRepository lineRepository) {
-        List<String> lineInputs = List.of("2호선", "3호선", "신분당선");
-        return lineInputs.stream()
-                .map(name -> lineRepository.findLineByName(name))
-                .toList();
+    private void makeRoute(final List<Route> routes, final List<String> path,
+                           final List<String> station) {
+        for (int j = 0; j < path.size(); j++) {
+            String[] pathInfo = path.get(j).split(",");
+            Station start = new Station(station.get(j));
+            Station end = new Station(station.get(j + 1));
+            Route route = new Route(start, end, parseToInteger(pathInfo[1], ErrorMessage.INVALID_ARGUMENT),
+                    parseToInteger(pathInfo[0], ErrorMessage.INVALID_ARGUMENT));
+            routes.add(route);
+        }
     }
 
-    private LineRepository initilaizeLines() {
+    private LineRepository initializeLines() {
         LineRepository lineRepository = new LineRepository();
         List<String> lineInputs = List.of("2호선, 3호선, 신분당선".split(", "));
         for (String line : lineInputs) {

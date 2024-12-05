@@ -1,13 +1,12 @@
 package subway.domain;
 
 public class Repositories {
-    private final LineRepository lineRepository;
+
     private final RoutesRepository routeRepository;
     private final StationRepository stationRepository;
 
-    public Repositories(final LineRepository lineRepository, final RoutesRepository routeRepository,
+    public Repositories(final RoutesRepository routeRepository,
                         final StationRepository stationRepository) {
-        this.lineRepository = lineRepository;
         this.routeRepository = routeRepository;
         this.stationRepository = stationRepository;
     }
