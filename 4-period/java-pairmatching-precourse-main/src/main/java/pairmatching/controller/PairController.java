@@ -58,7 +58,6 @@ public class PairController {
         if (command.IsPairInquiry()) {
             processPairInquiry(pairOrder);
         }
-
     }
 
     private void processPairMatching(PairOrder pairOrder) {
