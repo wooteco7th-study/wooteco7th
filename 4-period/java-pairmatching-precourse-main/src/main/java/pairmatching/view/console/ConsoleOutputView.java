@@ -38,7 +38,6 @@ public class ConsoleOutputView implements OutputView {
 
     @Override
     public void printAskMission() {
-        printPreview();
         printlnMessage(ASK_MISSION);
     }
 
@@ -60,7 +59,8 @@ public class ConsoleOutputView implements OutputView {
         printlnMessage(LINE_SEPARATOR + CLEAR);
     }
 
-    private void printPreview() {
+    @Override
+    public void printPreview() {
         printlnMessage(LINE_SEPARATOR + PREVIEW);
     }
 

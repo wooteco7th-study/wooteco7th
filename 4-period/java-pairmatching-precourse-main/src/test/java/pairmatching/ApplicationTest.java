@@ -42,7 +42,7 @@ class ApplicationTest extends NsTest {
                 () -> {
                     run("1", "백엔드, 레벨1, 자동차경주", "1", "백엔드, 레벨1, 로또", "Q");
                     assertThat(output()).contains("태웅 : 백호", "치수 : 태섭");
-                    assertThat(output()).contains(ErrorMessage.INVALID_FAIL_MATCH.getMessage());
+                    assertThat(output()).contains(ERROR_MESSAGE);
                 },
                 Arrays.asList("태웅", "백호", "치수", "태섭")
         );

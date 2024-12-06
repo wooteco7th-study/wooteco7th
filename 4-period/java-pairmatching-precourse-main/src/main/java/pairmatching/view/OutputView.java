@@ -5,6 +5,8 @@ import pairmatching.dto.PairName;
 
 public interface OutputView {
 
+    void printPreview();
+
     void printPairCommand();
 
     void printAskMission();

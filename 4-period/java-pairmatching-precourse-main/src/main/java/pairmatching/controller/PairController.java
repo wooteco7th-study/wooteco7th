@@ -36,9 +36,11 @@ public class PairController {
             return;
         }
         if (Objects.equals(pairCommand, PairCommand.MATCHING)) {
+            outputView.printPreview();
             match(pairSystem);
         }
         if (Objects.equals(pairCommand, PairCommand.LOOK_UP)) {
+            outputView.printPreview();
             lookUp(pairSystem);
         }
         if (Objects.equals(pairCommand, PairCommand.CLEAR)) {
@@ -61,17 +63,22 @@ public class PairController {
     private void match(final PairSystem pairSystem) {
         final Mission mission = requestMission();
         if (pairSystem.hasMatchResult(mission)) {
-            rematch(mission, pairSystem);
+            final boolean rematch = rematch(mission, pairSystem);
+            if (!rematch) {
+                match(pairSystem);
+            }
             return;
         }
         responseMatchResult(pairSystem.match(mission));
     }
 
-    private void rematch(final Mission mission, final PairSystem pairSystem) {
+    private boolean rematch(final Mission mission, final PairSystem pairSystem) {
         final RematchCommand rematchCommand = requestRematchCommand();
         if (Objects.equals(rematchCommand, RematchCommand.YES)) {
             responseMatchResult(pairSystem.rematch(mission));
+            return true;
         }
+        return false;
     }
 
     private RematchCommand requestRematchCommand() {
