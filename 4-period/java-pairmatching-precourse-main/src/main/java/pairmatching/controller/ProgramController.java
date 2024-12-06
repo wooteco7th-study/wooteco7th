@@ -28,7 +28,7 @@ public class ProgramController {
         List<String> backendCrews = CrewFileReader.readBackendCrews();
         List<String> frontendCrews = CrewFileReader.readFrontendCrews();
         PairHistory history = new PairHistory();
-        PairGenerator pairGenerator = new PairGenerator(new ShuffleGenerator(), history);
+        PairGenerator pairGenerator = new PairGenerator(history);
         while (true) {
             OptionCommand optionCommand = retryOnInvalidInput(this::getOptionCommand);
             if (optionCommand == OptionCommand.종료) {
@@ -44,14 +44,17 @@ public class ProgramController {
                             continue;
                         }
                     }
-                    List<Pair> pairResult = pairGenerator.generate(info.getLevel(), backendCrews);
+                    List<String> names = ShuffleGenerator.shuffleNames(backendCrews);
+                    List<Pair> pairResult = pairGenerator.generate(info.getLevel(), names);
                     history.add(info.getMission(), pairResult);
                     outputView.printResult(pairResult);
                     continue;
                 }
-                List<Pair> pairResult = pairGenerator.generate(info.getLevel(), frontendCrews);
+                List<String> names = ShuffleGenerator.shuffleNames(frontendCrews);
+                List<Pair> pairResult = pairGenerator.generate(info.getLevel(), names);
                 history.add(info.getMission(), pairResult);
                 outputView.printResult(pairResult);
+                continue;
             }
             if (optionCommand == OptionCommand.페어조회) {
                 Info info = retryOnInvalidInput(this::getInfo);
