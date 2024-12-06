@@ -14,8 +14,10 @@ import subway.domain.route.Route;
 import subway.domain.route.RoutesRepository;
 import subway.domain.station.Station;
 import subway.domain.station.StationRepository;
+import subway.dto.ResultDto;
 import subway.exception.ErrorMessage;
 import subway.exception.ExceptionHandler;
+import subway.service.SubwayService;
 import subway.view.InputView;
 import subway.view.OutputView;
 
@@ -24,12 +26,15 @@ public class SubwayController {
     private final InputView inputView;
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
+    private final SubwayService subwayService;
 
     public SubwayController(final InputView inputView, final OutputView outputView,
-                            final ExceptionHandler exceptionHandler) {
+                            final ExceptionHandler exceptionHandler,
+                            final SubwayService subwayService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
+        this.subwayService = subwayService;
     }
 
     public void process() {
@@ -57,7 +62,7 @@ public class SubwayController {
         try {
             PathFinder pathFinder = new PathFinder();
             Order order = createOrder(pathFinder);
-            processRoute(command, order, pathFinder);
+            processByCommand(command, order, pathFinder);
             return ProcessingState.START_FROM_BEGINNING;
         } catch (IllegalArgumentException exception) {
             outputView.showException(exception);
@@ -72,33 +77,17 @@ public class SubwayController {
         return new Order(departureStation, arrivalStation);
     }
 
-    private void processRoute(final RouteCriteriaCommand command,
-                              final Order order, final PathFinder pathFinder) {
+    private void processByCommand(final RouteCriteriaCommand command,
+                                  final Order order, final PathFinder pathFinder) {
+        ResultDto resultDto = processRoute(command, order, pathFinder);
+        outputView.showTotalResult(resultDto);
+    }
+
+    private ResultDto processRoute(final RouteCriteriaCommand command, final Order order, final PathFinder pathFinder) {
         if (command.isShortestDistance()) {
-            processShortestDistance(order, pathFinder);
-            return;
+            return subwayService.processShortestDistance(order, pathFinder);
         }
-        processMinimumTime(order, pathFinder);
-    }
-
-    private void processMinimumTime(final Order order,
-                                    final PathFinder pathFinder) {
-        Station departureStation = order.getDepartureStation();
-        Station arrivalStation = order.getArrivalStation();
-        int shortestTime = pathFinder.getShortestTime(departureStation, arrivalStation);
-        List<String> shortestTimePath = pathFinder.getShortestTimePath(departureStation, arrivalStation);
-        int totalDistance = RoutesRepository.getTotalDistance(shortestTimePath);
-        outputView.showTotalResult(totalDistance, shortestTime, shortestTimePath);
-    }
-
-    private void processShortestDistance(final Order order, final PathFinder pathFinder) {
-        Station departureStation = order.getDepartureStation();
-        Station arrivalStation = order.getArrivalStation();
-        int shortestDistance = pathFinder.getShortestDistance(departureStation, arrivalStation);
-        List<String> shortestDistancePath = pathFinder.getShortestDistancePath(departureStation.getName(),
-                arrivalStation.getName());
-        int totalTime = RoutesRepository.getTotalTime(shortestDistancePath);
-        outputView.showTotalResult(shortestDistance, totalTime, shortestDistancePath);
+        return subwayService.processMinimumTime(order, pathFinder);
     }
 
     private Station makeArrivalStation() {
