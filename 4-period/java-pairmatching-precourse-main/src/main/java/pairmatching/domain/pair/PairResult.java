@@ -22,4 +22,8 @@ public class PairResult {
         return pairs.stream()
                 .anyMatch(pair -> pair.equals(compared));
     }
+
+    public PairOrder getPairOrder() {
+        return pairOrder;
+    }
 }

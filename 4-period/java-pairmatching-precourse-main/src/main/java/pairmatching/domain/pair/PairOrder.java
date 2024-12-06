@@ -1,5 +1,6 @@
 package pairmatching.domain.pair;
 
+import java.util.Objects;
 import pairmatching.domain.Course;
 import pairmatching.domain.Level;
 import pairmatching.domain.Mission;
@@ -14,6 +15,23 @@ public class PairOrder {
         this.course = Course.from(course);
         this.level = Level.from(level);
         this.mission = Mission.from(mission);
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof PairOrder pairOrder)) {
+            return false;
+        }
+        return getCourse() == pairOrder.getCourse() && getLevel() == pairOrder.getLevel()
+                && getMission() == pairOrder.getMission();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCourse(), getLevel(), getMission());
     }
 
     public Course getCourse() {

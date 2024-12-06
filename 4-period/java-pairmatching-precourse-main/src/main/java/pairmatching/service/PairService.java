@@ -7,6 +7,7 @@ import pairmatching.domain.pair.Pair;
 import pairmatching.domain.pair.PairHistory;
 import pairmatching.domain.pair.PairMatcher;
 import pairmatching.domain.pair.PairOrder;
+import pairmatching.domain.pair.PairResult;
 import pairmatching.dto.PairMatchResultDto;
 
 public class PairService {
@@ -14,7 +15,9 @@ public class PairService {
     public PairMatchResultDto matchPair(final PairOrder pairOrder, final Initializer initializer) {
         Crews crews = getCrews(pairOrder, initializer);
         PairMatcher pairMatcher = new PairMatcher(crews.getCrews());
-        List<Pair> pairs = pairMatcher.matchCrew(initializer.getHistory(), pairOrder.getLevel());
+        PairHistory pairHistory = initializer.getHistory();
+        List<Pair> pairs = pairMatcher.matchCrew(pairHistory, pairOrder.getLevel());
+        pairHistory.add(new PairResult(pairOrder, pairs));
         return PairMatchResultDto.from(pairs);
     }
 

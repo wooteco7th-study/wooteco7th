@@ -49,17 +49,16 @@ public class PairController {
         while (!isInMiddle) {
             PairOrder pairOrder = makePairOrder();
             if (command.isPairMatching()) {
-                PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder, initializer);
-                outputView.showMatchResult(pairMatchResultDto);
-                return;
+                isInMiddle = processPairMatching(pairOrder);
             }
             if (command.IsPairInquiry()) {
-                isInMiddle = processPairInquiry(pairOrder);
+                processPairInquiry(pairOrder);
+                isInMiddle = true;
             }
         }
     }
 
-    private boolean processPairInquiry(final PairOrder pairOrder) {
+    private boolean processPairMatching(final PairOrder pairOrder) {
         PairHistory pairHistory = initializer.getHistory();
         if (pairHistory.isExists(pairOrder)) {
             outputView.showRequestRetry();
@@ -67,12 +66,18 @@ public class PairController {
                 return false;
             }
         }
-        pairService.inquirePair(pairOrder, pairHistory);
+        PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder, initializer);
+        outputView.showMatchResult(pairMatchResultDto);
         return true;
     }
 
+    private void processPairInquiry(final PairOrder pairOrder) {
+        PairHistory pairHistory = initializer.getHistory();
+        pairService.inquirePair(pairOrder, pairHistory);
+    }
+
     private boolean wantRetry() {
-        return RetryCommand.from(inputView.readRequestRetry()).isYes();
+        return exceptionHandler.retryOn(() -> RetryCommand.from(inputView.readRequestRetry()).isYes());
     }
 
     private PairOrder makePairOrder() {

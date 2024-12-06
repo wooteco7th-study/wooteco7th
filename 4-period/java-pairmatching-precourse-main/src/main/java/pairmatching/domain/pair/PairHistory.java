@@ -15,9 +15,10 @@ public class PairHistory {
         results.add(pairResult);
     }
 
-    public boolean isExists(final PairOrder pairOrder) {
-        // 이미 존재할 경우
-        return false;
+    public boolean isExists(final PairOrder compared) {
+        return results.stream()
+                .map(PairResult::getPairOrder)
+                .anyMatch(pairOrder -> pairOrder.equals(compared));
     }
 
     public boolean hasSameLevelPair(final Pair pair, final Level level) {
