@@ -1,6 +1,7 @@
 package pairmatching.domain.pair;
 
 import java.util.List;
+import pairmatching.domain.Level;
 
 public class PairResult {
 
@@ -13,4 +14,12 @@ public class PairResult {
     }
 
 
+    public boolean hasSameLevel(final Level level) {
+        return pairOrder.getLevel().equals(level);
+    }
+
+    public boolean hasSamePair(final Pair compared) {
+        return pairs.stream()
+                .anyMatch(pair -> pair.equals(compared));
+    }
 }

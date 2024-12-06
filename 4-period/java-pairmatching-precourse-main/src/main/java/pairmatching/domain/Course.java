@@ -15,4 +15,12 @@ public enum Course {
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_COURSE));
     }
+
+    public boolean isBackend() {
+        return this == 백엔드;
+    }
+
+    public boolean isFrontend() {
+        return this == 프론트엔드;
+    }
 }

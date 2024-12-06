@@ -3,6 +3,7 @@ package pairmatching.domain.pair;
 import pairmatching.domain.Course;
 
 public class Crew {
+
     private final Course course;
     private final String name;
 
@@ -11,11 +12,19 @@ public class Crew {
         this.name = name;
     }
 
-    @Override
-    public String toString() {
-        return "Crew{" +
-                "course=" + course +
-                ", name='" + name + '\'' +
-                '}';
+    public boolean isBackend() {
+        return course.isBackend();
+    }
+
+    public boolean isFrontend() {
+        return course.isFrontend();
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public String getName() {
+        return name;
     }
 }

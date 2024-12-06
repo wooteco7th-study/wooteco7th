@@ -37,10 +37,6 @@ public class OutputView {
         showln(LINE + TITLE_SELECT);
     }
 
-    public void showTitleResult() {
-        showln(TITLE_RESULT);
-    }
-
     public void showRequestRetry() {
         showln(REQUEST_RETRY);
     }
@@ -62,9 +58,11 @@ public class OutputView {
     }
 
     public void showMatchResult(final PairMatchResultDto pairMatchResultDto) {
+        showln(LINE + TITLE_RESULT);
         for (List<String> result : pairMatchResultDto.results()) {
             String message = String.join(" : ", result);
             showln(message);
         }
+        showln("");
     }
 }

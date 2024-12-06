@@ -40,7 +40,7 @@ public class PairController {
                 // 초기화 수행
                 continue;
             }
-            processWithCommand(command);
+            exceptionHandler.retryOn(() -> processWithCommand(command));
         }
     }
 
@@ -49,8 +49,9 @@ public class PairController {
         while (!isInMiddle) {
             PairOrder pairOrder = makePairOrder();
             if (command.isPairMatching()) {
-                PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder);
+                PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder, initializer);
                 outputView.showMatchResult(pairMatchResultDto);
+                return;
             }
             if (command.IsPairInquiry()) {
                 isInMiddle = processPairInquiry(pairOrder);

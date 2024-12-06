@@ -15,4 +15,16 @@ public class PairOrder {
         this.level = Level.from(level);
         this.mission = Mission.from(mission);
     }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
+
+    public Mission getMission() {
+        return mission;
+    }
 }
