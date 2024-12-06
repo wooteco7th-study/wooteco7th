@@ -6,10 +6,10 @@ import java.util.Map;
 
 import static pairmatching.exception.ExceptionMessage.MATCHING_HISTORY_NOT_FOUND;
 
-public class PairResult {
+public class PairHistory {
     private final Map<Mission, List<Pair>> pairResult;
 
-    public PairResult() {
+    public PairHistory() {
         this.pairResult = new LinkedHashMap<>();
     }
 
@@ -23,6 +23,10 @@ public class PairResult {
                 .filter(entry -> entry.getKey().isSameLevel(level))
                 .flatMap(entry -> entry.getValue().stream())
                 .toList();
+    }
+
+    public boolean ExistsHistory(final Mission mission) {
+        return pairResult.containsKey(mission);
     }
 
     public List<Pair> findByMission(final Mission mission) {

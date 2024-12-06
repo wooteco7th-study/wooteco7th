@@ -4,7 +4,8 @@ import pairmatching.domain.Info;
 import pairmatching.domain.OptionCommand;
 import pairmatching.domain.Pair;
 import pairmatching.domain.PairGenerator;
-import pairmatching.domain.PairResult;
+import pairmatching.domain.PairHistory;
+import pairmatching.domain.RematchingCommand;
 import pairmatching.util.CrewFileReader;
 import pairmatching.util.ShuffleGenerator;
 import pairmatching.view.InputView;
@@ -26,8 +27,8 @@ public class ProgramController {
     public void run() {
         List<String> backendCrews = CrewFileReader.readBackendCrews();
         List<String> frontendCrews = CrewFileReader.readFrontendCrews();
-        PairResult result = new PairResult();
-        PairGenerator pairGenerator = new PairGenerator(new ShuffleGenerator(), result);
+        PairHistory history = new PairHistory();
+        PairGenerator pairGenerator = new PairGenerator(new ShuffleGenerator(), history);
         while (true) {
             OptionCommand optionCommand = retryOnInvalidInput(this::getOptionCommand);
             if (optionCommand == OptionCommand.종료) {
@@ -36,31 +37,44 @@ public class ProgramController {
             if (optionCommand == OptionCommand.페어매칭) {
                 Info info = retryOnInvalidInput(this::getInfo);
                 if (info.isBackendCourse()) {
+                    boolean isExists = history.ExistsHistory(info.getMission());
+                    if (isExists) {
+                        RematchingCommand answer = retryOnInvalidInput(this::getRematchingCommand);
+                        if (answer == RematchingCommand.NO) {
+                            continue;
+                        }
+                    }
                     List<Pair> pairResult = pairGenerator.generate(info.getLevel(), backendCrews);
-                    result.add(info.getMission(), pairResult);
+                    history.add(info.getMission(), pairResult);
                     outputView.printResult(pairResult);
                     continue;
                 }
                 List<Pair> pairResult = pairGenerator.generate(info.getLevel(), frontendCrews);
-                result.add(info.getMission(), pairResult);
+                history.add(info.getMission(), pairResult);
                 outputView.printResult(pairResult);
             }
             if (optionCommand == OptionCommand.페어조회) {
                 Info info = retryOnInvalidInput(this::getInfo);
                 if (info.isBackendCourse()) {
-                    List<Pair> pairResult = result.findByMission(info.getMission());
+                    List<Pair> pairResult = history.findByMission(info.getMission());
                     outputView.printResult(pairResult);
                     continue;
                 }
-                List<Pair> pairResult = result.findByMission(info.getMission());
+                List<Pair> pairResult = history.findByMission(info.getMission());
                 outputView.printResult(pairResult);
             }
             if (optionCommand == OptionCommand.페어초기화) {
-                result.clear();
+                history.clear();
                 outputView.printClearMsg();
 
             }
         }
+    }
+
+    private RematchingCommand getRematchingCommand() {
+        String input = inputView.readRematching();
+        RematchingCommand answer = RematchingCommand.from(input);
+        return answer;
     }
 
     private OptionCommand getOptionCommand() {
