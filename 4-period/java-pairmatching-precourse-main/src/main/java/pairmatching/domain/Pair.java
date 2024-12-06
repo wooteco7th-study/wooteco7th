@@ -12,8 +12,10 @@ public class Pair {
     }
 
     public boolean hasCrews(final List<String> crews) {
-        return crews.stream()
-                .anyMatch(this.crews::contains);
+        if (this.crews.size() > crews.size()) {
+            return this.crews.containsAll(crews);
+        }
+        return crews.containsAll(this.crews);
     }
 
     public List<String> getCrews() {
