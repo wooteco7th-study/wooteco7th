@@ -5,7 +5,7 @@ import static pairmatching.constant.ExceptionMessage.INVALID_INPUT_FORM;
 import java.util.List;
 import pairmatching.domain.vo.FunctionOption;
 import pairmatching.domain.vo.RematchOption;
-import pairmatching.dto.FairMatchingDto;
+import pairmatching.dto.FairMatchingRequestDto;
 
 public class ModelMapper {
 
@@ -19,13 +19,13 @@ public class ModelMapper {
         return FunctionOption.toFunctionOption(input);
     }
 
-    public static FairMatchingDto toFaitMatchingDto(String input) {
+    public static FairMatchingRequestDto toFaitMatchingDto(String input) {
         String pattern = RequestPattern.createPairMatchDtoPattern();
         RequestValidator.validateInput(input, pattern, INVALID_INPUT_FORM.getMessage());
 
         List<String> items = RequestParser.parseItemList(input);
 
-        return new FairMatchingDto(items.get(0), items.get(1), items.get(2));
+        return new FairMatchingRequestDto(items.get(0), items.get(1), items.get(2));
     }
 
 

@@ -16,7 +16,7 @@ public enum RematchOption {
 
     public static RematchOption toRematchOption(String value) {
         return Arrays.stream(RematchOption.values())
-                .filter(option -> option.getValue().equals(value))
+                .filter(option -> option.getValue().equals(value.trim()))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException(ExceptionMessage.INVALID_INPUT_FORM.getMessage()));
     }

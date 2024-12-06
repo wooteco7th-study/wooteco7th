@@ -5,7 +5,7 @@ import static pairmatching.util.RetryOnExceptionTemplate.retryOnException;
 import java.util.function.Function;
 import pairmatching.domain.vo.FunctionOption;
 import pairmatching.domain.vo.RematchOption;
-import pairmatching.dto.FairMatchingDto;
+import pairmatching.dto.FairMatchingRequestDto;
 import pairmatching.view.io.ConsoleInputView;
 import pairmatching.view.io.ConsoleOutputView;
 import pairmatching.view.mapper.ModelMapper;
@@ -32,7 +32,7 @@ public class RequestView {
         return request(message, ModelMapper::toFunctionOption);
     }
 
-    public FairMatchingDto requestFairMatching() {
+    public FairMatchingRequestDto requestFairMatching() {
         String message = new StringBuilder()
                 .append("#############################################").append(NEW_LINE)
                 .append("미션:").append(NEW_LINE)

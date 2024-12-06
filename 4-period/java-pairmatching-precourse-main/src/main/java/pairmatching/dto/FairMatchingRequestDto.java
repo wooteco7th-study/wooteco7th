@@ -8,12 +8,12 @@ import pairmatching.domain.vo.Course;
 import pairmatching.domain.vo.Level;
 import pairmatching.domain.vo.Mission;
 
-public class FairMatchingDto {
+public class FairMatchingRequestDto {
     private final Course course;
     private final Level level;
     private final Mission mission;
 
-    public FairMatchingDto(final String course, final String level, final String mission) {
+    public FairMatchingRequestDto(final String course, final String level, final String mission) {
         this.course = toCourse(course);
         this.level = toLevel(level);
         this.mission = toMission(mission);
