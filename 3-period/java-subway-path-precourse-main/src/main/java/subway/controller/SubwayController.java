@@ -1,7 +1,6 @@
 package subway.controller;
 
 import subway.command.FunctionCommand;
-import subway.command.ProcessingState;
 import subway.command.RouteCriteriaCommand;
 import subway.domain.Initializer;
 import subway.domain.Order;
@@ -38,31 +37,22 @@ public class SubwayController {
     }
 
     private void processCommands() {
-        ProcessingState status = ProcessingState.START_FROM_BEGINNING;
-        while (shouldContinue(status)) {
+        while (!isQuit()) {
+            processCommand();
+        }
+    }
+
+    private void processCommand() {
+        exceptionHandler.retryOn(() -> {
             RouteCriteriaCommand command = makeCriteria();
-            status = processCommand(command);
-        }
-    }
-
-    private boolean shouldContinue(final ProcessingState status) {
-        return status.shouldContinue() || !isQuit();
-    }
-
-    private ProcessingState processCommand(final RouteCriteriaCommand command) {
-        if (command.isGoBack()) {
-            outputView.showBlank();
-            return ProcessingState.START_FROM_BEGINNING;
-        }
-        try {
+            if (command.isGoBack()) {
+                outputView.showBlank();
+                return;
+            }
             PathFinder pathFinder = new PathFinder();
             Order order = createOrder(pathFinder);
             processByCommand(command, order, pathFinder);
-            return ProcessingState.START_FROM_BEGINNING;
-        } catch (IllegalArgumentException exception) {
-            outputView.showException(exception);
-            return ProcessingState.CONTINUE_IN_THE_MIDDLE;
-        }
+        });
     }
 
     private Order createOrder(final PathFinder pathFinder) {
