@@ -20,4 +20,10 @@ public class Team {
         return crewNames;
     }
 
+    public boolean hasDuplicatePair(List<String> pair) {
+        return crewNames.stream()
+                .filter(i -> pair.contains(i))
+                .count() >= 2;
+    }
+
 }

@@ -73,7 +73,7 @@ public class PairmatchingService {
         List<Team> existingTeams = matchRepository.get(level);
         for (List<String> newPair : newPairs) {
             for (Team existingTeam : existingTeams) {
-                if (hasDuplicatePair(newPair, existingTeam.getCrewNames())) {
+                if (existingTeam.hasDuplicatePair(newPair)) {
                     return true;
                 }
             }
@@ -81,11 +81,6 @@ public class PairmatchingService {
         return false;
     }
 
-    private boolean hasDuplicatePair(List<String> pair, List<String> existingPair) {
-        return pair.stream()
-                .filter(existingPair::contains)
-                .count() >= 2;
-    }
 
     private FairMatchingResponseDto createResponse(List<Team> teams) {
         List<MatchDto> matchDtos = teams.stream()
