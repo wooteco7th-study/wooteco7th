@@ -16,4 +16,12 @@ public class Info {
     public boolean isBackendCourse() {
         return course == Course.BACKEND;
     }
+
+    public Mission getMission() {
+        return mission;
+    }
+
+    public Level getLevel() {
+        return level;
+    }
 }

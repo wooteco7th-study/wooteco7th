@@ -2,6 +2,7 @@ package pairmatching.controller;
 
 import pairmatching.domain.Info;
 import pairmatching.domain.OptionCommand;
+import pairmatching.domain.Pair;
 import pairmatching.domain.PairGenerator;
 import pairmatching.domain.PairResult;
 import pairmatching.util.CrewFileReader;
@@ -25,7 +26,8 @@ public class ProgramController {
     public void run() {
         List<String> backendCrews = CrewFileReader.readBackendCrews();
         List<String> frontendCrews = CrewFileReader.readFrontendCrews();
-        PairGenerator pairGenerator = new PairGenerator(new ShuffleGenerator());
+        PairResult result = new PairResult();
+        PairGenerator pairGenerator = new PairGenerator(new ShuffleGenerator(), result);
         while (true) {
             OptionCommand optionCommand = retryOnInvalidInput(this::getOptionCommand);
             if (optionCommand == OptionCommand.종료) {
@@ -34,12 +36,14 @@ public class ProgramController {
             if (optionCommand == OptionCommand.페어매칭) {
                 Info info = retryOnInvalidInput(this::getInfo);
                 if (info.isBackendCourse()) {
-                    PairResult result = pairGenerator.generate(backendCrews);
-                    outputView.printResult(result);
+                    List<Pair> pairResult = pairGenerator.generate(info.getLevel(), backendCrews);
+                    result.add(info.getMission(), pairResult);
+                    outputView.printResult(pairResult);
                     continue;
                 }
-                PairResult result = pairGenerator.generate(frontendCrews);
-                outputView.printResult(result);
+                List<Pair> pairResult = pairGenerator.generate(info.getLevel(), frontendCrews);
+                result.add(info.getMission(), pairResult);
+                outputView.printResult(pairResult);
             }
         }
     }

@@ -5,9 +5,12 @@ import java.util.Arrays;
 import static pairmatching.domain.Level.LEVEL1;
 import static pairmatching.domain.Level.LEVEL2;
 import static pairmatching.domain.Level.LEVEL4;
+import static pairmatching.domain.Level.LEVEL_NONE;
 import static pairmatching.exception.ExceptionMessage.INFO_NOT_FOUND;
 
 public enum Mission {
+    NONE(LEVEL_NONE, "없음"),
+
     RACING_CAR(LEVEL1, "자동차경주"),
     LOTTO(LEVEL1, "로또"),
     BASEBALL(LEVEL1, "숫자야구게임"),
@@ -33,5 +36,9 @@ public enum Mission {
                 .filter(element -> element.name.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INFO_NOT_FOUND.getMessage()));
+    }
+
+    public boolean isSameLevel(Level level) {
+        return this.level == level;
     }
 }

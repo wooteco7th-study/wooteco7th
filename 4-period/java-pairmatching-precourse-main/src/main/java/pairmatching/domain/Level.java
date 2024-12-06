@@ -5,6 +5,7 @@ import java.util.Arrays;
 import static pairmatching.exception.ExceptionMessage.INFO_NOT_FOUND;
 
 public enum Level {
+    LEVEL_NONE("없음"),
     LEVEL1("레벨1"),
     LEVEL2("레벨2"),
     LEVEL3("레벨3"),
@@ -22,5 +23,9 @@ public enum Level {
                 .filter(element -> element.level.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INFO_NOT_FOUND.getMessage()));
+    }
+
+    public boolean isLevel3OrLevel5() {
+        return this == LEVEL3 || this == LEVEL5;
     }
 }
