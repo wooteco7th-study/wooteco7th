@@ -45,6 +45,16 @@ public class ProgramController {
                 result.add(info.getMission(), pairResult);
                 outputView.printResult(pairResult);
             }
+            if (optionCommand == OptionCommand.페어조회) {
+                Info info = retryOnInvalidInput(this::getInfo);
+                if (info.isBackendCourse()) {
+                    List<Pair> pairResult = result.findByMission(info.getMission());
+                    outputView.printResult(pairResult);
+                    continue;
+                }
+                List<Pair> pairResult = result.findByMission(info.getMission());
+                outputView.printResult(pairResult);
+            }
         }
     }
 
