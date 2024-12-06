@@ -13,12 +13,12 @@ import subway.exception.CustomIllegalArgumentException;
 
 public class PathFinder {
 
-    private final Path shortestTimePath;
-    private final Path shortestDistancePath;
+    private final Graph shortestTimeGraph;
+    private final Graph shortestDistanceGraph;
 
     public PathFinder() {
-        this.shortestTimePath = initializeTimeGraph();
-        this.shortestDistancePath = initializeDistanceGraph();
+        this.shortestTimeGraph = initializeTimeGraph();
+        this.shortestDistanceGraph = initializeDistanceGraph();
     }
 
     public void validatePathConnected(final String startVertex, final String endVertex) {
@@ -33,27 +33,27 @@ public class PathFinder {
     }
 
     public int getShortestTime(final Station start, final Station end) {
-        return (int) shortestTimePath.getPathWeight(start.getName(), end.getName());
+        return (int) shortestTimeGraph.getPathWeight(start.getName(), end.getName());
     }
 
     public int getShortestDistance(final Station start, final Station end) {
-        return (int) shortestDistancePath.getPathWeight(start.getName(), end.getName());
+        return (int) shortestDistanceGraph.getPathWeight(start.getName(), end.getName());
     }
 
     public List<String> getShortestTimePath(final Station start, final Station end) {
-        return shortestTimePath.getPath(start.getName(), end.getName());
+        return shortestTimeGraph.getPath(start.getName(), end.getName());
     }
 
     public List<String> getShortestDistancePath(final String start, final String end) {
-        return shortestDistancePath.getPath(start, end);
+        return shortestDistanceGraph.getPath(start, end);
     }
 
-    private Path initializeDistanceGraph() {
+    private Graph initializeDistanceGraph() {
         WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph(
                 DefaultWeightedEdge.class);
         initVertex(distanceGraph);
         initEdgeWeight(distanceGraph);
-        return new Path(distanceGraph);
+        return new Graph(distanceGraph);
     }
 
     private boolean isNotConnected(final String start, final String end) {
@@ -74,7 +74,7 @@ public class PathFinder {
         }
     }
 
-    private Path initializeTimeGraph() {
+    private Graph initializeTimeGraph() {
         WeightedMultigraph<String, DefaultWeightedEdge> timesGraph = new WeightedMultigraph(DefaultWeightedEdge.class);
         initVertex(timesGraph);
 
@@ -83,6 +83,6 @@ public class PathFinder {
                     timesGraph.addEdge(route.getDepartureStation().getName(), route.getArrivalStation().getName()),
                     route.getTakenTime());
         }
-        return new Path(timesGraph);
+        return new Graph(timesGraph);
     }
 }
