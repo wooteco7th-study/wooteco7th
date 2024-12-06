@@ -7,15 +7,6 @@ import pairmatching.error.ErrorMessage;
 
 public enum MissionType {
 
-    /**
-     * ## 미션 ### 레벨1 - 자동차경주 - 로또 - 숫자야구게임
-     * <p>
-     * ### 레벨2 - 장바구니 - 결제 - 지하철노선도
-     * <p>
-     * ### 레벨3(없음)
-     * <p>
-     * ### 레벨4 - 성능개선 - 배포
-     */
     RACING_CAR(LevelType.LEVEL_1, "자동차경주"),
     LOTTO(LevelType.LEVEL_1, "로또"),
     BASEBALL_GAME(LevelType.LEVEL_1, "숫자야구게임"),
@@ -40,10 +31,6 @@ public enum MissionType {
                 .filter(missionType -> Objects.equals(missionType.name, name))
                 .findAny()
                 .orElseThrow(() -> new AppException(ErrorMessage.INVALID_MISSION));
-    }
-
-    public LevelType getLevel() {
-        return levelType;
     }
 
     public String getName() {

@@ -6,12 +6,6 @@ import pairmatching.error.AppException;
 import pairmatching.error.ErrorMessage;
 
 public enum PairCommand {
-    /**
-     * 1. 페어 매칭
-     * 2. 페어 조회
-     * 3. 페어 초기화
-     * Q. 종료
-     */
 
     MATCHING("1"),
     LOOK_UP("2"),

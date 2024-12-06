@@ -1,7 +1,6 @@
 package pairmatching.domain;
 
 import java.util.List;
-import java.util.Objects;
 import pairmatching.error.AppException;
 import pairmatching.error.ErrorMessage;
 
@@ -42,9 +41,5 @@ public class PairSystem {
 
     public void clear() {
         pairResult.clear();
-    }
-
-    public boolean isQuit(final PairCommand pairCommand) {
-        return Objects.equals(pairCommand, PairCommand.QUIT);
     }
 }
