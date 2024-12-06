@@ -40,8 +40,10 @@ public class GameController {
     private void processGame(final BridgeGame bridgeGame, final CurrentMap currentMap) {
         while (bridgeGame.keepGame()) {
             boolean isCorrect = moveAndCompare(bridgeGame, currentMap);
-            if (!isCorrect) {
-                retryOrNot(bridgeGame, currentMap);
+            if (isCorrect) {
+                continue;
+            }
+            if (isNotRetry(bridgeGame, currentMap)) {
                 break;
             }
         }
@@ -61,12 +63,13 @@ public class GameController {
         return moving;
     }
 
-    private void retryOrNot(final BridgeGame bridgeGame, final CurrentMap currentMap) {
+    private boolean isNotRetry(final BridgeGame bridgeGame, final CurrentMap currentMap) {
         boolean isRetry = retryOnInvalidInput(() -> isRetry(bridgeGame));
         if (isRetry) {
             currentMap.clearMap();
-            processGame(bridgeGame, currentMap);
+            return false;
         }
+        return true;
     }
 
     private boolean isRetry(final BridgeGame bridgeGame) {
