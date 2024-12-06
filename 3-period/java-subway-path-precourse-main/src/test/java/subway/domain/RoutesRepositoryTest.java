@@ -146,7 +146,7 @@ class RoutesRepositoryTest {
 
         // When & Then
         assertThatThrownBy(
-                () -> routesRepository.validatePathConnected(stations.get(3), stations.get(6), stationRepository))
+                () -> routesRepository.validatePathConnected(stations.get(3), stations.get(6)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR]");
     }

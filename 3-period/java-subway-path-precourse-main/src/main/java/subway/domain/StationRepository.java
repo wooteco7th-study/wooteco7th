@@ -20,7 +20,7 @@ public class StationRepository {
         stations.add(station);
     }
 
-    public Station findByName(final String name) {
+    public static Station findByName(final String name) {
         return stations.stream()
                 .filter(station -> station.getName().equals(name))
                 .findFirst()

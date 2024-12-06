@@ -94,15 +94,14 @@ public class RoutesRepository {
         routes.add(route);
     }
 
-    public void validatePathConnected(final Station departureStation, final Station arrivalStation,
-                                      final StationRepository stationRepository) {
+    public void validatePathConnected(final Station departureStation, final Station arrivalStation) {
         List<String> paths = getShortestDistancePath(departureStation, arrivalStation);
         for (int i = 0; i < paths.size() - 1; i++) {
             String start = paths.get(i);
             String end = paths.get(i + 1);
             boolean isConnected = routes.stream()
-                    .anyMatch(route -> route.findRoute(stationRepository.findByName(start),
-                            stationRepository.findByName(end)));
+                    .anyMatch(route -> route.findRoute(StationRepository.findByName(start),
+                            StationRepository.findByName(end)));
             if (!isConnected) {
                 throw new CustomIllegalArgumentException(INVALID_STATION_PATH);
             }
