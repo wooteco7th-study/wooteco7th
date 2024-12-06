@@ -40,6 +40,10 @@ public class PairResult {
         values.clear();
     }
 
+    public void remove(final Mission mission) {
+        values.remove(mission);
+    }
+
     private List<PairGroup> getPairGroupsByLevelType(final LevelType levelType) {
         return values.entrySet().stream()
                 .filter(entry -> entry.getKey().isSameLevelType(levelType))
