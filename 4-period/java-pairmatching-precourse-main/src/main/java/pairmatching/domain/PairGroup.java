@@ -11,12 +11,17 @@ public class PairGroup {
         this.pairs = pairs;
     }
 
-    public boolean hasCrews(final List<String> crews) {
+    public boolean hasPair(final List<Pair> pairs) {
         return pairs.stream()
-                .anyMatch(pair -> pair.hasCrews(crews));
+                .anyMatch(pair -> hasCrews(pair.getCrews()));
     }
 
     public List<Pair> getPairs() {
         return Collections.unmodifiableList(pairs);
+    }
+
+    private boolean hasCrews(final List<String> crews) {
+        return pairs.stream()
+                .anyMatch(pair -> pair.hasCrews(crews));
     }
 }
