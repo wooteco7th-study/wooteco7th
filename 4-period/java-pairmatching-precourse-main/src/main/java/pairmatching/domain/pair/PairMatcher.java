@@ -1,27 +1,28 @@
 package pairmatching.domain.pair;
 
-import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import pairmatching.domain.order.Level;
 import pairmatching.domain.crew.Crew;
+import pairmatching.domain.order.Level;
+import pairmatching.domain.random.Shuffle;
 import pairmatching.exception.CustomIllegalArgumentException;
 import pairmatching.exception.ErrorMessage;
 
 public class PairMatcher {
 
     private final List<Crew> crews;
+    private final Shuffle shuffle;
 
-    public PairMatcher(final List<Crew> crews) {
+    public PairMatcher(final List<Crew> crews, final Shuffle randomShuffle) {
         this.crews = crews;
+        this.shuffle = randomShuffle;
     }
 
-    public List<Pair> matchCrew(final PairHistory pairHistory, final Level level) {
-        //    1. **3회** 시도까지 매칭이 되지 않거나 **매칭을 할 수 있는 경우의 수가 없으면 에러 메시지**를 출력한다.
+    public List<Pair> matchCrewUntilCount(final PairHistory pairHistory, final Level level) {
         int count = 0;
         while (count != 3) {
-            List<Pair> pairs = matchCrewUntilCount(pairHistory, level);
+            List<Pair> pairs = matchCrew(pairHistory, level);
             if (!pairs.isEmpty()) {
                 return pairs;
             }
@@ -30,8 +31,8 @@ public class PairMatcher {
         throw new CustomIllegalArgumentException(ErrorMessage.PAIR_MATCH_FAILED);
     }
 
-    private List<Pair> matchCrewUntilCount(final PairHistory pairHistory, final Level level) {
-        List<String> crews = shuffleCrews();
+    private List<Pair> matchCrew(final PairHistory pairHistory, final Level level) {
+        List<String> crews = shuffle.shuffleCrews(getNames());
         List<Pair> pairs = makePairs(crews);
         if (hasPair(pairs, pairHistory, level)) {
             return Collections.emptyList();
@@ -67,13 +68,8 @@ public class PairMatcher {
     }
 
     private boolean hasPair(final List<Pair> pairs, final PairHistory pairHistory, final Level level) {
-        //    1. 같은 레벨에서 이미 페어로 만난적이 있는 크루끼리 다시 페어로 매칭 된다면 **크루 목록의 순서를 다시 랜덤으로 섞어서 매칭을 시도**한다.
         return pairs.stream()
                 .anyMatch(pair -> pairHistory.hasSameLevelPair(pair, level));
-    }
-
-    private List<String> shuffleCrews() {
-        return Randoms.shuffle(getNames());
     }
 
     private List<String> getNames() {
