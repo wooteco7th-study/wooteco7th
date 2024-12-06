@@ -1,6 +1,6 @@
 package pairmatching.domain;
 
-import java.lang.System.Logger.Level;
+import java.util.Objects;
 
 public class Mission {
 
@@ -16,5 +16,23 @@ public class Mission {
 
     public boolean isSameLevelType(final LevelType levelType) {
         return this.levelType == levelType;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof final Mission mission)) {
+            return false;
+        }
+        return Objects.equals(levelType.getName(), mission.levelType.getName())
+                && Objects.equals(courseType.getName(), mission.courseType.getName()) && Objects.equals(
+                missionType.getName(), mission.missionType.getName());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(levelType.getName(), courseType.getName(), missionType.getName());
     }
 }
