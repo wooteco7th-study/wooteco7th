@@ -42,7 +42,7 @@ public class OutputView {
     }
 
     public void showInformReset() {
-        showln(INFORM_RESET + LINE);
+        showln(LINE + INFORM_RESET + LINE);
     }
 
     public void showException(Exception exception) {

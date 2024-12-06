@@ -54,4 +54,8 @@ public class Initializer {
     public PairHistory getHistory() {
         return history;
     }
+
+    public void clearHistory() {
+        history.clear();
+    }
 }

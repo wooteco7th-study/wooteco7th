@@ -52,4 +52,8 @@ public class PairHistory {
                 .findAny()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_NO_HISTORY));
     }
+
+    public void clear() {
+        results.clear();
+    }
 }

@@ -37,11 +37,16 @@ public class PairController {
                 return;
             }
             if (command.isInitialized()) {
-                // 초기화 수행
+                processInitialize();
                 continue;
             }
             exceptionHandler.retryOn(() -> processWithCommand(command));
         }
+    }
+
+    private void processInitialize() {
+        initializer.clearHistory();
+        outputView.showInformReset();
     }
 
     private void processWithCommand(final FunctionCommand command) {
@@ -49,6 +54,8 @@ public class PairController {
         while (!isInMiddle) {
             PairOrder pairOrder = makePairOrder();
             if (command.isPairMatching()) {
+                // 페어 매칭 후 정상 종료 -> isInMiddle = true;
+                // 이미 존재할 경우 -> 아니오 누를 경우  재시도, isInMiddle= false
                 isInMiddle = processPairMatching(pairOrder);
             }
             if (command.IsPairInquiry()) {
@@ -74,7 +81,6 @@ public class PairController {
     private void processPairInquiry(final PairOrder pairOrder) {
         PairHistory pairHistory = initializer.getHistory();
         PairMatchResultDto pairMatchResultDto = pairService.inquirePair(pairOrder, pairHistory);
-        System.out.println(pairMatchResultDto);
         outputView.showMatchResult(pairMatchResultDto);
     }
 
