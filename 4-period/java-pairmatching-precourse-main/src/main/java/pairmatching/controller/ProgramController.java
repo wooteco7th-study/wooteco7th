@@ -11,6 +11,8 @@ import pairmatching.view.OutputView;
 
 import java.util.List;
 
+import static pairmatching.exception.ExceptionHandler.retryOnInvalidInput;
+
 public class ProgramController {
     private final InputView inputView;
     private final OutputView outputView;
@@ -25,13 +27,12 @@ public class ProgramController {
         List<String> frontendCrews = CrewFileReader.readFrontendCrews();
         PairGenerator pairGenerator = new PairGenerator(new ShuffleGenerator());
         while (true) {
-            OptionCommand optionCommand = getOptionCommand();
+            OptionCommand optionCommand = retryOnInvalidInput(this::getOptionCommand);
             if (optionCommand == OptionCommand.종료) {
                 break;
             }
             if (optionCommand == OptionCommand.페어매칭) {
-                List<String> input = inputView.readInfo();
-                Info info = new Info(input);
+                Info info = retryOnInvalidInput(this::getInfo);
                 if (info.isBackendCourse()) {
                     PairResult result = pairGenerator.generate(backendCrews);
                     outputView.printResult(result);
@@ -46,5 +47,10 @@ public class ProgramController {
     private OptionCommand getOptionCommand() {
         String option = inputView.readOption();
         return OptionCommand.from(option);
+    }
+
+    private Info getInfo() {
+        List<String> input = inputView.readInfo();
+        return new Info(input);
     }
 }

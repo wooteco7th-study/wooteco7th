@@ -14,4 +14,8 @@ public class OutputView {
             System.out.println(String.join(" : ", pair.getPair()));
         }
     }
+
+    public static void printError(String error) {
+        System.out.println(error);
+    }
 }
