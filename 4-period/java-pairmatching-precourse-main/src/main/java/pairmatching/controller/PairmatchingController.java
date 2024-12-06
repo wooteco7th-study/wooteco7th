@@ -10,7 +10,7 @@ import pairmatching.domain.vo.FunctionOption;
 import pairmatching.domain.vo.RematchOption;
 import pairmatching.dto.FairMatchingRequestDto;
 import pairmatching.dto.FairMatchingResponseDto;
-import pairmatching.service.PairmatchinService;
+import pairmatching.service.PairmatchingService;
 import pairmatching.util.RetryOnExceptionTemplate;
 import pairmatching.view.RequestView;
 import pairmatching.view.ResponseView;
@@ -18,10 +18,10 @@ import pairmatching.view.ResponseView;
 public class PairmatchingController {
     private final RequestView requestView;
     private final ResponseView responseView;
-    private final PairmatchinService pairmatchingService;
+    private final PairmatchingService pairmatchingService;
 
     public PairmatchingController(final RequestView requestView, final ResponseView responseView,
-                                  final PairmatchinService pairmatchingService) {
+                                  final PairmatchingService pairmatchingService) {
         this.requestView = requestView;
         this.responseView = responseView;
         this.pairmatchingService = pairmatchingService;
@@ -54,7 +54,7 @@ public class PairmatchingController {
         responseView.printFairMatchingBoard();
         RetryOnExceptionTemplate.repeatUntilSuccess(() -> {
             FairMatchingRequestDto requestDto = requestView.requestFairMatching();
-            boolean alreadyMatch = pairmatchingService.isAlreadyMatch();
+            boolean alreadyMatch = pairmatchingService.isAlreadyMatch(requestDto.getLevel());
             isYes(requestDto, alreadyMatch);
             isNo(requestDto, alreadyMatch);
         });
