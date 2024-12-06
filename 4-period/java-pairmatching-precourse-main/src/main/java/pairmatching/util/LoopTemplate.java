@@ -1,6 +1,5 @@
 package pairmatching.util;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 
 public class LoopTemplate {
@@ -29,12 +28,4 @@ public class LoopTemplate {
         }
     }
 
-    public static <T> Optional<T> tryCatchLoopOptional(Supplier<T> callback) {
-        try {
-            return Optional.of(callback.get());
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            System.out.println(e.getMessage());
-            return Optional.empty();
-        }
-    }
 }
