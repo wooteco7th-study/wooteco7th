@@ -1,5 +1,9 @@
 package pairmatching.domain;
 
+import java.util.Arrays;
+
+import static pairmatching.exception.ExceptionMessage.INFO_NOT_FOUND;
+
 public enum Level {
     LEVEL1("레벨1"),
     LEVEL2("레벨2"),
@@ -7,9 +11,16 @@ public enum Level {
     LEVEL4("레벨4"),
     LEVEL5("레벨5");
 
-    private String name;
+    private String level;
 
-    Level(String name) {
-        this.name = name;
+    Level(String level) {
+        this.level = level;
+    }
+
+    public static Level from(String input) {
+        return Arrays.stream(Level.values())
+                .filter(element -> element.level.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INFO_NOT_FOUND.getMessage()));
     }
 }

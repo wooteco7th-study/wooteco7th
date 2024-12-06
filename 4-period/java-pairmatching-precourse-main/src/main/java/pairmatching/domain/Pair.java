@@ -9,6 +9,10 @@ public class Pair {
         this.pair = pair;
     }
 
+    public List<String> getPair() {
+        return pair;
+    }
+
     @Override
     public String toString() {
         return "Pair{" +

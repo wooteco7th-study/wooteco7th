@@ -1,8 +1,11 @@
 package pairmatching.domain;
 
+import java.util.Arrays;
+
 import static pairmatching.domain.Level.LEVEL1;
 import static pairmatching.domain.Level.LEVEL2;
 import static pairmatching.domain.Level.LEVEL4;
+import static pairmatching.exception.ExceptionMessage.INFO_NOT_FOUND;
 
 public enum Mission {
     RACING_CAR(LEVEL1, "자동차경주"),
@@ -23,5 +26,12 @@ public enum Mission {
     Mission(final Level level, final String name) {
         this.level = level;
         this.name = name;
+    }
+
+    public static Mission from(String input) {
+        return Arrays.stream(Mission.values())
+                .filter(element -> element.name.equals(input))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INFO_NOT_FOUND.getMessage()));
     }
 }
