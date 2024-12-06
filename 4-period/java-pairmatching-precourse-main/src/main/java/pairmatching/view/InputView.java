@@ -1,12 +1,16 @@
 package pairmatching.view;
 
 import camp.nextstep.edu.missionutils.Console;
+import pairmatching.util.StringParser;
+
+import java.util.List;
 
 import static pairmatching.exception.ExceptionMessage.INPUT_BLANK;
 
 public class InputView {
 
     private static final String CHOOSE_OPTION_MSG = """
+            
             기능을 선택하세요.
             1. 페어 매칭
             2. 페어 조회
@@ -32,13 +36,15 @@ public class InputView {
             매칭 정보가 있습니다. 다시 매칭하시겠습니까?
             네 | 아니오
             """;
+    private static final String DELIMITER = ", ";
+
 
     public String readOption() {
         return getValidatedInput(CHOOSE_OPTION_MSG);
     }
 
-    public String readInfo() {
-        return getValidatedInput(CHOOSE_INFO_MSG);
+    public List<String> readInfo() {
+        return StringParser.parseWithDelimiter(getValidatedInput(CHOOSE_INFO_MSG), DELIMITER);
     }
 
     public String readRematching() {
