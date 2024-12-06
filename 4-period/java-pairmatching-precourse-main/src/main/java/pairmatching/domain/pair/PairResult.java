@@ -15,7 +15,6 @@ public class PairResult {
         this.pairs = pairs;
     }
 
-
     public boolean hasSameLevel(final Level level) {
         return pairOrder.getLevel().equals(level);
     }

@@ -17,7 +17,6 @@ public class PairHistory {
     }
 
     public void add(final PairResult pairResult) {
-        // 같은 PairOrder면 덮어쓰기
         PairOrder pairOrder = pairResult.getPairOrder();
         if (isExists(pairOrder)) {
             PairResult samePairOrderResult = findSamePairOrderResult(pairOrder);
@@ -40,7 +39,6 @@ public class PairHistory {
     }
 
     public boolean hasSameLevelPair(final Pair pair, final Level level) {
-        // 같은 레벨의 PairResult 찾기
         return results.stream()
                 .filter(result -> result.hasSameLevel(level))
                 .anyMatch(result -> result.hasSamePair(pair));
