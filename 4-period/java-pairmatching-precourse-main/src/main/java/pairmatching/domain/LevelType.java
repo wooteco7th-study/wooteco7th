@@ -5,7 +5,7 @@ import java.util.Objects;
 import pairmatching.error.AppException;
 import pairmatching.error.ErrorMessage;
 
-public enum Level {
+public enum LevelType {
     LEVEL_1("레벨1"),
     LEVEL_2("레벨2"),
     LEVEL_3("레벨3"),
@@ -14,13 +14,13 @@ public enum Level {
 
     private final String name;
 
-    Level(final String name) {
+    LevelType(final String name) {
         this.name = name;
     }
 
-    public static Level findByName(final String name) {
-        return Arrays.stream(Level.values())
-                .filter(level -> Objects.equals(level.name, name))
+    public static LevelType findByName(final String name) {
+        return Arrays.stream(LevelType.values())
+                .filter(levelType -> Objects.equals(levelType.name, name))
                 .findAny()
                 .orElseThrow(() -> new AppException(ErrorMessage.INVALID_LEVEL));
     }
