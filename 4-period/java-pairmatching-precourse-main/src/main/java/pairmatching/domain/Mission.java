@@ -22,6 +22,10 @@ public class Mission {
         return courseType;
     }
 
+    public LevelType getLevelType() {
+        return levelType;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
