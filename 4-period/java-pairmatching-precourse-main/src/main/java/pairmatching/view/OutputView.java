@@ -30,7 +30,7 @@ public class OutputView {
     }
 
     public void showTitleSelect() {
-        showln(TITLE_SELECT);
+        showln(LINE + TITLE_SELECT);
     }
 
     public void showTitleResult() {

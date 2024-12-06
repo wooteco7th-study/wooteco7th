@@ -1,4 +1,4 @@
-package pairmatching.domain;
+package pairmatching.domain.command;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -24,5 +24,22 @@ public enum FunctionCommand {
                 .filter(command -> Objects.equals(command.value, input))
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_COMMAND));
+    }
+
+    public boolean isQuit() {
+        return this == 종료;
+    }
+
+    public boolean isInitialized() {
+        return this == 페어초기화;
+    }
+
+    public boolean isPairMatching() {
+        return this == 페어매칭;
+    }
+
+
+    public boolean IsPairInquiry() {
+        return this == 페어조회;
     }
 }
