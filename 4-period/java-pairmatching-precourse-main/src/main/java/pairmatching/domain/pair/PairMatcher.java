@@ -4,7 +4,8 @@ import camp.nextstep.edu.missionutils.Randoms;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import pairmatching.domain.Level;
+import pairmatching.domain.order.Level;
+import pairmatching.domain.crew.Crew;
 import pairmatching.exception.CustomIllegalArgumentException;
 import pairmatching.exception.ErrorMessage;
 

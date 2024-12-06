@@ -2,7 +2,7 @@ package pairmatching;
 
 import camp.nextstep.edu.missionutils.Console;
 import pairmatching.controller.PairController;
-import pairmatching.domain.Initializer;
+import pairmatching.support.Initializer;
 import pairmatching.exception.ExceptionHandler;
 import pairmatching.service.PairService;
 import pairmatching.view.InputView;

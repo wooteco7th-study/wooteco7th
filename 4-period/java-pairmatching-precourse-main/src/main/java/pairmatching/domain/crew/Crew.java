@@ -1,6 +1,6 @@
-package pairmatching.domain.pair;
+package pairmatching.domain.crew;
 
-import pairmatching.domain.Course;
+import pairmatching.domain.order.Course;
 
 public class Crew {
 

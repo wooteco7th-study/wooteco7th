@@ -1,9 +1,10 @@
-package pairmatching.domain;
+package pairmatching.support;
 
 import java.util.ArrayList;
 import java.util.List;
-import pairmatching.domain.pair.Crew;
-import pairmatching.domain.pair.Crews;
+import pairmatching.domain.crew.Crew;
+import pairmatching.domain.crew.Crews;
+import pairmatching.domain.order.Course;
 import pairmatching.domain.pair.PairHistory;
 import pairmatching.util.PairFileReader;
 

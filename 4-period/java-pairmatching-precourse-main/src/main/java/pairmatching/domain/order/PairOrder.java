@@ -1,9 +1,6 @@
-package pairmatching.domain.pair;
+package pairmatching.domain.order;
 
 import java.util.Objects;
-import pairmatching.domain.Course;
-import pairmatching.domain.Level;
-import pairmatching.domain.Mission;
 
 public class PairOrder {
 

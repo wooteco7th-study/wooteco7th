@@ -1,4 +1,4 @@
-package pairmatching.domain;
+package pairmatching.domain.order;
 
 import java.util.Arrays;
 import java.util.Objects;

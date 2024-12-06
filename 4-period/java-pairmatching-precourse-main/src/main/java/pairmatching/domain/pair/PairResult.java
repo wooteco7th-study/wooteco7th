@@ -2,7 +2,8 @@ package pairmatching.domain.pair;
 
 import java.util.Collections;
 import java.util.List;
-import pairmatching.domain.Level;
+import pairmatching.domain.order.Level;
+import pairmatching.domain.order.PairOrder;
 
 public class PairResult {
 

@@ -3,7 +3,8 @@ package pairmatching.domain.pair;
 import static pairmatching.exception.ErrorMessage.PAIR_MATCH_ORDER_FAILED;
 
 import java.util.List;
-import pairmatching.domain.Level;
+import pairmatching.domain.order.Level;
+import pairmatching.domain.order.PairOrder;
 import pairmatching.exception.CustomIllegalArgumentException;
 import pairmatching.exception.ErrorMessage;
 
