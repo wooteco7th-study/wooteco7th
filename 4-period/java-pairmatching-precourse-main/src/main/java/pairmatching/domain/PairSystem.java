@@ -1,6 +1,7 @@
 package pairmatching.domain;
 
 import java.util.List;
+import java.util.Objects;
 import pairmatching.error.AppException;
 import pairmatching.error.ErrorMessage;
 
@@ -30,9 +31,9 @@ public class PairSystem {
         return pairResult.findByMission(mission);
     }
 
-    public void rematch(final Mission mission) {
-        final PairGroup pairGroup = PairGroupGenerator.generate(mission.getCourseType());
-        pairResult.updateResult(mission, pairGroup);
+    public List<Pair> rematch(final Mission mission) {
+        pairResult.remove(mission);
+        return match(mission);
     }
 
     public boolean hasMatchResult(final Mission mission) {
@@ -41,5 +42,9 @@ public class PairSystem {
 
     public void clear() {
         pairResult.clear();
+    }
+
+    public boolean isQuit(final PairCommand pairCommand) {
+        return Objects.equals(pairCommand, PairCommand.QUIT);
     }
 }
