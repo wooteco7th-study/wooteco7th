@@ -53,7 +53,7 @@ public class PairController {
             }
             if (command.IsPairInquiry()) {
                 processPairInquiry(pairOrder);
-                isInMiddle = true;
+                break;
             }
         }
     }
@@ -73,7 +73,9 @@ public class PairController {
 
     private void processPairInquiry(final PairOrder pairOrder) {
         PairHistory pairHistory = initializer.getHistory();
-        pairService.inquirePair(pairOrder, pairHistory);
+        PairMatchResultDto pairMatchResultDto = pairService.inquirePair(pairOrder, pairHistory);
+        System.out.println(pairMatchResultDto);
+        outputView.showMatchResult(pairMatchResultDto);
     }
 
     private boolean wantRetry() {

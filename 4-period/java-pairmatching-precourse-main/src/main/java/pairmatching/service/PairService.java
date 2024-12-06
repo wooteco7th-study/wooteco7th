@@ -9,6 +9,8 @@ import pairmatching.domain.pair.PairMatcher;
 import pairmatching.domain.pair.PairOrder;
 import pairmatching.domain.pair.PairResult;
 import pairmatching.dto.PairMatchResultDto;
+import pairmatching.exception.CustomIllegalArgumentException;
+import pairmatching.exception.ErrorMessage;
 
 public class PairService {
 
@@ -28,8 +30,16 @@ public class PairService {
         return initializer.getFrontendCrews();
     }
 
-    public void inquirePair(final PairOrder pairOrder, final PairHistory pairHistory) {
+    public PairMatchResultDto inquirePair(final PairOrder pairOrder, final PairHistory pairHistory) {
         // 페어 조회
+        if (!historyNotExists(pairOrder, pairHistory)) {
+            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_NO_HISTORY);
+        }
+        PairResult pairResult = pairHistory.inquire(pairOrder);
+        return PairMatchResultDto.from(pairResult.getPairs());
+    }
 
+    private boolean historyNotExists(final PairOrder pairOrder, final PairHistory pairHistory) {
+        return pairHistory.isExists(pairOrder);
     }
 }

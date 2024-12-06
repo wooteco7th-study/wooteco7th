@@ -1,5 +1,6 @@
 package pairmatching.domain.pair;
 
+import java.util.Collections;
 import java.util.List;
 import pairmatching.domain.Level;
 
@@ -25,5 +26,9 @@ public class PairResult {
 
     public PairOrder getPairOrder() {
         return pairOrder;
+    }
+
+    public List<Pair> getPairs() {
+        return Collections.unmodifiableList(pairs);
     }
 }

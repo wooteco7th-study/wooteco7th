@@ -25,8 +25,8 @@ public class PairOrder {
         if (!(o instanceof PairOrder pairOrder)) {
             return false;
         }
-        return getCourse() == pairOrder.getCourse() && getLevel() == pairOrder.getLevel()
-                && getMission() == pairOrder.getMission();
+        return getCourse().equals(pairOrder.getCourse()) && getLevel().equals(pairOrder.getLevel())
+                && getMission().equals(pairOrder.getMission());
     }
 
     @Override
