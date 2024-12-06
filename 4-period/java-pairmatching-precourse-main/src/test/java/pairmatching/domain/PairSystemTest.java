@@ -19,9 +19,8 @@ class PairSystemTest {
         //when
         final PairSystem pairSystem = new PairSystem(pairResult);
         final List<Pair> match = pairSystem.match(mission);
-        for (Pair pair : match) {
-            System.out.println(pair.getCrews());
-        }
+        //then
+        assertThat(match).isNotEmpty();
     }
 
     @Test
@@ -35,6 +34,5 @@ class PairSystemTest {
         //then
         assertThat(pairSystem.hasMatchResult(mission)).isTrue();
     }
-
 
 }
