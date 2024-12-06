@@ -16,4 +16,15 @@ public class RetryOnExceptionTemplate {
         }
     }
 
+    public static void repeatUntilSuccess(Runnable action) {
+        while (true) {
+            try {
+                action.run();
+                return;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
 }

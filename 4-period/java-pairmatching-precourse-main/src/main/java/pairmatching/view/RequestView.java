@@ -34,14 +34,6 @@ public class RequestView {
 
     public FairMatchingRequestDto requestFairMatching() {
         String message = new StringBuilder()
-                .append("#############################################").append(NEW_LINE)
-                .append("미션:").append(NEW_LINE)
-                .append("  - 레벨1: 자동차경주 | 로또 | 숫자야구게임").append(NEW_LINE)
-                .append("  - 레벨2: 장바구니 | 결제 | 지하철노선도").append(NEW_LINE)
-                .append("  - 레벨3:").append(NEW_LINE)
-                .append("  - 레벨4: 성능개선 | 배포").append(NEW_LINE)
-                .append("  - 레벨5:").append(NEW_LINE)
-                .append("############################################").append(NEW_LINE)
                 .append("과정, 레벨, 미션을 선택하세요.").append(NEW_LINE)
                 .append("ex) 백엔드, 레벨1, 자동차경주").append(NEW_LINE)
                 .toString();
@@ -50,7 +42,8 @@ public class RequestView {
 
     public RematchOption aksPairRematch() {
         String message = new StringBuilder()
-                .append("매칭 정보가 있습니다. 다시 매칭하시겠습니까?").toString();
+                .append("매칭 정보가 있습니다. 다시 매칭하시겠습니까?").append(NEW_LINE)
+                .append("네 | 아니오").append(NEW_LINE).toString();
 
         return request(message, ModelMapper::toRematchOption);
     }

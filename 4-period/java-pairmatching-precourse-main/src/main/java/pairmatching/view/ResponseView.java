@@ -15,6 +15,20 @@ public class ResponseView {
         this.consoleOut = consoleOut;
     }
 
+    public void printFairMatchingBoard() {
+        String message = new StringBuilder()
+                .append("#############################################").append(NEW_LINE)
+                .append("미션:").append(NEW_LINE)
+                .append("  - 레벨1: 자동차경주 | 로또 | 숫자야구게임").append(NEW_LINE)
+                .append("  - 레벨2: 장바구니 | 결제 | 지하철노선도").append(NEW_LINE)
+                .append("  - 레벨3:").append(NEW_LINE)
+                .append("  - 레벨4: 성능개선 | 배포").append(NEW_LINE)
+                .append("  - 레벨5:").append(NEW_LINE)
+                .append("############################################")
+                .toString();
+        consoleOut.println(message);
+    }
+
     public void printFairMatchingResult(FairMatchingResponseDto dto) {
         StringBuilder br = new StringBuilder();
         br.append("페어 매칭 결과입니다.").append(NEW_LINE);
@@ -41,4 +55,7 @@ public class ResponseView {
         consoleOut.println(message);
     }
 
+    public void printError(final String message) {
+        consoleOut.println(message);
+    }
 }
