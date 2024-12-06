@@ -72,6 +72,23 @@ class PairMatcherTest {
                 ErrorMessage.PAIR_MATCH_FAILED);
     }
 
+    @Test
+    @DisplayName("다른 레벨에서는 페어가 중복될 수 있다.")
+    void 다른_레벨에서는_페어가_중복될_수_있다() {
+        // Given
+        List<Crew> crews = makeCrews();
+        Pair pair1 = new Pair(List.of("러키", "밍트"));
+        Pair pair2 = new Pair(List.of("진수", "수달"));
+        Shuffle shuffle = tokens -> List.of("러키", "밍트", "진수", "수달");
+        PairMatcher pairMatcher = new PairMatcher(crews, shuffle);
+        PairResult pairResult = new PairResult(new PairOrder(Course.백엔드.name(), Level.레벨1.name(), Mission.로또.name()),
+                List.of(pair1, pair2));
+
+        // When
+        assertIllegalArgument(() -> pairMatcher.matchCrewUntilCount(new PairHistory(List.of(pairResult)), Level.레벨1),
+                ErrorMessage.PAIR_MATCH_FAILED);
+    }
+
     private List<Crew> makeCrews() {
         List<Crew> crews = new ArrayList<>();
         crews.add(makeBackendCrew("밍트"));
