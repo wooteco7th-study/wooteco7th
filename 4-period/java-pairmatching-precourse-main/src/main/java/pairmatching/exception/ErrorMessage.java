@@ -10,6 +10,7 @@ public enum ErrorMessage {
 
     INVALID_FORMAT("올바르지 않은 입력 형식입니다."),
 
+    INVALID_FILE_FORMAT("파일 형식이 다릅니다.")
     ;
 
     private final String message;

@@ -2,6 +2,7 @@ package pairmatching;
 
 import camp.nextstep.edu.missionutils.Console;
 import pairmatching.controller.PairController;
+import pairmatching.domain.Initializer;
 import pairmatching.exception.ExceptionHandler;
 import pairmatching.service.PairService;
 import pairmatching.view.InputView;
@@ -14,7 +15,8 @@ public class Application {
         OutputView outputView = new OutputView();
         ExceptionHandler exceptionHandler = new ExceptionHandler(outputView);
         PairService pairService = new PairService();
-        PairController controller = new PairController(inputView, outputView, exceptionHandler, pairService);
+        Initializer initializer = new Initializer();
+        PairController controller = new PairController(inputView, outputView, exceptionHandler, pairService, initializer);
         try {
             controller.process();
         } finally {

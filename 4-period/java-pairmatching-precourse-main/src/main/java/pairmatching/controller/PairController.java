@@ -1,7 +1,7 @@
 package pairmatching.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import pairmatching.domain.Initializer;
 import pairmatching.domain.command.FunctionCommand;
 import pairmatching.domain.command.RetryCommand;
 import pairmatching.domain.pair.PairHistory;
@@ -18,18 +18,19 @@ public class PairController {
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
     private final PairService pairService;
+    private final Initializer initializer;
 
     public PairController(final InputView inputView, final OutputView outputView,
                           final ExceptionHandler exceptionHandler,
-                          final PairService pairService) {
+                          final PairService pairService, final Initializer initializer) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
         this.pairService = pairService;
+        this.initializer = initializer;
     }
 
     public void process() {
-        PairHistory pairHistory = new PairHistory(new ArrayList<>());
         while (true) {
             FunctionCommand command = makeFunctionCommand();
             if (command.isQuit()) {
@@ -39,25 +40,26 @@ public class PairController {
                 // 초기화 수행
                 continue;
             }
-            processWithCommand(command, pairHistory);
+            processWithCommand(command);
         }
     }
 
-    private void processWithCommand(final FunctionCommand command, final PairHistory pairHistory) {
+    private void processWithCommand(final FunctionCommand command) {
         boolean isInMiddle = false;
         while (!isInMiddle) {
             PairOrder pairOrder = makePairOrder();
             if (command.isPairMatching()) {
-                PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder, pairHistory);
+                PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder);
                 outputView.showMatchResult(pairMatchResultDto);
             }
             if (command.IsPairInquiry()) {
-                isInMiddle = processPairInquiry(pairHistory, pairOrder);
+                isInMiddle = processPairInquiry(pairOrder);
             }
         }
     }
 
-    private boolean processPairInquiry(final PairHistory pairHistory, final PairOrder pairOrder) {
+    private boolean processPairInquiry(final PairOrder pairOrder) {
+        PairHistory pairHistory = initializer.getHistory();
         if (pairHistory.isExists(pairOrder)) {
             outputView.showRequestRetry();
             if (!wantRetry()) {

@@ -7,7 +7,7 @@ import pairmatching.dto.PairMatchResultDto;
 
 public class PairService {
 
-    public PairMatchResultDto matchPair(final PairOrder pairOrder, final PairHistory pairHistory) {
+    public PairMatchResultDto matchPair(final PairOrder pairOrder) {
         return new PairMatchResultDto(List.of(List.of("a", "b"), List.of("c", "d", "e")));
     }
 
