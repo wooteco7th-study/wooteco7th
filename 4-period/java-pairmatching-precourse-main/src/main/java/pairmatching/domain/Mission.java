@@ -18,6 +18,10 @@ public class Mission {
         return this.levelType == levelType;
     }
 
+    public CourseType getCourseType() {
+        return courseType;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
