@@ -7,7 +7,7 @@ import pairmatching.exception.ErrorMessage;
 
 public enum RetryCommand {
 
-    예, 아니오;
+    네, 아니오;
 
     public static RetryCommand from(String input) {
         return Arrays.stream(RetryCommand.values())
@@ -17,6 +17,6 @@ public enum RetryCommand {
     }
 
     public boolean isYes() {
-        return this == 예;
+        return this == 네;
     }
 }

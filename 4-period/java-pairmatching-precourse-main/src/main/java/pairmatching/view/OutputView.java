@@ -25,12 +25,21 @@ public class OutputView {
             과정, 레벨, 미션을 선택하세요.
             ex) 백엔드, 레벨1, 자동차경주""";
     private static final String TITLE_RESULT = "페어 매칭 결과입니다.";
-    private static final String REQUEST_RETRY = "매칭 정보가 있습니다. 다시 매칭하시겠습니까?";
+    private static final String REQUEST_RETRY = """
+            매칭 정보가 있습니다. 다시 매칭하시겠습니까?
+            네 | 아니오""";
     private static final String INFORM_RESET = "초기화 되었습니다.";
     private static final String FORMAT_PAIR_MATCH_RESULT = "%s : %s";
+    private static final String RETRY = """
+            과정, 레벨, 미션을 선택하세요.
+            ex) 백엔드, 레벨1, 자동차경주""";
 
     public void showTitleFunction() {
         showln(TITLE_FUNCTION);
+    }
+
+    public void showRetry() {
+        showln(LINE + RETRY);
     }
 
     public void showTitleSelect() {
@@ -38,7 +47,7 @@ public class OutputView {
     }
 
     public void showRequestRetry() {
-        showln(REQUEST_RETRY);
+        showln(LINE + REQUEST_RETRY);
     }
 
     public void showInformReset() {

@@ -1,6 +1,7 @@
 package pairmatching.controller;
 
 import java.util.List;
+import java.util.Optional;
 import pairmatching.domain.Initializer;
 import pairmatching.domain.command.FunctionCommand;
 import pairmatching.domain.command.RetryCommand;
@@ -49,33 +50,47 @@ public class PairController {
         outputView.showInformReset();
     }
 
+    //                 // 페어 매칭 후 정상 종료 -> isInMiddle = true;
+    //                // 이미 존재할 경우 -> 아니오 누를 경우  재시도, isInMiddle= false
     private void processWithCommand(final FunctionCommand command) {
-        boolean isInMiddle = false;
-        while (!isInMiddle) {
-            PairOrder pairOrder = makePairOrder();
-            if (command.isPairMatching()) {
-                // 페어 매칭 후 정상 종료 -> isInMiddle = true;
-                // 이미 존재할 경우 -> 아니오 누를 경우  재시도, isInMiddle= false
-                isInMiddle = processPairMatching(pairOrder);
-            }
-            if (command.IsPairInquiry()) {
-                processPairInquiry(pairOrder);
-                break;
-            }
+        PairOrder pairOrder = makePairOrder();
+        if (command.isPairMatching()) {
+            processPairMatching(pairOrder);
         }
+        if (command.IsPairInquiry()) {
+            processPairInquiry(pairOrder);
+        }
+
     }
 
-    private boolean processPairMatching(final PairOrder pairOrder) {
+    private void processPairMatching(PairOrder pairOrder) {
         PairHistory pairHistory = initializer.getHistory();
-        if (pairHistory.isExists(pairOrder)) {
-            outputView.showRequestRetry();
-            if (!wantRetry()) {
-                return false;
+        while (pairHistory.isExists(pairOrder)) {
+            Optional<PairOrder> retryOrder = requestRetryOrder();
+            if (retryOrder.isPresent()) {
+                pairOrder = retryOrder.get();
+                continue;
             }
+            break;
         }
         PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder, initializer);
         outputView.showMatchResult(pairMatchResultDto);
-        return true;
+    }
+
+    private Optional<PairOrder> requestRetryOrder() {
+        outputView.showRequestRetry();
+        if (!wantRetry()) { // 다시 매칭을 원하지 않으면 새로운 order를 받아 수행
+            outputView.showRetry();
+            return Optional.ofNullable(makeRetryOrder());
+        }
+        return Optional.empty(); // 다시 매칭을 원함
+    }
+
+    private PairOrder makeRetryOrder() {
+        return exceptionHandler.retryOn(() -> {
+            List<String> tokens = inputView.readSelect();
+            return new PairOrder(tokens.get(0), tokens.get(1), tokens.get(2));
+        });
     }
 
     private void processPairInquiry(final PairOrder pairOrder) {
@@ -90,10 +105,7 @@ public class PairController {
 
     private PairOrder makePairOrder() {
         outputView.showTitleSelect();
-        return exceptionHandler.retryOn(() -> {
-            List<String> tokens = inputView.readSelect();
-            return new PairOrder(tokens.get(0), tokens.get(1), tokens.get(2));
-        });
+        return makeRetryOrder();
     }
 
     private FunctionCommand makeFunctionCommand() {
