@@ -8,6 +8,8 @@ import java.util.List;
 import static pairmatching.exception.ExceptionMessage.MATCHING_IMPOSSIBLE;
 
 public class PairGenerator {
+    private static final int TOTAL_TRIAL_COUNT = 3;
+
     private final ShuffleGenerator shuffleGenerator;
     private final PairHistory pairHistory;
 
@@ -21,15 +23,9 @@ public class PairGenerator {
         int totalTrialCount = 1;
         List<Pair> pairResult = new ArrayList<>();
         if (isEven(crewNames)) {
-            while (totalTrialCount < 3) {
+            while (totalTrialCount < TOTAL_TRIAL_COUNT) {
                 List<String> shuffledNames = shuffleGenerator.shuffleNames(crewNames);
-                for (int i = 0; i < shuffledNames.size() - 1; i += 2) {
-                    List<String> names = new ArrayList<>();
-                    names.add(shuffledNames.get(i));
-                    names.add(shuffledNames.get(i + 1));
-                    Pair pair = new Pair(names);
-                    pairResult.add(pair);
-                }
+                addResultWhenCountOfCrewEven(shuffledNames, pairResult);
                 if (isDuplicated(pairHistory.resultOfLevel(level), pairResult)) {
                     totalTrialCount += 1;
                     continue;
@@ -37,21 +33,9 @@ public class PairGenerator {
                 return pairResult;
             }
         }
-        while (totalTrialCount < 3) {
+        while (totalTrialCount < TOTAL_TRIAL_COUNT) {
             List<String> shuffledNames = shuffleGenerator.shuffleNames(crewNames);
-            for (int i = 0; i < shuffledNames.size() - 3; i += 2) {
-                List<String> names = new ArrayList<>();
-                names.add(shuffledNames.get(i));
-                names.add(shuffledNames.get(i + 1));
-                Pair pair = new Pair(names);
-                pairResult.add(pair);
-            }
-            List<String> names = new ArrayList<>();
-            names.add(shuffledNames.get(shuffledNames.size() - 3));
-            names.add(shuffledNames.get(shuffledNames.size() - 2));
-            names.add(shuffledNames.get(shuffledNames.size() - 1));
-            Pair pair = new Pair(names);
-            pairResult.add(pair);
+            addResultWhenCountOfCrewOdd(shuffledNames, pairResult);
             if (isDuplicated(pairHistory.resultOfLevel(level), pairResult)) {
                 totalTrialCount += 1;
                 continue;
@@ -69,6 +53,32 @@ public class PairGenerator {
 
     private boolean isEven(final List<String> crewNames) {
         return crewNames.size() % 2 == 0;
+    }
+
+    private void addResultWhenCountOfCrewEven(final List<String> shuffledNames, final List<Pair> pairResult) {
+        for (int i = 0; i < shuffledNames.size() - 1; i += 2) {
+            List<String> names = new ArrayList<>();
+            names.add(shuffledNames.get(i));
+            names.add(shuffledNames.get(i + 1));
+            Pair pair = new Pair(names);
+            pairResult.add(pair);
+        }
+    }
+
+    private static void addResultWhenCountOfCrewOdd(final List<String> shuffledNames, final List<Pair> pairResult) {
+        for (int i = 0; i < shuffledNames.size() - 3; i += 2) {
+            List<String> names = new ArrayList<>();
+            names.add(shuffledNames.get(i));
+            names.add(shuffledNames.get(i + 1));
+            Pair pair = new Pair(names);
+            pairResult.add(pair);
+        }
+        List<String> names = new ArrayList<>();
+        names.add(shuffledNames.get(shuffledNames.size() - 3));
+        names.add(shuffledNames.get(shuffledNames.size() - 2));
+        names.add(shuffledNames.get(shuffledNames.size() - 1));
+        Pair pair = new Pair(names);
+        pairResult.add(pair);
     }
 
     private boolean isDuplicated(final List<Pair> storage, List<Pair> now) {
