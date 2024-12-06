@@ -1,4 +1,4 @@
-package subway.domain;
+package subway.domain.route;
 
 import static subway.exception.ErrorMessage.INVALID_STATION_PATH;
 
@@ -7,6 +7,10 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
+import subway.domain.route.Route;
+import subway.domain.route.RoutesRepository;
+import subway.domain.station.Station;
+import subway.domain.station.StationRepository;
 import subway.exception.CustomIllegalArgumentException;
 
 public class PathFinder {

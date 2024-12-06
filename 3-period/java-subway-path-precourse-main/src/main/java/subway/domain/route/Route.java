@@ -1,6 +1,7 @@
-package subway.domain;
+package subway.domain.route;
 
 import java.util.Objects;
+import subway.domain.station.Station;
 
 // 출발 지하철역(정점)에서 도착 지하철역까지의 거리, 시간
 // - 출발 지하철역

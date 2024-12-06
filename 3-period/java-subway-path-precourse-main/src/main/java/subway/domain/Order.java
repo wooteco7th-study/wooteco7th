@@ -1,5 +1,6 @@
 package subway.domain;
 
+import subway.domain.station.Station;
 import subway.exception.CustomIllegalArgumentException;
 import subway.exception.ErrorMessage;
 

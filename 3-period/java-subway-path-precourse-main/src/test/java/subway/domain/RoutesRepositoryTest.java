@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import subway.domain.route.Route;
+import subway.domain.route.RoutesRepository;
+import subway.domain.station.Station;
 
 class RoutesRepositoryTest {
 
