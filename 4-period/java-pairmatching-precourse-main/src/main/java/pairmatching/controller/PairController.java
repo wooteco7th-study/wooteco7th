@@ -40,7 +40,6 @@ public class PairController {
             match(pairSystem);
         }
         if (Objects.equals(pairCommand, PairCommand.LOOK_UP)) {
-            outputView.printPreview();
             lookUp(pairSystem);
         }
         if (Objects.equals(pairCommand, PairCommand.CLEAR)) {
@@ -55,6 +54,7 @@ public class PairController {
     }
 
     private void lookUp(final PairSystem pairSystem) {
+        outputView.printPreview();
         final Mission mission = requestMission();
         final List<Pair> pairs = pairSystem.lookUp(mission);
         responseMatchResult(pairs);
