@@ -27,12 +27,22 @@ public class InputView {
             과정, 레벨, 미션을 선택하세요.
             ex) 백엔드, 레벨1, 자동차경주""";
 
+    private static final String CHOOSE_REMATCHING_MSG = """
+            
+            매칭 정보가 있습니다. 다시 매칭하시겠습니까?
+            네 | 아니오
+            """;
+
     public String readOption() {
         return getValidatedInput(CHOOSE_OPTION_MSG);
     }
 
     public String readInfo() {
         return getValidatedInput(CHOOSE_INFO_MSG);
+    }
+
+    public String readRematching() {
+        return getValidatedInput(CHOOSE_REMATCHING_MSG);
     }
 
     private String getValidatedInput(String message) {
