@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ShuffleGenerator {
 
-    public static List<String> shuffleNames(List<String> crewNames) {
+    public List<String> shuffleNames(List<String> crewNames) {
         return Randoms.shuffle(crewNames);
     }
 }
