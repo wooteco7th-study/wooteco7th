@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import subway.domain.route.PathFinder;
+import subway.domain.path.PathFinder;
 import subway.domain.route.Route;
 import subway.domain.route.RoutesRepository;
 import subway.domain.station.Station;
@@ -27,7 +27,7 @@ class PathFinderTest {
 
         // When & Then
         assertThatThrownBy(
-                () -> pathFinder.validatePathConnected(stations.get(3), stations.get(6)))
+                () -> pathFinder.validatePathConnected(stations.get(3).getName(), stations.get(6).getName()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR]");
     }
@@ -85,7 +85,7 @@ class PathFinderTest {
         PathFinder pathFinder = new PathFinder();
 
         // When
-        List<String> shortestTimePath = pathFinder.getShortestDistancePath(stations.get(2), stations.get(1));
+        List<String> shortestTimePath = pathFinder.getShortestDistancePath(stations.get(2).getName(), stations.get(1).getName());
 
         // Then
         assertThat(shortestTimePath).containsExactly("교대역", "강남역", "양재역");

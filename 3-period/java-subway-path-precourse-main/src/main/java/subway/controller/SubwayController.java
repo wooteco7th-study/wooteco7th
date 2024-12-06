@@ -6,10 +6,10 @@ import java.util.List;
 import subway.command.FunctionCommand;
 import subway.command.ProcessingState;
 import subway.command.RouteCriteriaCommand;
+import subway.domain.Order;
 import subway.domain.line.Line;
 import subway.domain.line.LineRepository;
-import subway.domain.Order;
-import subway.domain.route.PathFinder;
+import subway.domain.path.PathFinder;
 import subway.domain.route.Route;
 import subway.domain.route.RoutesRepository;
 import subway.domain.station.Station;
@@ -68,7 +68,7 @@ public class SubwayController {
     private Order createOrder(final PathFinder pathFinder) {
         Station departureStation = makeDepartureStation();
         Station arrivalStation = makeArrivalStation();
-        pathFinder.validatePathConnected(departureStation, arrivalStation);
+        pathFinder.validatePathConnected(departureStation.getName(), arrivalStation.getName());
         return new Order(departureStation, arrivalStation);
     }
 
@@ -95,7 +95,8 @@ public class SubwayController {
         Station departureStation = order.getDepartureStation();
         Station arrivalStation = order.getArrivalStation();
         int shortestDistance = pathFinder.getShortestDistance(departureStation, arrivalStation);
-        List<String> shortestDistancePath = pathFinder.getShortestDistancePath(departureStation, arrivalStation);
+        List<String> shortestDistancePath = pathFinder.getShortestDistancePath(departureStation.getName(),
+                arrivalStation.getName());
         int totalTime = RoutesRepository.getTotalTime(shortestDistancePath);
         outputView.showTotalResult(shortestDistance, totalTime, shortestDistancePath);
     }
