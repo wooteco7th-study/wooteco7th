@@ -50,8 +50,6 @@ public class PairController {
         outputView.showInformReset();
     }
 
-    //                 // 페어 매칭 후 정상 종료 -> isInMiddle = true;
-    //                // 이미 존재할 경우 -> 아니오 누를 경우  재시도, isInMiddle= false
     private void processWithCommand(final FunctionCommand command) {
         PairOrder pairOrder = makePairOrder();
         if (command.isPairMatching()) {
@@ -79,11 +77,11 @@ public class PairController {
 
     private Optional<PairOrder> requestRetryOrder() {
         outputView.showRequestRetry();
-        if (!wantRetry()) { // 다시 매칭을 원하지 않으면 새로운 order를 받아 수행
+        if (!wantRetry()) {
             outputView.showRetry();
             return Optional.ofNullable(makeRetryOrder());
         }
-        return Optional.empty(); // 다시 매칭을 원함
+        return Optional.empty();
     }
 
     private PairOrder makeRetryOrder() {
