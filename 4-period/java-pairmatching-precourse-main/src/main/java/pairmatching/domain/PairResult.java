@@ -31,7 +31,11 @@ public class PairResult {
         return result;
     }
 
-    private static void validatePairExists(final List<Pair> result) {
+    public void clear() {
+        pairResult.clear();
+    }
+
+    private void validatePairExists(final List<Pair> result) {
         if (result == null) {
             throw new IllegalArgumentException(MATCHING_HISTORY_NOT_FOUND.getMessage());
         }

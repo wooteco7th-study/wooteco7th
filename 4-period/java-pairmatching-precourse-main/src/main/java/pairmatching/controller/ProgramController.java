@@ -55,6 +55,11 @@ public class ProgramController {
                 List<Pair> pairResult = result.findByMission(info.getMission());
                 outputView.printResult(pairResult);
             }
+            if (optionCommand == OptionCommand.페어초기화) {
+                result.clear();
+                outputView.printClearMsg();
+
+            }
         }
     }
 
