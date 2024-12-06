@@ -14,19 +14,17 @@ public class PathFinder {
     private final DijkstraShortestPath shortestTimePath;
     private final DijkstraShortestPath shortestDistancePath;
 
-    public PathFinder(final List<Route> routes) {
-        this.shortestTimePath = initializeTimeGraph(routes);
-        this.shortestDistancePath = initializeDistanceGraph(routes);
+    public PathFinder() {
+        this.shortestTimePath = initializeTimeGraph();
+        this.shortestDistancePath = initializeDistanceGraph();
     }
 
-    public void validatePathConnected(final RoutesRepository routesRepository,
-                                      final Station departureStation, final Station arrivalStation) {
-        List<Route> routes = routesRepository.getRoutes();
+    public void validatePathConnected(final Station departureStation, final Station arrivalStation) {
         List<String> path = getShortestDistancePath(departureStation, arrivalStation);
         for (int i = 0; i < path.size() - 1; i++) {
             String start = path.get(i);
             String end = path.get(i + 1);
-            boolean isConnected = routesRepository.isConnected(routes, start, end);
+            boolean isConnected = RoutesRepository.isConnected(start, end);
             if (!isConnected) {
                 throw new CustomIllegalArgumentException(INVALID_STATION_PATH);
             }
@@ -51,14 +49,14 @@ public class PathFinder {
         return shortestDistancePath.getPath(start.getName(), end.getName()).getVertexList();
     }
 
-    private DijkstraShortestPath initializeDistanceGraph(final List<Route> routes) {
+    private DijkstraShortestPath initializeDistanceGraph() {
         WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph(
                 DefaultWeightedEdge.class);
         for (Station station : StationRepository.stations()) {
             distanceGraph.addVertex(station.getName());
         }
 
-        for (Route route : routes) {
+        for (Route route : RoutesRepository.routes()) {
             distanceGraph.setEdgeWeight(
                     distanceGraph.addEdge(route.getDepartureStation().getName(), route.getArrivalStation().getName()),
                     route.getDistance());
@@ -66,13 +64,13 @@ public class PathFinder {
         return new DijkstraShortestPath(distanceGraph);
     }
 
-    private DijkstraShortestPath initializeTimeGraph(final List<Route> routes) {
+    private DijkstraShortestPath initializeTimeGraph() {
         WeightedMultigraph<String, DefaultWeightedEdge> timesGraph = new WeightedMultigraph(DefaultWeightedEdge.class);
         for (Station station : StationRepository.stations()) {
             timesGraph.addVertex(station.getName());
         }
 
-        for (Route route : routes) {
+        for (Route route : RoutesRepository.routes()) {
             timesGraph.setEdgeWeight(
                     timesGraph.addEdge(route.getDepartureStation().getName(), route.getArrivalStation().getName()),
                     route.getTakenTime());

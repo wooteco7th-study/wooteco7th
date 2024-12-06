@@ -14,17 +14,15 @@ class PathFinderTest {
     void validatePathConnected() {
         // Given
         List<Station> stations = getStations();
-        StationRepository stationRepository = new StationRepository();
         for (Station station : stations) {
-            stationRepository.addStation(station);
+            StationRepository.addStation(station);
         }
-        List<Route> routes = getRoutes(stations);
-        RoutesRepository routesRepository = new RoutesRepository(routes);
-        PathFinder pathFinder = new PathFinder(routes);
+        initializeRouteRepository(stations);
+        PathFinder pathFinder = new PathFinder();
 
         // When & Then
         assertThatThrownBy(
-                () -> pathFinder.validatePathConnected(routesRepository, stations.get(3), stations.get(6)))
+                () -> pathFinder.validatePathConnected(stations.get(3), stations.get(6)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("[ERROR]");
     }
@@ -34,8 +32,7 @@ class PathFinderTest {
     void getShortestTime() {
         // Given
         List<Station> stations = getStations();
-        List<Route> routes = getRoutes(stations);
-        PathFinder pathFinder = new PathFinder(routes);
+        PathFinder pathFinder = new PathFinder();
 
         // When
         Integer shortestTime = pathFinder.getShortestTime(stations.get(2), stations.get(1));
@@ -49,8 +46,8 @@ class PathFinderTest {
     void getShortestDistance() {
         // Given
         List<Station> stations = getStations();
-        List<Route> routes = getRoutes(stations);
-        PathFinder pathFinder = new PathFinder(routes);
+        initializeRouteRepository(stations);
+        PathFinder pathFinder = new PathFinder();
 
         // When
         Integer shortestTime = pathFinder.getShortestDistance(stations.get(2), stations.get(1));
@@ -64,8 +61,8 @@ class PathFinderTest {
     void getShortestTimePath() {
         // Given
         List<Station> stations = getStations();
-        List<Route> routes = getRoutes(stations);
-        PathFinder pathFinder = new PathFinder(routes);
+        initializeRouteRepository(stations);
+        PathFinder pathFinder = new PathFinder();
 
         // When
         List<String> shortestTimePath = pathFinder.getShortestTimePath(stations.get(2), stations.get(1));
@@ -79,8 +76,8 @@ class PathFinderTest {
     void getShortestDistancePath() {
         // Given
         List<Station> stations = getStations();
-        List<Route> routes = getRoutes(stations);
-        PathFinder pathFinder = new PathFinder(routes);
+        initializeRouteRepository(stations);
+        PathFinder pathFinder = new PathFinder();
 
         // When
         List<String> shortestTimePath = pathFinder.getShortestDistancePath(stations.get(2), stations.get(1));
@@ -89,8 +86,8 @@ class PathFinderTest {
         assertThat(shortestTimePath).containsExactly("교대역", "강남역", "양재역");
     }
 
-    private List<Route> getRoutes(final List<Station> stations) {
-        return List.of(
+    private void initializeRouteRepository(final List<Station> stations) {
+        List<Route> routes = List.of(
                 new Route(stations.get(0), stations.get(1), 8, 2),
                 new Route(stations.get(2), stations.get(0), 3, 2),
                 new Route(stations.get(0), stations.get(3), 3, 2),
@@ -100,6 +97,9 @@ class PathFinderTest {
                 new Route(stations.get(0), stations.get(1), 8, 2),
                 new Route(stations.get(1), stations.get(6), 3, 10)
         );
+        for (Route route : routes) {
+            RoutesRepository.addRoute(route);
+        }
     }
 
     private List<Station> getStations() {
