@@ -1,5 +1,8 @@
 package pairmatching.view;
 
+import java.util.List;
+import pairmatching.dto.PairMatchResultDto;
+
 public class OutputView {
 
     private static final String LINE = System.lineSeparator();
@@ -24,6 +27,7 @@ public class OutputView {
     private static final String TITLE_RESULT = "페어 매칭 결과입니다.";
     private static final String REQUEST_RETRY = "매칭 정보가 있습니다. 다시 매칭하시겠습니까?";
     private static final String INFORM_RESET = "초기화 되었습니다.";
+    private static final String FORMAT_PAIR_MATCH_RESULT = "%s : %s";
 
     public void showTitleFunction() {
         showln(TITLE_FUNCTION);
@@ -55,5 +59,12 @@ public class OutputView {
 
     private void showln(String message) {
         System.out.println(message);
+    }
+
+    public void showMatchResult(final PairMatchResultDto pairMatchResultDto) {
+        for (List<String> result : pairMatchResultDto.results()) {
+            String message = String.join(" : ", result);
+            showln(message);
+        }
     }
 }

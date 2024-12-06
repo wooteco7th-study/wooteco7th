@@ -6,6 +6,7 @@ import pairmatching.domain.command.FunctionCommand;
 import pairmatching.domain.command.RetryCommand;
 import pairmatching.domain.pair.PairHistory;
 import pairmatching.domain.pair.PairOrder;
+import pairmatching.dto.PairMatchResultDto;
 import pairmatching.exception.ExceptionHandler;
 import pairmatching.service.PairService;
 import pairmatching.view.InputView;
@@ -47,7 +48,8 @@ public class PairController {
         while (!isInMiddle) {
             PairOrder pairOrder = makePairOrder();
             if (command.isPairMatching()) {
-                pairService.matchPair(pairOrder, pairHistory);
+                PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder, pairHistory);
+                outputView.showMatchResult(pairMatchResultDto);
             }
             if (command.IsPairInquiry()) {
                 isInMiddle = processPairInquiry(pairHistory, pairOrder);
