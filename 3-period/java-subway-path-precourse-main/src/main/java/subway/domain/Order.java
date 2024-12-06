@@ -8,18 +8,16 @@ public class Order {
     private final Station departureStation;
     private final Station arrivalStation;
 
-    public Order(final Station departureStation, final Station arrivalStation, final RoutesRepository routesRepository) {
-        validate(departureStation, arrivalStation, routesRepository);
+    public Order(final Station departureStation, final Station arrivalStation) {
+        validate(departureStation, arrivalStation);
         this.departureStation = departureStation;
         this.arrivalStation = arrivalStation;
     }
 
-    private void validate(final Station departureStation, final Station arrivalStation,
-                          final RoutesRepository routeRepository) {
+    private void validate(final Station departureStation, final Station arrivalStation) {
         if (departureStation.equals(arrivalStation)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_STATION_DUPLICATED);
         }
-        routeRepository.validatePathConnected(departureStation, arrivalStation);
     }
 
     public Station getDepartureStation() {

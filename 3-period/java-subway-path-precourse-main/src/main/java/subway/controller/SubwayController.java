@@ -10,6 +10,7 @@ import subway.command.RouteCriteriaCommand;
 import subway.domain.Line;
 import subway.domain.LineRepository;
 import subway.domain.Order;
+import subway.domain.PathFinder;
 import subway.domain.Route;
 import subway.domain.RoutesRepository;
 import subway.domain.Station;
@@ -56,8 +57,9 @@ public class SubwayController {
             return ProcessingState.START_FROM_BEGINNING;
         }
         try {
-            Order order = createOrder(routesRepository);
-            processRoute(routesRepository, command, order);
+            PathFinder pathFinder = new PathFinder(routesRepository.getRoutes());
+            Order order = createOrder(routesRepository, pathFinder);
+            processRoute(routesRepository, command, order, pathFinder);
             return ProcessingState.START_FROM_BEGINNING;
         } catch (IllegalArgumentException exception) {
             outputView.showException(exception);
@@ -65,35 +67,38 @@ public class SubwayController {
         }
     }
 
-    private Order createOrder(final RoutesRepository routesRepository) {
+    private Order createOrder(final RoutesRepository routesRepository, final PathFinder pathFinder) {
         Station departureStation = makeDepartureStation();
         Station arrivalStation = makeArrivalStation();
-        return new Order(departureStation, arrivalStation, routesRepository);
+        pathFinder.validatePathConnected(routesRepository, departureStation, arrivalStation);
+        return new Order(departureStation, arrivalStation);
     }
 
     private void processRoute(final RoutesRepository routesRepository, final RouteCriteriaCommand command,
-                              final Order order) {
+                              final Order order, final PathFinder pathFinder) {
         if (command.isShortestDistance()) {
-            processShortestDistance(routesRepository, order);
+            processShortestDistance(routesRepository, order, pathFinder);
             return;
         }
-        processMinimumTime(routesRepository, order);
+        processMinimumTime(routesRepository, order, pathFinder);
     }
 
-    private void processMinimumTime(final RoutesRepository routesRepository, final Order order) {
+    private void processMinimumTime(final RoutesRepository routesRepository, final Order order,
+                                    final PathFinder pathFinder) {
         Station departureStation = order.getDepartureStation();
         Station arrivalStation = order.getArrivalStation();
-        Integer shortestTime = routesRepository.getShortestTime(departureStation, arrivalStation);
-        List<String> shortestTimePath = routesRepository.getShortestTimePath(departureStation, arrivalStation);
+        Integer shortestTime = pathFinder.getShortestTime(departureStation, arrivalStation);
+        List<String> shortestTimePath = pathFinder.getShortestTimePath(departureStation, arrivalStation);
         int totalDistance = routesRepository.getTotalDistance(shortestTimePath);
         outputView.showTotalResult(totalDistance, shortestTime, shortestTimePath);
     }
 
-    private void processShortestDistance(final RoutesRepository routesRepository, final Order order) {
+    private void processShortestDistance(final RoutesRepository routesRepository, final Order order,
+                                         final PathFinder pathFinder) {
         Station departureStation = order.getDepartureStation();
         Station arrivalStation = order.getArrivalStation();
-        Integer shortestDistance = routesRepository.getShortestDistance(departureStation, arrivalStation);
-        List<String> shortestDistancePath = routesRepository.getShortestDistancePath(departureStation, arrivalStation);
+        Integer shortestDistance = pathFinder.getShortestDistance(departureStation, arrivalStation);
+        List<String> shortestDistancePath = pathFinder.getShortestDistancePath(departureStation, arrivalStation);
         int totalTime = routesRepository.getTotalTime(shortestDistancePath);
         outputView.showTotalResult(shortestDistance, totalTime, shortestDistancePath);
     }
@@ -126,7 +131,7 @@ public class SubwayController {
             List<String> station = stations.get(i);
             makeRoute(routes, path, station);
         }
-        return new RoutesRepository(routes, StationRepository.stations());
+        return new RoutesRepository(routes);
     }
 
     private List<Line> makeLines() {
