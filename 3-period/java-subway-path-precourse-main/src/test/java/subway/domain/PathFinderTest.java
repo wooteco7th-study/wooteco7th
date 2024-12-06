@@ -70,7 +70,8 @@ class PathFinderTest {
         PathFinder pathFinder = new PathFinder();
 
         // When
-        List<String> shortestTimePath = pathFinder.getShortestTimePath(stations.get(2), stations.get(1));
+        List<String> shortestTimePath = pathFinder.getShortestTimePath(stations.get(2).getName(),
+                stations.get(1).getName());
 
         // Then
         assertThat(shortestTimePath).containsExactly("교대역", "남부터미널역", "양재역");
@@ -85,7 +86,8 @@ class PathFinderTest {
         PathFinder pathFinder = new PathFinder();
 
         // When
-        List<String> shortestTimePath = pathFinder.getShortestDistancePath(stations.get(2).getName(), stations.get(1).getName());
+        List<String> shortestTimePath = pathFinder.getShortestDistancePath(stations.get(2).getName(),
+                stations.get(1).getName());
 
         // Then
         assertThat(shortestTimePath).containsExactly("교대역", "강남역", "양재역");

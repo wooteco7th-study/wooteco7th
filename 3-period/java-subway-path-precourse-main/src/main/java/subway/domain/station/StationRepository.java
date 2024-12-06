@@ -12,10 +12,6 @@ public class StationRepository {
 
     private static final List<Station> stations = new ArrayList<>();
 
-    public static List<Station> stations() {
-        return Collections.unmodifiableList(stations);
-    }
-
     public static void addStation(Station station) {
         stations.add(station);
     }
@@ -33,5 +29,9 @@ public class StationRepository {
 
     public static void deleteAll() {
         stations.clear();
+    }
+
+    public static List<Station> stations() {
+        return Collections.unmodifiableList(stations);
     }
 }

@@ -12,20 +12,6 @@ import subway.domain.station.Station;
 class RoutesRepositoryTest {
 
     @Test
-    @DisplayName("두 인접 정점간의 시간을 구한다.")
-    void getTime() {
-        // Given
-        List<Station> stations = getStations();
-        initializeRouteRepository(stations);
-
-        // When
-        int time = RoutesRepository.getTime(stations.get(0).getName(), stations.get(1).getName());
-
-        // Then
-        assertThat(time).isEqualTo(8);
-    }
-
-    @Test
     @DisplayName("두 인접 정점간의 거리를 구한다.")
     void getDistance() {
         // Given

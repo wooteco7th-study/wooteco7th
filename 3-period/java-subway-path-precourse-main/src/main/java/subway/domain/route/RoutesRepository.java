@@ -13,10 +13,6 @@ public class RoutesRepository {
         routes.add(route);
     }
 
-    public static List<Route> routes() {
-        return Collections.unmodifiableList(routes);
-    }
-
     public static boolean isConnected(final String start, final String end) {
         return routes.stream()
                 .anyMatch(route -> route.findRoute(StationRepository.findByName(start),
@@ -52,16 +48,16 @@ public class RoutesRepository {
         return total;
     }
 
-    public static int getTime(final String start, final String end) {
-        return getAdjacentDistance(start, end);
-    }
-
-    private static int getAdjacentDistance(final String start, final String end) {
+    private static int getTime(final String start, final String end) {
         return routes.stream()
                 .filter(route -> route.getDepartureStation().getName().equals(start))
                 .filter(route -> route.getArrivalStation().getName().equals(end))
                 .map(Route::getTakenTime)
                 .findFirst()
                 .orElse(0);
+    }
+
+    public static List<Route> routes() {
+        return Collections.unmodifiableList(routes);
     }
 }

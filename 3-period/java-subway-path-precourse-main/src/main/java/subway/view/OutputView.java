@@ -1,6 +1,6 @@
 package subway.view;
 
-import java.util.List;
+import subway.dto.ResultDto;
 
 public class OutputView {
 
@@ -32,9 +32,9 @@ public class OutputView {
     private static final String ASK_DEPARTURE_STATION = "## 출발역을 입력하세요.";
     private static final String ASK_ARRIVAL_STATION = "## 도착역을 입력하세요.";
 
-    public void showTotalResult(int totalDistance, int totalTime, List<String> results) {
-        showln(LINE + format(TOTAL_RESULT, totalDistance, totalTime));
-        results.stream()
+    public void showTotalResult(final ResultDto resultDto) {
+        showln(LINE + format(TOTAL_RESULT, resultDto.totalDistance(), resultDto.totalTime()));
+        resultDto.path().stream()
                 .map(result -> format(STATION_RESULT, result))
                 .forEach(this::showln);
         showln("");

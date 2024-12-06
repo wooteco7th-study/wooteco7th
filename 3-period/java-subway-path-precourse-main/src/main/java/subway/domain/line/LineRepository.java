@@ -11,10 +11,6 @@ public class LineRepository {
 
     private static final List<Line> lines = new ArrayList<>();
 
-    public static List<Line> lines() {
-        return Collections.unmodifiableList(lines);
-    }
-
     public static void addLine(Line line) {
         lines.add(line);
     }
@@ -32,5 +28,9 @@ public class LineRepository {
 
     public static void deleteAll() {
         lines.clear();
+    }
+
+    public static List<Line> lines() {
+        return Collections.unmodifiableList(lines);
     }
 }

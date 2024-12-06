@@ -40,8 +40,8 @@ public class PathFinder {
         return (int) shortestDistanceGraph.getPathWeight(start.getName(), end.getName());
     }
 
-    public List<String> getShortestTimePath(final Station start, final Station end) {
-        return shortestTimeGraph.getPath(start.getName(), end.getName());
+    public List<String> getShortestTimePath(final String start, final String end) {
+        return shortestTimeGraph.getPath(start, end);
     }
 
     public List<String> getShortestDistancePath(final String start, final String end) {
