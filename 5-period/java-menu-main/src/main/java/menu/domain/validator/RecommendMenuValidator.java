@@ -7,6 +7,7 @@ package menu.domain.validator;
     - 한 주에 중복되지 않은 메뉴 추천임을 검증
  */
 
+import static menu.constant.ApplicationRule.ONE_WEEK_SAME_CATEGORY_MAX;
 import static menu.util.ListUtils.hasDuplicates;
 
 import java.util.HashMap;
@@ -34,24 +35,14 @@ public class RecommendMenuValidator {
     }
 
     public static boolean isTwoOrLessOfSameCategory(Map<DayOfWeek, Menu> recommendMenus) {
-        List<Category> categories = recommendMenus.values().stream().map(menu -> menu.getCategory())
-                .collect(Collectors.toList());
-        for (int i = 0; i < categories.size(); i++) {
-            int sameCount = 0;
-            Category category = categories.get(i);
-            for (int j = i + 1; j < categories.size(); j++) {
-                if (categories.get(j).equals(category)) {
-                    ++sameCount;
-                }
-            }
-            if (sameCount >= 2) {
-                return false;
-            }
-        }
-        return true;
+        Map<Category, Long> categoryCount = recommendMenus.values().stream()
+                .map(Menu::getCategory)
+                .collect(Collectors.groupingBy(category -> category, Collectors.counting()));
+
+        return categoryCount.values().stream().noneMatch(count -> count > ONE_WEEK_SAME_CATEGORY_MAX);
     }
 
-    public static boolean validateNoDuplicateRecommendMenus(Map<DayOfWeek, Menu> recommendMenus) {
+    public static boolean isNoDuplicateRecommendMenus(Map<DayOfWeek, Menu> recommendMenus) {
         List<Menu> menus = recommendMenus.values().stream().collect(Collectors.toList());
         return !hasDuplicates(menus);
     }
