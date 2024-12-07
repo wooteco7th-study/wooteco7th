@@ -49,7 +49,9 @@ public enum Menu {
                 .filter(menu -> !noMenus.contains(menu))
                 .filter(menu -> menu.getCategory().equals(category))
                 .collect(Collectors.toList());
-        return Randoms.shuffle(menus).get(0);
+        List<String> menuValues = menus.stream().map(i -> i.getValue()).collect(Collectors.toList());
+        String pickedMenu = Randoms.shuffle(menuValues).get(0);
+        return toMenu(pickedMenu);
     }
 
     public static Menu toMenu(String name) {
