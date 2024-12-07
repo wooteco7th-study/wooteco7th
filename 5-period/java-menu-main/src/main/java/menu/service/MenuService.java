@@ -14,7 +14,7 @@ public class MenuService {
     }
 
     public List<Coach> createCoach(final List<Coach> coaches) {
-        return null;
+        return coachRepository.saveAll(coaches);
     }
 
     public List<Coach> createCoachNoMenu(final Coach coach, final List<Menu> menus) {
