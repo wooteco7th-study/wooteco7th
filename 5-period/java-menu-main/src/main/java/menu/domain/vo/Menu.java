@@ -7,7 +7,10 @@ import static menu.domain.vo.Category.JP;
 import static menu.domain.vo.Category.KR;
 import static menu.domain.vo.Category.WEST;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /*
 일식: 규동, 우동, 미소시루, 스시, 가츠동, 오니기리, 하이라이스, 라멘, 오코노미야끼
@@ -46,6 +49,14 @@ public enum Menu {
     Menu(final String value, final Category category) {
         this.value = value;
         this.category = category;
+    }
+
+    public static Menu pickRandomByCategory(Category category, List<Menu> noMenus) {
+        List<Menu> menus = Arrays.stream(values())
+                .filter(menu -> !noMenus.contains(menu))
+                .filter(menu -> menu.getCategory().equals(category))
+                .collect(Collectors.toList());
+        return Randoms.shuffle(menus).get(0);
     }
 
     public static Menu toMenu(String name) {

@@ -1,8 +1,11 @@
 package menu.service;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import menu.domain.Coach;
+import menu.domain.vo.DayOfWeek;
 import menu.domain.vo.Menu;
 import menu.dto.RecommendDto;
 import menu.repository.CoachRepository;
@@ -26,8 +29,13 @@ public class MenuService {
     }
 
     public RecommendDto getRecommendMenus(final List<Coach> coaches) {
-        Map<String, List<String>> recommendResult = menuRecommendGenerator.generate(coaches);
-        return new RecommendDto(recommendResult);
+        Map<String, List<String>> recommendMenusOfCoaches = new LinkedHashMap<>();
+        for (Coach coach : coaches) {
+            Map<DayOfWeek, Menu> generate = menuRecommendGenerator.generate(coach.getNoMenus());
+            recommendMenusOfCoaches.put(coach.getName(),
+                    generate.values().stream().map(i -> i.getValue()).collect(Collectors.toList()));
+        }
+        return new RecommendDto(recommendMenusOfCoaches);
     }
 
 }

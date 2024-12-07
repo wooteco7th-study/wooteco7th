@@ -24,6 +24,10 @@ public class Coach {
         return name;
     }
 
+    public List<Menu> getNoMenus() {
+        return noMenus;
+    }
+
     @Override
     public String toString() {
         return "Coach{" +

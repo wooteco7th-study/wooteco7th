@@ -33,7 +33,7 @@ public class RecommendMenuValidator {
         System.out.println(isTwoOrLessOfSameCategory(map));
     }
 
-    private static boolean isTwoOrLessOfSameCategory(Map<DayOfWeek, Menu> recommendMenus) {
+    public static boolean isTwoOrLessOfSameCategory(Map<DayOfWeek, Menu> recommendMenus) {
         List<Category> categories = recommendMenus.values().stream().map(menu -> menu.getCategory())
                 .collect(Collectors.toList());
         for (int i = 0; i < categories.size(); i++) {
