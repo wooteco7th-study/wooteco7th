@@ -1,6 +1,8 @@
 package pairmatching.domain;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import pairmatching.domain.vo.Level;
 
 public class Team {
@@ -21,9 +23,9 @@ public class Team {
     }
 
     public boolean hasDuplicatePair(List<String> pair) {
-        return crewNames.stream()
-                .filter(i -> pair.contains(i))
-                .count() >= 2;
+        Set<String> existingSet = new HashSet<>(this.crewNames);
+        Set<String> newPairSet = new HashSet<>(pair);
+        return existingSet.equals(newPairSet);
     }
 
 }

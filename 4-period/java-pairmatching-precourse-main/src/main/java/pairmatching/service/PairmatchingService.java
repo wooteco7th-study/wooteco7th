@@ -81,7 +81,6 @@ public class PairmatchingService {
         return false;
     }
 
-
     private FairMatchingResponseDto createResponse(List<Team> teams) {
         List<MatchDto> matchDtos = teams.stream()
                 .map(team -> new MatchDto(team.getCrewNames()))

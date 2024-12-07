@@ -12,11 +12,14 @@ public class ModelMapper {
     private ModelMapper() {
     }
 
+    /*
+    Enum
+     */
     public static FunctionOption toFunctionOption(final String input) {
         String pattern = RequestPattern.createOptionPattern();
         RequestValidator.validateInput(input, pattern, INVALID_INPUT_FORM.getMessage());
 
-        return FunctionOption.toFunctionOption(input);
+        return FunctionOption.toFunctionOption(input.trim());
     }
 
     public static FairMatchingRequestDto toFaitMatchingDto(String input) {
@@ -32,6 +35,6 @@ public class ModelMapper {
     public static RematchOption toRematchOption(final String input) {
         String pattern = RequestPattern.createOptionPattern();
         RequestValidator.validateInput(input, pattern, INVALID_INPUT_FORM.getMessage());
-        return RematchOption.toRematchOption(input);
+        return RematchOption.toRematchOption(input.trim());
     }
 }
