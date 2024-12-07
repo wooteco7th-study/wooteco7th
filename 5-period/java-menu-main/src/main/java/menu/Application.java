@@ -1,5 +1,6 @@
 package menu;
 
+import camp.nextstep.edu.missionutils.Console;
 import menu.controller.MenuController;
 import menu.domain.random.CategoryGenerator;
 import menu.domain.random.MenuGenerator;
@@ -14,7 +15,11 @@ public class Application {
 
     public static void main(String[] args) {
         MenuController menuController = makeMenuController();
-        menuController.process();
+        try {
+            menuController.process();
+        } finally {
+            Console.close();
+        }
     }
 
     private static MenuController makeMenuController() {

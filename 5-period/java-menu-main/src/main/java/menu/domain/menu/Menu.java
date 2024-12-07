@@ -55,8 +55,9 @@ public enum Menu {
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_NAME));
     }
 
-    public static List<String> findAllMenuNames() {
+    public static List<String> findMenuNames(final Category category) {
         return VALUED_MENUS.stream()
+                .filter(menu -> menu.category.equals(category))
                 .map(Menu::getMenuName)
                 .toList();
     }
