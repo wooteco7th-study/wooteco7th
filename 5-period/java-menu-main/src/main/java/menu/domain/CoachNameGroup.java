@@ -2,7 +2,6 @@ package menu.domain;
 
 import java.util.Collections;
 import java.util.List;
-import menu.error.ErrorMessage;
 import menu.util.ListValidator;
 
 public class CoachNameGroup {
@@ -18,7 +17,7 @@ public class CoachNameGroup {
     }
 
     private void validate(final List<CoachName> coachNames) {
-        ListValidator.validateSize(coachNames, MIN, MAX, ErrorMessage.INVALID_COACHES_SIZE);
+        ListValidator.validateSize(coachNames, MIN, MAX);
     }
 
     public List<CoachName> getCoachNames() {
