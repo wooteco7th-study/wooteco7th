@@ -1,12 +1,13 @@
 package menu.view.mapper;
 
 import static menu.constant.ExceptionMessage.INVALID_INPUT_FORM;
+import static menu.domain.validator.CoachValidator.validateCoachSize;
+import static menu.domain.validator.NoMenuValidator.validateDuplicateNoMenus;
+import static menu.domain.validator.NoMenuValidator.validateNoMenuSize;
 
 import java.util.List;
 import java.util.stream.Collectors;
 import menu.domain.Coach;
-import menu.domain.validator.CoachValidator;
-import menu.domain.validator.NoMenuValidator;
 import menu.domain.vo.Menu;
 
 public class ModelMapper {
@@ -20,7 +21,8 @@ public class ModelMapper {
     public static List<Menu> toNoMenus(String input) {
 
         List<String> menuNames = RequestParser.parseNames(input.trim());
-        NoMenuValidator.validateDuplicateNoMenus(menuNames);
+        validateNoMenuSize(menuNames);
+        validateDuplicateNoMenus(menuNames);
         List<Menu> noMenus = menuNames.stream().map(cantName -> Menu.toMenu(cantName))
                 .collect(Collectors.toList());
 
@@ -33,7 +35,7 @@ public class ModelMapper {
         RequestValidator.validateInput(input, pattern, INVALID_INPUT_FORM.getMessage());
 
         List<String> names = RequestParser.parseNames(input.trim());
-        CoachValidator.validateCoachSize(names);
+        validateCoachSize(names);
         List<Coach> coaches = names.stream().map(name -> new Coach(name)).collect(Collectors.toList());
 
         return coaches;
