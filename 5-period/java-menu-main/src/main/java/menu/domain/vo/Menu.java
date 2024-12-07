@@ -35,7 +35,9 @@ public enum Menu {
 
     // 서양
     라자냐("라자냐", WEST), 그라탱("그라탱", WEST), 뇨끼("뇨끼", WEST), 끼슈("끼슈", WEST), 프렌치_토스트("프렌치 토스트", WEST),
-    바게트("바게트", WEST), 스파게티("스파게티", WEST), 피자("피자", WEST), 파니니("파니니", WEST);
+    바게트("바게트", WEST), 스파게티("스파게티", WEST), 피자("피자", WEST), 파니니("파니니", WEST),
+
+    NONE("", Category.NONE);
 
 
     private final String value;
