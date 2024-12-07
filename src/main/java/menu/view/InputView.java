@@ -23,7 +23,7 @@ public class InputView {
     }
 
     public List<String> readCoachCantEatMenu() {
-        String input = getValidatedInput(INPUT_COACH_CANT_EAT_MENU_MSG);
+        String input = getInput(INPUT_COACH_CANT_EAT_MENU_MSG);
         return StringParser.parseWithDelimiter(input, DELIMITER);
     }
 
@@ -38,5 +38,10 @@ public class InputView {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException(INPUT_BLANK.getMessage());
         }
+    }
+
+    private String getInput(String message) {
+        System.out.println(message);
+        return Console.readLine().strip();
     }
 }
