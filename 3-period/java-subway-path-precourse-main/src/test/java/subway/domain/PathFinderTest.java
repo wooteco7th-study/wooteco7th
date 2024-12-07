@@ -33,35 +33,6 @@ class PathFinderTest {
     }
 
     @Test
-    @DisplayName("두 정점간의 최단 시간을 구한다.")
-    void getShortestTime() {
-        // Given
-        List<Station> stations = getStations();
-        PathFinder pathFinder = new PathFinder();
-
-        // When
-        Integer shortestTime = pathFinder.getShortestTime(stations.get(2), stations.get(1));
-
-        // Then
-        assertThat(shortestTime).isEqualTo(7);
-    }
-
-    @Test
-    @DisplayName("두 정점간의 최단 거리를 구한다.")
-    void getShortestDistance() {
-        // Given
-        List<Station> stations = getStations();
-        initializeRouteRepository(stations);
-        PathFinder pathFinder = new PathFinder();
-
-        // When
-        Integer shortestTime = pathFinder.getShortestDistance(stations.get(2), stations.get(1));
-
-        // Then
-        assertThat(shortestTime).isEqualTo(4);
-    }
-
-    @Test
     @DisplayName("최소시간 경로를 구한다.")
     void getShortestTimePath() {
         // Given
@@ -70,7 +41,7 @@ class PathFinderTest {
         PathFinder pathFinder = new PathFinder();
 
         // When
-        List<String> shortestTimePath = pathFinder.getShortestTimePath(stations.get(2).getName(),
+        List<String> shortestTimePath = pathFinder.calculateShortestTimePath(stations.get(2).getName(),
                 stations.get(1).getName());
 
         // Then
@@ -86,7 +57,7 @@ class PathFinderTest {
         PathFinder pathFinder = new PathFinder();
 
         // When
-        List<String> shortestTimePath = pathFinder.getShortestDistancePath(stations.get(2).getName(),
+        List<String> shortestTimePath = pathFinder.calculateShortestDistancePath(stations.get(2).getName(),
                 stations.get(1).getName());
 
         // Then

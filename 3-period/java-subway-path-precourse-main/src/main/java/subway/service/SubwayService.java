@@ -13,7 +13,7 @@ public class SubwayService {
                                         final PathFinder pathFinder) {
         Station departureStation = order.getDepartureStation();
         Station arrivalStation = order.getArrivalStation();
-        List<String> shortestTimePath = pathFinder.getShortestTimePath(departureStation.getName(),
+        List<String> shortestTimePath = pathFinder.calculateShortestTimePath(departureStation.getName(),
                 arrivalStation.getName());
         int totalTime = SectionRepository.getTotalTime(shortestTimePath);
         int totalDistance = SectionRepository.getTotalDistance(shortestTimePath);
@@ -23,11 +23,10 @@ public class SubwayService {
     public ResultDto processShortestDistance(final Order order, final PathFinder pathFinder) {
         Station departureStation = order.getDepartureStation();
         Station arrivalStation = order.getArrivalStation();
-        List<String> shortestDistancePath = pathFinder.getShortestDistancePath(departureStation.getName(),
+        List<String> shortestDistancePath = pathFinder.calculateShortestDistancePath(departureStation.getName(),
                 arrivalStation.getName());
         int totalDistance = SectionRepository.getTotalDistance(shortestDistancePath);
         int totalTime = SectionRepository.getTotalTime(shortestDistancePath);
         return new ResultDto(totalDistance, totalTime, shortestDistancePath);
     }
-
 }

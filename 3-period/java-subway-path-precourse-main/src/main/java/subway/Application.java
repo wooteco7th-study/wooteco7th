@@ -2,7 +2,6 @@ package subway;
 
 import java.util.Scanner;
 import subway.controller.SubwayController;
-import subway.domain.Initializer;
 import subway.exception.ExceptionHandler;
 import subway.service.SubwayService;
 import subway.view.InputView;
@@ -11,15 +10,17 @@ import subway.view.OutputView;
 public class Application {
     public static void main(String[] args) {
         final Scanner scanner = new Scanner(System.in);
+        try (scanner) {
+            SubwayController controller = makeController(scanner);
+            controller.process();
+        }
+    }
+
+    private static SubwayController makeController(final Scanner scanner) {
         InputView inputView = new InputView(scanner);
         OutputView outputView = new OutputView();
         ExceptionHandler exceptionHandler = new ExceptionHandler(outputView);
         SubwayService subwayService = new SubwayService();
-        SubwayController controller = new SubwayController(inputView, outputView, exceptionHandler, subwayService);
-        try {
-            controller.process();
-        } finally {
-            scanner.close();
-        }
+        return new SubwayController(inputView, outputView, exceptionHandler, subwayService);
     }
 }

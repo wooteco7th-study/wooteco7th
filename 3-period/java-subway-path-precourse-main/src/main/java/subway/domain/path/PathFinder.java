@@ -22,7 +22,7 @@ public class PathFinder {
     }
 
     public void validatePathConnected(final String startVertex, final String endVertex) {
-        List<String> path = getShortestDistancePath(startVertex, endVertex);
+        List<String> path = calculateShortestDistancePath(startVertex, endVertex);
         for (int i = 0; i < path.size() - 1; i++) {
             String start = path.get(i);
             String end = path.get(i + 1);
@@ -32,19 +32,11 @@ public class PathFinder {
         }
     }
 
-    public int getShortestTime(final Station start, final Station end) {
-        return (int) shortestTimeGraph.getPathWeight(start.getName(), end.getName());
-    }
-
-    public int getShortestDistance(final Station start, final Station end) {
-        return (int) shortestDistanceGraph.getPathWeight(start.getName(), end.getName());
-    }
-
-    public List<String> getShortestTimePath(final String start, final String end) {
+    public List<String> calculateShortestTimePath(final String start, final String end) {
         return shortestTimeGraph.getPath(start, end);
     }
 
-    public List<String> getShortestDistancePath(final String start, final String end) {
+    public List<String> calculateShortestDistancePath(final String start, final String end) {
         return shortestDistanceGraph.getPath(start, end);
     }
 
