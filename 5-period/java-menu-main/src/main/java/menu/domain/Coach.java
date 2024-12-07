@@ -26,8 +26,8 @@ public class Coach {
         return hateMenu.hasMenu(menu);
     }
 
-    public CoachName getCoachName() {
-        return coachName;
+    public String getCoachName() {
+        return coachName.getValue();
     }
 
     public HateMenu getHateMenu() {
