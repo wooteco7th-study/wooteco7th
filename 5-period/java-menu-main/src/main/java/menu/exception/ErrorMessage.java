@@ -23,10 +23,16 @@ public enum ErrorMessage {
 
     // - [ ]  한 주에 같은 **카테고리는 최대 2회**까지만 고를 수 있다.
     //- [ ]  한 주에 **중복되지 않는 메뉴를 추천**한다.
+    INVALID_CATEGORY_MENU_SIZE("카테고리 크기와 메뉴 크기가 다릅니다."),
     INVALID_CATEGORY_DUPLICATED("한 주에 같은 카테고리는 최대 2회까지만 고를 수 있습니다."),
+    INVALID_CATEGORY_NUMBER("유효하지 않은 카테고리 번호입니다."),
+    NOT_SAME_CATEGORY("같은 카테고리가 아닙니다."),
+
     INVALID_MENU_DUPLICATED("한 주에 같은 메뉴를 고를 수 없습니다."),
     INVALID_MENU_COACH_CANNOT_EAT("해당 코치가 먹지 못하는 메뉴입니다."),
     INVALID_MENU_NOT_RECOMMEND("추천할 수 없는 메뉴입니다."),
+    INVALID_RECOMMENDED_SIZE("추천 메뉴가 5개가 아닙니다."),
+
     ;
 
     private final String message;

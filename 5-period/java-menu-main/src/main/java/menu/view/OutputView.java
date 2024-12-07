@@ -46,7 +46,7 @@ public class OutputView {
     }
 
     public void showTitleEndResult() {
-        showln(TITLE_END_RESULT);
+        showln(LINE + TITLE_END_RESULT);
     }
 
     public void showException(Exception exception) {

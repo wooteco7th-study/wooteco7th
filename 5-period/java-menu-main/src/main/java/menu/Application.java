@@ -1,6 +1,10 @@
 package menu;
 
 import menu.controller.MenuController;
+import menu.domain.random.CategoryGenerator;
+import menu.domain.random.MenuGenerator;
+import menu.domain.random.RandomCategoryGenerator;
+import menu.domain.random.RandomMenuGenerator;
 import menu.exception.ExceptionHandler;
 import menu.service.MenuService;
 import menu.view.InputView;
@@ -18,6 +22,9 @@ public class Application {
         OutputView outputView = new OutputView();
         ExceptionHandler exceptionHandler = new ExceptionHandler(outputView);
         MenuService menuService = new MenuService();
-        return new MenuController(inputView, outputView, exceptionHandler, menuService);
+        CategoryGenerator categoryGenerator = new RandomCategoryGenerator();
+        MenuGenerator menuGenerator = new RandomMenuGenerator();
+        return new MenuController(inputView, outputView, exceptionHandler, menuService, categoryGenerator,
+                menuGenerator);
     }
 }
