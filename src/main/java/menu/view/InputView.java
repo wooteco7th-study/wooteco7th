@@ -15,15 +15,17 @@ public class InputView {
             
             코치의 이름을 입력해 주세요. (, 로 구분)""";
 
-    private static final String INPUT_COACH_CANT_EAT_MENU_MSG = "%s(이)가 못 먹는 메뉴를 입력해 주세요.";
+    private static final String NEW_LINE = System.lineSeparator();
+    private static final String INPUT_COACH_CANT_EAT_MENU_MSG = "%s(이)가 못 먹는 메뉴를 입력해 주세요." + NEW_LINE;
 
     public List<String> readCoachNames() {
         String input = getValidatedInput(INPUT_COACH_NAME_MSG);
         return StringParser.parseWithDelimiter(input, DELIMITER);
     }
 
-    public List<String> readCoachCantEatMenu() {
-        String input = getInput(INPUT_COACH_CANT_EAT_MENU_MSG);
+    public List<String> readCoachCantEatMenu(final String name) {
+        System.out.printf(INPUT_COACH_CANT_EAT_MENU_MSG, name);
+        String input = getInput();
         return StringParser.parseWithDelimiter(input, DELIMITER);
     }
 
@@ -40,8 +42,7 @@ public class InputView {
         }
     }
 
-    private String getInput(String message) {
-        System.out.println(message);
+    private String getInput() {
         return Console.readLine().strip();
     }
 }

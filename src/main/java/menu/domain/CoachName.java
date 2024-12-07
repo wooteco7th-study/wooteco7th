@@ -15,6 +15,10 @@ public class CoachName {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
     private void validateRange(String name) {
         if (isOutOfRange(name)) {
             throw new IllegalArgumentException(INVALID_NAME_FORMAT.getMessage());

@@ -17,6 +17,10 @@ public class Coaches {
         this.coaches = coaches;
     }
 
+    public List<CoachName> getCoaches() {
+        return coaches;
+    }
+
     private void validateSize(final List<CoachName> coaches) {
         if (isOutOfRange(coaches)) {
             throw new IllegalArgumentException(INVALID_COACHES_SIZE.getMessage());
