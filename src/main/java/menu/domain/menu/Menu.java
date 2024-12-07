@@ -1,6 +1,7 @@
 package menu.domain.menu;
 
 import java.util.Arrays;
+import java.util.List;
 
 import static menu.domain.menu.Category.아시안;
 import static menu.domain.menu.Category.양식;
@@ -88,5 +89,12 @@ public enum Menu {
                 .filter(element -> element.name.equals(input))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(MENU_NOT_FOUND.getMessage()));
+    }
+
+    public static List<String> findAllMenuInSameCategory(Category category) {
+        return Arrays.stream(Menu.values())
+                .filter(element -> element.category == category)
+                .map(menu -> menu.name)
+                .toList();
     }
 }

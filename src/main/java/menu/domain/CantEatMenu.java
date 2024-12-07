@@ -18,6 +18,10 @@ public class CantEatMenu {
         this.cantEatMenu = cantEatMenu;
     }
 
+    public boolean contains(final Menu menu) {
+        return cantEatMenu.contains(menu);
+    }
+
     private void validateRange(final List<Menu> cantEatMenu) {
         if (isOutOfRange(cantEatMenu)) {
             throw new IllegalArgumentException(MENU_OUT_OF_RANGE.getMessage());
