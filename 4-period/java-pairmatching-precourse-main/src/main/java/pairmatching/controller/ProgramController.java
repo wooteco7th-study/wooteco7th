@@ -7,7 +7,6 @@ import pairmatching.domain.PairGenerator;
 import pairmatching.domain.PairHistory;
 import pairmatching.domain.RematchingCommand;
 import pairmatching.util.CrewFileReader;
-import pairmatching.util.ShuffleGenerator;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -44,14 +43,12 @@ public class ProgramController {
                             continue;
                         }
                     }
-                    List<String> names = ShuffleGenerator.shuffleNames(backendCrews);
-                    List<Pair> pairResult = pairGenerator.generate(info.getLevel(), names);
+                    List<Pair> pairResult = pairGenerator.generate(info.getLevel(), backendCrews);
                     history.add(info.getMission(), pairResult);
                     outputView.printResult(pairResult);
                     continue;
                 }
-                List<String> names = ShuffleGenerator.shuffleNames(frontendCrews);
-                List<Pair> pairResult = pairGenerator.generate(info.getLevel(), names);
+                List<Pair> pairResult = pairGenerator.generate(info.getLevel(), frontendCrews);
                 history.add(info.getMission(), pairResult);
                 outputView.printResult(pairResult);
                 continue;

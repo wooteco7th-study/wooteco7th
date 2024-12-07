@@ -4,14 +4,18 @@ import java.util.List;
 import java.util.Objects;
 
 public class Pair {
-    private final List<String> pair;
+    private final List<String> names;
 
-    public Pair(final List<String> pair) {
-        this.pair = pair;
+    public Pair(final List<String> names) {
+        this.names = names;
     }
 
-    public List<String> getPair() {
-        return pair;
+    public List<String> getNames() {
+        return names;
+    }
+
+    public void addPair(final String pair) {
+        this.names.add(pair);
     }
 
     @Override
@@ -19,11 +23,11 @@ public class Pair {
         if (!(o instanceof final Pair pair1)) {
             return false;
         }
-        return Objects.equals(getPair(), pair1.getPair());
+        return Objects.equals(getNames(), pair1.getNames());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(getPair());
+        return Objects.hashCode(getNames());
     }
 }

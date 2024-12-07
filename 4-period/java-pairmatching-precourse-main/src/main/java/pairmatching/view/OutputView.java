@@ -15,7 +15,7 @@ public class OutputView {
     public void printResult(final List<Pair> result) {
         System.out.println(RESULT_MSG);
         for (Pair pair : result) {
-            System.out.println(String.join(RESULT_DELIMITER, pair.getPair()));
+            System.out.println(String.join(RESULT_DELIMITER, pair.getNames()));
         }
     }
 

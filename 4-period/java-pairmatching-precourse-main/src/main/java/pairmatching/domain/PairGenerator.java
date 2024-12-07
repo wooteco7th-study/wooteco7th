@@ -3,6 +3,7 @@ package pairmatching.domain;
 import pairmatching.util.ShuffleGenerator;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static pairmatching.exception.ExceptionMessage.MATCHING_IMPOSSIBLE;
@@ -18,29 +19,11 @@ public class PairGenerator {
 
     public List<Pair> generate(Level level, List<String> crewNames) {
         validateLevel(level);
-        int totalTrialCount = 1;
-        List<Pair> pairResult = new ArrayList<>();
-        if (isEven(crewNames)) {
-            while (totalTrialCount < TOTAL_TRIAL_COUNT) {
-                addResultWhenCountOfCrewEven(crewNames, pairResult);
-                if (isDuplicated(pairHistory.resultOfLevel(level), pairResult)) {
-                    totalTrialCount += 1;
-                    crewNames = ShuffleGenerator.shuffleNames(crewNames);
-                    continue;
-                }
-                return pairResult;
-            }
+        List<Pair> pairResult = getPairResult(level, crewNames);
+        if (pairResult.isEmpty()) {
+            throw new IllegalArgumentException(MATCHING_IMPOSSIBLE.getMessage());
         }
-        while (totalTrialCount < TOTAL_TRIAL_COUNT) {
-            addResultWhenCountOfCrewOdd(crewNames, pairResult);
-            if (isDuplicated(pairHistory.resultOfLevel(level), pairResult)) {
-                totalTrialCount += 1;
-                crewNames = ShuffleGenerator.shuffleNames(crewNames);
-                continue;
-            }
-            return pairResult;
-        }
-        throw new IllegalArgumentException(MATCHING_IMPOSSIBLE.getMessage());
+        return pairResult;
     }
 
     private void validateLevel(final Level level) {
@@ -49,34 +32,48 @@ public class PairGenerator {
         }
     }
 
+    private List<Pair> getPairResult(final Level level, final List<String> crewNames) {
+        List<String> shuffleNames = ShuffleGenerator.shuffleNames(crewNames);
+        int totalTrialCount = 1;
+        while (totalTrialCount < TOTAL_TRIAL_COUNT) {
+            List<Pair> pairResult = generatePairResult(shuffleNames);
+            if (!isDuplicated(pairHistory.resultOfLevel(level), pairResult)) {
+                return pairResult;
+            }
+            shuffleNames = ShuffleGenerator.shuffleNames(shuffleNames);
+            totalTrialCount += 1;
+        }
+        return Collections.emptyList();
+    }
+
+    private List<Pair> generatePairResult(final List<String> shuffleNames) {
+        List<Pair> pairResult = new ArrayList<>();
+        if (isEven(shuffleNames)) {
+            addEvenPair(shuffleNames, pairResult);
+        }
+        addOddPair(shuffleNames, pairResult);
+        return pairResult;
+    }
+
     private boolean isEven(final List<String> crewNames) {
         return crewNames.size() % 2 == 0;
     }
 
-    private void addResultWhenCountOfCrewEven(final List<String> shuffledNames, final List<Pair> pairResult) {
-        for (int i = 0; i < shuffledNames.size() - 1; i += 2) {
-            List<String> names = new ArrayList<>();
-            names.add(shuffledNames.get(i));
-            names.add(shuffledNames.get(i + 1));
-            Pair pair = new Pair(names);
-            pairResult.add(pair);
+    private void addEvenPair(final List<String> shuffledNames, final List<Pair> pairResult) {
+        for (int i = 0; i < shuffledNames.size(); i += 2) {
+            List<String> names = List.of(shuffledNames.get(i), shuffledNames.get(i + 1));
+            pairResult.add(new Pair(names));
         }
     }
 
-    private static void addResultWhenCountOfCrewOdd(final List<String> shuffledNames, final List<Pair> pairResult) {
+    private void addOddPair(final List<String> shuffledNames, final List<Pair> pairResult) {
         for (int i = 0; i < shuffledNames.size() - 3; i += 2) {
-            List<String> names = new ArrayList<>();
-            names.add(shuffledNames.get(i));
-            names.add(shuffledNames.get(i + 1));
-            Pair pair = new Pair(names);
-            pairResult.add(pair);
+            List<String> names = List.of(shuffledNames.get(i), shuffledNames.get(i + 1));
+            pairResult.add(new Pair(names));
         }
-        List<String> names = new ArrayList<>();
-        names.add(shuffledNames.get(shuffledNames.size() - 3));
-        names.add(shuffledNames.get(shuffledNames.size() - 2));
-        names.add(shuffledNames.get(shuffledNames.size() - 1));
-        Pair pair = new Pair(names);
-        pairResult.add(pair);
+        int lastIndex = shuffledNames.size() - 3;
+        List<String> names = List.of(shuffledNames.get(lastIndex), shuffledNames.get(lastIndex + 1), shuffledNames.get(lastIndex + 2));
+        pairResult.add(new Pair(names));
     }
 
     private boolean isDuplicated(final List<Pair> storage, List<Pair> now) {
