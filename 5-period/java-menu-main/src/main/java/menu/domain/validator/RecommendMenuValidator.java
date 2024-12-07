@@ -51,8 +51,8 @@ public class RecommendMenuValidator {
         return true;
     }
 
-    private static boolean validateNoDuplicateRecommendMenus(Map<DayOfWeek, Menu> recommendMenus) {
+    public static boolean validateNoDuplicateRecommendMenus(Map<DayOfWeek, Menu> recommendMenus) {
         List<Menu> menus = recommendMenus.values().stream().collect(Collectors.toList());
-        return hasDuplicates(menus);
+        return !hasDuplicates(menus);
     }
 }
