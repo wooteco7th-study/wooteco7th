@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="전체 기능 테스트" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-07T13:40:37" hostname="baghyeong-gyun-ui-MacBookPro.local" time="0.665">
+<testsuite name="전체 기능 테스트" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-07T14:17:25" hostname="baghyeong-gyun-ui-MacBookPro.local" time="0.677">
   <properties/>
-  <testcase name="기능_테스트()" classname="menu.ApplicationTest$AllFeatureTest" time="0.665"/>
+  <testcase name="기능_테스트()" classname="menu.ApplicationTest$AllFeatureTest" time="0.677"/>
   <system-out><![CDATA[점심 메뉴 추천을 시작합니다.
 
 코치의 이름을 입력해 주세요. (, 로 구분)

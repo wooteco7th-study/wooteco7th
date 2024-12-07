@@ -30,9 +30,6 @@ public class Coach {
         return coachName.getValue();
     }
 
-    public HateMenu getHateMenu() {
-        return hateMenu;
-    }
 
     public List<String> getMenus() {
         return menus;
