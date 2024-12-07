@@ -17,8 +17,9 @@ public class MenuService {
         return coachRepository.saveAll(coaches);
     }
 
-    public List<Coach> createCoachNoMenu(final Coach coach, final List<Menu> menus) {
-        return null;
+    public void createCoachNoMenu(final Coach coach, final List<Menu> menus) {
+        Coach findCoach = coachRepository.findByName(coach.getName());
+        findCoach.addNoMenus(menus);
     }
 
     public RecommendDto getRecommendMenus(final List<Coach> coaches) {

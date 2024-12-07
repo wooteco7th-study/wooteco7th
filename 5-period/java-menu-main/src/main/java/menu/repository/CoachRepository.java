@@ -25,4 +25,5 @@ public class CoachRepository {
     public Coach findByName(String name) {
         return repository.get(name);
     }
+
 }
