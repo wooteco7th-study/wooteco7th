@@ -9,11 +9,9 @@ import static menu.exception.ExceptionMessage.MENU_OUT_OF_RANGE;
 public class CantEatMenu {
     public static final int MAX_SIZE = 2;
 
-    private final CoachName name;
     private final List<Menu> cantEatMenu;
 
-    public CantEatMenu(final CoachName name, final List<Menu> cantEatMenu) {
-        this.name = name;
+    public CantEatMenu(final List<Menu> cantEatMenu) {
         validateRange(cantEatMenu);
         this.cantEatMenu = cantEatMenu;
     }

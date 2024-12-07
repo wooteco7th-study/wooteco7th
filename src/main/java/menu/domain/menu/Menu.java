@@ -2,6 +2,7 @@ package menu.domain.menu;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static menu.domain.menu.Category.아시안;
 import static menu.domain.menu.Category.양식;
@@ -95,6 +96,10 @@ public enum Menu {
         return Arrays.stream(Menu.values())
                 .filter(element -> element.category == category)
                 .map(menu -> menu.name)
-                .toList();
+                .collect(Collectors.toList());
+    }
+
+    public String getName() {
+        return name;
     }
 }
