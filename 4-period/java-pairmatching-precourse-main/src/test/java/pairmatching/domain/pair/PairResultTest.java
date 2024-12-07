@@ -43,7 +43,7 @@ class PairResultTest {
     void hasSamePair(Pair pair, boolean expected) {
         // Given
         Pair pair1 = new Pair(List.of("러키", "밍트"));
-        Pair pair2 = new Pair(List.of("진수", "수달"));
+        Pair pair2 = new Pair(List.of("진수", "수달", "혜민"));
         PairResult pairResult = new PairResult(new PairOrder(Course.백엔드.name(), Level.레벨1.name(), Mission.로또.name()),
                 List.of(pair1, pair2));
 
@@ -54,6 +54,8 @@ class PairResultTest {
     private static Stream<Arguments> hasSamePair() {
         return Stream.of(
                 Arguments.of(new Pair(List.of("러키", "밍트")), true),
+                Arguments.of(new Pair(List.of("수달", "혜민")), true),
+                Arguments.of(new Pair(List.of("혜민", "진수")), true),
                 Arguments.of(new Pair(List.of("pack", "고로케")), false)
         );
     }

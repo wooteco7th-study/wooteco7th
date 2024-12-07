@@ -1,6 +1,7 @@
 package pairmatching.domain.pair;
 
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 
@@ -11,7 +12,6 @@ public class Pair {
     public Pair(final List<String> crews) {
         this.crews = crews;
     }
-
 
     public void add(final String crew) {
         crews.add(crew);
@@ -25,7 +25,9 @@ public class Pair {
         if (!(o instanceof Pair pair)) {
             return false;
         }
-        return Objects.equals(crews, pair.crews);
+        HashSet<String> crewsUnique = new HashSet<>(crews);
+        HashSet<String> comparedUnique = new HashSet<>(pair.crews);
+        return crewsUnique.containsAll(comparedUnique) || comparedUnique.containsAll(crewsUnique);
     }
 
     @Override
