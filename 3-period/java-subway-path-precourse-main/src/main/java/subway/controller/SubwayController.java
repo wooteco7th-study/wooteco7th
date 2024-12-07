@@ -2,7 +2,7 @@ package subway.controller;
 
 import subway.command.FunctionCommand;
 import subway.command.RouteCriteriaCommand;
-import subway.domain.Initializer;
+import subway.support.Initializer;
 import subway.domain.Order;
 import subway.domain.path.PathFinder;
 import subway.domain.station.Station;
@@ -48,15 +48,14 @@ public class SubwayController {
                 return;
             }
             PathFinder pathFinder = new PathFinder();
-            Order order = createOrder(pathFinder);
+            Order order = createOrder();
             processByCommand(command, order, pathFinder);
         });
     }
 
-    private Order createOrder(final PathFinder pathFinder) {
+    private Order createOrder() {
         Station departureStation = makeDepartureStation();
         Station arrivalStation = makeArrivalStation();
-        pathFinder.validatePathConnected(departureStation.getName(), arrivalStation.getName());
         return new Order(departureStation, arrivalStation);
     }
 

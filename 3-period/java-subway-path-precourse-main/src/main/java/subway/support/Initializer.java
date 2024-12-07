@@ -1,4 +1,4 @@
-package subway.domain;
+package subway.support;
 
 import subway.domain.line.Line;
 import subway.domain.line.LineName;
