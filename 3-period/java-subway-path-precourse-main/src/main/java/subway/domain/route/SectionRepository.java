@@ -5,25 +5,25 @@ import java.util.Collections;
 import java.util.List;
 import subway.domain.station.StationRepository;
 
-public class RoutesRepository {
+public class SectionRepository {
 
-    private static final List<Route> routes = new ArrayList<>();
+    private static final List<Section> SECTIONS = new ArrayList<>();
 
-    public static void addRoute(final Route route) {
-        routes.add(route);
+    public static void addRoute(final Section section) {
+        SECTIONS.add(section);
     }
 
     public static boolean isConnected(final String start, final String end) {
-        return routes.stream()
+        return SECTIONS.stream()
                 .anyMatch(route -> route.findRoute(StationRepository.findByName(start),
                         StationRepository.findByName(end)));
     }
 
     public static int getDistance(final String start, final String end) {
-        return routes.stream()
+        return SECTIONS.stream()
                 .filter(route -> route.getDepartureStation().getName().equals(start))
                 .filter(route -> route.getArrivalStation().getName().equals(end))
-                .map(Route::getDistance)
+                .map(Section::getDistance)
                 .findFirst()
                 .orElse(0);
     }
@@ -49,15 +49,15 @@ public class RoutesRepository {
     }
 
     private static int getTime(final String start, final String end) {
-        return routes.stream()
+        return SECTIONS.stream()
                 .filter(route -> route.getDepartureStation().getName().equals(start))
                 .filter(route -> route.getArrivalStation().getName().equals(end))
-                .map(Route::getTakenTime)
+                .map(Section::getTakenTime)
                 .findFirst()
                 .orElse(0);
     }
 
-    public static List<Route> routes() {
-        return Collections.unmodifiableList(routes);
+    public static List<Section> routes() {
+        return Collections.unmodifiableList(SECTIONS);
     }
 }

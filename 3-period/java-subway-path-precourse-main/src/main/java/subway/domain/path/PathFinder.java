@@ -5,8 +5,8 @@ import static subway.exception.ErrorMessage.INVALID_STATION_PATH;
 import java.util.List;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
-import subway.domain.route.Route;
-import subway.domain.route.RoutesRepository;
+import subway.domain.route.Section;
+import subway.domain.route.SectionRepository;
 import subway.domain.station.Station;
 import subway.domain.station.StationRepository;
 import subway.exception.CustomIllegalArgumentException;
@@ -57,14 +57,14 @@ public class PathFinder {
     }
 
     private boolean isNotConnected(final String start, final String end) {
-        return !RoutesRepository.isConnected(start, end);
+        return !SectionRepository.isConnected(start, end);
     }
 
     private void initEdgeWeight(final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph) {
-        for (Route route : RoutesRepository.routes()) {
+        for (Section section : SectionRepository.routes()) {
             distanceGraph.setEdgeWeight(
-                    distanceGraph.addEdge(route.getDepartureStation().getName(), route.getArrivalStation().getName()),
-                    route.getDistance());
+                    distanceGraph.addEdge(section.getDepartureStation().getName(), section.getArrivalStation().getName()),
+                    section.getDistance());
         }
     }
 
@@ -78,10 +78,10 @@ public class PathFinder {
         WeightedMultigraph<String, DefaultWeightedEdge> timesGraph = new WeightedMultigraph(DefaultWeightedEdge.class);
         initVertex(timesGraph);
 
-        for (Route route : RoutesRepository.routes()) {
+        for (Section section : SectionRepository.routes()) {
             timesGraph.setEdgeWeight(
-                    timesGraph.addEdge(route.getDepartureStation().getName(), route.getArrivalStation().getName()),
-                    route.getTakenTime());
+                    timesGraph.addEdge(section.getDepartureStation().getName(), section.getArrivalStation().getName()),
+                    section.getTakenTime());
         }
         return new Graph(timesGraph);
     }

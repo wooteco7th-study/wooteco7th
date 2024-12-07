@@ -5,11 +5,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import subway.domain.route.Route;
-import subway.domain.route.RoutesRepository;
+import subway.domain.route.Section;
+import subway.domain.route.SectionRepository;
 import subway.domain.station.Station;
 
-class RoutesRepositoryTest {
+class SectionRepositoryTest {
 
     @Test
     @DisplayName("두 인접 정점간의 거리를 구한다.")
@@ -19,7 +19,7 @@ class RoutesRepositoryTest {
         initializeRouteRepository(stations);
 
         // When
-        int distance = RoutesRepository.getDistance(stations.get(0).getName(), stations.get(1).getName());
+        int distance = SectionRepository.getDistance(stations.get(0).getName(), stations.get(1).getName());
 
         // Then
         assertThat(distance).isEqualTo(2);
@@ -47,7 +47,7 @@ class RoutesRepositoryTest {
         initializeRouteRepository(stations);
 
         // When
-        int totalTime = RoutesRepository.getTotalTime(List.of("교대역", "강남역", "양재역"));
+        int totalTime = SectionRepository.getTotalTime(List.of("교대역", "강남역", "양재역"));
 
         // Then
         assertThat(totalTime).isEqualTo(11);
@@ -61,25 +61,25 @@ class RoutesRepositoryTest {
         initializeRouteRepository(stations);
 
         // When
-        int totalTime = RoutesRepository.getTotalDistance(List.of("교대역", "강남역", "양재역"));
+        int totalTime = SectionRepository.getTotalDistance(List.of("교대역", "강남역", "양재역"));
 
         // Then
         assertThat(totalTime).isEqualTo(4);
     }
 
     private void initializeRouteRepository(final List<Station> stations) {
-        List<Route> routes = List.of(
-                new Route(stations.get(0), stations.get(1), 8, 2),
-                new Route(stations.get(2), stations.get(0), 3, 2),
-                new Route(stations.get(0), stations.get(3), 3, 2),
-                new Route(stations.get(2), stations.get(4), 2, 3),
-                new Route(stations.get(4), stations.get(1), 5, 6),
-                new Route(stations.get(1), stations.get(5), 1, 1),
-                new Route(stations.get(0), stations.get(1), 8, 2),
-                new Route(stations.get(1), stations.get(6), 3, 10)
+        List<Section> sections = List.of(
+                new Section(stations.get(0), stations.get(1), 8, 2),
+                new Section(stations.get(2), stations.get(0), 3, 2),
+                new Section(stations.get(0), stations.get(3), 3, 2),
+                new Section(stations.get(2), stations.get(4), 2, 3),
+                new Section(stations.get(4), stations.get(1), 5, 6),
+                new Section(stations.get(1), stations.get(5), 1, 1),
+                new Section(stations.get(0), stations.get(1), 8, 2),
+                new Section(stations.get(1), stations.get(6), 3, 10)
         );
-        for (Route route : routes) {
-            RoutesRepository.addRoute(route);
+        for (Section section : sections) {
+            SectionRepository.addRoute(section);
         }
     }
 

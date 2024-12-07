@@ -3,7 +3,7 @@ package subway.service;
 import java.util.List;
 import subway.domain.Order;
 import subway.domain.path.PathFinder;
-import subway.domain.route.RoutesRepository;
+import subway.domain.route.SectionRepository;
 import subway.domain.station.Station;
 import subway.dto.ResultDto;
 
@@ -15,8 +15,8 @@ public class SubwayService {
         Station arrivalStation = order.getArrivalStation();
         List<String> shortestTimePath = pathFinder.getShortestTimePath(departureStation.getName(),
                 arrivalStation.getName());
-        int totalTime = RoutesRepository.getTotalTime(shortestTimePath);
-        int totalDistance = RoutesRepository.getTotalDistance(shortestTimePath);
+        int totalTime = SectionRepository.getTotalTime(shortestTimePath);
+        int totalDistance = SectionRepository.getTotalDistance(shortestTimePath);
         return new ResultDto(totalDistance, totalTime, shortestTimePath);
     }
 
@@ -25,8 +25,8 @@ public class SubwayService {
         Station arrivalStation = order.getArrivalStation();
         List<String> shortestDistancePath = pathFinder.getShortestDistancePath(departureStation.getName(),
                 arrivalStation.getName());
-        int totalDistance = RoutesRepository.getTotalDistance(shortestDistancePath);
-        int totalTime = RoutesRepository.getTotalTime(shortestDistancePath);
+        int totalDistance = SectionRepository.getTotalDistance(shortestDistancePath);
+        int totalTime = SectionRepository.getTotalTime(shortestDistancePath);
         return new ResultDto(totalDistance, totalTime, shortestDistancePath);
     }
 

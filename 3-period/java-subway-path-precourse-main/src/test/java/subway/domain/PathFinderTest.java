@@ -7,8 +7,8 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import subway.domain.path.PathFinder;
-import subway.domain.route.Route;
-import subway.domain.route.RoutesRepository;
+import subway.domain.route.Section;
+import subway.domain.route.SectionRepository;
 import subway.domain.station.Station;
 import subway.domain.station.StationRepository;
 
@@ -94,18 +94,18 @@ class PathFinderTest {
     }
 
     private void initializeRouteRepository(final List<Station> stations) {
-        List<Route> routes = List.of(
-                new Route(stations.get(0), stations.get(1), 8, 2),
-                new Route(stations.get(2), stations.get(0), 3, 2),
-                new Route(stations.get(0), stations.get(3), 3, 2),
-                new Route(stations.get(2), stations.get(4), 2, 3),
-                new Route(stations.get(4), stations.get(1), 5, 6),
-                new Route(stations.get(1), stations.get(5), 1, 1),
-                new Route(stations.get(0), stations.get(1), 8, 2),
-                new Route(stations.get(1), stations.get(6), 3, 10)
+        List<Section> sections = List.of(
+                new Section(stations.get(0), stations.get(1), 8, 2),
+                new Section(stations.get(2), stations.get(0), 3, 2),
+                new Section(stations.get(0), stations.get(3), 3, 2),
+                new Section(stations.get(2), stations.get(4), 2, 3),
+                new Section(stations.get(4), stations.get(1), 5, 6),
+                new Section(stations.get(1), stations.get(5), 1, 1),
+                new Section(stations.get(0), stations.get(1), 8, 2),
+                new Section(stations.get(1), stations.get(6), 3, 10)
         );
-        for (Route route : routes) {
-            RoutesRepository.addRoute(route);
+        for (Section section : sections) {
+            SectionRepository.addRoute(section);
         }
     }
 

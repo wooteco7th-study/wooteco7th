@@ -19,20 +19,18 @@ public class SubwayController {
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
     private final SubwayService subwayService;
-    private final Initializer initializer;
 
     public SubwayController(final InputView inputView, final OutputView outputView,
                             final ExceptionHandler exceptionHandler,
-                            final SubwayService subwayService, final Initializer initializer) {
+                            final SubwayService subwayService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
         this.subwayService = subwayService;
-        this.initializer = initializer;
     }
 
     public void process() {
-        initializer.initialize();
+        Initializer.initialize();
         processCommands();
     }
 
@@ -43,7 +41,7 @@ public class SubwayController {
     }
 
     private void processCommand() {
-        exceptionHandler.retryOn(() -> {
+        exceptionHandler.retryUntilSuccess(() -> {
             RouteCriteriaCommand command = makeCriteria();
             if (command.isGoBack()) {
                 outputView.showBlank();
@@ -77,11 +75,11 @@ public class SubwayController {
 
     private Station makeArrivalStation() {
         outputView.askArrivalStation();
-        return exceptionHandler.retryOn(() -> StationRepository.findByName(inputView.readDeparture()));
+        return exceptionHandler.retryUntilSuccess(() -> StationRepository.findByName(inputView.readDeparture()));
     }
 
     private Station makeDepartureStation() {
-        return exceptionHandler.retryOn(() -> {
+        return exceptionHandler.retryUntilSuccess(() -> {
             outputView.askDepartureStation();
             return StationRepository.findByName(inputView.readDeparture());
         });
@@ -89,12 +87,12 @@ public class SubwayController {
 
     private RouteCriteriaCommand makeCriteria() {
         outputView.selectRouteCriteria();
-        return exceptionHandler.retryOn(() -> RouteCriteriaCommand.from(inputView.readRouteCriteria()));
+        return exceptionHandler.retryUntilSuccess(() -> RouteCriteriaCommand.from(inputView.readRouteCriteria()));
     }
 
     private boolean isQuit() {
         outputView.welcome();
-        return exceptionHandler.retryOn(
+        return exceptionHandler.retryUntilSuccess(
                 () -> FunctionCommand.from(inputView.informFunction()).isQuit());
     }
 }
