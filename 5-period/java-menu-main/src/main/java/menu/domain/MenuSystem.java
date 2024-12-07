@@ -5,6 +5,8 @@ import java.util.List;
 
 public class MenuSystem {
 
+    private static final int DAY_COUNT = 5;
+
     private final List<Coach> coaches;
     private final MenuTypeGroup menuTypeGroup;
 
@@ -14,7 +16,7 @@ public class MenuSystem {
     }
 
     public void recommend() {
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < DAY_COUNT; i++) {
             final MenuType menuType = menuTypeGroup.updateMenuTypes();
             recommendCoachMenu(menuType);
         }
