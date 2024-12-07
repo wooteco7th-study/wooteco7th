@@ -10,6 +10,7 @@ public enum ErrorMessage {
 
     PAIR_MATCH_FAILED("페어매칭이 3번 이상 실패했습니다."),
     PAIR_MATCH_ORDER_FAILED("페어 매칭 주문을 찾을 수 없습니다."),
+    PAIR_DUPLICATED("페어 내에서 이름이 중복될 수 없습니다."),
 
     INVALID_FORMAT("올바르지 않은 입력 형식입니다."),
 

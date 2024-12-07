@@ -44,7 +44,6 @@ public class PairHistory {
                 .anyMatch(result -> result.hasSamePair(pair));
     }
 
-
     public PairResult inquire(final PairOrder compared) {
         return results.stream()
                 .filter(result -> result.getPairOrder().equals(compared))
