@@ -13,7 +13,7 @@ public class CoachRepository {
 
     public List<Coach> saveAll(List<Coach> coaches) {
         for (Coach coach : coaches) {
-            repository.put(coach.getName(), coach);
+            repository.put(coach.getName현(), coach);
         }
         return coaches;
     }

@@ -2,6 +2,7 @@ package menu.config;
 
 import menu.controller.MenuController;
 import menu.repository.CoachRepository;
+import menu.service.MenuRecommendGenerator;
 import menu.service.MenuService;
 import menu.view.RequestView;
 import menu.view.ResponseView;
@@ -27,7 +28,10 @@ public class AppConfig {
 
     // service
     private MenuService createService() {
-        return new MenuService(new CoachRepository());
+        return new MenuService(
+                new CoachRepository(),
+                new MenuRecommendGenerator()
+        );
     }
 
     public MenuController initialize() {
