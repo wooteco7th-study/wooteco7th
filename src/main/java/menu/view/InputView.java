@@ -8,7 +8,7 @@ import java.util.List;
 import static menu.exception.ExceptionMessage.INPUT_BLANK;
 
 public class InputView {
-    private static final String NAME_DELIMITER = ",";
+    private static final String DELIMITER = ",";
 
     private static final String INPUT_COACH_NAME_MSG = """
             점심 메뉴 추천을 시작합니다.
@@ -19,7 +19,12 @@ public class InputView {
 
     public List<String> readCoachNames() {
         String input = getValidatedInput(INPUT_COACH_NAME_MSG);
-        return StringParser.parseWithDelimiter(input, NAME_DELIMITER);
+        return StringParser.parseWithDelimiter(input, DELIMITER);
+    }
+
+    public List<String> readCoachCantEatMenu() {
+        String input = getValidatedInput(INPUT_COACH_CANT_EAT_MENU_MSG);
+        return StringParser.parseWithDelimiter(input, DELIMITER);
     }
 
     private String getValidatedInput(String message) {
