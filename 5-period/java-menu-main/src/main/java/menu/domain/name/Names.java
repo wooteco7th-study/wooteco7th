@@ -1,5 +1,6 @@
-package menu.domain;
+package menu.domain.name;
 
+import java.util.Collections;
 import java.util.List;
 import menu.exception.CustomIllegalArgumentException;
 import menu.exception.ErrorMessage;
@@ -37,5 +38,9 @@ public class Names {
         if (names.size() > 5) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_COACH_NUMBER_MAX);
         }
+    }
+
+    public List<Name> getNames() {
+        return Collections.unmodifiableList(names);
     }
 }

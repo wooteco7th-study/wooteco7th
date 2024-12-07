@@ -29,8 +29,8 @@ public class OutputView {
         showln(TITLE_WELCOME);
     }
 
-    public void showRequestMenu() {
-        showln(LINE + REQUEST_MENU);
+    public void showRequestMenu(String name) {
+        showln(LINE + format(REQUEST_MENU, name));
     }
 
     public void showTitleResult(final ResultDto resultDto) {

@@ -23,7 +23,7 @@ public class InputView {
 
     private String readLine(ErrorMessage errorMessage) {
         String line = Console.readLine();
-        InputValidator.validateNotNullOrBlank(line, errorMessage);
+        InputValidator.validateNotNull(line, errorMessage);
         return line;
     }
 }

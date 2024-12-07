@@ -1,4 +1,4 @@
-package menu.domain;
+package menu.domain.name;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
@@ -41,5 +41,9 @@ public class Name {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public String getValue() {
+        return value;
     }
 }
