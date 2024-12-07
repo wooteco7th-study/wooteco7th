@@ -14,11 +14,9 @@ public class MenuSystem {
     }
 
     public void recommend() {
-        for (int i = 0; i < coaches.size(); i++) {
+        for (int i = 0; i < 5; i++) {
             final MenuType menuType = menuTypeGroup.updateMenuTypes();
-            final Coach coach = coaches.get(i);
-            final String menu = RandomMenuGenerator.generate(coach, menuType);
-            coach.addMenu(menu);
+            recommendCoachMenu(menuType);
         }
     }
 
@@ -28,5 +26,13 @@ public class MenuSystem {
 
     public List<String> getMenuTypes() {
         return menuTypeGroup.getMenuTypes();
+    }
+
+    private void recommendCoachMenu(final MenuType menuType) {
+        for (int i = 0; i < coaches.size(); i++) {
+            final Coach coach = coaches.get(i);
+            final String menu = RandomMenuGenerator.generate(coach, menuType);
+            coach.addMenu(menu);
+        }
     }
 }
