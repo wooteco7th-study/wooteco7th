@@ -27,9 +27,17 @@ public class HateMenu {
     }
 
     private void validateExistMenu(final List<String> values) {
+        if (isAllEmpty(values)) {
+            return;
+        }
         if (hasNotMenu(values)) {
             throw new AppException(ErrorMessage.INVALID_NOT_FOUND_MENU);
         }
+    }
+
+    private boolean isAllEmpty(final List<String> values) {
+        return values.stream()
+                .allMatch(String::isEmpty);
     }
 
     private boolean hasNotMenu(final List<String> values) {
