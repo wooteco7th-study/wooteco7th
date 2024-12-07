@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="전체 기능 테스트" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-07T14:55:41" hostname="baghyeong-gyun-ui-MacBookPro.local" time="0.657">
+  <properties/>
+  <testcase name="기능_테스트()" classname="menu.ApplicationTest$AllFeatureTest" time="0.657"/>
+  <system-out><![CDATA[점심 메뉴 추천을 시작합니다.
+
+코치의 이름을 입력해 주세요. (, 로 구분)
+
+구구(이)가 못 먹는 메뉴를 입력해 주세요.
+
+제임스(이)가 못 먹는 메뉴를 입력해 주세요.
+
+메뉴 추천 결과입니다.
+[ 구분 | 월요일 | 화요일 | 수요일 | 목요일 | 금요일 ]
+[ 카테고리 | 한식 | 양식 | 일식 | 중식 | 아시안 ]
+[ 구구 | 김치찌개 | 스파게티 | 규동 | 짜장면 | 카오 팟 ]
+[ 제임스 | 제육볶음 | 라자냐 | 가츠동 | 짬뽕 | 파인애플 볶음밥 ]
+
+추천을 완료했습니다.
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
