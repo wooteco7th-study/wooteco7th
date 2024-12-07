@@ -1,5 +1,6 @@
 package subway.exception;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 import subway.view.OutputView;
 
@@ -11,8 +12,7 @@ public class ExceptionHandler {
         this.outputView = outputView;
     }
 
-    // 최대 시도 횟수만큼 재시도하며 결과를 반환
-    public <T> T retryOn(Supplier<T> action) {
+    public <T> T retryUntilSuccess(Supplier<T> action) {
         while (true) {
             try {
                 return action.get();
@@ -22,7 +22,7 @@ public class ExceptionHandler {
         }
     }
 
-    public void retryOn(Runnable callback) {
+    public void retryUntilSuccess(Runnable callback) {
         while (true) {
             try {
                 callback.run();
@@ -33,33 +33,16 @@ public class ExceptionHandler {
         }
     }
 
-    // 실패시 false를 반환하고 계속 진행
-    public boolean tryWithoutThrow(Supplier<Boolean> action) {
-        try {
-            return action.get();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            outputView.showException(e);
-            return false;
-        }
-    }
-
-    // 예외 발생시 메시지 출력 후 예외를 다시 던짐
-    public <T> T tryWithThrow(Supplier<T> action) {
-        try {
-            return action.get();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            outputView.showException(e);
-            throw e;
-        }
-    }
-
-    // 반환값이 없는 작업 실행, 예외 발생시 메시지 출력 후 예외를 다시 던짐
-    public void tryVoid(Runnable action) {
-        try {
-            action.run();
-        } catch (IllegalArgumentException | IllegalStateException e) {
-            outputView.showException(e);
-            throw e;
+    public <T> T retryUntilPresent(Supplier<Optional<T>> action) {
+        while (true) {
+            try {
+                Optional<T> result = action.get();
+                if (result.isPresent()) {
+                    return result.get();
+                }
+            } catch (IllegalArgumentException e) {
+                outputView.showException(e);
+            }
         }
     }
 }
