@@ -31,8 +31,7 @@ public class MenuSystem {
     }
 
     private void recommendCoachMenu(final MenuType menuType) {
-        for (int i = 0; i < coaches.size(); i++) {
-            final Coach coach = coaches.get(i);
+        for (final Coach coach : coaches) {
             final String menu = RandomMenuGenerator.generate(coach, menuType);
             coach.addMenu(menu);
         }
