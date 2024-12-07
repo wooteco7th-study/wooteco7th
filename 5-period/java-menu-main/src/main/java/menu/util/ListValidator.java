@@ -18,12 +18,24 @@ public class ListValidator {
     }
 
 
-    public static <T> void validateSize(final List<T> values, final int min, final int max) {
-        if (values.size() < min) {
-            throw new AppException(ErrorMessage.INVALID_COACHES_MIN_SIZE);
+    public static <T> void validateSize(final List<T> values, final int min, final int max,
+                                        final ErrorMessage errorMessage) {
+        if (values.size() < min || values.size() > max) {
+            throw new AppException(errorMessage);
         }
+    }
+
+    public static <T> void validateMinSize(final List<T> values, final int min,
+                                           final ErrorMessage errorMessage) {
+        if (values.size() < min) {
+            throw new AppException(errorMessage);
+        }
+    }
+
+    public static <T> void validateMaxSize(final List<T> values, final int max,
+                                           final ErrorMessage errorMessage) {
         if (values.size() > max) {
-            throw new AppException(ErrorMessage.INVALID_COACHES_MAX_SIZE);
+            throw new AppException(errorMessage);
         }
     }
 
