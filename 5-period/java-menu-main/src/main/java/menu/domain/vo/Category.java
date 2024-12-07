@@ -1,5 +1,6 @@
 package menu.domain.vo;
 
+import camp.nextstep.edu.missionutils.Randoms;
 import java.util.Arrays;
 
 public enum Category {
@@ -21,6 +22,11 @@ public enum Category {
         return Arrays.stream(values()).filter(category -> category.getIndex() == index)
                 .findFirst()
                 .orElse(NONE);
+    }
+
+    public static Category pickRandomCategory() {
+        int result = Randoms.pickNumberInRange(1, 5);
+        return Category.findByIndex(result);
     }
 
     public String getValue() {
