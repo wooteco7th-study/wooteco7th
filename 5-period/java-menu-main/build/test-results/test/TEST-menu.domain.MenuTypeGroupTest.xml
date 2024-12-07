@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="menu.domain.MenuTypeGroupTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2024-12-07T13:40:38" hostname="baghyeong-gyun-ui-MacBookPro.local" time="0.002">
+  <properties/>
+  <testcase name="2개를 초과하는 메뉴 타입은 업데이트 하지 않는다." classname="menu.domain.MenuTypeGroupTest" time="0.002"/>
+  <system-out><![CDATA[]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
