@@ -39,6 +39,7 @@ public class MenuController {
                 .map(MenuResult::of)
                 .collect(Collectors.toList());
         outputView.printResult(menuTypes, menuResults);
+        outputView.printClear();
     }
 
     private CoachNameGroup requestCoachNameGroup() {
