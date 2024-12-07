@@ -2,6 +2,7 @@ package menu.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import menu.domain.Coach;
 import menu.domain.CoachName;
 import menu.domain.CoachNameGroup;
@@ -36,7 +37,7 @@ public class MenuController {
         final List<String> menuTypes = menuSystem.getMenuTypes();
         final List<MenuResult> menuResults = menuSystem.getCoaches().stream()
                 .map(MenuResult::of)
-                .toList();
+                .collect(Collectors.toList());
         outputView.printResult(menuTypes, menuResults);
     }
 
@@ -45,7 +46,7 @@ public class MenuController {
             outputView.printAskCoachesName();
             final List<CoachName> coachNames = inputView.readInputs().stream()
                     .map(CoachName::new)
-                    .toList();
+                    .collect(Collectors.toList());
             return new CoachNameGroup(coachNames);
         });
     }
@@ -61,7 +62,7 @@ public class MenuController {
     private List<Coach> createCoaches(final CoachNameGroup coachNameGroup) {
         return coachNameGroup.getCoachNames().stream()
                 .map(this::createCoach)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private Coach createCoach(final CoachName coachName) {

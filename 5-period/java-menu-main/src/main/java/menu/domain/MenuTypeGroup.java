@@ -2,6 +2,7 @@ package menu.domain;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class MenuTypeGroup {
 
@@ -25,6 +26,6 @@ public class MenuTypeGroup {
     public List<String> getMenuTypes() {
         return menuTypes.stream()
                 .map(MenuType::getName)
-                .toList();
+                .collect(Collectors.toList());
     }
 }

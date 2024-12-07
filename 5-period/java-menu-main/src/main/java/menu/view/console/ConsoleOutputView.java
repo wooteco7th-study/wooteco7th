@@ -37,8 +37,8 @@ public class ConsoleOutputView implements OutputView {
     public void printResult(final List<String> menuTypes, final List<MenuResult> menuResults) {
         final String menuTypesMessage = String.format(MENU_TYPE_FORMAT, String.join(DELIMITER, menuTypes));
         final String menuResultMessage = menuResults.stream()
-                .map(menuResult -> String.format(MENU_FORMAT, menuResult.coachName(),
-                        String.join(DELIMITER, menuResult.menus())))
+                .map(menuResult -> String.format(MENU_FORMAT, menuResult.getCoachName(),
+                        String.join(DELIMITER, menuResult.getMenus())))
                 .collect(Collectors.joining(LINE_SEPARATOR));
         printlnMessage(LINE_SEPARATOR + RESULT_HEADER + LINE_SEPARATOR + DAY_FORMAT + LINE_SEPARATOR + menuTypesMessage
                 + LINE_SEPARATOR + menuResultMessage);

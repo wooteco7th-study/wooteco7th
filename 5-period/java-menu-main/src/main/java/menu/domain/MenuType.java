@@ -2,6 +2,7 @@ package menu.domain;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import menu.error.ErrorMessage;
 
 public enum MenuType {
@@ -39,7 +40,7 @@ public enum MenuType {
     public static List<String> findAllMenus() {
         return Arrays.stream(MenuType.values())
                 .flatMap(menuType -> menuType.getMenus().stream())
-                .toList();
+                .collect(Collectors.toList());
     }
 
     public int getNumber() {
