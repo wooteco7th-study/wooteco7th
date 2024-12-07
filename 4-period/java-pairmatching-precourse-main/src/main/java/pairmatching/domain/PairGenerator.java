@@ -50,6 +50,7 @@ public class PairGenerator {
         List<Pair> pairResult = new ArrayList<>();
         if (isEven(shuffleNames)) {
             addEvenPair(shuffleNames, pairResult);
+            return pairResult;
         }
         addOddPair(shuffleNames, pairResult);
         return pairResult;
