@@ -43,8 +43,8 @@
 #### CoachGroupGenerator
 - [] 코치 그룹을 생성
 
-#### RandomMenuTypesGenerator
-- [] 메뉴 타입들을 생성
+#### RandomMenuTypeGenerator
+- [] 메뉴 타입을 생성
 
 #### RandomMenuGenerator
 - [] 랜덤 메뉴를 생성
