@@ -8,15 +8,15 @@ import subway.domain.station.Station;
 //- 종료 지하철역
 //- 걸린 시간
 //- 이동 거리
-public class Route {
+public class Section {
 
     private final Station departureStation;
     private final Station arrivalStation;
     private final int takenTime;
     private final int distance;
 
-    public Route(final Station departureStation, final Station arrivalStation, final int takenTime,
-                 final int distance) {
+    public Section(final Station departureStation, final Station arrivalStation, final int takenTime,
+                   final int distance) {
         this.departureStation = departureStation;
         this.arrivalStation = arrivalStation;
         this.takenTime = takenTime;
@@ -32,12 +32,12 @@ public class Route {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Route route)) {
+        if (!(o instanceof Section section)) {
             return false;
         }
-        return getTakenTime() == route.getTakenTime() && getDistance() == route.getDistance() && Objects.equals(
-                getDepartureStation(), route.getDepartureStation()) && Objects.equals(getArrivalStation(),
-                route.getArrivalStation());
+        return getTakenTime() == section.getTakenTime() && getDistance() == section.getDistance() && Objects.equals(
+                getDepartureStation(), section.getDepartureStation()) && Objects.equals(getArrivalStation(),
+                section.getArrivalStation());
     }
 
     @Override
