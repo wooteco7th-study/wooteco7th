@@ -11,8 +11,7 @@ public enum ExceptionMessage {
 
     MENU_NOT_FOUND("존재하지 않는 메뉴입니다."),
 
-    MENU_OUT_OF_RANGE("못 먹는 메뉴는 최소 0개에서 최대 2개까지 입력 가능합니다.")
-    ;
+    MENU_OUT_OF_RANGE("못 먹는 메뉴는 최소 0개에서 최대 2개까지 입력 가능합니다.");
     private static final String ERROR_PREFIX = "[ERROR] ";
 
     private final String message;
