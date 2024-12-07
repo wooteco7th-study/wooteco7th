@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 
 public class StringParser {
 
-    private static final int SPLIT_LIMIT = -1;
     private static final String BLANK = "";
 
     private StringParser() {
@@ -19,7 +18,7 @@ public class StringParser {
 
 
     public static List<String> parseToTokens(final String value, final String delimiter) {
-        return Arrays.stream(value.split(delimiter, SPLIT_LIMIT))
+        return Arrays.stream(value.split(delimiter))
                 .collect(Collectors.toList());
     }
 }

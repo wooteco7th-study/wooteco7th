@@ -52,8 +52,4 @@ public class ConsoleOutputView implements OutputView {
     private void printlnMessage(final String message) {
         System.out.println(message);
     }
-
-    private void printMessage(final String message) {
-        System.out.print(message);
-    }
 }

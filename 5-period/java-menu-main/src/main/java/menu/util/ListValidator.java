@@ -18,28 +18,20 @@ public class ListValidator {
     }
 
 
+    public static <T> void validateSize(final List<T> values, final int min, final int max) {
+        if (values.size() < min) {
+            throw new AppException(ErrorMessage.INVALID_COACHES_MIN_SIZE);
+        }
+        if (values.size() > max) {
+            throw new AppException(ErrorMessage.INVALID_COACHES_MAX_SIZE);
+        }
+    }
+
+
     private static <T> boolean isDuplicated(final List<T> values) {
         return values.stream()
                 .distinct()
                 .count() != values.size();
     }
 
-    public static <T> void validateSize(final List<T> values, final int min, final int max,
-                                        final ErrorMessage errorMessage) {
-        if (values.size() < min || values.size() > max) {
-            throw new AppException(errorMessage);
-        }
-    }
-
-    public static <T extends Number> void validateRange(final List<T> values, final ValidateFunction<T> function) {
-        for (T value : values) {
-            function.validate(value);
-        }
-    }
-
-
-    @FunctionalInterface
-    public interface ValidateFunction<T extends Number> {
-        void validate(final T value);
-    }
 }
