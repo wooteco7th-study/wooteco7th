@@ -3,7 +3,7 @@ package menu.exception;
 public enum ExceptionMessage {
     INPUT_BLANK("빈 값을 입력하셨습니다."),
 
-    INVALID_NAME_FORMAT("이름은 최소 2글자에서 최대 5글자까지 입력 가능합니다."),
+    INVALID_NAME_FORMAT("이름은 최소 2글자에서 최대 4글자까지 입력 가능합니다."),
 
     INVALID_COACHES_SIZE("코치는 최소 2명에서 최대 5명까지 입력 가능합니다."),
 
