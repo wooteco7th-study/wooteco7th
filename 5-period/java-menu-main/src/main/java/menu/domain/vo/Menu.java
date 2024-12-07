@@ -1,10 +1,13 @@
 package menu.domain.vo;
 
+import static menu.constant.ExceptionMessage.INVALID_MENU_NAME_RANGE;
 import static menu.domain.vo.Category.ASIA;
 import static menu.domain.vo.Category.CH;
 import static menu.domain.vo.Category.JP;
 import static menu.domain.vo.Category.KR;
 import static menu.domain.vo.Category.WEST;
+
+import java.util.Arrays;
 
 /*
 일식: 규동, 우동, 미소시루, 스시, 가츠동, 오니기리, 하이라이스, 라멘, 오코노미야끼
@@ -41,6 +44,13 @@ public enum Menu {
     Menu(final String value, final Category category) {
         this.value = value;
         this.category = category;
+    }
+
+    public static Menu toMenu(String name) {
+        return Arrays.stream(values())
+                .filter(menu -> menu.getValue().equals(name))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_MENU_NAME_RANGE.getMessage()));
     }
 
     public String getValue() {
