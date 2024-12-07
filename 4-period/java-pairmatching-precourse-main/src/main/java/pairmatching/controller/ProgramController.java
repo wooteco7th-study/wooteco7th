@@ -24,57 +24,69 @@ public class ProgramController {
     }
 
     public void run() {
-        List<String> backendCrews = CrewFileReader.readBackendCrews();
-        List<String> frontendCrews = CrewFileReader.readFrontendCrews();
         PairHistory history = new PairHistory();
         PairGenerator pairGenerator = new PairGenerator(history);
+        start(history, pairGenerator);
+    }
+
+    private void start(PairHistory history, PairGenerator pairGenerator) {
         while (true) {
             OptionCommand optionCommand = retryOnInvalidInput(this::getOptionCommand);
             if (optionCommand == OptionCommand.종료) {
-                break;
+                return;
             }
             if (optionCommand == OptionCommand.페어매칭) {
-                Info info = retryOnInvalidInput(this::getInfo);
-                if (info.isBackendCourse()) {
-                    boolean isExists = history.ExistsHistory(info.getMission());
-                    if (isExists) {
-                        RematchingCommand answer = retryOnInvalidInput(this::getRematchingCommand);
-                        if (answer == RematchingCommand.NO) {
-                            continue;
-                        }
-                    }
-                    List<Pair> pairResult = pairGenerator.generate(info.getLevel(), backendCrews);
-                    history.add(info.getMission(), pairResult);
-                    outputView.printResult(pairResult);
-                    continue;
-                }
-                List<Pair> pairResult = pairGenerator.generate(info.getLevel(), frontendCrews);
-                history.add(info.getMission(), pairResult);
-                outputView.printResult(pairResult);
-                continue;
+                retryOnInvalidInput(() -> doMatch(history, pairGenerator));
             }
             if (optionCommand == OptionCommand.페어조회) {
-                Info info = retryOnInvalidInput(this::getInfo);
-                if (info.isBackendCourse()) {
-                    List<Pair> pairResult = history.findByMission(info.getMission());
-                    outputView.printResult(pairResult);
-                    continue;
-                }
-                List<Pair> pairResult = history.findByMission(info.getMission());
-                outputView.printResult(pairResult);
+                doSearch(history);
             }
             if (optionCommand == OptionCommand.페어초기화) {
-                history.clear();
-                outputView.printClearMsg();
-
+                doClear(history);
             }
         }
     }
 
+    private void doMatch(final PairHistory history, final PairGenerator pairGenerator) {
+        while (true) {
+            Info info = retryOnInvalidInput(this::getInfo);
+            if (history.ExistsHistory(info.getMission()) && retryOnInvalidInput(this::getRematchingCommand) == RematchingCommand.NO) {
+                continue;
+            }
+            List<String> crewNames = getCrewNames(info);
+            List<Pair> pairResult = pairGenerator.generate(info.getLevel(), crewNames);
+            history.add(info.getMission(), pairResult);
+            outputView.printResult(pairResult);
+            break;
+        }
+    }
+
+    private List<String> getCrewNames(final Info info) {
+        if (info.isBackendCourse()) {
+            return CrewFileReader.readBackendCrews();
+        }
+        return CrewFileReader.readFrontendCrews();
+    }
+
+    private void doSearch(final PairHistory history) {
+        Info info = retryOnInvalidInput(this::getInfo);
+        if (info.isBackendCourse()) {
+            List<Pair> pairResult = history.findByMission(info.getMission());
+            outputView.printResult(pairResult);
+            return;
+        }
+        List<Pair> pairResult = history.findByMission(info.getMission());
+        outputView.printResult(pairResult);
+    }
+
+    private void doClear(final PairHistory history) {
+        history.clear();
+        outputView.printClearMsg();
+    }
+
     private RematchingCommand getRematchingCommand() {
         String input = inputView.readRematching();
-        RematchingCommand answer = RematchingCommand.from(input);
-        return answer;
+        return RematchingCommand.from(input);
     }
 
     private OptionCommand getOptionCommand() {
