@@ -6,7 +6,7 @@ public enum Category {
     CH("중식"),
     ASIA("아시안"),
     WEST("양식"),
-    NONE(""),
+    NONE("");
     private final String value;
 
     Category(final String value) {
