@@ -36,6 +36,12 @@ public enum MenuType {
                 .orElseThrow(() -> new IllegalStateException(ErrorMessage.INVALID_NOT_FOUND_MENU_TYPE.getMessage()));
     }
 
+    public static List<String> findAllMenus() {
+        return Arrays.stream(MenuType.values())
+                .flatMap(menuType -> menuType.getMenus().stream())
+                .toList();
+    }
+
     public int getNumber() {
         return number;
     }
