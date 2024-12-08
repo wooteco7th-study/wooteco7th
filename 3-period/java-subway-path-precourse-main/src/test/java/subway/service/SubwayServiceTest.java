@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import subway.command.RouteCriteriaCommand;
 import subway.domain.Order;
 import subway.domain.path.DistancePathFinder;
 import subway.domain.path.TimePathFinder;
@@ -20,7 +21,8 @@ class SubwayServiceTest {
 
     @BeforeEach
     void setUp() {
-        subwayService = new SubwayService();
+        Sections sections = new Sections(SectionType.findAll());
+        subwayService = new SubwayService(new TimePathFinder(sections), new DistancePathFinder(sections));
     }
 
     @Test
@@ -29,10 +31,9 @@ class SubwayServiceTest {
         // Given
         Order order = new Order(StationType.교대역,
                 StationType.양재역);
-        Sections sections = new Sections(SectionType.findAll());
 
         // When
-        ResultDto resultDto = subwayService.process(order, new TimePathFinder(sections));
+        ResultDto resultDto = subwayService.process(order, RouteCriteriaCommand.최소시간);
 
         // Then
         assertAll(
@@ -44,14 +45,13 @@ class SubwayServiceTest {
     }
 
     @Test
-    @DisplayName("최단경로를 구하여 결과를 반환한다.")
+    @DisplayName("최단거리를 구하여 결과를 반환한다.")
     void processShortestDistance() {
         // Given
         Order order = new Order(StationType.교대역, StationType.양재역);
-        Sections sections = new Sections(SectionType.findAll());
 
         // When
-        ResultDto resultDto = subwayService.process(order, new DistancePathFinder(sections));
+        ResultDto resultDto = subwayService.process(order, RouteCriteriaCommand.최단거리);
 
         // Then
         assertAll(
@@ -59,6 +59,5 @@ class SubwayServiceTest {
                 () -> assertThat(resultDto.totalTime()).isEqualTo(11),
                 () -> assertThat(resultDto.path()).containsExactly("교대역", "강남역", "양재역")
         );
-
     }
 }

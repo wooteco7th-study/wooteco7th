@@ -3,10 +3,6 @@ package subway.controller;
 import subway.command.FunctionCommand;
 import subway.command.RouteCriteriaCommand;
 import subway.domain.Order;
-import subway.domain.path.DistancePathFinder;
-import subway.domain.path.TimePathFinder;
-import subway.domain.route.SectionType;
-import subway.domain.route.Sections;
 import subway.domain.station.StationType;
 import subway.dto.ResultDto;
 import subway.exception.ExceptionHandler;
@@ -35,15 +31,12 @@ public class SubwayController {
     }
 
     private void processCommands() {
-        Sections sections = new Sections(SectionType.findAll());
-        TimePathFinder timePathFinder = new TimePathFinder(sections);
-        DistancePathFinder distancePathFinder = new DistancePathFinder(sections);
         while (!isQuit()) {
-            processCommand(timePathFinder, distancePathFinder);
+            processCommand();
         }
     }
 
-    private void processCommand(final TimePathFinder timePathFinder, final DistancePathFinder distancePathFinder) {
+    private void processCommand() {
         exceptionHandler.retryUntilSuccess(() -> {
             RouteCriteriaCommand command = makeCriteria();
             if (command.isGoBack()) {
@@ -51,7 +44,7 @@ public class SubwayController {
                 return;
             }
             Order order = createOrder();
-            processByCommand(command, order, timePathFinder, distancePathFinder);
+            processByCommand(command, order);
         });
     }
 
@@ -62,19 +55,13 @@ public class SubwayController {
     }
 
     private void processByCommand(final RouteCriteriaCommand command,
-                                  final Order order, final TimePathFinder timePathFinder,
-                                  final DistancePathFinder distancePathFinder) {
-        ResultDto resultDto = processRoute(command, order, timePathFinder, distancePathFinder);
+                                  final Order order) {
+        ResultDto resultDto = processRoute(command, order);
         outputView.showTotalResult(resultDto);
     }
 
-    private ResultDto processRoute(final RouteCriteriaCommand command, final Order order,
-                                   final TimePathFinder timePathFinder,
-                                   final DistancePathFinder distancePathFinder) {
-        if (command.isShortestDistance()) {
-            return subwayService.process(order, distancePathFinder);
-        }
-        return subwayService.process(order, timePathFinder);
+    private ResultDto processRoute(final RouteCriteriaCommand command, final Order order) {
+        return subwayService.process(order, command);
     }
 
     private StationType makeArrivalStation() {
