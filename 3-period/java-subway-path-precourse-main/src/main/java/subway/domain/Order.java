@@ -1,31 +1,31 @@
 package subway.domain;
 
-import subway.domain.station.Station;
+import subway.domain.station.StationType;
 import subway.exception.CustomIllegalArgumentException;
 import subway.exception.ErrorMessage;
 
 public class Order {
 
-    private final Station departureStation;
-    private final Station arrivalStation;
+    private final StationType departureStation;
+    private final StationType arrivalStation;
 
-    public Order(final Station departureStation, final Station arrivalStation) {
+    public Order(final StationType departureStation, final StationType arrivalStation) {
         validate(departureStation, arrivalStation);
         this.departureStation = departureStation;
         this.arrivalStation = arrivalStation;
     }
 
-    private void validate(final Station departureStation, final Station arrivalStation) {
+    private void validate(final StationType departureStation, final StationType arrivalStation) {
         if (departureStation.equals(arrivalStation)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_STATION_DUPLICATED);
         }
     }
 
-    public Station getDepartureStation() {
-        return departureStation;
+    public String getDepartureStationName() {
+        return departureStation.name();
     }
 
-    public Station getArrivalStation() {
-        return arrivalStation;
+    public String getArrivalStationName() {
+        return arrivalStation.name();
     }
 }

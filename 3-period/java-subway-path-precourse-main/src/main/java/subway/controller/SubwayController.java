@@ -2,11 +2,10 @@ package subway.controller;
 
 import subway.command.FunctionCommand;
 import subway.command.RouteCriteriaCommand;
+import subway.domain.station.StationType;
 import subway.support.Initializer;
 import subway.domain.Order;
 import subway.domain.path.PathFinder;
-import subway.domain.station.Station;
-import subway.domain.station.StationRepository;
 import subway.dto.ResultDto;
 import subway.exception.ExceptionHandler;
 import subway.service.SubwayService;
@@ -19,18 +18,19 @@ public class SubwayController {
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
     private final SubwayService subwayService;
+    private final Initializer initializer;
 
     public SubwayController(final InputView inputView, final OutputView outputView,
                             final ExceptionHandler exceptionHandler,
-                            final SubwayService subwayService) {
+                            final SubwayService subwayService, final Initializer initializer) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
         this.subwayService = subwayService;
+        this.initializer = initializer;
     }
 
     public void process() {
-        Initializer.initialize();
         processCommands();
     }
 
@@ -54,8 +54,8 @@ public class SubwayController {
     }
 
     private Order createOrder() {
-        Station departureStation = makeDepartureStation();
-        Station arrivalStation = makeArrivalStation();
+        StationType departureStation = makeDepartureStation();
+        StationType arrivalStation = makeArrivalStation();
         return new Order(departureStation, arrivalStation);
     }
 
@@ -72,15 +72,15 @@ public class SubwayController {
         return subwayService.processMinimumTime(order, pathFinder);
     }
 
-    private Station makeArrivalStation() {
+    private StationType makeArrivalStation() {
         outputView.askArrivalStation();
-        return exceptionHandler.retryUntilSuccess(() -> StationRepository.findByName(inputView.readDeparture()));
+        return exceptionHandler.retryUntilSuccess(() -> StationType.of(inputView.readDeparture()));
     }
 
-    private Station makeDepartureStation() {
+    private StationType makeDepartureStation() {
         return exceptionHandler.retryUntilSuccess(() -> {
             outputView.askDepartureStation();
-            return StationRepository.findByName(inputView.readDeparture());
+            return StationType.of(inputView.readDeparture());
         });
     }
 

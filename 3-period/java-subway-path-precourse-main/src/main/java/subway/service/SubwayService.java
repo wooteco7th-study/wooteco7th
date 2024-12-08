@@ -3,6 +3,7 @@ package subway.service;
 import java.util.List;
 import subway.domain.Order;
 import subway.domain.path.PathFinder;
+import subway.domain.station.StationType;
 import subway.dto.ResultDto;
 
 public class SubwayService {
@@ -19,15 +20,15 @@ public class SubwayService {
     }
 
     private List<String> makeTimePath(final Order order, final PathFinder pathFinder) {
-        String departureStation = order.getDepartureStation().getName();
-        String arrivalStation = order.getArrivalStation().getName();
+        String departureStation = order.getDepartureStationName();
+        String arrivalStation = order.getArrivalStationName();
         pathFinder.validatePathConnected(departureStation, arrivalStation);
         return pathFinder.calculateShortestTimePath(departureStation, arrivalStation);
     }
 
     private List<String> makeDistancePath(final Order order, final PathFinder pathFinder) {
-        String departureStation = order.getDepartureStation().getName();
-        String arrivalStation = order.getArrivalStation().getName();
+        String departureStation = order.getDepartureStationName();
+        String arrivalStation = order.getArrivalStationName();
         pathFinder.validatePathConnected(departureStation, arrivalStation);
         return pathFinder.calculateShortestDistancePath(departureStation, arrivalStation);
     }

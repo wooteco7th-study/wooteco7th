@@ -8,19 +8,22 @@ import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
-import subway.domain.route.Section;
-import subway.domain.route.SectionRepository;
-import subway.domain.station.Station;
-import subway.domain.station.StationRepository;
+import subway.domain.route.SectionType;
+import subway.domain.route.Sections;
+import subway.domain.station.StationType;
 import subway.exception.CustomIllegalArgumentException;
 import subway.exception.ErrorMessage;
 
+// 최단거리 찾기
+// 연결 여부는 section에서 파악 -> 항상 section과 함께 사용하므로 합성 사용
 public class PathFinder {
 
+    private final Sections sections;
     private final DijkstraShortestPath shortestTimeGraph;
     private final DijkstraShortestPath shortestDistanceGraph;
 
     public PathFinder() {
+        this.sections = new Sections(SectionType.findAll());
         this.shortestTimeGraph = initializeTimeGraph();
         this.shortestDistanceGraph = initializeDistanceGraph();
     }
@@ -52,7 +55,7 @@ public class PathFinder {
         WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph = new WeightedMultigraph(
                 DefaultWeightedEdge.class);
         initVertex(distanceGraph);
-        initEdgeWeight(distanceGraph);
+        initializeDistanceWeight(distanceGraph);
         return new DijkstraShortestPath(distanceGraph);
     }
 
@@ -60,30 +63,30 @@ public class PathFinder {
         WeightedMultigraph<String, DefaultWeightedEdge> timesGraph = new WeightedMultigraph(DefaultWeightedEdge.class);
         initVertex(timesGraph);
 
-        for (Section section : SectionRepository.routes()) {
+        for (SectionType section : SectionType.findAll()) {
             timesGraph.setEdgeWeight(
-                    timesGraph.addEdge(section.getDepartureStation().getName(), section.getArrivalStation().getName()),
+                    timesGraph.addEdge(section.getDepartureStationName(), section.getArrivalStationName()),
                     section.getTakenTime());
         }
         return new DijkstraShortestPath(timesGraph);
     }
 
     private boolean isNotConnected(final String start, final String end) {
-        return !SectionRepository.isConnected(start, end);
+        return !sections.isConnected(start, end);
     }
 
-    private void initEdgeWeight(final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph) {
-        for (Section section : SectionRepository.routes()) {
+    private void initializeDistanceWeight(final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph) {
+        for (SectionType section : SectionType.findAll()) {
             distanceGraph.setEdgeWeight(
-                    distanceGraph.addEdge(section.getDepartureStation().getName(),
-                            section.getArrivalStation().getName()),
+                    distanceGraph.addEdge(section.getDepartureStationName(),
+                            section.getArrivalStationName()),
                     section.getDistance());
         }
     }
 
     private void initVertex(final WeightedMultigraph<String, DefaultWeightedEdge> distanceGraph) {
-        for (Station station : StationRepository.stations()) {
-            distanceGraph.addVertex(station.getName());
+        for (StationType stationType : StationType.values()) {
+            distanceGraph.addVertex(stationType.name());
         }
     }
 
@@ -94,10 +97,10 @@ public class PathFinder {
     }
 
     public int getTotalDistance(final List<String> path) {
-        return SectionRepository.getTotalDistance(path);
+        return sections.getTotalDistance(path);
     }
 
     public int getTotalTime(final List<String> path) {
-        return SectionRepository.getTotalTime(path);
+        return sections.getTotalTime(path);
     }
 }

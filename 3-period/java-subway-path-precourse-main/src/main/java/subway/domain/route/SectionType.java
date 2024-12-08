@@ -26,6 +26,12 @@ public enum SectionType {
         this.takenTime = takenTime;
     }
 
+    public static boolean existsStartAndEnd(final StationType start, final StationType end) {
+        return findAll().stream()
+                .anyMatch(sectionType -> sectionType.getDepartureStation().equals(start)
+                        && sectionType.getArrivalStation().equals(end));
+    }
+
     public static List<SectionType> findAll() {
         return List.of(SectionType.values());
     }
@@ -36,6 +42,14 @@ public enum SectionType {
 
     public String getArrivalStationName() {
         return arrivalStation.name();
+    }
+
+    public StationType getDepartureStation() {
+        return departureStation;
+    }
+
+    public StationType getArrivalStation() {
+        return arrivalStation;
     }
 
     public int getDistance() {
