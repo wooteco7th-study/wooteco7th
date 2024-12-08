@@ -16,7 +16,7 @@ class SectionRepositoryTest {
     void getDistance() {
         // Given
         List<Station> stations = getStations();
-        initializeRouteRepository(stations);
+        initializeSectionRepository(stations);
 
         // When
         int distance = SectionRepository.getDistance(stations.get(0).getName(), stations.get(1).getName());
@@ -44,7 +44,7 @@ class SectionRepositoryTest {
     void getTotalTime() {
         // Given
         List<Station> stations = getStations();
-        initializeRouteRepository(stations);
+        initializeSectionRepository(stations);
 
         // When
         int totalTime = SectionRepository.getTotalTime(List.of("교대역", "강남역", "양재역"));
@@ -58,7 +58,7 @@ class SectionRepositoryTest {
     void getTotalDistance() {
         // Given
         List<Station> stations = getStations();
-        initializeRouteRepository(stations);
+        initializeSectionRepository(stations);
 
         // When
         int totalTime = SectionRepository.getTotalDistance(List.of("교대역", "강남역", "양재역"));
@@ -67,7 +67,7 @@ class SectionRepositoryTest {
         assertThat(totalTime).isEqualTo(4);
     }
 
-    private void initializeRouteRepository(final List<Station> stations) {
+    private void initializeSectionRepository(final List<Station> stations) {
         List<Section> sections = List.of(
                 new Section(stations.get(0), stations.get(1), 8, 2),
                 new Section(stations.get(2), stations.get(0), 3, 2),

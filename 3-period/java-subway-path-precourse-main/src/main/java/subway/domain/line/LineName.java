@@ -16,13 +16,6 @@ public enum LineName {
         this.name = name;
     }
 
-    public static LineName from(String input) {
-        return Arrays.stream(LineName.values())
-                .filter(lineName -> Objects.equals(lineName.name, input))
-                .findFirst()
-                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_LINE_NAME));
-    }
-
     public static List<LineName> findAll() {
         return List.of(LineName.values());
     }
