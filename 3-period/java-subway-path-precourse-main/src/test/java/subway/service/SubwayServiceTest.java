@@ -7,7 +7,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import subway.domain.Order;
-import subway.domain.path.PathFinder;
+import subway.domain.path.DistancePathFinder;
+import subway.domain.path.TimePathFinder;
+import subway.domain.route.SectionType;
+import subway.domain.route.Sections;
 import subway.domain.station.StationType;
 import subway.dto.ResultDto;
 
@@ -26,9 +29,10 @@ class SubwayServiceTest {
         // Given
         Order order = new Order(StationType.교대역,
                 StationType.양재역);
+        Sections sections = new Sections(SectionType.findAll());
 
         // When
-        ResultDto resultDto = subwayService.processMinimumTime(order, new PathFinder());
+        ResultDto resultDto = subwayService.process(order, new TimePathFinder(sections));
 
         // Then
         assertAll(
@@ -44,9 +48,10 @@ class SubwayServiceTest {
     void processShortestDistance() {
         // Given
         Order order = new Order(StationType.교대역, StationType.양재역);
+        Sections sections = new Sections(SectionType.findAll());
 
         // When
-        ResultDto resultDto = subwayService.processShortestDistance(order, new PathFinder());
+        ResultDto resultDto = subwayService.process(order, new DistancePathFinder(sections));
 
         // Then
         assertAll(

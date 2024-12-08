@@ -4,7 +4,6 @@ import java.util.Scanner;
 import subway.controller.SubwayController;
 import subway.exception.ExceptionHandler;
 import subway.service.SubwayService;
-import subway.support.Initializer;
 import subway.view.InputView;
 import subway.view.OutputView;
 
@@ -22,7 +21,6 @@ public class Application {
         OutputView outputView = new OutputView();
         ExceptionHandler exceptionHandler = new ExceptionHandler(outputView);
         SubwayService subwayService = new SubwayService();
-        Initializer initializer = new Initializer();
-        return new SubwayController(inputView, outputView, exceptionHandler, subwayService, initializer);
+        return new SubwayController(inputView, outputView, exceptionHandler, subwayService);
     }
 }

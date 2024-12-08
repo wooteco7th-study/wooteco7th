@@ -2,10 +2,12 @@ package subway.controller;
 
 import subway.command.FunctionCommand;
 import subway.command.RouteCriteriaCommand;
-import subway.domain.station.StationType;
-import subway.support.Initializer;
 import subway.domain.Order;
-import subway.domain.path.PathFinder;
+import subway.domain.path.DistancePathFinder;
+import subway.domain.path.TimePathFinder;
+import subway.domain.route.SectionType;
+import subway.domain.route.Sections;
+import subway.domain.station.StationType;
 import subway.dto.ResultDto;
 import subway.exception.ExceptionHandler;
 import subway.service.SubwayService;
@@ -18,16 +20,14 @@ public class SubwayController {
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
     private final SubwayService subwayService;
-    private final Initializer initializer;
 
     public SubwayController(final InputView inputView, final OutputView outputView,
                             final ExceptionHandler exceptionHandler,
-                            final SubwayService subwayService, final Initializer initializer) {
+                            final SubwayService subwayService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
         this.subwayService = subwayService;
-        this.initializer = initializer;
     }
 
     public void process() {
@@ -35,21 +35,23 @@ public class SubwayController {
     }
 
     private void processCommands() {
+        Sections sections = new Sections(SectionType.findAll());
+        TimePathFinder timePathFinder = new TimePathFinder(sections);
+        DistancePathFinder distancePathFinder = new DistancePathFinder(sections);
         while (!isQuit()) {
-            processCommand();
+            processCommand(timePathFinder, distancePathFinder);
         }
     }
 
-    private void processCommand() {
+    private void processCommand(final TimePathFinder timePathFinder, final DistancePathFinder distancePathFinder) {
         exceptionHandler.retryUntilSuccess(() -> {
             RouteCriteriaCommand command = makeCriteria();
             if (command.isGoBack()) {
                 outputView.showBlank();
                 return;
             }
-            PathFinder pathFinder = new PathFinder();
             Order order = createOrder();
-            processByCommand(command, order, pathFinder);
+            processByCommand(command, order, timePathFinder, distancePathFinder);
         });
     }
 
@@ -60,16 +62,19 @@ public class SubwayController {
     }
 
     private void processByCommand(final RouteCriteriaCommand command,
-                                  final Order order, final PathFinder pathFinder) {
-        ResultDto resultDto = processRoute(command, order, pathFinder);
+                                  final Order order, final TimePathFinder timePathFinder,
+                                  final DistancePathFinder distancePathFinder) {
+        ResultDto resultDto = processRoute(command, order, timePathFinder, distancePathFinder);
         outputView.showTotalResult(resultDto);
     }
 
-    private ResultDto processRoute(final RouteCriteriaCommand command, final Order order, final PathFinder pathFinder) {
+    private ResultDto processRoute(final RouteCriteriaCommand command, final Order order,
+                                   final TimePathFinder timePathFinder,
+                                   final DistancePathFinder distancePathFinder) {
         if (command.isShortestDistance()) {
-            return subwayService.processShortestDistance(order, pathFinder);
+            return subwayService.process(order, distancePathFinder);
         }
-        return subwayService.processMinimumTime(order, pathFinder);
+        return subwayService.process(order, timePathFinder);
     }
 
     private StationType makeArrivalStation() {
