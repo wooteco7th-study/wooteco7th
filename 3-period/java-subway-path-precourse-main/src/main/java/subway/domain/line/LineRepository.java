@@ -1,4 +1,4 @@
-package subway.domain;
+package subway.domain.line;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -7,6 +7,10 @@ import java.util.Objects;
 
 public class LineRepository {
     private static final List<Line> lines = new ArrayList<>();
+
+    private LineRepository() {
+
+    }
 
     public static List<Line> lines() {
         return Collections.unmodifiableList(lines);
