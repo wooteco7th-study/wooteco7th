@@ -1,6 +1,8 @@
 package subway.service;
 
+import java.util.EnumMap;
 import java.util.List;
+import java.util.Map;
 import subway.command.RouteCriteriaCommand;
 import subway.domain.Order;
 import subway.domain.path.DistancePathFinder;
@@ -12,23 +14,26 @@ public class SubwayService {
 
     private final TimePathFinder timePathFinder;
     private final DistancePathFinder distancePathFinder;
+    private final Map<RouteCriteriaCommand, PathFinder> pathFinders;
 
     public SubwayService(final TimePathFinder timePathFinder, final DistancePathFinder distancePathFinder) {
         this.timePathFinder = timePathFinder;
         this.distancePathFinder = distancePathFinder;
+        this.pathFinders = initializePathFinders();
+    }
+
+    private Map<RouteCriteriaCommand, PathFinder> initializePathFinders() {
+        EnumMap<RouteCriteriaCommand, PathFinder> pathFinders = new EnumMap<>(
+                RouteCriteriaCommand.class);
+        pathFinders.put(RouteCriteriaCommand.최단거리, distancePathFinder);
+        pathFinders.put(RouteCriteriaCommand.최소시간, timePathFinder);
+        return pathFinders;
     }
 
     public ResultDto process(final Order order, final RouteCriteriaCommand command) {
-        PathFinder pathFinder = getPathFinderByCommand(command);
+        PathFinder pathFinder = pathFinders.get(command);
         List<String> shortestTimePath = makePath(order, pathFinder);
         return makeResult(pathFinder, shortestTimePath);
-    }
-
-    private PathFinder getPathFinderByCommand(final RouteCriteriaCommand command) {
-        if (command.isShortestDistance()) {
-            return distancePathFinder;
-        }
-        return timePathFinder;
     }
 
     private List<String> makePath(final Order order, final PathFinder pathFinder) {
