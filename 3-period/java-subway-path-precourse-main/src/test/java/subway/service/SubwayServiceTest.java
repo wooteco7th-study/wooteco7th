@@ -12,7 +12,7 @@ import subway.domain.path.PathFinder;
 import subway.domain.route.Section;
 import subway.domain.route.SectionRepository;
 import subway.domain.station.Station;
-import subway.domain.station.StationName;
+import subway.domain.station.StationType;
 import subway.domain.station.StationRepository;
 import subway.dto.ResultDto;
 
@@ -31,7 +31,7 @@ class SubwayServiceTest {
         // Given
         List<Station> stations = initializeStations();
         initializeSectionRepository(stations);
-        Order order = new Order(new Station(StationName.교대역.name()), new Station(StationName.양재역.name()));
+        Order order = new Order(new Station(StationType.교대역.name()), new Station(StationType.양재역.name()));
 
         // When
         ResultDto resultDto = subwayService.processMinimumTime(order, new PathFinder());
@@ -51,7 +51,7 @@ class SubwayServiceTest {
         // Given
         List<Station> stations = initializeStations();
         initializeSectionRepository(stations);
-        Order order = new Order(new Station(StationName.교대역.name()), new Station(StationName.양재역.name()));
+        Order order = new Order(new Station(StationType.교대역.name()), new Station(StationType.양재역.name()));
 
         // When
         ResultDto resultDto = subwayService.processShortestDistance(order, new PathFinder());
