@@ -6,6 +6,7 @@ import subway.exception.CustomIllegalArgumentException;
 import subway.exception.ErrorMessage;
 
 public enum FunctionCommand {
+
     PROCESS("1"), QUIT("Q");
 
     private final String value;
