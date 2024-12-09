@@ -18,6 +18,10 @@ public class WeekdayWorkerGroup {
         ListValidator.validateDuplicate(workers, ErrorMessage.INVALID_WORKER);
     }
 
+    public int getSize() {
+        return workers.size();
+    }
+
     public String getNextWorker() {
         final String worker = workers.pollFirst();
         workers.offerLast(worker);

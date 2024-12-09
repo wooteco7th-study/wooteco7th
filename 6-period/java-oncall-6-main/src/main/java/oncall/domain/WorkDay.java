@@ -19,6 +19,10 @@ public class WorkDay {
         return DayOfWeek.getNext(dayOfWeek);
     }
 
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
+
     public Month getMonth() {
         return month;
     }
