@@ -20,20 +20,30 @@ public class Turn {
         this.names = Name.of(names);
     }
 
-    public Name getNextName(final String pastName) {
+    public Name calculateNextName(final String pastName) {
         pos = calculateNextPos();
         Name nextName = names.get(pos);
         if (isChanged) {
-            Collections.swap(names, pos, calculatePreviousPos());
-            isChanged = false;
-            return nextName;
+            swapNames(pos, calculatePreviousPos());
         }
-        if (nextName.getName().equals(pastName)) {
-            Collections.swap(names, pos, calculateNextPos());
-            isChanged = true;
+        if (hasSameName(pastName, nextName)) {
+            swapNames(pos, calculateNextPos());
             return names.get(pos);
         }
         return nextName;
+    }
+
+    private boolean hasSameName(final String pastName, final Name nextName) {
+        return nextName.getName().equals(pastName);
+    }
+
+    private void swapNames(int firstPos, int secondPos) {
+        Collections.swap(names, firstPos, secondPos);
+        toggleIsChanged();
+    }
+
+    private void toggleIsChanged() {
+        isChanged = !isChanged;
     }
 
     private int calculateNextPos() {

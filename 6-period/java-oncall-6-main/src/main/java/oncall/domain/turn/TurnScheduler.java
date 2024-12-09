@@ -1,13 +1,17 @@
-package oncall.domain;
+package oncall.domain.turn;
 
 import java.util.ArrayList;
 import java.util.List;
+import oncall.domain.HolidayChecker;
+import oncall.domain.Name;
 import oncall.domain.date.DayType;
 import oncall.dto.TurnDto;
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
 
 public class TurnScheduler {
+
+    private static final int firstDay = 1;
 
     private final Turn weekdayTurn;
     private final Turn holidayTurn;
@@ -24,7 +28,7 @@ public class TurnScheduler {
         int lastDayNumber = holidayChecker.getLastDayNumber();
         List<TurnDto> result = new ArrayList<>();
         String pastName = "";
-        for (int number = 1; number <= lastDayNumber; number++) {
+        for (int number = firstDay; number <= lastDayNumber; number++) {
             result.add(processPerPerson(number, pastName));
             pastName = result.getLast().name();
         }
@@ -39,9 +43,9 @@ public class TurnScheduler {
 
     private Name getName(final int number, final String pastName) {
         if (holidayChecker.isHoliday(number)) {
-            return holidayTurn.getNextName(pastName);
+            return holidayTurn.calculateNextName(pastName);
         }
-        return weekdayTurn.getNextName(pastName);
+        return weekdayTurn.calculateNextName(pastName);
     }
 
     private TurnDto makeTurnDto(int day, DayType dayType, String name) {

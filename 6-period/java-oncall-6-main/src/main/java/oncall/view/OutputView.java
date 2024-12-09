@@ -20,7 +20,7 @@ public class OutputView {
     }
 
     private String makeMessage(TurnDto dto) {
-        if (dto.isHoliday()) {
+        if (dto.isSpecialDay()) {
             return format(INFORM_HOLIDAY, dto.month(), dto.day(), dto.dayOfWeek(), dto.name());
         }
         return format(INFORM_WEEKDAY, dto.month(), dto.day(), dto.dayOfWeek(), dto.name());

@@ -2,8 +2,8 @@ package oncall.controller;
 
 import java.util.List;
 import oncall.domain.HolidayChecker;
-import oncall.domain.Turn;
-import oncall.domain.TurnScheduler;
+import oncall.domain.turn.Turn;
+import oncall.domain.turn.TurnScheduler;
 import oncall.domain.date.Month;
 import oncall.dto.TurnDto;
 import oncall.exception.ErrorMessage;

@@ -19,6 +19,11 @@ public class HolidayChecker {
         return isSaturdayOrSunday(inputDay) || isLegalHoliday(inputDay);
     }
 
+    public DayType calculateDayType(int inputDay) {
+        DayType startDay = month.getStartDay();
+        return startDay.passFrom(startDay, inputDay - 1);
+    }
+
     public boolean isWeekdayHoliday(int inputDay) {
         return !isSaturdayOrSunday(inputDay) && isLegalHoliday(inputDay);
     }
@@ -28,14 +33,9 @@ public class HolidayChecker {
     }
 
     private boolean isSaturdayOrSunday(final int inputDay) {
-        DayType startDay = month.getDayType();
+        DayType startDay = month.getStartDay();
         DayType day = startDay.passFrom(startDay, inputDay - 1);
         return day.isSaturdayOrSunday();
-    }
-
-    public DayType calculateDayType(int inputDay) {
-        DayType startDay = month.getDayType();
-        return startDay.passFrom(startDay, inputDay - 1);
     }
 
     public int getLastDayNumber() {
