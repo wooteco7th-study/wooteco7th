@@ -2,8 +2,8 @@ package oncall.domain;
 
 public class WeekWorkerGroup {
 
-    private final WeekdayWorkerGroup weekdayWorkerGroup;
-    private final WeekendWorkerGroup weekendWorkerGroup;
+    private final WorkerGroup weekdayWorkerGroup;
+    private final WorkerGroup weekendWorkerGroup;
 
     public WeekWorkerGroup(final WeekdayWorkerGroup weekdayWorkerGroup, final WeekendWorkerGroup weekendWorkerGroup) {
         this.weekdayWorkerGroup = weekdayWorkerGroup;
