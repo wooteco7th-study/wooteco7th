@@ -5,23 +5,25 @@ import oncall.error.AppException;
 import oncall.error.ErrorMessage;
 
 public enum Month {
-    JANUARY(1),
-    FEBRUARY(2),
-    MARCH(3),
-    APRIL(4),
-    MAY(5),
-    JUNE(6),
-    JULY(7),
-    AUGUST(8),
-    SEPTEMBER(9),
-    OCTOBER(10),
-    NOVEMBER(11),
-    DECEMBER(12);
+    JANUARY(1, 31),
+    FEBRUARY(2, 28),
+    MARCH(3, 31),
+    APRIL(4, 30),
+    MAY(5, 31),
+    JUNE(6, 30),
+    JULY(7, 31),
+    AUGUST(8, 31),
+    SEPTEMBER(9, 30),
+    OCTOBER(10, 31),
+    NOVEMBER(11, 30),
+    DECEMBER(12, 31);
 
     private final int number;
+    private final int lastDayOfMonth;
 
-    Month(final int number) {
+    Month(final int number, final int lastDayOfMonth) {
         this.number = number;
+        this.lastDayOfMonth = lastDayOfMonth;
     }
 
     public static Month findByNumber(final int number) {
@@ -29,6 +31,10 @@ public enum Month {
                 .filter(month -> month.number == number)
                 .findAny()
                 .orElseThrow(() -> new AppException(ErrorMessage.INVALID_MONTH));
+    }
+
+    public int getLastDayOfMonth() {
+        return lastDayOfMonth;
     }
 
     public int getNumber() {
