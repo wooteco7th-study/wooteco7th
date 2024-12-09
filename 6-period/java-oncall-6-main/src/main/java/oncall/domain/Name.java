@@ -2,6 +2,7 @@ package oncall.domain;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
 
@@ -19,7 +20,7 @@ public class Name {
     public static List<Name> of(List<String> input) {
         return input.stream()
                 .map(Name::new)
-                .toList();
+                .collect(Collectors.toList());
     }
 
     private void validate(final String name) {

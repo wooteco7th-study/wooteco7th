@@ -72,6 +72,49 @@ class ApplicationTest extends NsTest {
         });
     }
 
+    @Test
+    void 기능_테스트2() {
+        assertSimpleTest(() -> {
+            run(
+                    "4,토",
+                    "우코,허브,쥬니,말랑,라온,헤나",
+                    "허브,우코,쥬니,라온,말랑,헤나"
+            );
+            assertThat(output()).contains(
+                    "4월 1일 토 허브" + LINE_SEPARATOR,
+                    "4월 2일 일 우코" + LINE_SEPARATOR,
+                    "4월 3일 월 허브" + LINE_SEPARATOR,
+                    "4월 4일 화 우코" + LINE_SEPARATOR,
+                    "4월 5일 수 쥬니" + LINE_SEPARATOR,
+                    "4월 6일 목 말랑" + LINE_SEPARATOR,
+                    "4월 7일 금 라온" + LINE_SEPARATOR,
+                    "4월 8일 토 쥬니" + LINE_SEPARATOR,
+                    "4월 9일 일 라온" + LINE_SEPARATOR,
+                    "4월 10일 월 헤나" + LINE_SEPARATOR,
+                    "4월 11일 화 우코" + LINE_SEPARATOR,
+                    "4월 12일 수 허브" + LINE_SEPARATOR,
+                    "4월 13일 목 쥬니" + LINE_SEPARATOR,
+                    "4월 14일 금 말랑" + LINE_SEPARATOR,
+                    "4월 15일 토 헤나" + LINE_SEPARATOR,
+                    "4월 16일 일 말랑" + LINE_SEPARATOR,
+                    "4월 17일 월 라온" + LINE_SEPARATOR,
+                    "4월 18일 화 헤나" + LINE_SEPARATOR
+//                    "4월 19일 수 모디" + LINE_SEPARATOR,
+//                    "4월 20일 목 연어" + LINE_SEPARATOR,
+//                    "4월 21일 금 깃짱" + LINE_SEPARATOR,
+//                    "4월 22일 토 첵스" + LINE_SEPARATOR,
+//                    "4월 23일 일 로지" + LINE_SEPARATOR,
+//                    "4월 24일 월 리오" + LINE_SEPARATOR,
+//                    "4월 25일 화 고니" + LINE_SEPARATOR,
+//                    "4월 26일 수 박스터" + LINE_SEPARATOR,
+//                    "4월 27일 목 달리" + LINE_SEPARATOR,
+//                    "4월 28일 금 조이" + LINE_SEPARATOR,
+//                    "4월 29일 토 해시" + LINE_SEPARATOR,
+//                    "4월 30일 일 폴로"
+            );
+        });
+    }
+
     @Override
     protected void runMain() {
         Application.main(new String[]{});

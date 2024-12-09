@@ -2,7 +2,7 @@ package oncall.domain.date;
 
 import java.util.Arrays;
 
-public enum Holiday {
+public enum LegalHoliday {
 
     신정(1, 1), 삼일절(3, 1), 어린이날(5, 5),
     현충일(6, 6), 광복절(8, 15), 개천절(10, 3),
@@ -12,12 +12,12 @@ public enum Holiday {
     private final int month;
     private final int day;
 
-    Holiday(final int month, final int day) {
+    LegalHoliday(final int month, final int day) {
         this.month = month;
         this.day = day;
     }
 
-    public boolean isHoliday(int month, int day) {
+    public static boolean isLegalHoliday(int month, int day) {
         return Arrays.asList(values())
                 .stream()
                 .anyMatch(holiday -> holiday.day == day && holiday.month == month);

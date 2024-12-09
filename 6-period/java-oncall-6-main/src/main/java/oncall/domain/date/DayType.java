@@ -8,13 +8,15 @@ import oncall.exception.ErrorMessage;
 
 public enum DayType {
 
-    월(DayOfWeek.MONDAY), 화(DayOfWeek.TUESDAY), 수(DayOfWeek.WEDNESDAY), 목(DayOfWeek.THURSDAY), 금(DayOfWeek.FRIDAY),
-    토(DayOfWeek.SATURDAY), 일(DayOfWeek.SUNDAY);
+    월(DayOfWeek.MONDAY, 0), 화(DayOfWeek.TUESDAY, 1), 수(DayOfWeek.WEDNESDAY, 2), 목(DayOfWeek.THURSDAY, 3), 금(
+            DayOfWeek.FRIDAY, 4), 토(DayOfWeek.SATURDAY, 5), 일(DayOfWeek.SUNDAY, 6);
 
     private final DayOfWeek dayOfWeek;
+    private final int number;
 
-    DayType(final DayOfWeek dayOfWeek) {
+    DayType(final DayOfWeek dayOfWeek, final int number) {
         this.dayOfWeek = dayOfWeek;
+        this.number = number;
     }
 
     public static DayType from(String input) {
@@ -22,5 +24,17 @@ public enum DayType {
                 .filter(dayType -> Objects.equals(dayType.name(), input))
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_INPUT));
+    }
+
+    public DayType passFrom(DayType from, int pass) {
+        int passDay = (from.number + pass) % values().length;
+        return Arrays.stream(values())
+                .filter(dayType -> dayType.number == passDay)
+                .findFirst()
+                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.CANNOT_CALCULATE_DAYTYPE));
+    }
+
+    public boolean isSaturdayOrSunday() {
+        return this == 토 || this == 일;
     }
 }
