@@ -42,6 +42,10 @@ public enum DayOfWeek {
                 .orElseThrow(() -> new AppException(ErrorMessage.INVALID_WEEK));
     }
 
+    public String getName() {
+        return name;
+    }
+
     public boolean isWeekend() {
         return isWeekend;
     }
