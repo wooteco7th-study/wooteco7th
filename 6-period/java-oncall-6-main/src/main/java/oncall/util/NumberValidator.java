@@ -1,6 +1,5 @@
 package oncall.util;
 
-import java.util.List;
 import oncall.error.AppException;
 import oncall.error.ErrorMessage;
 
