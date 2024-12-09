@@ -1,6 +1,5 @@
 package oncall.domain.date;
 
-import java.time.DayOfWeek;
 import java.util.Arrays;
 import java.util.Objects;
 import oncall.exception.CustomIllegalArgumentException;
@@ -8,14 +7,11 @@ import oncall.exception.ErrorMessage;
 
 public enum DayType {
 
-    월(DayOfWeek.MONDAY, 0), 화(DayOfWeek.TUESDAY, 1), 수(DayOfWeek.WEDNESDAY, 2), 목(DayOfWeek.THURSDAY, 3), 금(
-            DayOfWeek.FRIDAY, 4), 토(DayOfWeek.SATURDAY, 5), 일(DayOfWeek.SUNDAY, 6);
+    월(0), 화(1), 수(2), 목(3), 금(4), 토(5), 일(6);
 
-    private final DayOfWeek dayOfWeek;
     private final int number;
 
-    DayType(final DayOfWeek dayOfWeek, final int number) {
-        this.dayOfWeek = dayOfWeek;
+    DayType(final int number) {
         this.number = number;
     }
 
