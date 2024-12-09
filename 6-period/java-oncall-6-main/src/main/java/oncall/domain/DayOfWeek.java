@@ -5,7 +5,7 @@ import java.util.Objects;
 import oncall.error.AppException;
 import oncall.error.ErrorMessage;
 
-public enum Week {
+public enum DayOfWeek {
     SUNDAY("일", 0),
     MONDAY("월", 1),
     TUESDAY("화", 2),
@@ -18,24 +18,24 @@ public enum Week {
     private final String name;
     private final int index;
 
-    Week(final String name, final int index) {
+    DayOfWeek(final String name, final int index) {
         this.name = name;
         this.index = index;
     }
 
-    public static Week findByName(final String name) {
-        return Arrays.stream(Week.values())
-                .filter(week -> Objects.equals(week.name, name))
+    public static DayOfWeek findByName(final String name) {
+        return Arrays.stream(DayOfWeek.values())
+                .filter(dayOfWeek -> Objects.equals(dayOfWeek.name, name))
                 .findAny()
                 .orElseThrow(() -> new AppException(ErrorMessage.INVALID_WEEK));
     }
 
-    public static Week getNext(final Week week) {
-        final int length = Week.values().length;
-        final int nextIndex = (week.index + 1) % length;
-        return Arrays.stream(Week.values())
+    public static DayOfWeek getNext(final DayOfWeek dayOfWeek) {
+        final int length = DayOfWeek.values().length;
+        final int nextIndex = (dayOfWeek.index + 1) % length;
+        return Arrays.stream(DayOfWeek.values())
                 .sorted((w1, w2) -> w1.index - w2.index)
-                .filter(sortedWeek -> sortedWeek.index == nextIndex)
+                .filter(sortedDayOfWeek -> sortedDayOfWeek.index == nextIndex)
                 .findAny()
                 .orElseThrow(() -> new AppException(ErrorMessage.INVALID_WEEK));
     }

@@ -5,15 +5,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class WeekTest {
+class DayOfWeekTest {
 
     @DisplayName("다음 요일을 찾는다.")
     @Test
     void getNextTest() {
         //given
-        final Week saturday = Week.SATURDAY;
+        final DayOfWeek saturday = DayOfWeek.SATURDAY;
 
         //should
-        assertThat(Week.getNext(saturday)).isEqualTo(Week.SUNDAY);
+        assertThat(DayOfWeek.getNext(saturday)).isEqualTo(DayOfWeek.SUNDAY);
     }
 }
