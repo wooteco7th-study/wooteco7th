@@ -1,13 +1,12 @@
-package subway;
+package subway.jgrapht;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.List;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.WeightedMultigraph;
 import org.junit.jupiter.api.Test;
-
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 public class JGraphtTest {
     @Test
@@ -22,7 +21,6 @@ public class JGraphtTest {
 
         DijkstraShortestPath dijkstraShortestPath = new DijkstraShortestPath(graph);
         List<String> shortestPath = dijkstraShortestPath.getPath("v3", "v1").getVertexList();
-
         assertThat(shortestPath.size()).isEqualTo(3);
     }
 }
