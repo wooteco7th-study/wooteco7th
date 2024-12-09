@@ -8,6 +8,8 @@ import oncall.util.NumberValidator;
 
 public class WeekdayWorkerGroup {
 
+    private static final int NAME_MIN = 0;
+    private static final int NAME_MAX = 5;
     private static final int MIN = 5;
     private static final int MAX = 35;
 
@@ -16,11 +18,6 @@ public class WeekdayWorkerGroup {
     public WeekdayWorkerGroup(final List<String> workers) {
         validate(workers);
         this.workers = new ArrayDeque<>(workers);
-    }
-
-    private void validate(final List<String> workers) {
-        ListValidator.validateDuplicate(workers, ErrorMessage.INVALID_WORKER);
-        NumberValidator.validateRange(workers.size(), MIN, MAX, ErrorMessage.INVALID_WORKER);
     }
 
     public String getNextWorker() {
@@ -34,5 +31,17 @@ public class WeekdayWorkerGroup {
         workers.offerLast(nextWorker);
         workers.offerFirst(worker);
         return nextWorker;
+    }
+
+    private void validate(final List<String> workers) {
+        ListValidator.validateDuplicate(workers, ErrorMessage.INVALID_WORKER);
+        NumberValidator.validateRange(workers.size(), MIN, MAX, ErrorMessage.INVALID_WORKER);
+        validateLength(workers);
+    }
+
+    private void validateLength(final List<String> workers) {
+        for (String worker : workers) {
+            NumberValidator.validateRange(worker.length(), NAME_MIN, NAME_MAX, ErrorMessage.INVALID_WORKER);
+        }
     }
 }
