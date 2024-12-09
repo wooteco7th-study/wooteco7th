@@ -1,5 +1,6 @@
 package oncall.controller;
 
+import camp.nextstep.edu.missionutils.Console;
 import java.util.List;
 import java.util.Stack;
 import oncall.domain.OnCall;
@@ -25,6 +26,7 @@ public class OnCallController {
     public void run() {
         final WorkDay workDay = requestWorkDay();
         final WeekWorkerGroup weekWorkerGroup = requestWorkerGroup();
+        Console.close();
         final OnCall onCall = new OnCall(workDay, weekWorkerGroup, new Stack<>());
         onCall.assign();
         responseWorkers(onCall);
