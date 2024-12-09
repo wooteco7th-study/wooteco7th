@@ -1,5 +1,6 @@
 package pairmatching.exception;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 import pairmatching.view.OutputView;
 
@@ -11,7 +12,7 @@ public class ExceptionHandler {
         this.outputView = outputView;
     }
 
-    public <T> T retryOn(Supplier<T> action) {
+    public <T> T retryUntilSuccess(Supplier<T> action) {
         while (true) {
             try {
                 return action.get();
@@ -21,7 +22,7 @@ public class ExceptionHandler {
         }
     }
 
-    public void retryOn(Runnable callback) {
+    public void retryUntilSuccess(Runnable callback) {
         while (true) {
             try {
                 callback.run();
@@ -32,21 +33,33 @@ public class ExceptionHandler {
         }
     }
 
-    public <T> T handle(Supplier<T> action) {
+    public <T> T retryUntilPresent(Supplier<Optional<T>> action) {
+        while (true) {
+            try {
+                Optional<T> result = action.get();
+                if (result.isPresent()) {
+                    return result.get();
+                }
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                outputView.showException(e);
+            }
+        }
+    }
+
+    public <T> T executeWithCatch(Supplier<T> action) {
         try {
             return action.get();
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.showException(e);
-            throw e;
+            return null;
         }
     }
 
-    public void handle(Runnable action) {
+    public void executeWithCatch(Runnable action) {
         try {
             action.run();
         } catch (IllegalArgumentException | IllegalStateException e) {
             outputView.showException(e);
-            throw e;
         }
     }
 }
