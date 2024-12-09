@@ -15,12 +15,10 @@ public class WorkDay {
         this.dayOfWeek = dayOfWeek;
     }
 
-    public DayOfWeek getNextDayOfWeek() {
-        return DayOfWeek.getNext(dayOfWeek);
-    }
-
     public DayOfWeek getDayOfWeek() {
-        return dayOfWeek;
+        final DayOfWeek currentDayOfWeek = this.dayOfWeek;
+        this.dayOfWeek = DayOfWeek.getNext(currentDayOfWeek);
+        return currentDayOfWeek;
     }
 
     public Month getMonth() {
