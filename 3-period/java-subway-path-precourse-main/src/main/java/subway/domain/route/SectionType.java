@@ -56,7 +56,7 @@ public enum SectionType {
         return distance;
     }
 
-    public int getTakenTime() {
+    public int getTime() {
         return takenTime;
     }
 }

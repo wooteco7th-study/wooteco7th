@@ -15,7 +15,7 @@ public class TimePathFinder extends PathFinder {
 
     public TimePathFinder(final Sections sections) {
         super(sections);
-        this.graph = initializeGraph(SectionType::getTakenTime);
+        this.graph = initializeGraph(SectionType::getTime);
     }
 
     @Override

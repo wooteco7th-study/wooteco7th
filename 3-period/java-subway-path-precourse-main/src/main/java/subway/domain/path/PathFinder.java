@@ -63,10 +63,10 @@ public abstract class PathFinder {
     }
 
     public int getTotalDistance(final List<String> path) {
-        return sections.getTotalDistance(path);
+        return sections.calculateTotalDistance(path);
     }
 
     public int getTotalTime(final List<String> path) {
-        return sections.getTotalTime(path);
+        return sections.calculateTotalTime(path);
     }
 }
