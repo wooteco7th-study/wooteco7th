@@ -19,6 +19,6 @@ public enum LegalHoliday {
     public static boolean isLegalHoliday(int month, int day) {
         return Arrays.asList(values())
                 .stream()
-                .anyMatch(holiday -> holiday.day == day && holiday.month == month);
+                .anyMatch(holiday -> holiday.month == month && holiday.day == day);
     }
 }

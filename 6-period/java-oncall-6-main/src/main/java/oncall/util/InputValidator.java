@@ -1,6 +1,5 @@
 package oncall.util;
 
-import java.util.regex.Pattern;
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
 
@@ -14,9 +13,4 @@ public class InputValidator {
             throw new CustomIllegalArgumentException(message);
         }
     }
-
-    public static boolean isInvalidPattern(String input, Pattern pattern) {
-        return !pattern.matcher(input).matches();
-    }
-
 }
