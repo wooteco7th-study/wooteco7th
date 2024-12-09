@@ -14,7 +14,7 @@ public record WorkerDto(
         return new WorkerDto(
                 String.valueOf(worker.getMonth().getNumber()),
                 String.valueOf(worker.getDayOfMonth()),
-                worker.getDayOfWeek().name(),
+                worker.getDayOfWeek().getName(),
                 worker.getName(),
                 worker.isHoliday()
         );
