@@ -1,9 +1,12 @@
 package oncall.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.assertThatIllegalStateException;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
+import oncall.error.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -45,5 +48,14 @@ class WeekdayWorkerGroupTest {
                 () -> assertThat(nextWorker1).isEqualTo("밍트"),
                 () -> assertThat(nextWorker2).isEqualTo("희용")
         );
+    }
+
+    @Test
+    @DisplayName("이름이 5글자가 넘는 근무자가 존재하여 예외가 발생한다.")
+    void validateLengthTest() throws Exception {
+        //should
+        assertThatIllegalArgumentException().isThrownBy(() -> new WeekdayWorkerGroup(List.of("밍트밍트밍트", "람쥐", "수달", "러키", "고로케")))
+                .withMessageContaining(ErrorMessage.INVALID_INPUT.getMessage());
+
     }
 }
