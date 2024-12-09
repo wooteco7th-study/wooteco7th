@@ -1,6 +1,6 @@
 package oncall.exception;
 
-public class CustomIllegalStateException extends IllegalStateException{
+public class CustomIllegalStateException extends IllegalStateException {
 
     public CustomIllegalStateException(final String message) {
         super(ErrorPrefix.format(message));
