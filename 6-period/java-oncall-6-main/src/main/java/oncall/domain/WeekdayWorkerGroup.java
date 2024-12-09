@@ -4,8 +4,12 @@ import java.util.ArrayDeque;
 import java.util.List;
 import oncall.error.ErrorMessage;
 import oncall.util.ListValidator;
+import oncall.util.NumberValidator;
 
 public class WeekdayWorkerGroup {
+
+    private static final int MIN = 5;
+    private static final int MAX = 35;
 
     private final ArrayDeque<String> workers;
 
@@ -16,6 +20,7 @@ public class WeekdayWorkerGroup {
 
     private void validate(final List<String> workers) {
         ListValidator.validateDuplicate(workers, ErrorMessage.INVALID_WORKER);
+        NumberValidator.validateRange(workers.size(), MIN, MAX, ErrorMessage.INVALID_WORKER);
     }
 
     public int getSize() {
