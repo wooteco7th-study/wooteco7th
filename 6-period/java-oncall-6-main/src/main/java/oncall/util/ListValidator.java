@@ -6,25 +6,21 @@ import oncall.error.ErrorMessage;
 
 public class ListValidator {
 
-        private ListValidator() {
+    private ListValidator() {
 
-            }
+    }
 
-            public static <T> void validateDuplicate(final List<T> values, final ErrorMessage errorMessage) {
-                if (isDuplicated(values)) {
-                    throw new AppException(errorMessage);
-                }
-            }
+    public static <T> void validateDuplicate(final List<T> values, final ErrorMessage errorMessage) {
+        if (isDuplicated(values)) {
+            throw new AppException(errorMessage);
+        }
+    }
 
 
-            private static <T> boolean isDuplicated(final List<T> values) {
-                return values.stream()
-                        .distinct()
-                        .count() != values.size();
-            }
+    private static <T> boolean isDuplicated(final List<T> values) {
+        return values.stream()
+                .distinct()
+                .count() != values.size();
+    }
 
-            @FunctionalInterface
-            public interface ValidateFunction<T extends Number> {
-                void validate(final T value);
-            }
 }

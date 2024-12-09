@@ -13,10 +13,6 @@ public class WorkDay {
         this.dayOfMonth = dayOfMonth;
     }
 
-    public void updateDayOfWeek(final DayOfWeek dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
     public DayOfWeek getDayOfWeek() {
         final DayOfWeek currentDayOfWeek = this.dayOfWeek;
         this.dayOfWeek = DayOfWeek.getNext(currentDayOfWeek);

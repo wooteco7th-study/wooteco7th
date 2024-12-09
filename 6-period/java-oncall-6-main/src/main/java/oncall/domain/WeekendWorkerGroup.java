@@ -23,10 +23,6 @@ public class WeekendWorkerGroup {
         NumberValidator.validateRange(workers.size(), MIN, MAX, ErrorMessage.INVALID_WORKER);
     }
 
-    public int getSize() {
-        return workers.size();
-    }
-
     public String getNextWorker() {
         final String worker = workers.pollFirst();
         workers.offerLast(worker);
