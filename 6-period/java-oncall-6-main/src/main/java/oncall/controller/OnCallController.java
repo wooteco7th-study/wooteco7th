@@ -6,7 +6,7 @@ import oncall.domain.OnCall;
 import oncall.domain.WeekdayWorkerGroup;
 import oncall.domain.WeekendWorkerGroup;
 import oncall.domain.WorkDay;
-import oncall.domain.WorkerGroup;
+import oncall.domain.WeekWorkerGroup;
 import oncall.dto.WorkerDto;
 import oncall.util.LoopTemplate;
 import oncall.view.InputView;
@@ -24,8 +24,8 @@ public class OnCallController {
 
     public void run() {
         final WorkDay workDay = requestWorkDay();
-        final WorkerGroup workerGroup = requestWorkerGroup();
-        final OnCall onCall = new OnCall(workDay, workerGroup, new Stack<>());
+        final WeekWorkerGroup weekWorkerGroup = requestWorkerGroup();
+        final OnCall onCall = new OnCall(workDay, weekWorkerGroup, new Stack<>());
         onCall.assign();
         responseWorkers(onCall);
 
@@ -45,11 +45,11 @@ public class OnCallController {
         });
     }
 
-    private WorkerGroup requestWorkerGroup() {
+    private WeekWorkerGroup requestWorkerGroup() {
         return LoopTemplate.tryCatchLoop(() -> {
             final WeekdayWorkerGroup weekdayWorkerGroup = requestWeekdayWorkerGroup();
             final WeekendWorkerGroup weekendWorkerGroup = requestWeekendWorkerGroup();
-            return new WorkerGroup(weekdayWorkerGroup, weekendWorkerGroup);
+            return new WeekWorkerGroup(weekdayWorkerGroup, weekendWorkerGroup);
         });
     }
 

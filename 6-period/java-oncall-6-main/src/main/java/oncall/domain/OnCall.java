@@ -6,12 +6,12 @@ import java.util.Stack;
 public class OnCall {
 
     private final WorkDay workDay;
-    private final WorkerGroup workerGroup;
+    private final WeekWorkerGroup weekWorkerGroup;
     private final Stack<Worker> workers;
 
-    public OnCall(final WorkDay workDay, final WorkerGroup workerGroup, final Stack<Worker> workers) {
+    public OnCall(final WorkDay workDay, final WeekWorkerGroup weekWorkerGroup, final Stack<Worker> workers) {
         this.workDay = workDay;
-        this.workerGroup = workerGroup;
+        this.weekWorkerGroup = weekWorkerGroup;
         this.workers = workers;
     }
 
@@ -37,9 +37,9 @@ public class OnCall {
 
     private String getWorkerName(final DayOfWeek dayOfWeek, final int month, int dayOfMonth) {
         if (dayOfWeek.isWeekend() || Holiday.isHoliday(month, dayOfMonth)) {
-            return workerGroup.getWeekendNextWorker();
+            return weekWorkerGroup.getWeekendNextWorker();
         }
-        return workerGroup.getWeekDayNextWorker();
+        return weekWorkerGroup.getWeekDayNextWorker();
     }
 
 
@@ -57,10 +57,10 @@ public class OnCall {
                                     final int dayOfMonth, final boolean isHoliday) {
         String changedWorkerName = "";
         if (dayOfWeek.isWeekend() || isHoliday) {
-            changedWorkerName = workerGroup.getWeekendChangedWorker(workerName);
+            changedWorkerName = weekWorkerGroup.getWeekendChangedWorker(workerName);
         }
         if (!dayOfWeek.isWeekend() && !isHoliday) {
-            changedWorkerName = workerGroup.getWeekDayChangedWorker(workerName);
+            changedWorkerName = weekWorkerGroup.getWeekDayChangedWorker(workerName);
         }
         return new Worker(changedWorkerName, month, dayOfWeek, dayOfMonth, isHoliday);
     }

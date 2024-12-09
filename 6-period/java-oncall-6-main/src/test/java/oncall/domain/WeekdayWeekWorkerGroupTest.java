@@ -10,7 +10,7 @@ import oncall.error.ErrorMessage;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class WeekdayWorkerGroupTest {
+class WeekdayWeekWorkerGroupTest {
 
     @DisplayName("다음 근무자를 가져온다.")
     @Test
