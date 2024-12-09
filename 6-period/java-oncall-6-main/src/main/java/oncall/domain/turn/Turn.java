@@ -1,7 +1,8 @@
-package oncall.domain;
+package oncall.domain.turn;
 
 import java.util.Collections;
 import java.util.List;
+import oncall.domain.Name;
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
 
@@ -28,7 +29,7 @@ public class Turn {
             return nextName;
         }
         if (nextName.getName().equals(pastName)) {
-            Collections.swap(names, pos, pos + 1);
+            Collections.swap(names, pos, calculateNextPos());
             isChanged = true;
             return names.get(pos);
         }
