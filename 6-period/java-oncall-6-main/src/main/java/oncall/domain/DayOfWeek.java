@@ -29,7 +29,7 @@ public enum DayOfWeek {
         return Arrays.stream(DayOfWeek.values())
                 .filter(dayOfWeek -> Objects.equals(dayOfWeek.name, name))
                 .findAny()
-                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_WEEK));
+                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_INPUT));
     }
 
     public static DayOfWeek getNext(final DayOfWeek dayOfWeek) {
@@ -39,7 +39,7 @@ public enum DayOfWeek {
                 .sorted((w1, w2) -> w1.index - w2.index)
                 .filter(sortedDayOfWeek -> sortedDayOfWeek.index == nextIndex)
                 .findAny()
-                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_WEEK));
+                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_INPUT));
     }
 
     public String getName() {

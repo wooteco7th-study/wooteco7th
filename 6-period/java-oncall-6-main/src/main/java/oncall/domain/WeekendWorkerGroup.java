@@ -34,14 +34,14 @@ public class WeekendWorkerGroup {
     }
 
     private void validate(final List<String> workers) {
-        ListValidator.validateDuplicate(workers, ErrorMessage.INVALID_WORKER);
-        NumberValidator.validateRange(workers.size(), MIN, MAX, ErrorMessage.INVALID_WORKER);
+        ListValidator.validateDuplicate(workers, ErrorMessage.INVALID_INPUT);
+        NumberValidator.validateRange(workers.size(), MIN, MAX, ErrorMessage.INVALID_INPUT);
         validateLength(workers);
     }
 
     private void validateLength(final List<String> workers) {
         for (String worker : workers) {
-            NumberValidator.validateRange(worker.length(), NAME_MIN, NAME_MAX, ErrorMessage.INVALID_WORKER);
+            NumberValidator.validateRange(worker.length(), NAME_MIN, NAME_MAX, ErrorMessage.INVALID_INPUT);
         }
     }
 }

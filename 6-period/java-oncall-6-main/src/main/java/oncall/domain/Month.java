@@ -30,7 +30,7 @@ public enum Month {
         return Arrays.stream(Month.values())
                 .filter(month -> month.number == number)
                 .findAny()
-                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_MONTH));
+                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_INPUT));
     }
 
     public int getLastDayOfMonth() {

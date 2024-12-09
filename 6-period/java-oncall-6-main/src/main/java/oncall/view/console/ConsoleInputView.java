@@ -20,10 +20,10 @@ public class ConsoleInputView implements InputView {
     @Override
     public WorkDay readWorkDay() {
         final String input = readInput();
-        StringValidator.validateFormat(input, ErrorMessage.INVALID_WORK_DAY);
+        StringValidator.validateFormat(input, ErrorMessage.INVALID_INPUT);
         final List<String> tokens = StringParser.parseToTokens(input, DELIMITER_COMMA);
         final Month month = Month.findByNumber(
-                StringParser.parseToInt(tokens.get(MONTH_INDEX), ErrorMessage.INVALID_MONTH));
+                StringParser.parseToInt(tokens.get(MONTH_INDEX), ErrorMessage.INVALID_INPUT));
         final DayOfWeek dayOfWeek = DayOfWeek.findByName(tokens.get(DAY_OF_WEEK_INDEX));
         return new WorkDay(month, dayOfWeek, INITIAL_DAY_OF_MONTH);
     }
