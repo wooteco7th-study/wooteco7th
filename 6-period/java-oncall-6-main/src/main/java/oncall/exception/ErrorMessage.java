@@ -9,6 +9,7 @@ public enum ErrorMessage {
     //    - [ ]  월~금 사이의 문자가 아닌 경우
     //    - [ ]  해당 달의 시작 요일이 아닌 경우
     INVALID_INPUT("유효하지 않은 입력 값입니다. 다시 입력해 주세요."),
+    CANNOT_CALCULATE_DAYTYPE("적절한 DayType을 반환할 수 없습니다."),
 
     // - 닉네임
     //    - [ ]  빈 값이거나 5자 초과일 경우
@@ -26,13 +27,13 @@ public enum ErrorMessage {
 //    INVALID_TURN("근무자가 평일과 주말에 올바르게 배치되지 않았습니다."),
 
     ;
-    
+
     private final String message;
-    
+
     ErrorMessage(final String message) {
         this.message = message;
     }
-    
+
     public String getMessage(Object... args) {
         return String.format(message, args);
     }

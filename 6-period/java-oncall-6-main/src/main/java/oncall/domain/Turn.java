@@ -1,5 +1,6 @@
 package oncall.domain;
 
+import java.util.Collections;
 import java.util.List;
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
@@ -10,10 +11,36 @@ public class Turn {
     private static final int MAX_WORKER_NUMBER = 35;
 
     private final List<Name> names;
+    private int pos = -1;
+    private boolean isChanged = false;
 
     public Turn(final List<String> names) {
         validate(names);
         this.names = Name.of(names);
+    }
+
+    public Name getNextName(final String pastName) {
+        pos = calculateNextPos();
+        Name nextName = names.get(pos);
+        if (isChanged) {
+            Collections.swap(names, pos, calculatePreviousPos());
+            isChanged = false;
+            return nextName;
+        }
+        if (nextName.getName().equals(pastName)) {
+            Collections.swap(names, pos, pos + 1);
+            isChanged = true;
+            return names.get(pos);
+        }
+        return nextName;
+    }
+
+    private int calculateNextPos() {
+        return (pos + 1) % getSize();
+    }
+
+    private int calculatePreviousPos() {
+        return (getSize() + pos - 1) % getSize();
     }
 
     private void validate(final List<String> names) {

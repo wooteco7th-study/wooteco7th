@@ -1,9 +1,11 @@
 package oncall.controller;
 
 import java.util.List;
+import oncall.domain.HolidayChecker;
 import oncall.domain.Turn;
 import oncall.domain.TurnScheduler;
 import oncall.domain.date.Month;
+import oncall.dto.TurnDto;
 import oncall.exception.ErrorMessage;
 import oncall.exception.ExceptionHandler;
 import oncall.service.OncallService;
@@ -30,14 +32,16 @@ public class OncallController {
     public void process() {
         Month month = makeMonth();
         // 평일 비상 근무 순번과 휴일 비상 근무 순번 입력
-        TurnScheduler turnScheduler = makeTurnScheduler();
+        TurnScheduler turnScheduler = makeTurnScheduler(month);
+        List<TurnDto> dtos = oncallService.makeWorkSchedule(turnScheduler);
+        outputView.showInformTurn(dtos);
     }
 
-    private TurnScheduler makeTurnScheduler() {
+    private TurnScheduler makeTurnScheduler(final Month month) {
         return exceptionHandler.retryUntilSuccess(() -> {
             Turn weekdayTurn = makeWeekdayTurn();
             Turn holidayTurn = makeHolidayTurn();
-            return new TurnScheduler(weekdayTurn, holidayTurn);
+            return new TurnScheduler(weekdayTurn, holidayTurn, new HolidayChecker(month));
         });
     }
 
