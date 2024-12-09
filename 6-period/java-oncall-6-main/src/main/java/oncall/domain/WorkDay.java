@@ -24,7 +24,7 @@ public class WorkDay {
     }
 
     public int getDayOfMonth() {
-        return dayOfMonth;
+        return dayOfMonth++;
     }
 
     public Month getMonth() {
