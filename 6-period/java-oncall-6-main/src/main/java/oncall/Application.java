@@ -1,7 +1,14 @@
 package oncall;
 
+import oncall.controller.OnCallController;
+import oncall.view.console.ConsoleInputView;
+import oncall.view.console.ConsoleOutputView;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        final ConsoleInputView consoleInputView = new ConsoleInputView();
+        final ConsoleOutputView consoleOutputView = new ConsoleOutputView();
+        final OnCallController onCallController = new OnCallController(consoleInputView, consoleOutputView);
+        onCallController.run();
     }
 }
