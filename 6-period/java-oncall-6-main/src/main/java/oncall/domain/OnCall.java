@@ -17,15 +17,18 @@ public class OnCall {
 
     public void assign() {
         final Month month = workDay.getMonth();
-        final DayOfWeek dayOfWeek = workDay.getDayOfWeek();
-        final int dayOfMonth = workDay.getDayOfMonth();
-        final boolean isHoliday = isHoliday(dayOfWeek, month.getNumber(), dayOfMonth);
-        final String workerName = getWorkerName(dayOfWeek, month.getNumber(), dayOfMonth);
-        if (workers.isEmpty()) {
-            workers.push(new Worker(workerName, month, dayOfWeek, dayOfMonth, isHoliday));
-            return;
+        int lastDayOfMonth = month.getLastDayOfMonth();
+        while (lastDayOfMonth-- > 0) {
+            final DayOfWeek dayOfWeek = workDay.getDayOfWeek();
+            final int dayOfMonth = workDay.getDayOfMonth();
+            final boolean isHoliday = isHoliday(dayOfWeek, month.getNumber(), dayOfMonth);
+            final String workerName = getWorkerName(dayOfWeek, month.getNumber(), dayOfMonth);
+            if (workers.isEmpty()) {
+                workers.push(new Worker(workerName, month, dayOfWeek, dayOfMonth, isHoliday));
+                continue;
+            }
+            workers.push(getWorker(workerName, dayOfWeek, month, dayOfMonth, isHoliday));
         }
-        workers.push(getWorker(workerName, dayOfWeek, month, dayOfMonth, isHoliday));
     }
 
     public Stack<Worker> getWorkers() {
