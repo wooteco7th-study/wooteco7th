@@ -1,4 +1,4 @@
-package oncall.domain;
+package oncall.domain.date;
 
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;

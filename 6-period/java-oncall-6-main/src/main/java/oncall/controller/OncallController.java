@@ -1,7 +1,9 @@
 package oncall.controller;
 
 import java.util.List;
-import oncall.domain.Month;
+import oncall.domain.Turn;
+import oncall.domain.TurnScheduler;
+import oncall.domain.date.Month;
 import oncall.exception.ErrorMessage;
 import oncall.exception.ExceptionHandler;
 import oncall.service.OncallService;
@@ -27,8 +29,30 @@ public class OncallController {
 
     public void process() {
         Month month = makeMonth();
-
+        // 평일 비상 근무 순번과 휴일 비상 근무 순번 입력
+        TurnScheduler turnScheduler = makeTurnScheduler();
     }
+
+    private TurnScheduler makeTurnScheduler() {
+        return exceptionHandler.retryUntilSuccess(() -> {
+            Turn weekdayTurn = makeWeekdayTurn();
+            Turn holidayTurn = makeHolidayTurn();
+            return new TurnScheduler(weekdayTurn, holidayTurn);
+        });
+    }
+
+    private Turn makeHolidayTurn() {
+        outputView.showRequestHoliday();
+        List<String> tokens = inputView.readHolidayTurn();
+        return new Turn(tokens);
+    }
+
+    private Turn makeWeekdayTurn() {
+        outputView.showRequestWeekday();
+        List<String> tokens = inputView.readWeekdayTurn();
+        return new Turn(tokens);
+    }
+
 
     private Month makeMonth() {
         // 비상 근무 배정 월, 시작요일 입력
