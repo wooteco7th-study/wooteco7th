@@ -20,10 +20,10 @@ public enum ErrorMessage {
     //    - [ ]  중복 이름이 존재하는 경우
     //- [ ]  평일 순번과 휴일 순번에 근무자가 각각 한번씩 배정되지 않는 경우
     //    - [ ]  평일 비상 근무와 휴일 비상 근무의 크기가 다른 경우
-    INVALID_NICKNAME("유효한 닉네임이 아닙니다."),
-    INVALID_WORKER_NUMBER("유효한 근무자 수 범위가 아닙니다."),
-    INVALID_DUPLICATED_NAME("순번 내에 중복 이름이 존재합니다."),
-    INVALID_TURN("근무자가 평일과 주말에 올바르게 배치되지 않았습니다."),
+//    INVALID_NICKNAME("유효한 닉네임이 아닙니다."),
+//    INVALID_WORKER_NUMBER("유효한 근무자 수 범위가 아닙니다."),
+//    INVALID_DUPLICATED_NAME("순번 내에 중복 이름이 존재합니다."),
+//    INVALID_TURN("근무자가 평일과 주말에 올바르게 배치되지 않았습니다."),
 
     ;
     

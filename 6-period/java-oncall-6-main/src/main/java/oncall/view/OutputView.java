@@ -27,15 +27,15 @@ public class OutputView {
     }
 
     public void showRequestStart() {
-        showln(REQUEST_START);
+        show(REQUEST_START);
     }
 
     public void showRequestWeekday() {
-        showln(REQUEST_WEEKDAY);
+        show(REQUEST_WEEKDAY);
     }
 
     public void showRequestHoliday() {
-        showln(REQUEST_HOLIDAY);
+        show(REQUEST_HOLIDAY);
     }
 
     public void showException(Exception exception) {
@@ -50,4 +50,7 @@ public class OutputView {
         System.out.println(message);
     }
 
+    private void show(String message) {
+        System.out.print(message);
+    }
 }
