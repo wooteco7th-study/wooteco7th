@@ -84,8 +84,8 @@ public class OutputView {
         showln(REQUEST_RETRY);
     }
 
-    public void showRequestRegularPrice() {
-        showln(LINE + REQUEST_REGULAR_PRICE);
+    public void showRequestRegularPrice(final String productName, final int quantity) {
+        showln(LINE + format(REQUEST_REGULAR_PRICE, productName, quantity));
     }
 
     public void showRequestGift(String productName) {

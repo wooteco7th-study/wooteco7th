@@ -59,11 +59,11 @@ public class StoreService {
 
     public ResultDto processMixedPurchase(final ResultDto resultDto, final Stocks stocks) {
         // 프로모션 구매
-        int purchaseQuantity = resultDto.promotionPurchaseQuantity();
-        stocks.subtractPromotionStock(purchaseQuantity);
+        int totalPurchaseQuantity = resultDto.promotionPurchaseQuantity() + resultDto.regularPurchaseQuantity();
+        int remainingQuantity = totalPurchaseQuantity - stocks.getPromotionStockQuantity();
+        stocks.subtractPromotionStock(stocks.getPromotionStockQuantity());
         // 정가 구매
-        int regularPurchaseQuantity = resultDto.regularPurchaseQuantity();
-        stocks.subtractRegularStock(regularPurchaseQuantity);
+        stocks.subtractRegularStock(remainingQuantity);
         return resultDto;
     }
 

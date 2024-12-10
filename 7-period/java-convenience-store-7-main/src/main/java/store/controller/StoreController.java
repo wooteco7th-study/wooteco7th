@@ -112,7 +112,7 @@ public class StoreController {
     }
 
     private ResultDto guideIfMixed(final ResultDto resultDto, final Stocks stocks) {
-        outputView.showRequestRegularPrice();
+        outputView.showRequestRegularPrice(resultDto.productName(), resultDto.regularPurchaseQuantity());
         if (isYes()) {
             return storeService.processMixedPurchase(resultDto, stocks);
         }
