@@ -111,12 +111,12 @@ public class Stocks {
         regularStockQuantity -= purchaseQuantity;
     }
 
-    public int calculateGiftQuantity(final int unit) {
-        return promotion.calculateGiftQuantity(unit);
+    public int calculateGiftQuantity(final int numberOfUnit) {
+        return promotion.calculateGiftQuantity(numberOfUnit);
     }
 
-    public boolean isPromotionHasMoreThanEqualToBuyQuantity() {
-        return getPromotionStockQuantity() >= getBuyQuantity();
+    public boolean calculateRemainingIsMoreThanEqualToBuyQuantity(final int purchaseQuantity) {
+        return getPromotionStockQuantity() - purchaseQuantity >= getBuyQuantity();
     }
 
     public void subtractPromotionStock(final int purchaseQuantity) {
