@@ -8,7 +8,6 @@ public class ResultCalculator {
     private static final int MEMBERSHIP_DISCOUNT_RATE = 30;
     private static final int PERCENT = 100;
     private static final int MEMBERSHIP_MAX_DISCOUNT = 8000;
-    // int totalQuantity, int totalPrice, int promotionDiscount, int membershipDiscount, int payPrice)
 
     private final List<ResultDto> dtos;
 

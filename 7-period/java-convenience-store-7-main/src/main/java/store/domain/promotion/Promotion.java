@@ -35,10 +35,6 @@ public class Promotion {
         return buyQuantity;
     }
 
-    public int getGetQuantity() {
-        return getQuantity;
-    }
-
     public String getName() {
         return name;
     }

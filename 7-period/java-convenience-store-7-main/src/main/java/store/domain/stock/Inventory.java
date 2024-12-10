@@ -22,8 +22,6 @@ public class Inventory {
         throw new CustomIllegalArgumentException(ErrorMessage.INVALID_PRODUCT_NAME);
     }
 
-    // name,price,quantity,promotion
-    // 프로모션 존재할 경우
     public void put(final String name, final int price, final int quantity, final Promotion promotion) {
         if (inventory.containsKey(name)) {
             Stocks stocks = inventory.get(name);

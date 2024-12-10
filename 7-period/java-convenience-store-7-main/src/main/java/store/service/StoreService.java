@@ -55,11 +55,9 @@ public class StoreService {
     }
 
     public ResultDto processMixedPurchase(final ResultDto resultDto, final Stocks stocks) {
-        // 프로모션 구매
         int totalPurchaseQuantity = resultDto.promotionPurchaseQuantity() + resultDto.regularPurchaseQuantity();
         int remainingQuantity = totalPurchaseQuantity - stocks.getPromotionStockQuantity();
         stocks.subtractPromotionStock(stocks.getPromotionStockQuantity());
-        // 정가 구매
         stocks.subtractRegularStock(remainingQuantity);
         return resultDto;
     }
@@ -83,7 +81,6 @@ public class StoreService {
 
     public ReceiptResultDto convertToReceiptResultDtoWithMembership(final List<ResultDto> dtos) {
         ResultCalculator resultCalculator = new ResultCalculator(dtos);
-        //     // int totalQuantity, int totalPrice, int promotionDiscount, int membershipDiscount, int payPrice)
         int totalQuantity = resultCalculator.calculateTotalQuantity();
         int totalPrice = resultCalculator.calcuclateTotalPrice();
         int promotionDiscount = resultCalculator.calculatePromotionDiscount();
@@ -94,7 +91,6 @@ public class StoreService {
 
     public ReceiptResultDto convertToReceiptResultDto(final List<ResultDto> dtos) {
         ResultCalculator resultCalculator = new ResultCalculator(dtos);
-        //     // int totalQuantity, int totalPrice, int promotionDiscount, int membershipDiscount, int payPrice)
         int totalQuantity = resultCalculator.calculateTotalQuantity();
         int totalPrice = resultCalculator.calcuclateTotalPrice();
         int promotionDiscount = resultCalculator.calculatePromotionDiscount();

@@ -37,7 +37,6 @@ public class PromotionProcessor {
         if (canGift(order)) {
             return guideGift(order);
         }
-        // 프로모션 결제
         return processOnlyPromotionPurchase(order);
     }
 

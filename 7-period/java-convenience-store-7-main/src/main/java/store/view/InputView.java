@@ -7,6 +7,7 @@ import store.util.InputValidator;
 import store.util.StringParser;
 
 public class InputView {
+
     private static final String DELIMITER = ",";
 
     public List<String> readOrder() {
