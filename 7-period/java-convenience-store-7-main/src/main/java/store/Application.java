@@ -1,6 +1,9 @@
 package store;
 
 import java.util.ArrayList;
+import store.payment.controller.PaymentController;
+import store.payment.view.PaymentInputView;
+import store.payment.view.PaymentOutputView;
 import store.product.controller.ProductController;
 import store.product.domain.ProductRepository;
 import store.product.domain.PurchaseProductGroup;
@@ -31,5 +34,12 @@ public class Application {
         final PromotionController promotionController = new PromotionController(promotionInputView, promotionOutputView,
                 promotionService, purchaseProductGroup);
         promotionController.run();
+
+        final PaymentInputView paymentInputView = new PaymentInputView();
+        final PaymentOutputView paymentOutputView = new PaymentOutputView();
+        final PaymentController paymentController = new PaymentController(paymentInputView, paymentOutputView,
+                productRepository, promotionRepository, purchaseProductGroup);
+
+        paymentController.run();
     }
 }

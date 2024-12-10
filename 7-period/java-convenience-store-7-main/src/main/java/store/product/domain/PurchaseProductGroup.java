@@ -21,6 +21,12 @@ public class PurchaseProductGroup {
                 .sum();
     }
 
+    public int calculateTotalQuantity() {
+        return purchaseProducts.stream()
+                .mapToInt(PurchaseProduct::calculateTotalQuantity)
+                .sum();
+    }
+
     public int calculateTotalPrice() {
         return purchaseProducts.stream()
                 .mapToInt(PurchaseProduct::calculateTotalPrice)

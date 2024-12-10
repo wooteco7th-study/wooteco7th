@@ -41,10 +41,6 @@ public class PurchaseProduct {
                 + purchaseProductQuantity.getPromotionAndNonPromotionQuantity());
     }
 
-    public int calculatePromotionPrice() {
-        return price * purchaseProductQuantity.getPromotionQuantity();
-    }
-
     public int calculateTotalPrice() {
         return calculateTotalQuantity() * price;
     }

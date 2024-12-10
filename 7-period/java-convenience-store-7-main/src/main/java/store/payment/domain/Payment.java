@@ -57,7 +57,7 @@ public class Payment {
         final int promotionDiscount = purchaseProductGroup.getPurchaseProducts().stream()
                 .mapToInt(purchaseProduct -> calculateBenefitQuantity(purchaseProduct) * purchaseProduct.getPrice())
                 .sum();
-        return new PaymentReceipt(totalPrice, promotionDiscount, memberShipDiscount,
+        return new PaymentReceipt(purchaseProductGroup.calculateTotalQuantity(),totalPrice, promotionDiscount, memberShipDiscount,
                 totalPrice - promotionDiscount - memberShipDiscount);
     }
 
@@ -83,7 +83,7 @@ public class Payment {
     }
 
     private int calculateBenefitQuantity(final PurchaseProduct purchaseProduct) {
-        final Promotion promotion = promotionRepository.findByName(purchaseProduct.getName());
+        final Promotion promotion = promotionRepository.findByName(purchaseProduct.getPromotionName());
         final int promotionQuantity = purchaseProduct.getPurchaseProductQuantity().getPromotionQuantity();
         return promotion.calculateBenefitQuantity(promotionQuantity);
     }

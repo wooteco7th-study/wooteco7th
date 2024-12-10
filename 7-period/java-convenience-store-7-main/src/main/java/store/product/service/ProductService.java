@@ -38,7 +38,7 @@ public class ProductService {
         if (!productRepository.hasNonPromotionProduct(productResponse.name()) && productRepository.hasPromotionProduct(
                 productResponse.name())) {
             productResponses.add(ProductResponse.of(
-                    new Product(productResponse.name(), ProductType.NON_PROMOTION,0,  productResponse.price(), "")));
+                    new Product(productResponse.name(), ProductType.NON_PROMOTION, 0, productResponse.price(), "")));
         }
     }
 
@@ -52,13 +52,15 @@ public class ProductService {
 
     private PurchaseProduct createPurchaseProduct(final ProductRequest productRequest) {
         final int promotionQuantity = calculatePromotionQuantity(productRequest);
+        final int price = productRepository.findNonProductByProductName(productRequest.name()).getPrice();
         int nonPromotionQuantity = 0;
         if (productRequest.quantity() > promotionQuantity) {
             nonPromotionQuantity = productRequest.quantity() - promotionQuantity;
         }
         final PurchaseProductQuantity purchaseProductQuantity = new PurchaseProductQuantity(promotionQuantity,
                 nonPromotionQuantity, 0);
-        return new PurchaseProduct(productRequest.name(), getPromotionName(productRequest), purchaseProductQuantity);
+        return new PurchaseProduct(productRequest.name(), price, getPromotionName(productRequest),
+                purchaseProductQuantity);
     }
 
     private String getPromotionName(final ProductRequest productRequest) {
