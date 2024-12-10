@@ -1,4 +1,4 @@
-package store.domain;
+package store.domain.calculator;
 
 import java.util.List;
 import store.dto.ResultDto;
@@ -38,7 +38,7 @@ public class ResultCalculator {
         int total = dtos.stream()
                 .mapToInt(dto -> multiplyPrice(dto.price(), dto.membershipApplyCount()))
                 .sum();
-        int membershipDiscount = total * MEMBERSHIP_DISCOUNT_RATE;
+        int membershipDiscount = total * MEMBERSHIP_DISCOUNT_RATE / PERCENT;
         return Math.min(membershipDiscount, MEMBERSHIP_MAX_DISCOUNT);
     }
 

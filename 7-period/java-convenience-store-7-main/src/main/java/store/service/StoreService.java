@@ -3,7 +3,7 @@ package store.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map.Entry;
-import store.domain.ResultCalculator;
+import store.domain.calculator.ResultCalculator;
 import store.domain.order.Order;
 import store.domain.promotion.ProcessType;
 import store.domain.promotion.PromotionProcessor;
