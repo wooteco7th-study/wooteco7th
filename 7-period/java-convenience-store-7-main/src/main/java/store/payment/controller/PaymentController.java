@@ -1,5 +1,6 @@
 package store.payment.controller;
 
+import java.util.Objects;
 import store.constant.StoreCommand;
 import store.payment.domain.Payment;
 import store.payment.view.PaymentInputView;
@@ -34,6 +35,11 @@ public class PaymentController {
         responseBenefitProduct(payment);
         responsePayment(payment);
         payment.purchase();
+    }
+
+    public boolean isRetry() {
+        paymentOutputView.printAskRetryPurchase();
+        return Objects.equals(paymentInputView.readStoreCommand(), StoreCommand.YES);
     }
 
     private void responsePayment(final Payment payment) {
