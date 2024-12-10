@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
+import store.error.AppException;
 import store.error.ErrorMessage;
 import store.promotion.Promotion;
 import store.promotion.PromotionRepository;
@@ -24,6 +25,25 @@ public class ProductRepository {
 
     public List<Product> findAll() {
         return Collections.unmodifiableList(products);
+    }
+
+    public Product findByProductName(final String name) {
+        return products.stream()
+                .filter(product -> Objects.equals(product.getName(), name))
+                .findAny()
+                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_INPUT));
+    }
+
+    public int countQuantityByProductName(final String name) {
+        return products.stream()
+                .filter(product -> Objects.equals(product.getName(), name))
+                .mapToInt(Product::getQuantity)
+                .sum();
+    }
+
+    public boolean existByProductName(final String name) {
+        return products.stream()
+                .anyMatch(product -> Objects.equals(product.getName() , name));
     }
 
     public void initialize() {

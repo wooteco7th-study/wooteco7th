@@ -1,8 +1,11 @@
 package store.product.domain;
 
-import store.promotion.Promotion;
+import store.error.ErrorMessage;
+import store.util.NumberValidator;
 
 public class Product {
+
+    private static final int MIN_QUANTITY = 0;
 
     private final String name;
     private final ProductType productType;
@@ -12,6 +15,7 @@ public class Product {
 
     public Product(final String name, final ProductType productType, final int quantity, final int price,
                    final String promotionName) {
+        validate(quantity);
         this.name = name;
         this.productType = productType;
         this.quantity = quantity;
@@ -37,5 +41,9 @@ public class Product {
 
     public String getPromotionName() {
         return promotionName;
+    }
+
+    private void validate(final int quantity) {
+        NumberValidator.validateRange(quantity, MIN_QUANTITY, Integer.MAX_VALUE, ErrorMessage.INVALID_INPUT);
     }
 }

@@ -9,6 +9,7 @@ public class OutputView {
     private static final String LINE_SEPARATOR = System.lineSeparator();
     private static final String INTRO = "안녕하세요. W편의점입니다." + LINE_SEPARATOR + "현재 보유하고 있는 상품입니다.";
     private static final String PRODUCT_FORMAT = "- %s %,d원 %d개 %s";
+    private static final String ASK_PRODUCT = "구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])";
 
     public void printProductResponse(final List<ProductResponse> productResponses) {
         final String message = productResponses.stream()
@@ -17,6 +18,10 @@ public class OutputView {
                 .collect(Collectors.joining(LINE_SEPARATOR));
         printlnMessage(INTRO);
         printlnMessage(LINE_SEPARATOR + message);
+    }
+
+    public void printAskProduct() {
+        printlnMessage(LINE_SEPARATOR + ASK_PRODUCT);
     }
 
     private void printlnMessage(final String message) {
