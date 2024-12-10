@@ -6,7 +6,7 @@ import store.product.domain.ProductRepository;
 import store.product.service.ProductService;
 import store.product.view.InputView;
 import store.product.view.OutputView;
-import store.promotion.PromotionRepository;
+import store.promotion.domain.PromotionRepository;
 
 public class Application {
     public static void main(String[] args) {

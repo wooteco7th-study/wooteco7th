@@ -5,8 +5,11 @@ import java.util.List;
 import store.error.AppException;
 import store.error.ErrorMessage;
 import store.product.domain.Product;
-import store.product.domain.ProductGroup;
+import store.product.domain.PurchaseProductGroup;
 import store.product.domain.ProductRepository;
+import store.product.domain.ProductType;
+import store.product.domain.PurchaseProduct;
+import store.product.domain.PurchaseProductQuantity;
 import store.product.dto.ProductRequest;
 import store.product.dto.ProductResponse;
 import store.util.ListValidator;
@@ -20,14 +23,54 @@ public class ProductService {
     }
 
     public List<ProductResponse> getProductResponses() {
-        return productRepository.findAll().stream()
-                .map(ProductResponse::of)
-                .toList();
+        final List<ProductResponse> productResponses = new ArrayList<>();
+        final List<Product> products = productRepository.findAll();
+        for (Product product : products) {
+            final ProductResponse productResponse = ProductResponse.of(product);
+            productResponses.add(productResponse);
+            addNonPromotionProduct(productResponse, productResponses);
+        }
+        return productResponses;
     }
 
-    public ProductGroup generateProductGroup(final List<ProductRequest> productRequests) {
+    private void addNonPromotionProduct(final ProductResponse productResponse,
+                                        final List<ProductResponse> productResponses) {
+        if (productRepository.hasNonPromotionProduct(productResponse.name())) {
+            productResponses.add(ProductResponse.of(
+                    new Product(productResponse.name(), ProductType.NON_PROMOTION, productResponse.price(), 0, "")));
+        }
+    }
+
+    public PurchaseProductGroup generatePurchaseProductGroup(final List<ProductRequest> productRequests) {
         validate(productRequests);
-        return new ProductGroup(new ArrayList<>());
+        final List<PurchaseProduct> purchaseProducts = productRequests.stream()
+                .map(this::createPurchaseProduct)
+                .toList();
+        return new PurchaseProductGroup(purchaseProducts);
+    }
+
+    private PurchaseProduct createPurchaseProduct(final ProductRequest productRequest) {
+        final int promotionQuantity = calculatePromotionQuantity(productRequest);
+        int nonPromotionQuantity = 0;
+        if (productRequest.quantity() > promotionQuantity) {
+            nonPromotionQuantity = productRequest.quantity() - promotionQuantity;
+        }
+        final PurchaseProductQuantity purchaseProductQuantity = new PurchaseProductQuantity(promotionQuantity,
+                nonPromotionQuantity, 0);
+        return new PurchaseProduct(productRequest.name(), getPromotionName(productRequest), purchaseProductQuantity);
+    }
+
+    private String getPromotionName(final ProductRequest productRequest) {
+        if (productRepository.hasPromotionProduct(productRequest.name())) {
+            return productRepository.findPromotionProductByProductName(productRequest.name()).getPromotionName();
+        }
+        return "";
+    }
+
+    private int calculatePromotionQuantity(final ProductRequest productRequest) {
+        final Product promotionProduct = productRepository.findPromotionProductByProductName(
+                productRequest.name());
+        return Math.min(promotionProduct.getQuantity(), productRequest.quantity());
     }
 
     private void validate(final List<ProductRequest> productRequests) {

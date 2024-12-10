@@ -27,7 +27,7 @@ public class ProductController {
         final List<ProductResponse> productResponses = productService.getProductResponses();
         outputView.printProductResponse(productResponses);
         final List<ProductRequest> productRequests = requestProductRequests();
-        productService.generateProductGroup(productRequests);
+        productService.generatePurchaseProductGroup(productRequests);
     }
 
     private List<ProductRequest> requestProductRequests() {

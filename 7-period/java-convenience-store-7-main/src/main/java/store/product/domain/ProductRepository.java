@@ -6,8 +6,6 @@ import java.util.Objects;
 import java.util.Queue;
 import store.error.AppException;
 import store.error.ErrorMessage;
-import store.promotion.Promotion;
-import store.promotion.PromotionRepository;
 import store.util.FileReader;
 import store.util.StringParser;
 
@@ -15,11 +13,9 @@ public class ProductRepository {
 
     private static final String PATH = "products.md";
 
-    private final PromotionRepository promotionRepository;
     private final List<Product> products;
 
-    public ProductRepository(final PromotionRepository promotionRepository, final List<Product> products) {
-        this.promotionRepository = promotionRepository;
+    public ProductRepository(final List<Product> products) {
         this.products = products;
     }
 
@@ -27,11 +23,31 @@ public class ProductRepository {
         return Collections.unmodifiableList(products);
     }
 
-    public Product findByProductName(final String name) {
+    public Product findPromotionProductByProductName(final String name) {
         return products.stream()
                 .filter(product -> Objects.equals(product.getName(), name))
+                .filter(product -> Objects.equals(product.getProductType(), ProductType.PROMOTION))
                 .findAny()
                 .orElseThrow(() -> new AppException(ErrorMessage.INVALID_INPUT));
+    }
+
+    public Product findNonProductByProductName(final String name) {
+        return products.stream()
+                .filter(product -> Objects.equals(product.getName(), name))
+                .filter(product -> Objects.equals(product.getProductType(), ProductType.NON_PROMOTION))
+                .findAny()
+                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_INPUT));
+    }
+
+    public boolean hasNonPromotionProduct(final String name) {
+        return products.stream()
+                .anyMatch(product -> Objects.equals(product.getName(), name) && Objects.equals(product.getProductType(),
+                        ProductType.NON_PROMOTION));
+    }
+
+    public boolean hasPromotionProduct(final String name) {
+        return products.stream()
+                .anyMatch(product -> Objects.equals(product.getName(), name) && Objects.equals(product.getProductType(), ProductType.PROMOTION));
     }
 
     public int countQuantityByProductName(final String name) {
@@ -43,7 +59,7 @@ public class ProductRepository {
 
     public boolean existByProductName(final String name) {
         return products.stream()
-                .anyMatch(product -> Objects.equals(product.getName() , name));
+                .anyMatch(product -> Objects.equals(product.getName(), name));
     }
 
     public void initialize() {
@@ -64,7 +80,6 @@ public class ProductRepository {
         if (Objects.equals(promotionName, "null")) {
             return new Product(name, ProductType.NON_PROMOTION, quantity, price, "");
         }
-        final Promotion promotion = promotionRepository.findByName(promotionName);
-        return new PromotionProduct(name, ProductType.PROMOTION, quantity, price, promotion, promotionName);
+        return new Product(name, ProductType.PROMOTION, quantity, price, promotionName);
     }
 }

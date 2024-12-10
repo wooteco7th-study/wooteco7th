@@ -1,11 +1,9 @@
-package store.promotion;
+package store.promotion.domain;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Queue;
-import store.error.AppException;
 import store.error.ErrorMessage;
 import store.util.FileReader;
 import store.util.StringParser;
