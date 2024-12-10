@@ -12,7 +12,7 @@ public class Application {
     public static void main(String[] args) {
         final PromotionRepository promotionRepository = new PromotionRepository(new ArrayList<>());
         promotionRepository.initialize();
-        final ProductRepository productRepository = new ProductRepository(promotionRepository, new ArrayList<>());
+        final ProductRepository productRepository = new ProductRepository(new ArrayList<>());
         productRepository.initialize();
         final ProductService productService = new ProductService(productRepository);
         final InputView inputView = new InputView();

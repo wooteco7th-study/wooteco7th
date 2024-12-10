@@ -35,9 +35,10 @@ public class ProductService {
 
     private void addNonPromotionProduct(final ProductResponse productResponse,
                                         final List<ProductResponse> productResponses) {
-        if (productRepository.hasNonPromotionProduct(productResponse.name())) {
+        if (!productRepository.hasNonPromotionProduct(productResponse.name()) && productRepository.hasPromotionProduct(
+                productResponse.name())) {
             productResponses.add(ProductResponse.of(
-                    new Product(productResponse.name(), ProductType.NON_PROMOTION, productResponse.price(), 0, "")));
+                    new Product(productResponse.name(), ProductType.NON_PROMOTION,0,  productResponse.price(), "")));
         }
     }
 
