@@ -4,12 +4,18 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+import store.domain.command.Answer;
 import store.domain.order.Order;
 import store.domain.order.Orders;
+import store.domain.promotion.ProcessType;
 import store.domain.promotion.Promotion;
 import store.domain.promotion.Promotions;
+import store.dto.ReceiptResultDto;
+import store.dto.ResultDto;
 import store.domain.stock.Inventory;
+import store.domain.stock.Stocks;
 import store.dto.InventoryDto;
+import store.dto.ReceiptProductDto;
 import store.exception.CustomIllegalArgumentException;
 import store.exception.ErrorMessage;
 import store.exception.ExceptionHandler;
@@ -43,13 +49,74 @@ public class StoreController {
 
     public void process() {
         // 보유 상품 출력 기능 구현
-        Inventory inventory = makeInventory();
+        Inventory inventory = processInventory();
         // 구매할 상품명과 수량 입력
-        outputView.showRequestOrder();
         Orders orders = makeOrders(inventory);
+        // 프로모션에 따른 안내
+        List<ResultDto> dtos = processOrderWithResult(inventory, orders);
+        ReceiptResultDto receiptResultDto = processMembership(dtos);
+        outputView.showReceipt(ReceiptProductDto.of(dtos), receiptResultDto);
+    }
+
+    private ReceiptResultDto processMembership(final List<ResultDto> dtos) {
+        outputView.showRequestMembership();
+        if (isYes()) {
+            return storeService.convertToReceiptResultDtoWithMembership(dtos);
+        }
+        return storeService.convertToReceiptResultDto(dtos);
+    }
+
+    private List<ResultDto> processOrderWithResult(final Inventory inventory, final Orders orders) {
+        return orders.getOrders().stream()
+                .map(order -> processOrderWithInventory(inventory, order))
+                .toList();
+    }
+
+    private ResultDto processOrderWithInventory(final Inventory inventory, final Order order) {
+        Stocks stocks = inventory.get(order.getName());
+        ResultDto resultDto = storeService.processOrder(order, stocks);
+        if (doesGuideNeeded(resultDto)) {
+            return guide(resultDto, stocks);
+        }
+        return resultDto;
+    }
+
+    private ResultDto guide(final ResultDto resultDto, final Stocks stocks) {
+        if (resultDto.type() == ProcessType.MIXED) {
+            return guideIfMixed(resultDto, stocks);
+        }
+        if (resultDto.type() == ProcessType.CAN_GIFT) {
+            return guideIfGift(resultDto, stocks);
+        }
+        return resultDto;
+    }
+
+    private ResultDto guideIfGift(final ResultDto resultDto, final Stocks stocks) {
+        outputView.showRequestGift();
+        if (isYes()) {
+            return storeService.addGiftQuantity(resultDto, stocks);
+        }
+        return storeService.continuePurchase(resultDto, stocks);
+    }
+
+    private ResultDto guideIfMixed(final ResultDto resultDto, final Stocks stocks) {
+        outputView.showRequestRegularPrice();
+        if (isYes()) {
+            return storeService.processMixedPurchase(resultDto, stocks);
+        }
+        return storeService.excludeRegularPurchaseQuantity(resultDto, stocks);
+    }
+
+    private boolean isYes() {
+        return exceptionHandler.retryUntilSuccess(() -> Answer.from(inputView.readAnswer()).isYes());
+    }
+
+    private boolean doesGuideNeeded(final ResultDto resultDto) {
+        return resultDto.type().doesGuideNeeded();
     }
 
     private Orders makeOrders(final Inventory inventory) {
+        outputView.showRequestOrder();
         return exceptionHandler.retryUntilSuccess(() -> new Orders(
                 inputView.readOrder().stream()
                         .map(token -> makeOrder(token, inventory))
@@ -67,7 +134,7 @@ public class StoreController {
         return new Order(name, quantity, inventory);
     }
 
-    private Inventory makeInventory() {
+    private Inventory processInventory() {
         outputView.showTitleWelcome();
         Promotions promotions = makePromotions();
         Inventory inventory = initializeInventory(promotions);
