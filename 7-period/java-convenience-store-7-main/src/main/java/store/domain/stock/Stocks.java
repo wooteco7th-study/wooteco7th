@@ -7,6 +7,8 @@ import store.exception.ErrorMessage;
 
 public class Stocks {
 
+    private static final String EMPTY_STRING = "";
+
     private final int price;
     private int promotionQuantity;
     private int regularQuantity;
@@ -66,7 +68,7 @@ public class Stocks {
         if (hasPromotion) {
             return promotion.getName();
         }
-        return "";
+        return EMPTY_STRING;
     }
 
     public int getPromotionQuantity() {
@@ -77,11 +79,7 @@ public class Stocks {
         return regularQuantity;
     }
 
-    public Promotion getPromotion() {
-        return promotion;
-    }
-
-    public PromotionType getPromotionType() {
-        return promotionType;
+    public boolean hasEnoughQuantity(final int purchaseQuantity) {
+        return promotionQuantity + regularQuantity >= purchaseQuantity;
     }
 }

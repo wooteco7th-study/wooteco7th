@@ -45,7 +45,7 @@ public class OutputView {
     }
 
     public void showRequestOrder() {
-        showln(REQUEST_ORDER);
+        showln(LINE + REQUEST_ORDER);
     }
 
     public void showRequestMembership() {

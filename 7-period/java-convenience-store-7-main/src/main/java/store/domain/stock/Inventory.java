@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import store.domain.promotion.Promotion;
+import store.exception.CustomIllegalArgumentException;
+import store.exception.ErrorMessage;
 
 public class Inventory {
 
@@ -24,7 +26,18 @@ public class Inventory {
         inventory.put(name, Stocks.from(price, quantity, promotion));
     }
 
+    public boolean hasProduct(final String productName) {
+        return inventory.containsKey(productName);
+    }
+
     public Map<String, Stocks> getInventory() {
         return Collections.unmodifiableMap(inventory);
+    }
+
+    public void validateAvailablePurchase(final String name, final int quantity) {
+        Stocks stocks = inventory.get(name);
+        if (!stocks.hasEnoughQuantity(quantity)) {
+            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_QUANTITY_OUT_OF_STOCK);
+        }
     }
 }

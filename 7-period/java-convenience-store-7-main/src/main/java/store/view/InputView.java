@@ -7,11 +7,11 @@ import store.util.InputValidator;
 import store.util.StringParser;
 
 public class InputView {
-    // ^\[([가-힣a-zA-z]+)-([1-9]\d*)\]$
+    private static final String DELIMITER = ",";
 
     public List<String> readOrder() {
-        String line = readLine(ErrorMessage.INVALID_ORDER_FORMAT);
-        return StringParser.parseByDelimiter(line, ",");
+        String line = readLine(ErrorMessage.INVALID_INPUT);
+        return StringParser.parseByDelimiter(line, DELIMITER);
     }
 
     public String readRequestMembership() {
