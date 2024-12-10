@@ -46,41 +46,43 @@ public class PromotionProcessor {
         int purchaseQuantity = order.getPurchaseQuantity();
         int unitQuantity = stocks.getPromotionUnitQuantity();
         // 프로모션 적용 상품 개수
-        int membershipApplyCount = purchaseQuantity - (purchaseQuantity / unitQuantity * unitQuantity);
+        int numberOfUnit = divideByUnitQuantity(purchaseQuantity, unitQuantity);
+        int membershipApplyCount = purchaseQuantity - (numberOfUnit * unitQuantity);
         // 증정 상품 개수
-        int giftCount = stocks.calculateGiftQuantity(unitQuantity);
+        int giftCount = stocks.calculateGiftQuantity(numberOfUnit);
         stocks.subtractPromotionStock(purchaseQuantity);
         return ResultDto.of(ProcessType.ONLY_PROMOTION, order, purchaseQuantity, 0, giftCount, stocks,
                 membershipApplyCount);
     }
 
     private ResultDto guideGift(final Order order) {
-        int numberOfUnit = calculateUnit(order);
+        int numberOfUnit = divideByUnitQuantity(order.getPurchaseQuantity(), stocks.getPromotionUnitQuantity());
         return ResultDto.of(ProcessType.CAN_GIFT, order, order.getPurchaseQuantity(), 0,
                 stocks.calculateGiftQuantity(numberOfUnit), stocks, 0);
-    }
-
-    private int calculateUnit(final Order order) {
-        return order.getPurchaseQuantity() / stocks.getPromotionUnitQuantity();
     }
 
     private boolean canGift(final Order order) {
         int purchaseQuantity = order.getPurchaseQuantity();
         int unitQuantity = stocks.getPromotionUnitQuantity();
-        return purchaseQuantity % unitQuantity == stocks.getBuyQuantity() && stocks.isPromotionHasMoreThanEqualToBuyQuantity();
+        return purchaseQuantity % unitQuantity == stocks.getBuyQuantity()
+                && stocks.calculateRemainingIsMoreThanEqualToBuyQuantity(purchaseQuantity);
     }
 
     // - 프로모션 재고가 7개이고 구매 상품 수가 10개일때 (6개(2+1)+(2+1))는 프로모션이 적용되지만 나머지 4개는 적용되지 않는다.
     //- n개 구매, 프로모션 재고 s개 : `n - (s / (a+b) * (a+b))` 개는 프로모션 적용 X, `s / (a+b) * (a+b)`는 프로모션 적용
     private ResultDto guideMixedPurchase(final Order order) {
-        int purchaseQuantity = order.getPurchaseQuantity();
         int unitQuantity = stocks.getPromotionUnitQuantity();
         int promotionQuantity = stocks.getPromotionStockQuantity();
-        int promotionPurchaseQuantity = promotionQuantity / unitQuantity * unitQuantity;
-        int regularPurchaseQuantity = purchaseQuantity - promotionPurchaseQuantity;
-        int giftQuantity = stocks.calculateGiftQuantity(unitQuantity);
+        int numberOfUnit = divideByUnitQuantity(promotionQuantity, unitQuantity);
+        int promotionPurchaseQuantity = numberOfUnit * unitQuantity;
+        int regularPurchaseQuantity = order.getPurchaseQuantity() - promotionPurchaseQuantity;
+        int giftQuantity = stocks.calculateGiftQuantity(numberOfUnit);
         return ResultDto.of(ProcessType.MIXED, order, promotionPurchaseQuantity, regularPurchaseQuantity, giftQuantity,
                 stocks, regularPurchaseQuantity);
+    }
+
+    public int divideByUnitQuantity(int quantity, int unitQuantity) {
+        return quantity / unitQuantity;
     }
 
     private boolean hasPromotionStockInsufficient(final Order order) {
