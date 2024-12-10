@@ -2,6 +2,7 @@ package store.product.controller;
 
 import java.util.List;
 import store.error.ErrorMessage;
+import store.product.domain.PurchaseProductGroup;
 import store.product.dto.ProductRequest;
 import store.product.dto.ProductResponse;
 import store.product.service.ProductService;
@@ -23,11 +24,11 @@ public class ProductController {
         this.productService = productService;
     }
 
-    public void run() {
+    public PurchaseProductGroup requestPurchaseProductGroup() {
         final List<ProductResponse> productResponses = productService.getProductResponses();
         outputView.printProductResponse(productResponses);
         final List<ProductRequest> productRequests = requestProductRequests();
-        productService.generatePurchaseProductGroup(productRequests);
+        return productService.generatePurchaseProductGroup(productRequests);
     }
 
     private List<ProductRequest> requestProductRequests() {
