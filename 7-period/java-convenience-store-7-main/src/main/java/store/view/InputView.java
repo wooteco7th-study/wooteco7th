@@ -14,19 +14,7 @@ public class InputView {
         return StringParser.parseByDelimiter(line, DELIMITER);
     }
 
-    public String readRequestMembership() {
-        return readLine(ErrorMessage.INVALID_INPUT);
-    }
-
-    public String readRequestRetry() {
-        return readLine(ErrorMessage.INVALID_INPUT);
-    }
-
-    public String readRequestRegularPrice() {
-        return readLine(ErrorMessage.INVALID_INPUT);
-    }
-
-    public String readRequestBonus() {
+    public String readAnswer() {
         return readLine(ErrorMessage.INVALID_INPUT);
     }
 

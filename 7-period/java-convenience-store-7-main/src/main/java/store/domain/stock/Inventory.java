@@ -15,6 +15,13 @@ public class Inventory {
         this.inventory = new LinkedHashMap<>(inventory);
     }
 
+    public Stocks get(final String name) {
+        if (inventory.containsKey(name)) {
+            return inventory.get(name);
+        }
+        throw new CustomIllegalArgumentException(ErrorMessage.INVALID_PRODUCT_NAME);
+    }
+
     // name,price,quantity,promotion
     // 프로모션 존재할 경우
     public void put(final String name, final int price, final int quantity, final Promotion promotion) {
@@ -36,7 +43,7 @@ public class Inventory {
 
     public void validateAvailablePurchase(final String name, final int quantity) {
         Stocks stocks = inventory.get(name);
-        if (!stocks.hasEnoughQuantity(quantity)) {
+        if (!stocks.hasTotalEnoughQuantity(quantity)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_QUANTITY_OUT_OF_STOCK);
         }
     }

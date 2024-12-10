@@ -9,12 +9,12 @@ public class Order {
 
     private static final int MIN_EXCLUSIVE = 0;
     private final String name;
-    private final int quantity;
+    private final int purchaseQuantity;
 
     public Order(final String name, final int quantity, final Inventory inventory) {
         validate(name, quantity, inventory);
         this.name = name;
-        this.quantity = quantity;
+        this.purchaseQuantity = quantity;
     }
 
     private void validate(final String name, final int quantity, final Inventory inventory) {
@@ -46,5 +46,13 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getPurchaseQuantity() {
+        return purchaseQuantity;
     }
 }

@@ -86,7 +86,7 @@ public class OutputView {
         showln(REQUEST_REGULAR_PRICE);
     }
 
-    public void showRequestBonus() {
+    public void showRequestGift() {
         showln(REQUEST_BONUS);
     }
 

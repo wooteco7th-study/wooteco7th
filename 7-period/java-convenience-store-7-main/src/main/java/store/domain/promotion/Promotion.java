@@ -19,11 +19,31 @@ public class Promotion {
         this.endDate = endDate;
     }
 
+    public boolean isPromotionPeriod(LocalDate now) {
+        return (now.isAfter(startDate) || now.isEqual(startDate)) && (now.isBefore(endDate) || now.isEqual(endDate));
+    }
+
     public boolean hasSameName(final String input) {
         return this.name.equals(input);
     }
 
+    public int getUnitQuantity() {
+        return buyQuantity + getQuantity;
+    }
+
+    public int getBuyQuantity() {
+        return buyQuantity;
+    }
+
+    public int getGetQuantity() {
+        return getQuantity;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public int calculateGiftQuantity(final int unit) {
+        return getQuantity * unit;
     }
 }

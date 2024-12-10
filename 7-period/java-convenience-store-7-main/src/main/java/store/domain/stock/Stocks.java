@@ -1,5 +1,6 @@
 package store.domain.stock;
 
+import java.time.LocalDate;
 import store.domain.promotion.Promotion;
 import store.domain.promotion.PromotionType;
 import store.exception.CustomIllegalArgumentException;
@@ -10,16 +11,17 @@ public class Stocks {
     private static final String EMPTY_STRING = "";
 
     private final int price;
-    private int promotionQuantity;
-    private int regularQuantity;
+    private int promotionStockQuantity;
+    private int regularStockQuantity;
     private Promotion promotion;
     private PromotionType promotionType;
 
-    public Stocks(final int price, final int promotionQuantity, final int regularQuantity, final Promotion promotion,
+    public Stocks(final int price, final int promotionStockQuantity, final int regularStockQuantity,
+                  final Promotion promotion,
                   final PromotionType promotionType) {
         this.price = price;
-        this.promotionQuantity = promotionQuantity;
-        this.regularQuantity = regularQuantity;
+        this.promotionStockQuantity = promotionStockQuantity;
+        this.regularStockQuantity = regularStockQuantity;
         this.promotion = promotion;
         this.promotionType = promotionType;
     }
@@ -33,12 +35,12 @@ public class Stocks {
 
     public void add(final int quantity, final Promotion inputPromotion) {
         if (inputPromotion == null) {
-            validateQuantity(regularQuantity);
-            regularQuantity = quantity;
+            validateQuantity(regularStockQuantity);
+            regularStockQuantity = quantity;
             return;
         }
-        validateQuantity(promotionQuantity);
-        promotionQuantity = quantity;
+        validateQuantity(promotionStockQuantity);
+        promotionStockQuantity = quantity;
         promotion = inputPromotion;
         promotionType = PromotionType.EXIST;
     }
@@ -59,9 +61,9 @@ public class Stocks {
 
     public int getQuantity(Stocks stocks, boolean hasPromotion) {
         if (hasPromotion) {
-            return stocks.getPromotionQuantity();
+            return stocks.getPromotionStockQuantity();
         }
-        return stocks.getRegularQuantity();
+        return stocks.getRegularStockQuantity();
     }
 
     public String getPromotionName(boolean hasPromotion) {
@@ -71,15 +73,53 @@ public class Stocks {
         return EMPTY_STRING;
     }
 
-    public int getPromotionQuantity() {
-        return promotionQuantity;
+    public int getPromotionUnitQuantity() {
+        return promotion.getUnitQuantity();
     }
 
-    public int getRegularQuantity() {
-        return regularQuantity;
+    public int getBuyQuantity() {
+        return promotion.getBuyQuantity();
     }
 
-    public boolean hasEnoughQuantity(final int purchaseQuantity) {
-        return promotionQuantity + regularQuantity >= purchaseQuantity;
+    public int getPromotionStockQuantity() {
+        return promotionStockQuantity;
+    }
+
+    public int getRegularStockQuantity() {
+        return regularStockQuantity;
+    }
+
+    public boolean hasTotalEnoughQuantity(final int purchaseQuantity) {
+        return promotionStockQuantity + regularStockQuantity >= purchaseQuantity;
+    }
+
+    public boolean hasPromotionEnoughQuantity(final int purchaseQuantity) {
+        return promotionStockQuantity >= purchaseQuantity;
+    }
+
+    public boolean isPromotionPeriod(final LocalDate now) {
+        if (promotionType == PromotionType.EXIST) {
+            return promotion.isPromotionPeriod(now);
+        }
+        return false;
+    }
+
+    public void subtractRegularStock(final int purchaseQuantity) {
+        if (regularStockQuantity < purchaseQuantity) {
+            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_QUANTITY_OUT_OF_STOCK);
+        }
+        regularStockQuantity -= purchaseQuantity;
+    }
+
+    public int calculateGiftQuantity(final int unit) {
+        return promotion.calculateGiftQuantity(unit);
+    }
+
+    public boolean isPromotionHasMoreThanEqualToBuyQuantity() {
+        return getPromotionStockQuantity() >= getBuyQuantity();
+    }
+
+    public void subtractPromotionStock(final int purchaseQuantity) {
+        promotionStockQuantity -= purchaseQuantity;
     }
 }
