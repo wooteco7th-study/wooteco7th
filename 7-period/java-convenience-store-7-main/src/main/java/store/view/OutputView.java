@@ -22,7 +22,7 @@ public class OutputView {
             상품명\t\t\t\t수량\t\t\t금액""";
     private static final String FORMAT_RECEIPT_INVENTORY = "%s\t\t\t%d\t\t\t%,d";
     private static final String INFORM_RECEIPT_BONUS_TITLE = "=============증\t\t정===============";
-    private static final String FORMAT_RECEIPT_BONUS = "%s\t%d";
+    private static final String FORMAT_RECEIPT_BONUS = "%s\t\t\t%d";
     private static final String INFORM_RESULT_TITLE = "====================================";
     private static final String INFORM_RESULT_FORMAT = """
             총구매액\t\t\t\t%d\t\t\t%,d
