@@ -18,6 +18,10 @@ public class Promotion {
         this.end = end;
     }
 
+    public int getBuy() {
+        return buy;
+    }
+
     public int calculateNonPromotionQuantity(final int quantity) {
         return quantity % (buy + get);
     }
@@ -35,7 +39,7 @@ public class Promotion {
 
     public boolean isIn() {
         final LocalDate now = LocalDate.now();
-        return now.isEqual(start) && now.isAfter(start) && now.isBefore(end) && now.isEqual(end);
+        return (now.isAfter(start) && now.isBefore(end)) || now.isEqual(end) || now.isEqual(start);
     }
 
     public String getName() {
