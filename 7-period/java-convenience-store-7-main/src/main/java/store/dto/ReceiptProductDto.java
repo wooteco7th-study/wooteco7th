@@ -3,7 +3,6 @@ package store.dto;
 import java.util.List;
 
 public record ReceiptProductDto(List<TotalProductDto> total, List<GiftProductDto> gifts) {
-    // 상품명		수량	금액
 
     public static ReceiptProductDto of(List<ResultDto> dtos) {
         List<TotalProductDto> totalProductDtos = makeTotalProductDtos(dtos);

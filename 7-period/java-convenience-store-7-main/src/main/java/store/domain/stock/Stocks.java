@@ -35,10 +35,18 @@ public class Stocks {
 
     public void add(final int quantity, final Promotion inputPromotion) {
         if (inputPromotion == null) {
-            validateQuantity(regularStockQuantity);
-            regularStockQuantity = quantity;
+            addRegularStock(quantity);
             return;
         }
+        addPromotionStock(quantity, inputPromotion);
+    }
+
+    private void addRegularStock(final int quantity) {
+        validateQuantity(regularStockQuantity);
+        regularStockQuantity = quantity;
+    }
+
+    private void addPromotionStock(final int quantity, final Promotion inputPromotion) {
         validateQuantity(promotionStockQuantity);
         promotionStockQuantity = quantity;
         promotion = inputPromotion;

@@ -156,13 +156,17 @@ public class StoreController {
         Inventory inventory = new Inventory(new HashMap<>());
         List<String> inputInventories = readInventories();
         for (String inputInventory : inputInventories) {
-            List<String> tokens = StringParser.parseByDelimiter(inputInventory, DELIMITER);
-            inventory.put(tokens.get(0),
-                    StringParser.parseToInteger(tokens.get(1), ErrorMessage.INVALID_INPUT),
-                    StringParser.parseToInteger(tokens.get(2), ErrorMessage.INVALID_INPUT),
-                    promotions.findByName(tokens.get(3)));
+            addProductToInventory(promotions, inventory, inputInventory);
         }
         return inventory;
+    }
+
+    private void addProductToInventory(final Promotions promotions, final Inventory inventory, final String inputInventory) {
+        List<String> tokens = StringParser.parseByDelimiter(inputInventory, DELIMITER);
+        inventory.put(tokens.get(0),
+                StringParser.parseToInteger(tokens.get(1), ErrorMessage.INVALID_INPUT),
+                StringParser.parseToInteger(tokens.get(2), ErrorMessage.INVALID_INPUT),
+                promotions.findByName(tokens.get(3)));
     }
 
     private Promotions makePromotions() {

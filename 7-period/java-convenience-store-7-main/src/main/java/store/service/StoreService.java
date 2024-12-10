@@ -26,12 +26,9 @@ public class StoreService {
     }
 
     private List<InventoryDto> makeInventoryDto(final Entry<String, Stocks> entry) {
-        // - [ ]  만약 재고가 0개라면 `재고 없음`을 출력한다.
-        //- [ ]  파일에 프로모션 상품만 있더라도, 일반 상품은 `"재고 없음"`으로 출력한다.
-        //    - **일반 상품은 무조건 출력해야한다.**
         Stocks stocks = entry.getValue();
         List<InventoryDto> dtos = new ArrayList<>();
-        if (stocks.hasPromotion()) { // 프로모션 상품이 존재할 경우
+        if (stocks.hasPromotion()) {
             dtos.add(makeDto(entry, stocks.hasPromotion()));
         }
         dtos.add(makeDto(entry, false));
@@ -72,7 +69,8 @@ public class StoreService {
         int giftQuantity = resultDto.giftQuantity();
         int totalPromotionQuantity = purchaseQuantity + giftQuantity + GIFT_QUANTITY_INCREASE_UNIT;
         stocks.subtractPromotionStock(totalPromotionQuantity);
-        return new ResultDto(ProcessType.ONLY_PROMOTION, resultDto.productName(), purchaseQuantity + GIFT_QUANTITY_INCREASE_UNIT,
+        return new ResultDto(ProcessType.ONLY_PROMOTION, resultDto.productName(),
+                purchaseQuantity + GIFT_QUANTITY_INCREASE_UNIT,
                 0, giftQuantity + GIFT_QUANTITY_INCREASE_UNIT, resultDto.price(), 0);
     }
 

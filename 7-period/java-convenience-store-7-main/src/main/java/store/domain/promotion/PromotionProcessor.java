@@ -25,16 +25,15 @@ public class PromotionProcessor {
 
     public ResultDto process(final Order order) {
         if (!isPromotionPeriod()) {
-            // 정가 결제
             return regularPurchase(order);
         }
-        // 프로모션 적용 -> 프로모션 재고 우선 차감
-        // 프로모션 재고가 부족**하여 **일부 수량을 프로모션 혜택 없이 결제**해야 하는 경우, **일부 수량에 대해 정가로 결제하게 됨을 안내**
+        return processWithPromotion(order);
+    }
+
+    private ResultDto processWithPromotion(final Order order) {
         if (hasPromotionStockInsufficient(order)) {
             return guideMixedPurchase(order);
         }
-        // 프로모션 적용이 가능한 상품에 대해 **고객이 해당 수량보다 적게 가져온 경우**, 필요한 수량을 **추가로 가져오면 혜택을 받을 수 있음을 안내**
-        // n개 구매 a+b 프로모션 : n % (a+b) == a 일 경우 1개를 증정받을 수 있다고 안내
         if (canGift(order)) {
             return guideGift(order);
         }
@@ -45,10 +44,8 @@ public class PromotionProcessor {
     private ResultDto processOnlyPromotionPurchase(final Order order) {
         int purchaseQuantity = order.getPurchaseQuantity();
         int unitQuantity = stocks.getPromotionUnitQuantity();
-        // 프로모션 적용 상품 개수
         int numberOfUnit = divideByUnitQuantity(purchaseQuantity, unitQuantity);
         int membershipApplyCount = purchaseQuantity - (numberOfUnit * unitQuantity);
-        // 증정 상품 개수
         int giftCount = stocks.calculateGiftQuantity(numberOfUnit);
         stocks.subtractPromotionStock(purchaseQuantity);
         return ResultDto.of(ProcessType.ONLY_PROMOTION, order, purchaseQuantity, 0, giftCount, stocks,

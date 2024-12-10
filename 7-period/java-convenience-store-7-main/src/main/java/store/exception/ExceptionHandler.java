@@ -1,13 +1,12 @@
 package store.exception;
 
-import java.util.Optional;
 import java.util.function.Supplier;
 import store.view.OutputView;
 
 public class ExceptionHandler {
     private final OutputView outputView;
 
-        public ExceptionHandler(final OutputView outputView) {
+    public ExceptionHandler(final OutputView outputView) {
         this.outputView = outputView;
     }
 
@@ -20,29 +19,4 @@ public class ExceptionHandler {
             }
         }
     }
-
-    public void retryUntilSuccess(Runnable callback) {
-        while (true) {
-            try {
-                callback.run();
-                return;
-            } catch (IllegalArgumentException e) {
-                outputView.showException(e);
-            }
-        }
-    }
-
-    public <T> T retryUntilPresent(Supplier<Optional<T>> action) {
-        while (true) {
-            try {
-                Optional<T> result = action.get();
-                if (result.isPresent()) {
-                    return result.get();
-                }
-            } catch (IllegalArgumentException e) {
-                outputView.showException(e);
-            }
-        }
-    }
-
 }
