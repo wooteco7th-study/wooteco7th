@@ -15,6 +15,8 @@ import store.dto.ResultDto;
 
 public class StoreService {
 
+    private static final int GIFT_QUANTITY_INCREASE_UNIT = 1;
+
     public List<InventoryDto> convertToInventoryDtos(final Inventory inventory) {
         return inventory.getInventory().entrySet()
                 .stream()
@@ -68,17 +70,17 @@ public class StoreService {
     public ResultDto addGiftQuantity(final ResultDto resultDto, final Stocks stocks) {
         int purchaseQuantity = resultDto.promotionPurchaseQuantity();
         int giftQuantity = resultDto.giftQuantity();
-        int totalPromotionQuantity = purchaseQuantity + giftQuantity;
+        int totalPromotionQuantity = purchaseQuantity + giftQuantity + GIFT_QUANTITY_INCREASE_UNIT;
         stocks.subtractPromotionStock(totalPromotionQuantity);
-        return new ResultDto(ProcessType.ONLY_PROMOTION, resultDto.productName(), totalPromotionQuantity,
-                0, giftQuantity, resultDto.price(), 0);
+        return new ResultDto(ProcessType.ONLY_PROMOTION, resultDto.productName(), purchaseQuantity + GIFT_QUANTITY_INCREASE_UNIT,
+                0, giftQuantity + GIFT_QUANTITY_INCREASE_UNIT, resultDto.price(), 0);
     }
 
     public ResultDto continuePurchase(final ResultDto resultDto, final Stocks stocks) {
         int purchaseQuantity = resultDto.promotionPurchaseQuantity();
         stocks.subtractPromotionStock(purchaseQuantity);
-        return new ResultDto(ProcessType.ONLY_PROMOTION, resultDto.productName(), purchaseQuantity, 0, 0,
-                resultDto.price(), 0);
+        return new ResultDto(ProcessType.ONLY_PROMOTION, resultDto.productName(), purchaseQuantity, 0,
+                resultDto.giftQuantity(), resultDto.price(), 0);
     }
 
     public ReceiptResultDto convertToReceiptResultDtoWithMembership(final List<ResultDto> dtos) {
