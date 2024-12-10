@@ -10,12 +10,12 @@ import store.domain.order.Orders;
 import store.domain.promotion.ProcessType;
 import store.domain.promotion.Promotion;
 import store.domain.promotion.Promotions;
-import store.dto.ReceiptResultDto;
-import store.dto.ResultDto;
 import store.domain.stock.Inventory;
 import store.domain.stock.Stocks;
 import store.dto.InventoryDto;
 import store.dto.ReceiptProductDto;
+import store.dto.ReceiptResultDto;
+import store.dto.ResultDto;
 import store.exception.CustomIllegalArgumentException;
 import store.exception.ErrorMessage;
 import store.exception.ExceptionHandler;
@@ -48,14 +48,26 @@ public class StoreController {
     }
 
     public void process() {
-        // 보유 상품 출력 기능 구현
         Inventory inventory = processInventory();
-        // 구매할 상품명과 수량 입력
-        Orders orders = makeOrders(inventory);
-        // 프로모션에 따른 안내
-        List<ResultDto> dtos = processOrderWithResult(inventory, orders);
-        ReceiptResultDto receiptResultDto = processMembership(dtos);
-        outputView.showReceipt(ReceiptProductDto.of(dtos), receiptResultDto);
+        do {
+            showInventory(inventory);
+            Orders orders = makeOrders(inventory);
+            List<ResultDto> dtos = processOrderWithResult(inventory, orders);
+            ReceiptResultDto receiptResultDto = processMembership(dtos);
+            outputView.showReceipt(ReceiptProductDto.of(dtos), receiptResultDto);
+        } while (shouldContinue());
+    }
+
+    private void showInventory(final Inventory inventory) {
+        List<InventoryDto> dtos = storeService.convertToInventoryDtos(inventory);
+        outputView.showInventory(dtos);
+    }
+
+    private boolean shouldContinue() {
+        outputView.showRequestRetry();
+        boolean isYes = isYes();
+        outputView.showBlank();
+        return isYes;
     }
 
     private ReceiptResultDto processMembership(final List<ResultDto> dtos) {
@@ -137,10 +149,7 @@ public class StoreController {
     private Inventory processInventory() {
         outputView.showTitleWelcome();
         Promotions promotions = makePromotions();
-        Inventory inventory = initializeInventory(promotions);
-        List<InventoryDto> dtos = storeService.convertToInventoryDtos(inventory);
-        outputView.showInventory(dtos);
-        return inventory;
+        return initializeInventory(promotions);
     }
 
     private Inventory initializeInventory(final Promotions promotions) {

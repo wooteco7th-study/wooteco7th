@@ -96,6 +96,10 @@ public class OutputView {
         showln(exception.getMessage());
     }
 
+    public void showBlank() {
+        showln("");
+    }
+
     private String format(String format, Object... args) {
         return String.format(format, args);
     }
