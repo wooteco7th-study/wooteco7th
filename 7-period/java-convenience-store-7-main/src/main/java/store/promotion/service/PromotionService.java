@@ -24,10 +24,12 @@ public class PromotionService {
     public void applyPromotion(final StoreCommand storeCommand, final PurchaseProduct purchaseProduct,
                                final PromotionCheckResult promotionCheckResult) {
         final int promotionQuantity = purchaseProduct.getPurchaseProductQuantity().getPromotionQuantity();
-        if (Objects.equals(storeCommand, StoreCommand.YES)) {
-            purchaseProduct.getPurchaseProductQuantity()
-                    .updatePromotionQuantity(promotionQuantity + promotionCheckResult.quantity());
-        }
+        yes(storeCommand, purchaseProduct, promotionCheckResult, promotionQuantity);
+        no(storeCommand, purchaseProduct, promotionQuantity);
+    }
+
+    private void no(final StoreCommand storeCommand, final PurchaseProduct purchaseProduct,
+                           final int promotionQuantity) {
         if (Objects.equals(storeCommand, StoreCommand.NO)) {
             final Promotion promotion = promotionRepository.findByName(purchaseProduct.getPromotionName());
             purchaseProduct.getPurchaseProductQuantity().updatePromotionQuantity(promotionQuantity - promotion.getBuy());
@@ -36,19 +38,37 @@ public class PromotionService {
         }
     }
 
+    private static void yes(final StoreCommand storeCommand, final PurchaseProduct purchaseProduct,
+                                  final PromotionCheckResult promotionCheckResult, final int promotionQuantity) {
+        if (Objects.equals(storeCommand, StoreCommand.YES)) {
+            purchaseProduct.getPurchaseProductQuantity()
+                    .updatePromotionQuantity(promotionQuantity + promotionCheckResult.quantity());
+        }
+    }
+
     public void applyNonPromotion(final StoreCommand storeCommand, final PurchaseProduct purchaseProduct,
                                   final NonPromotionCheckResult nonPromotionCheckResult) {
         final int promotionQuantity = purchaseProduct.getPurchaseProductQuantity().getPromotionQuantity();
         purchaseProduct.getPurchaseProductQuantity()
                 .updatePromotionQuantity(promotionQuantity - nonPromotionCheckResult.promotion());
-        if (Objects.equals(storeCommand, StoreCommand.YES)) {
-            purchaseProduct.getPurchaseProductQuantity()
-                    .updatePromotionAndNonPromotionQuantity(nonPromotionCheckResult.promotion());
-        }
+        yes(storeCommand, purchaseProduct, nonPromotionCheckResult);
+        no(storeCommand, purchaseProduct, nonPromotionCheckResult);
+    }
+
+    private static void no(final StoreCommand storeCommand, final PurchaseProduct purchaseProduct,
+                                  final NonPromotionCheckResult nonPromotionCheckResult) {
         if (Objects.equals(storeCommand, StoreCommand.NO)) {
             final int nonPromotionQuantity = purchaseProduct.getPurchaseProductQuantity().getNonPromotionQuantity();
             purchaseProduct.getPurchaseProductQuantity()
                     .updateNonPromotionQuantity(nonPromotionQuantity - nonPromotionCheckResult.normal());
+        }
+    }
+
+    private static void yes(final StoreCommand storeCommand, final PurchaseProduct purchaseProduct,
+                                  final NonPromotionCheckResult nonPromotionCheckResult) {
+        if (Objects.equals(storeCommand, StoreCommand.YES)) {
+            purchaseProduct.getPurchaseProductQuantity()
+                    .updatePromotionAndNonPromotionQuantity(nonPromotionCheckResult.promotion());
         }
     }
 

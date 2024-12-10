@@ -57,19 +57,26 @@ public class Payment {
         final int promotionDiscount = purchaseProductGroup.getPurchaseProducts().stream()
                 .mapToInt(purchaseProduct -> calculateBenefitQuantity(purchaseProduct) * purchaseProduct.getPrice())
                 .sum();
-        return new PaymentReceipt(purchaseProductGroup.calculateTotalQuantity(),totalPrice, promotionDiscount, memberShipDiscount,
+        return new PaymentReceipt(purchaseProductGroup.calculateTotalQuantity(), totalPrice, promotionDiscount,
+                memberShipDiscount,
                 totalPrice - promotionDiscount - memberShipDiscount);
     }
 
     public void purchase() {
         final List<PurchaseProduct> purchaseProducts = purchaseProductGroup.getPurchaseProducts();
         for (PurchaseProduct purchaseProduct : purchaseProducts) {
-            final PurchaseProductQuantity purchaseProductQuantity = purchaseProduct.getPurchaseProductQuantity();
-            if (purchaseProduct.hasPromotion()) {
-                productRepository.findPromotionProductByProductName(purchaseProduct.getName()).subtractQuantity(
-                        purchaseProductQuantity.getPromotionQuantity()
-                                + purchaseProductQuantity.getPromotionAndNonPromotionQuantity());
-            }
+            deduct(purchaseProduct);
+        }
+    }
+
+    private void deduct(final PurchaseProduct purchaseProduct) {
+        final PurchaseProductQuantity purchaseProductQuantity = purchaseProduct.getPurchaseProductQuantity();
+        if (purchaseProduct.hasPromotion()) {
+            productRepository.findPromotionProductByProductName(purchaseProduct.getName()).subtractQuantity(
+                    purchaseProductQuantity.getPromotionQuantity()
+                            + purchaseProductQuantity.getPromotionAndNonPromotionQuantity());
+        }
+        if (purchaseProductQuantity.getNonPromotionQuantity() > 0) {
             productRepository.findNonProductByProductName(purchaseProduct.getName())
                     .subtractQuantity(purchaseProductQuantity.getNonPromotionQuantity());
         }

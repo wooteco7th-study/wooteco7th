@@ -26,18 +26,21 @@ public class Store {
     }
 
     public void purchase() {
-        promotionRepository.initialize();
-        productRepository.initialize();
+        initialize();
         while (true) {
             final PurchaseProductGroup purchaseProductGroup = productController().requestPurchaseProductGroup();
-            final PromotionController promotionController = promotionController(purchaseProductGroup);
-            promotionController.run();
+            promotionController(purchaseProductGroup).run();
             final PaymentController paymentController = paymentController(purchaseProductGroup);
             paymentController.run();
             if (!paymentController.isRetry()) {
                 break;
             }
         }
+    }
+
+    private void initialize() {
+        promotionRepository.initialize();
+        productRepository.initialize();
     }
 
 

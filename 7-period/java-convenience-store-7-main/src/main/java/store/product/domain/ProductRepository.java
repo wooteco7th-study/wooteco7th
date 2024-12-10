@@ -23,6 +23,13 @@ public class ProductRepository {
         return Collections.unmodifiableList(products);
     }
 
+    public Product findByName(final String name) {
+        return products.stream()
+                .filter(product -> Objects.equals(product.getName(), name))
+                .findAny()
+                .orElseThrow(() -> new AppException(ErrorMessage.INVALID_INPUT));
+    }
+
     public Product findPromotionProductByProductName(final String name) {
         return products.stream()
                 .filter(product -> Objects.equals(product.getName(), name))

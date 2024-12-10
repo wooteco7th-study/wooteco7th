@@ -52,7 +52,7 @@ public class ProductService {
 
     private PurchaseProduct createPurchaseProduct(final ProductRequest productRequest) {
         final int promotionQuantity = calculatePromotionQuantity(productRequest);
-        final int price = productRepository.findNonProductByProductName(productRequest.name()).getPrice();
+        final int price = productRepository.findByName(productRequest.name()).getPrice();
         int nonPromotionQuantity = 0;
         if (productRequest.quantity() > promotionQuantity) {
             nonPromotionQuantity = productRequest.quantity() - promotionQuantity;
