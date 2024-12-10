@@ -1,7 +1,14 @@
 package store;
 
+import java.util.ArrayList;
+import store.product.domain.ProductRepository;
+import store.promotion.domain.PromotionRepository;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        final PromotionRepository promotionRepository = new PromotionRepository(new ArrayList<>());
+        final ProductRepository productRepository = new ProductRepository(new ArrayList<>());
+        final Store store = new Store(productRepository, promotionRepository);
+        store.purchase();
     }
 }
