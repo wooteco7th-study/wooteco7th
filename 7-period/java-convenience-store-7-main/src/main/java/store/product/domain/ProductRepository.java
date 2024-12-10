@@ -42,9 +42,9 @@ public class ProductRepository {
         final int quantity = StringParser.parseToInt(splitLine[2], ErrorMessage.INVALID_NUMBER_FORMAT);
         final String promotionName = splitLine[3];
         if (Objects.equals(promotionName, "null")) {
-            return new Product(name, ProductType.NON_PROMOTION, quantity, price);
+            return new Product(name, ProductType.NON_PROMOTION, quantity, price, "");
         }
         final Promotion promotion = promotionRepository.findByName(promotionName);
-        return new PromotionProduct(name, ProductType.PROMOTION, quantity, price, promotion);
+        return new PromotionProduct(name, ProductType.PROMOTION, quantity, price, promotion, promotionName);
     }
 }

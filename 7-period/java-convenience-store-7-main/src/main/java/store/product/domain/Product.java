@@ -8,12 +8,15 @@ public class Product {
     private final ProductType productType;
     private final int quantity;
     private final int price;
+    private final String promotionName;
 
-    public Product(final String name, final ProductType productType, final int quantity, final int price) {
+    public Product(final String name, final ProductType productType, final int quantity, final int price,
+                   final String promotionName) {
         this.name = name;
         this.productType = productType;
         this.quantity = quantity;
         this.price = price;
+        this.promotionName = promotionName;
     }
 
     public String getName() {
@@ -30,5 +33,9 @@ public class Product {
 
     public int getPrice() {
         return price;
+    }
+
+    public String getPromotionName() {
+        return promotionName;
     }
 }
