@@ -92,7 +92,7 @@ public class StoreController {
     }
 
     private ResultDto guideIfGift(final ResultDto resultDto, final Stocks stocks) {
-        outputView.showRequestGift();
+        outputView.showRequestGift(resultDto.productName());
         if (isYes()) {
             return storeService.addGiftQuantity(resultDto, stocks);
         }

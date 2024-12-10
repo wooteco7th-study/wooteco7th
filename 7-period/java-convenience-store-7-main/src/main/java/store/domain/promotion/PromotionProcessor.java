@@ -3,8 +3,8 @@ package store.domain.promotion;
 import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
 import store.domain.order.Order;
-import store.dto.ResultDto;
 import store.domain.stock.Stocks;
+import store.dto.ResultDto;
 
 public class PromotionProcessor {
 
@@ -44,37 +44,41 @@ public class PromotionProcessor {
 
     private ResultDto processOnlyPromotionPurchase(final Order order) {
         int purchaseQuantity = order.getPurchaseQuantity();
-        int unit = stocks.getPromotionUnitQuantity();
+        int unitQuantity = stocks.getPromotionUnitQuantity();
         // 프로모션 적용 상품 개수
-        int membershipApplyCount = purchaseQuantity - (purchaseQuantity / unit * unit);
+        int membershipApplyCount = purchaseQuantity - (purchaseQuantity / unitQuantity * unitQuantity);
         // 증정 상품 개수
-        int giftCount = stocks.calculateGiftQuantity(unit);
+        int giftCount = stocks.calculateGiftQuantity(unitQuantity);
         stocks.subtractPromotionStock(purchaseQuantity);
         return ResultDto.of(ProcessType.ONLY_PROMOTION, order, purchaseQuantity, 0, giftCount, stocks,
                 membershipApplyCount);
     }
 
     private ResultDto guideGift(final Order order) {
-        int unit = stocks.getPromotionUnitQuantity();
+        int numberOfUnit = calculateUnit(order);
         return ResultDto.of(ProcessType.CAN_GIFT, order, order.getPurchaseQuantity(), 0,
-                stocks.calculateGiftQuantity(unit), stocks, 0);
+                stocks.calculateGiftQuantity(numberOfUnit), stocks, 0);
+    }
+
+    private int calculateUnit(final Order order) {
+        return order.getPurchaseQuantity() / stocks.getPromotionUnitQuantity();
     }
 
     private boolean canGift(final Order order) {
         int purchaseQuantity = order.getPurchaseQuantity();
-        int unit = stocks.getPromotionUnitQuantity();
-        return purchaseQuantity % unit == stocks.getBuyQuantity() && stocks.isPromotionHasMoreThanEqualToBuyQuantity();
+        int unitQuantity = stocks.getPromotionUnitQuantity();
+        return purchaseQuantity % unitQuantity == stocks.getBuyQuantity() && stocks.isPromotionHasMoreThanEqualToBuyQuantity();
     }
 
     // - 프로모션 재고가 7개이고 구매 상품 수가 10개일때 (6개(2+1)+(2+1))는 프로모션이 적용되지만 나머지 4개는 적용되지 않는다.
     //- n개 구매, 프로모션 재고 s개 : `n - (s / (a+b) * (a+b))` 개는 프로모션 적용 X, `s / (a+b) * (a+b)`는 프로모션 적용
     private ResultDto guideMixedPurchase(final Order order) {
         int purchaseQuantity = order.getPurchaseQuantity();
-        int unit = stocks.getPromotionUnitQuantity();
+        int unitQuantity = stocks.getPromotionUnitQuantity();
         int promotionQuantity = stocks.getPromotionStockQuantity();
-        int promotionPurchaseQuantity = promotionQuantity / unit * unit;
+        int promotionPurchaseQuantity = promotionQuantity / unitQuantity * unitQuantity;
         int regularPurchaseQuantity = purchaseQuantity - promotionPurchaseQuantity;
-        int giftQuantity = stocks.calculateGiftQuantity(unit);
+        int giftQuantity = stocks.calculateGiftQuantity(unitQuantity);
         return ResultDto.of(ProcessType.MIXED, order, promotionPurchaseQuantity, regularPurchaseQuantity, giftQuantity,
                 stocks, regularPurchaseQuantity);
     }

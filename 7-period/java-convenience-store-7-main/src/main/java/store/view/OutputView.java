@@ -17,11 +17,10 @@ public class OutputView {
     private static final String REQUEST_ORDER = "구매하실 상품명과 수량을 입력해 주세요. (예: [사이다-2],[감자칩-1])";
     private static final String REQUEST_MEMBERSHIP = "멤버십 할인을 받으시겠습니까? (Y/N)";
     private static final String INFORM_RECEIPT_TITLE = """
-            ==============W 편의점================
-            """;
-    private static final String FORMAT_RECEIPT_INVENTORY = "%s/t/t%d/t%,d";
+            ==============W 편의점================""";
+    private static final String FORMAT_RECEIPT_INVENTORY = "%s\t\t%d\t%,d";
     private static final String INFORM_RECEIPT_BONUS_TITLE = "=============증	정===============";
-    private static final String FORMAT_RECEIPT_BONUS = "%s/t%d";
+    private static final String FORMAT_RECEIPT_BONUS = "%s\t%d";
     private static final String INFORM_RESULT_TITLE = "====================================";
     private static final String INFORM_RESULT_FORMAT = """
             총구매액		%d	%,d
@@ -31,7 +30,7 @@ public class OutputView {
             """;
     private static final String REQUEST_RETRY = "감사합니다. 구매하고 싶은 다른 상품이 있나요? (Y/N)";
     private static final String REQUEST_REGULAR_PRICE = "현재 %s %d개는 프로모션 할인이 적용되지 않습니다. 그래도 구매하시겠습니까? (Y/N)";
-    private static final String REQUEST_BONUS = "현재 {상품명}은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)";
+    private static final String REQUEST_BONUS = "현재 %s은(는) 1개를 무료로 더 받을 수 있습니다. 추가하시겠습니까? (Y/N)";
 
     public void showTitleWelcome() {
         showln(TITLE_WELCOME);
@@ -49,7 +48,7 @@ public class OutputView {
     }
 
     public void showRequestMembership() {
-        showln(REQUEST_MEMBERSHIP);
+        showln(LINE + REQUEST_MEMBERSHIP);
     }
 
     public void showReceipt(ReceiptProductDto productDto, ReceiptResultDto resultDto) {
@@ -83,11 +82,11 @@ public class OutputView {
     }
 
     public void showRequestRegularPrice() {
-        showln(REQUEST_REGULAR_PRICE);
+        showln(LINE + REQUEST_REGULAR_PRICE);
     }
 
-    public void showRequestGift() {
-        showln(REQUEST_BONUS);
+    public void showRequestGift(String productName) {
+        showln(LINE + format(REQUEST_BONUS, productName));
     }
 
     public void showException(Exception exception) {
