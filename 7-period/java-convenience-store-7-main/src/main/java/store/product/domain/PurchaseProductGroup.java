@@ -14,4 +14,16 @@ public class PurchaseProductGroup {
     public List<PurchaseProduct> getPurchaseProducts() {
         return Collections.unmodifiableList(purchaseProducts);
     }
+
+    public int calculateNonPromotionTotalPrice() {
+        return purchaseProducts.stream()
+                .mapToInt(PurchaseProduct::calculateNonPromotionPrice)
+                .sum();
+    }
+
+    public int calculateTotalPrice() {
+        return purchaseProducts.stream()
+                .mapToInt(PurchaseProduct::calculateTotalPrice)
+                .sum();
+    }
 }

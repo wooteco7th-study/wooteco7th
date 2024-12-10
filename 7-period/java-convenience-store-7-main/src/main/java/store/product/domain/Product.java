@@ -5,7 +5,7 @@ public class Product {
     private final String name;
     private final ProductType productType;
     private final String promotionName;
-    private final int quantity;
+    private int quantity;
     private final int price;
 
     public Product(final String name, final ProductType productType, final int quantity, final int price,
@@ -35,6 +35,10 @@ public class Product {
 
     public String getPromotionName() {
         return promotionName;
+    }
+
+    public void subtractQuantity(final int quantity) {
+        this.quantity -= quantity;
     }
 
 }
