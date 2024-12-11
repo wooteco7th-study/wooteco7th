@@ -15,9 +15,16 @@ public class InputView {
         return StringParser.parseToInteger(line, ErrorMessage.INVALID_INPUT);
     }
 
-    public List<String> readWinningNumber() {
+    public List<Integer> readWinningNumber() {
         String line = readLine(ErrorMessage.INVALID_INPUT);
-        return StringParser.parseByDelimiter(line, DELIMITER);
+        return convertToTokens(line);
+    }
+
+    private List<Integer> convertToTokens(final String line) {
+        List<String> tokens = StringParser.parseByDelimiter(line, DELIMITER);
+        return tokens.stream()
+                .map(input -> StringParser.parseToInteger(input, ErrorMessage.INVALID_INPUT))
+                .toList();
     }
 
     public int readBonusNumber() {

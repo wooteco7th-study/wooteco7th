@@ -1,5 +1,6 @@
 package lotto.controller;
 
+import lotto.domain.Lotto;
 import lotto.domain.Lottos;
 import lotto.domain.PurchaseAmount;
 import lotto.domain.generator.LottoGenerator;
@@ -29,17 +30,25 @@ public class LottoController {
 
     public void process() {
         int quantity = calculateQuantity();
-        Lottos purchaseLottos = makeLottos(quantity);
-        showPurchaseLottos(quantity, purchaseLottos);
+        Lottos purchaseLottos = purchaseLottos(quantity);
+        // 당첨 번호 입력
+        outputView.showRequestWinningNumber();
+        Lotto winningLotto = makeWinningLotto();
+    }
+
+    private Lotto makeWinningLotto() {
+        return exceptionHandler.retryUntilSuccess(() -> new Lotto(inputView.readWinningNumber()));
+    }
+
+    private Lottos purchaseLottos(final int quantity) {
+        Lottos lottos = lottoGenerator.generateMultiple(quantity);
+        showPurchaseLottos(quantity, lottos);
+        return lottos;
     }
 
     private void showPurchaseLottos(final int quantity, final Lottos purchaseLottos) {
         LottoDto lottoDto = lottoService.convertToLottoDto(purchaseLottos);
         outputView.showPurchaseLotto(quantity, lottoDto.numbers());
-    }
-
-    private Lottos makeLottos(final int quantity) {
-        return lottoGenerator.generateMultiple(quantity);
     }
 
     private int calculateQuantity() {
