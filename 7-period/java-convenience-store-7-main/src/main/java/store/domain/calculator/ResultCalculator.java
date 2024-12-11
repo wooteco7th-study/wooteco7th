@@ -1,7 +1,7 @@
 package store.domain.calculator;
 
 import java.util.List;
-import store.dto.ResultDto;
+import store.dto.PurchaseStateDto;
 
 public class ResultCalculator {
 
@@ -9,9 +9,9 @@ public class ResultCalculator {
     private static final int PERCENT = 100;
     private static final int MEMBERSHIP_MAX_DISCOUNT = 8000;
 
-    private final List<ResultDto> dtos;
+    private final List<PurchaseStateDto> dtos;
 
-    public ResultCalculator(final List<ResultDto> dtos) {
+    public ResultCalculator(final List<PurchaseStateDto> dtos) {
         this.dtos = dtos;
     }
 
@@ -35,7 +35,7 @@ public class ResultCalculator {
 
     public int calculateMembershipDiscount() {
         int total = dtos.stream()
-                .mapToInt(dto -> multiplyPrice(dto.price(), dto.membershipApplyCount()))
+                .mapToInt(dto -> multiplyPrice(dto.price(), dto.regularPurchaseQuantity()))
                 .sum();
         int membershipDiscount = total * MEMBERSHIP_DISCOUNT_RATE / PERCENT;
         return Math.min(membershipDiscount, MEMBERSHIP_MAX_DISCOUNT);
@@ -45,7 +45,7 @@ public class ResultCalculator {
         return price * quantity;
     }
 
-    private int getTotalQuantity(final ResultDto dto) {
+    private int getTotalQuantity(final PurchaseStateDto dto) {
         return dto.promotionPurchaseQuantity() + dto.regularPurchaseQuantity();
     }
 }
