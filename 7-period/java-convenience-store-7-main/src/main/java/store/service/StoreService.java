@@ -10,8 +10,8 @@ import store.domain.promotion.PromotionProcessor;
 import store.domain.stock.Inventory;
 import store.domain.stock.Stocks;
 import store.dto.InventoryDto;
+import store.domain.PurchaseState;
 import store.dto.ReceiptResultDto;
-import store.dto.PurchaseStateDto;
 
 public class StoreService {
 
@@ -42,44 +42,48 @@ public class StoreService {
                 stocks.getPromotionName(hasPromotion));
     }
 
-    public PurchaseStateDto processOrder(final Order order, final Stocks stocks) {
+    public PurchaseState processOrder(final Order order, final Stocks stocks) {
         PromotionProcessor promotionProcessor = new PromotionProcessor(stocks);
         return promotionProcessor.process(order);
     }
 
-    public PurchaseStateDto excludeRegularPurchaseQuantity(final PurchaseStateDto purchaseStateDto, final Stocks stocks) {
-        int promotionPurchaseQuantity = purchaseStateDto.promotionPurchaseQuantity();
+    public PurchaseState excludeRegularPurchaseQuantity(final PurchaseState purchaseState,
+                                                        final Stocks stocks) {
+        int promotionPurchaseQuantity = purchaseState.promotionPurchaseQuantity();
         stocks.subtractPromotionStock(promotionPurchaseQuantity);
-        return new PurchaseStateDto(ProcessType.ONLY_PROMOTION, purchaseStateDto.productName(), purchaseStateDto.promotionPurchaseQuantity(),
-                0, purchaseStateDto.giftQuantity(), purchaseStateDto.price());
+        return new PurchaseState(ProcessType.ONLY_PROMOTION, purchaseState.productName(),
+                purchaseState.promotionPurchaseQuantity(), 0, purchaseState.giftQuantity(),
+                purchaseState.price());
     }
 
-    public PurchaseStateDto processMixedPurchase(final PurchaseStateDto purchaseStateDto, final Stocks stocks) {
-        int totalPurchaseQuantity = purchaseStateDto.promotionPurchaseQuantity() + purchaseStateDto.regularPurchaseQuantity();
+    public PurchaseState processMixedPurchase(final PurchaseState purchaseState, final Stocks stocks) {
+        int totalPurchaseQuantity =
+                purchaseState.promotionPurchaseQuantity() + purchaseState.regularPurchaseQuantity();
         int remainingQuantity = totalPurchaseQuantity - stocks.getPromotionStockQuantity();
         stocks.subtractPromotionStock(stocks.getPromotionStockQuantity());
         stocks.subtractRegularStock(remainingQuantity);
-        return purchaseStateDto;
+        return purchaseState;
     }
 
-    public PurchaseStateDto addGiftQuantity(final PurchaseStateDto purchaseStateDto, final Stocks stocks) {
-        int purchaseQuantity = purchaseStateDto.promotionPurchaseQuantity();
-        int giftQuantity = purchaseStateDto.giftQuantity();
+    public PurchaseState addGiftQuantity(final PurchaseState purchaseState, final Stocks stocks) {
+        int purchaseQuantity = purchaseState.promotionPurchaseQuantity();
+        int giftQuantity = purchaseState.giftQuantity();
         int totalPromotionQuantity = purchaseQuantity + giftQuantity + GIFT_QUANTITY_INCREASE_UNIT;
         stocks.subtractPromotionStock(totalPromotionQuantity);
-        return new PurchaseStateDto(ProcessType.ONLY_PROMOTION, purchaseStateDto.productName(),
+        return new PurchaseState(ProcessType.ONLY_PROMOTION, purchaseState.productName(),
                 purchaseQuantity + GIFT_QUANTITY_INCREASE_UNIT,
-                0, giftQuantity + GIFT_QUANTITY_INCREASE_UNIT, purchaseStateDto.price());
+                0, giftQuantity + GIFT_QUANTITY_INCREASE_UNIT, purchaseState.price());
     }
 
-    public PurchaseStateDto continuePurchaseWithoutAddingGift(final PurchaseStateDto purchaseStateDto, final Stocks stocks) {
-        int purchaseQuantity = purchaseStateDto.promotionPurchaseQuantity();
+    public PurchaseState continuePurchaseWithoutAddingGift(final PurchaseState purchaseState,
+                                                           final Stocks stocks) {
+        int purchaseQuantity = purchaseState.promotionPurchaseQuantity();
         stocks.subtractPromotionStock(purchaseQuantity);
-        return new PurchaseStateDto(ProcessType.ONLY_PROMOTION, purchaseStateDto.productName(), purchaseQuantity, 0,
-                purchaseStateDto.giftQuantity(), purchaseStateDto.price());
+        return new PurchaseState(ProcessType.ONLY_PROMOTION, purchaseState.productName(), purchaseQuantity, 0,
+                purchaseState.giftQuantity(), purchaseState.price());
     }
 
-    public ReceiptResultDto convertToReceiptResultDtoWithMembership(final List<PurchaseStateDto> dtos) {
+    public ReceiptResultDto convertToReceiptResultDtoWithMembership(final List<PurchaseState> dtos) {
         ResultCalculator resultCalculator = new ResultCalculator(dtos);
         int totalQuantity = resultCalculator.calculateTotalQuantity();
         int totalPrice = resultCalculator.calculateTotalPrice();
@@ -89,7 +93,7 @@ public class StoreService {
         return new ReceiptResultDto(totalQuantity, totalPrice, promotionDiscount, membershipDiscount, payPrice);
     }
 
-    public ReceiptResultDto convertToReceiptResultDto(final List<PurchaseStateDto> dtos) {
+    public ReceiptResultDto convertToReceiptResultDto(final List<PurchaseState> dtos) {
         ResultCalculator resultCalculator = new ResultCalculator(dtos);
         int totalQuantity = resultCalculator.calculateTotalQuantity();
         int totalPrice = resultCalculator.calculateTotalPrice();

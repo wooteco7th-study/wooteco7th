@@ -4,7 +4,7 @@ import camp.nextstep.edu.missionutils.DateTimes;
 import java.time.LocalDate;
 import store.domain.order.Order;
 import store.domain.stock.Stocks;
-import store.dto.PurchaseStateDto;
+import store.domain.PurchaseState;
 
 public class PromotionProcessor {
 
@@ -19,14 +19,14 @@ public class PromotionProcessor {
         return stocks.isPromotionPeriod(now);
     }
 
-    public PurchaseStateDto process(final Order order) {
+    public PurchaseState process(final Order order) {
         if (!isPromotionPeriod()) {
             return regularPurchase(order);
         }
         return processWithPromotion(order);
     }
 
-    private PurchaseStateDto processWithPromotion(final Order order) {
+    private PurchaseState processWithPromotion(final Order order) {
         if (hasPromotionStockInsufficient(order)) {
             return guideMixedPurchase(order);
         }
@@ -36,21 +36,20 @@ public class PromotionProcessor {
         return processOnlyPromotionPurchase(order);
     }
 
-    private PurchaseStateDto processOnlyPromotionPurchase(final Order order) {
+    private PurchaseState processOnlyPromotionPurchase(final Order order) {
         int purchaseQuantity = order.getPurchaseQuantity();
         int unitQuantity = stocks.getPromotionUnitQuantity();
         int numberOfUnit = divideByUnitQuantity(purchaseQuantity, unitQuantity);
         int promotionApplyCount = divideByUnitQuantity(purchaseQuantity, unitQuantity) * unitQuantity;
-        int regularPurchaseQuantity = purchaseQuantity - promotionApplyCount;
         int giftCount = stocks.calculateGiftQuantity(numberOfUnit);
         stocks.subtractPromotionStock(purchaseQuantity);
-        return PurchaseStateDto.of(ProcessType.ONLY_PROMOTION, order, promotionApplyCount, regularPurchaseQuantity, giftCount, stocks
-        );
+        return PurchaseState.of(ProcessType.ONLY_PROMOTION, order, promotionApplyCount,
+                purchaseQuantity - promotionApplyCount, giftCount, stocks);
     }
 
-    private PurchaseStateDto guideGift(final Order order) {
+    private PurchaseState guideGift(final Order order) {
         int numberOfUnit = divideByUnitQuantity(order.getPurchaseQuantity(), stocks.getPromotionUnitQuantity());
-        return PurchaseStateDto.of(ProcessType.CAN_GIFT, order, order.getPurchaseQuantity(), 0,
+        return PurchaseState.of(ProcessType.CAN_GIFT, order, order.getPurchaseQuantity(), 0,
                 stocks.calculateGiftQuantity(numberOfUnit), stocks);
     }
 
@@ -61,15 +60,15 @@ public class PromotionProcessor {
                 && stocks.calculateRemainingIsMoreThanEqualToBuyQuantity(purchaseQuantity);
     }
 
-    private PurchaseStateDto guideMixedPurchase(final Order order) {
+    private PurchaseState guideMixedPurchase(final Order order) {
         int unitQuantity = stocks.getPromotionUnitQuantity();
         int promotionQuantity = stocks.getPromotionStockQuantity();
         int numberOfUnit = divideByUnitQuantity(promotionQuantity, unitQuantity);
         int promotionPurchaseQuantity = numberOfUnit * unitQuantity;
         int regularPurchaseQuantity = order.getPurchaseQuantity() - promotionPurchaseQuantity;
         int giftQuantity = stocks.calculateGiftQuantity(numberOfUnit);
-        return PurchaseStateDto.of(ProcessType.MIXED, order, promotionPurchaseQuantity, regularPurchaseQuantity, giftQuantity,
-                stocks);
+        return PurchaseState.of(ProcessType.MIXED, order, promotionPurchaseQuantity, regularPurchaseQuantity,
+                giftQuantity, stocks);
     }
 
     public int divideByUnitQuantity(int quantity, int unitQuantity) {
@@ -80,9 +79,9 @@ public class PromotionProcessor {
         return !stocks.hasPromotionEnoughQuantity(order.getPurchaseQuantity());
     }
 
-    private PurchaseStateDto regularPurchase(final Order order) {
+    private PurchaseState regularPurchase(final Order order) {
         int purchaseQuantity = order.getPurchaseQuantity();
         stocks.subtractRegularStock(purchaseQuantity);
-        return PurchaseStateDto.of(ProcessType.REGULAR, order, 0, purchaseQuantity, 0, stocks);
+        return PurchaseState.of(ProcessType.REGULAR, order, 0, purchaseQuantity, 0, stocks);
     }
 }

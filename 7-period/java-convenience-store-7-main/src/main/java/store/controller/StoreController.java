@@ -15,7 +15,7 @@ import store.domain.stock.Stocks;
 import store.dto.InventoryDto;
 import store.dto.ReceiptProductDto;
 import store.dto.ReceiptResultDto;
-import store.dto.PurchaseStateDto;
+import store.domain.PurchaseState;
 import store.exception.CustomIllegalArgumentException;
 import store.exception.ErrorMessage;
 import store.exception.ExceptionHandler;
@@ -52,7 +52,7 @@ public class StoreController {
         do {
             showInventory(inventory);
             Orders orders = makeOrders(inventory);
-            List<PurchaseStateDto> dtos = processOrderWithResult(inventory, orders);
+            List<PurchaseState> dtos = processOrderWithResult(inventory, orders);
             ReceiptResultDto receiptResultDto = processMembership(dtos);
             outputView.showReceipt(ReceiptProductDto.of(dtos), receiptResultDto);
         } while (shouldContinue());
@@ -70,7 +70,7 @@ public class StoreController {
         return isYes;
     }
 
-    private ReceiptResultDto processMembership(final List<PurchaseStateDto> dtos) {
+    private ReceiptResultDto processMembership(final List<PurchaseState> dtos) {
         outputView.showRequestMembership();
         if (isYes()) {
             return storeService.convertToReceiptResultDtoWithMembership(dtos);
@@ -78,53 +78,53 @@ public class StoreController {
         return storeService.convertToReceiptResultDto(dtos);
     }
 
-    private List<PurchaseStateDto> processOrderWithResult(final Inventory inventory, final Orders orders) {
+    private List<PurchaseState> processOrderWithResult(final Inventory inventory, final Orders orders) {
         return orders.getOrders().stream()
                 .map(order -> processOrderWithInventory(inventory, order))
                 .toList();
     }
 
-    private PurchaseStateDto processOrderWithInventory(final Inventory inventory, final Order order) {
+    private PurchaseState processOrderWithInventory(final Inventory inventory, final Order order) {
         Stocks stocks = inventory.get(order.getName());
-        PurchaseStateDto purchaseStateDto = storeService.processOrder(order, stocks);
-        if (doesGuideNeeded(purchaseStateDto)) {
-            return guide(purchaseStateDto, stocks);
+        PurchaseState purchaseState = storeService.processOrder(order, stocks);
+        if (doesGuideNeeded(purchaseState)) {
+            return guide(purchaseState, stocks);
         }
-        return purchaseStateDto;
+        return purchaseState;
     }
 
-    private PurchaseStateDto guide(final PurchaseStateDto purchaseStateDto, final Stocks stocks) {
-        if (purchaseStateDto.type() == ProcessType.MIXED) {
-            return guideIfMixed(purchaseStateDto, stocks);
+    private PurchaseState guide(final PurchaseState purchaseState, final Stocks stocks) {
+        if (purchaseState.type() == ProcessType.MIXED) {
+            return guideIfMixed(purchaseState, stocks);
         }
-        if (purchaseStateDto.type() == ProcessType.CAN_GIFT) {
-            return guideIfGift(purchaseStateDto, stocks);
+        if (purchaseState.type() == ProcessType.CAN_GIFT) {
+            return guideIfGift(purchaseState, stocks);
         }
-        return purchaseStateDto;
+        return purchaseState;
     }
 
-    private PurchaseStateDto guideIfGift(final PurchaseStateDto purchaseStateDto, final Stocks stocks) {
-        outputView.showRequestGift(purchaseStateDto.productName());
+    private PurchaseState guideIfGift(final PurchaseState purchaseState, final Stocks stocks) {
+        outputView.showRequestGift(purchaseState.productName());
         if (isYes()) {
-            return storeService.addGiftQuantity(purchaseStateDto, stocks);
+            return storeService.addGiftQuantity(purchaseState, stocks);
         }
-        return storeService.continuePurchaseWithoutAddingGift(purchaseStateDto, stocks);
+        return storeService.continuePurchaseWithoutAddingGift(purchaseState, stocks);
     }
 
-    private PurchaseStateDto guideIfMixed(final PurchaseStateDto purchaseStateDto, final Stocks stocks) {
-        outputView.showRequestRegularPrice(purchaseStateDto.productName(), purchaseStateDto.regularPurchaseQuantity());
+    private PurchaseState guideIfMixed(final PurchaseState purchaseState, final Stocks stocks) {
+        outputView.showRequestRegularPrice(purchaseState.productName(), purchaseState.regularPurchaseQuantity());
         if (isYes()) {
-            return storeService.processMixedPurchase(purchaseStateDto, stocks);
+            return storeService.processMixedPurchase(purchaseState, stocks);
         }
-        return storeService.excludeRegularPurchaseQuantity(purchaseStateDto, stocks);
+        return storeService.excludeRegularPurchaseQuantity(purchaseState, stocks);
     }
 
     private boolean isYes() {
         return exceptionHandler.retryUntilSuccess(() -> Answer.from(inputView.readAnswer()).isYes());
     }
 
-    private boolean doesGuideNeeded(final PurchaseStateDto purchaseStateDto) {
-        return purchaseStateDto.type().doesGuideNeeded();
+    private boolean doesGuideNeeded(final PurchaseState purchaseState) {
+        return purchaseState.type().doesGuideNeeded();
     }
 
     private Orders makeOrders(final Inventory inventory) {
