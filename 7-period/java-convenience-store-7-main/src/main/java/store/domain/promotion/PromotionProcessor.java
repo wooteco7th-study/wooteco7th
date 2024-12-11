@@ -8,10 +8,6 @@ import store.dto.ResultDto;
 
 public class PromotionProcessor {
 
-    // - `오늘 날짜`가 `프로모션 기간 내`에 포함되었는지 확인
-    //- 프로모션 적용이 가능한 상품에 대해 **고객이 해당 수량보다 적게 가져온 경우**, 필요한 수량을 **추가로 가져오면 혜택을 받을 수 있음을 안내**
-    //- **프로모션 재고가 부족**하여 **일부 수량을 프로모션 혜택 없이 결제**해야 하는 경우, **일부 수량에 대해 정가로 결제하게 됨을 안내**
-
     private final Stocks stocks;
 
     public PromotionProcessor(final Stocks stocks) {
@@ -64,8 +60,6 @@ public class PromotionProcessor {
                 && stocks.calculateRemainingIsMoreThanEqualToBuyQuantity(purchaseQuantity);
     }
 
-    // - 프로모션 재고가 7개이고 구매 상품 수가 10개일때 (6개(2+1)+(2+1))는 프로모션이 적용되지만 나머지 4개는 적용되지 않는다.
-    //- n개 구매, 프로모션 재고 s개 : `n - (s / (a+b) * (a+b))` 개는 프로모션 적용 X, `s / (a+b) * (a+b)`는 프로모션 적용
     private ResultDto guideMixedPurchase(final Order order) {
         int unitQuantity = stocks.getPromotionUnitQuantity();
         int promotionQuantity = stocks.getPromotionStockQuantity();

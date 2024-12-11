@@ -82,7 +82,7 @@ public class StoreService {
     public ReceiptResultDto convertToReceiptResultDtoWithMembership(final List<ResultDto> dtos) {
         ResultCalculator resultCalculator = new ResultCalculator(dtos);
         int totalQuantity = resultCalculator.calculateTotalQuantity();
-        int totalPrice = resultCalculator.calcuclateTotalPrice();
+        int totalPrice = resultCalculator.calculateTotalPrice();
         int promotionDiscount = resultCalculator.calculatePromotionDiscount();
         int membershipDiscount = resultCalculator.calculateMembershipDiscount();
         int payPrice = totalPrice - promotionDiscount - membershipDiscount;
@@ -92,7 +92,7 @@ public class StoreService {
     public ReceiptResultDto convertToReceiptResultDto(final List<ResultDto> dtos) {
         ResultCalculator resultCalculator = new ResultCalculator(dtos);
         int totalQuantity = resultCalculator.calculateTotalQuantity();
-        int totalPrice = resultCalculator.calcuclateTotalPrice();
+        int totalPrice = resultCalculator.calculateTotalPrice();
         int promotionDiscount = resultCalculator.calculatePromotionDiscount();
         int payPrice = totalPrice - promotionDiscount;
         return new ReceiptResultDto(totalQuantity, totalPrice, promotionDiscount, 0, payPrice);

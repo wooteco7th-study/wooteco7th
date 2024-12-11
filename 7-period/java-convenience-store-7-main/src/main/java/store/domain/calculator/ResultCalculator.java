@@ -21,7 +21,7 @@ public class ResultCalculator {
                 .sum();
     }
 
-    public int calcuclateTotalPrice() {
+    public int calculateTotalPrice() {
         return dtos.stream()
                 .mapToInt(dto -> multiplyPrice(dto.price(), getTotalQuantity(dto)))
                 .sum();

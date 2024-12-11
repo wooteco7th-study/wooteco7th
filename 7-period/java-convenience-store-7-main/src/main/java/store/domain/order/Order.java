@@ -8,6 +8,7 @@ import store.exception.ErrorMessage;
 public class Order {
 
     private static final int MIN_EXCLUSIVE = 0;
+
     private final String name;
     private final int purchaseQuantity;
 
@@ -21,7 +22,7 @@ public class Order {
         if (notExistProduct(name, inventory)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_PRODUCT_NAME);
         }
-        if (quantity < MIN_EXCLUSIVE) {
+        if (quantity <= MIN_EXCLUSIVE) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_INPUT);
         }
         inventory.validateAvailablePurchase(name, quantity);

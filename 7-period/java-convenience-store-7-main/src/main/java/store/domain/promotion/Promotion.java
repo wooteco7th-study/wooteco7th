@@ -27,6 +27,10 @@ public class Promotion {
         return this.name.equals(input);
     }
 
+    public int calculateGiftQuantity(final int numberOfUnit) {
+        return getQuantity * numberOfUnit;
+    }
+
     public int getUnitQuantity() {
         return buyQuantity + getQuantity;
     }
@@ -37,9 +41,5 @@ public class Promotion {
 
     public String getName() {
         return name;
-    }
-
-    public int calculateGiftQuantity(final int unit) {
-        return getQuantity * unit;
     }
 }
