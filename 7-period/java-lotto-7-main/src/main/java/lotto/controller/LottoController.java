@@ -1,9 +1,11 @@
 package lotto.controller;
 
-import lotto.domain.Lotto;
-import lotto.domain.Lottos;
 import lotto.domain.PurchaseAmount;
 import lotto.domain.generator.LottoGenerator;
+import lotto.domain.lotto.Lotto;
+import lotto.domain.lotto.LottoNumber;
+import lotto.domain.lotto.Lottos;
+import lotto.domain.lotto.WinningResult;
 import lotto.dto.LottoDto;
 import lotto.exception.ExceptionHandler;
 import lotto.service.LottoService;
@@ -31,12 +33,22 @@ public class LottoController {
     public void process() {
         int quantity = calculateQuantity();
         Lottos purchaseLottos = purchaseLottos(quantity);
-        // 당첨 번호 입력
-        outputView.showRequestWinningNumber();
+        WinningResult winningResult = makeWinningResult();
+
+    }
+
+    private WinningResult makeWinningResult() {
         Lotto winningLotto = makeWinningLotto();
+        outputView.showRequestBonusNumber();
+        return exceptionHandler.retryUntilSuccess(() -> new WinningResult(winningLotto, makeBonusNumber()));
+    }
+
+    private LottoNumber makeBonusNumber() {
+        return new LottoNumber(inputView.readBonusNumber());
     }
 
     private Lotto makeWinningLotto() {
+        outputView.showRequestWinningNumber();
         return exceptionHandler.retryUntilSuccess(() -> new Lotto(inputView.readWinningNumber()));
     }
 

@@ -1,8 +1,8 @@
 package lotto.domain.generator;
 
-import static lotto.domain.Lotto.LOTTO_SIZE;
-import static lotto.domain.LottoNumber.END_INCLUSIVE;
-import static lotto.domain.LottoNumber.START_INCLUSIVE;
+import static lotto.domain.lotto.Lotto.LOTTO_SIZE;
+import static lotto.domain.lotto.LottoNumber.END_INCLUSIVE;
+import static lotto.domain.lotto.LottoNumber.START_INCLUSIVE;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;

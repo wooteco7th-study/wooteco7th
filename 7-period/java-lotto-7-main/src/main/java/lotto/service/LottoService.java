@@ -1,6 +1,6 @@
 package lotto.service;
 
-import lotto.domain.Lottos;
+import lotto.domain.lotto.Lottos;
 import lotto.dto.LottoDto;
 
 public class LottoService {

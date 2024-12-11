@@ -1,4 +1,4 @@
-package lotto.domain;
+package lotto.domain.lotto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,10 @@ public class Lotto {
     public Lotto(final List<Integer> values) {
         validate(values);
         this.numbers = initializeNumbers(values);
+    }
+
+    public boolean contains(final LottoNumber lottoNumber) {
+        return numbers.contains(lottoNumber);
     }
 
     private Set<LottoNumber> initializeNumbers(final List<Integer> numbers) {

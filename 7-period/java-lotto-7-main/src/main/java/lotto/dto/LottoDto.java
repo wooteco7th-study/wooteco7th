@@ -1,8 +1,8 @@
 package lotto.dto;
 
 import java.util.List;
-import lotto.domain.Lotto;
-import lotto.domain.LottoNumber;
+import lotto.domain.lotto.Lotto;
+import lotto.domain.lotto.LottoNumber;
 
 public record LottoDto(List<List<Integer>> numbers) {
 
