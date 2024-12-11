@@ -25,6 +25,17 @@ public class Lotto {
         return numbers.contains(lottoNumber);
     }
 
+    public int countMatchingNumber(final Lotto winningLotto) {
+        return (int) numbers.stream()
+                .filter(winningLotto::contains)
+                .count();
+    }
+
+    public boolean doesMatchBonus(final LottoNumber bonusNumber) {
+        return numbers.stream()
+                .anyMatch(number -> number.equals(bonusNumber));
+    }
+
     private Set<LottoNumber> initializeNumbers(final List<Integer> numbers) {
         return new TreeSet<>(numbers.stream()
                 .map(LottoNumber::new)
@@ -48,21 +59,6 @@ public class Lotto {
         return numbers.size() != numbers.stream().distinct().count();
     }
 
-    public List<LottoNumber> getNumbers() {
-        return new ArrayList<>(numbers);
-    }
-
-    public int countMatchingNumber(final Lotto winningLotto) {
-        return (int) numbers.stream()
-                .filter(winningLotto::contains)
-                .count();
-    }
-
-    public boolean doesMatchBonus(final LottoNumber bonusNumber) {
-        return numbers.stream()
-                .anyMatch(number -> number.equals(bonusNumber));
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) {
@@ -77,5 +73,9 @@ public class Lotto {
     @Override
     public int hashCode() {
         return Objects.hash(getNumbers());
+    }
+
+    public List<LottoNumber> getNumbers() {
+        return new ArrayList<>(numbers);
     }
 }
