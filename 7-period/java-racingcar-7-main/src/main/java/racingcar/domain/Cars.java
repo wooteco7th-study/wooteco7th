@@ -9,8 +9,15 @@ public class Cars {
 
     private final List<Car> values;
 
-    public Cars(final List<Car> values) {
+    private Cars(final List<Car> values) {
         this.values = new ArrayList<>(values);
+    }
+
+    public static Cars of(final NumberGenerator numberGenerator, final List<CarName> carNames) {
+        final List<Car> cars = carNames.stream()
+                .map(carName -> new Car(numberGenerator, carName, 0))
+                .toList();
+        return new Cars(cars);
     }
 
     public int calculateMaxScore() {

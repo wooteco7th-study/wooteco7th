@@ -3,12 +3,17 @@ package racingcar.domain;
 import java.util.List;
 import racingcar.exception.AppException;
 import racingcar.exception.ErrorMessage;
+import racingcar.util.NumberValidator;
 
 public class CarNames {
+
+    private static final int MIN = 1;
+    private static final int MAX = 100;
 
     private final List<CarName> names;
 
     public CarNames(final List<CarName> names) {
+        NumberValidator.validateRange(names.size(), MIN, MAX, ErrorMessage.EXCEEDS_CAR_SIZE);
         validate(names);
         this.names = names;
     }
@@ -17,6 +22,10 @@ public class CarNames {
         return new CarNames(values.stream()
                 .map(CarName::new)
                 .toList());
+    }
+
+    public List<CarName> getNames() {
+        return names;
     }
 
     private void validate(final List<CarName> names) {

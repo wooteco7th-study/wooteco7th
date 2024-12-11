@@ -8,7 +8,7 @@ public class Attempt {
     private static final int MIN = 1;
     private static final int MAX = 100;
 
-    private final int value;
+    private int value;
 
     public Attempt(final int value) {
         validate(value);
@@ -19,7 +19,11 @@ public class Attempt {
         NumberValidator.validateRange(value, MIN, MAX, ErrorMessage.INVALID_INPUT);
     }
 
-    public int getValue() {
-        return value;
+    public void decreaseAttempt() {
+        this.value--;
+    }
+
+    public boolean isZero() {
+        return this.value == 0;
     }
 }
