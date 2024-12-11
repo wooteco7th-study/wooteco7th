@@ -48,6 +48,14 @@ public enum LottoRank {
                 .toList();
     }
 
+    public int getRank() {
+        return rank;
+    }
+
+    public int getMatchCount() {
+        return matchCount;
+    }
+
     public int getPrice() {
         return price;
     }

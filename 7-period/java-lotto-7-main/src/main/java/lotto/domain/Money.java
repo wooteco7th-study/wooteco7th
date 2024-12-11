@@ -18,6 +18,10 @@ public class Money {
         return this.value / number;
     }
 
+    public int getValue() {
+        return value;
+    }
+
     private void validate(final int value) {
         NumberValidator.validateRange(value, UNIT_AND_TICKET_PRICE, Integer.MAX_VALUE, ErrorMessage.EXCEEDS_MONEY);
         NumberValidator.validateUnit(value, UNIT_AND_TICKET_PRICE, ErrorMessage.INVALID_MONEY_UNIT);
