@@ -10,7 +10,7 @@ public class Lotto {
 
     public static final int NUMBER_MIN = 1;
     public static final int NUMBER_MAX = 45;
-    private static final int NUMBERS_SIZE = 6;
+    public static final int NUMBERS_SIZE = 6;
 
     private final List<Integer> numbers;
 
