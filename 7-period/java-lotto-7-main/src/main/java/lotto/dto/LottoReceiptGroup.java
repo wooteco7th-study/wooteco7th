@@ -13,7 +13,7 @@ public record LottoReceiptGroup(
                 .toList());
     }
 
-    record LottoReceipt(
+    public record LottoReceipt(
             List<Integer> numbers
     ) {
         public static LottoReceipt of(final Lotto lotto) {
