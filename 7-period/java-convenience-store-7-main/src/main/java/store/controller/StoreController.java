@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
+import store.domain.PurchaseState;
 import store.domain.command.Answer;
 import store.domain.order.Order;
 import store.domain.order.Orders;
@@ -15,7 +16,6 @@ import store.domain.stock.Stocks;
 import store.dto.InventoryDto;
 import store.dto.ReceiptProductDto;
 import store.dto.ReceiptResultDto;
-import store.domain.PurchaseState;
 import store.exception.CustomIllegalArgumentException;
 import store.exception.ErrorMessage;
 import store.exception.ExceptionHandler;
@@ -161,7 +161,8 @@ public class StoreController {
         return inventory;
     }
 
-    private void addProductToInventory(final Promotions promotions, final Inventory inventory, final String inputInventory) {
+    private void addProductToInventory(final Promotions promotions, final Inventory inventory,
+                                       final String inputInventory) {
         List<String> tokens = StringParser.parseByDelimiter(inputInventory, DELIMITER);
         inventory.put(tokens.get(0),
                 StringParser.parseToInteger(tokens.get(1), ErrorMessage.INVALID_INPUT),
@@ -171,17 +172,25 @@ public class StoreController {
 
     private Promotions makePromotions() {
         List<String> inputPromotions = readPromotions();
-        Promotions promotions = new Promotions(inputPromotions.stream()
+        return new Promotions(inputPromotions.stream()
                 .map(this::makePromotion)
                 .toList());
-        return promotions;
     }
 
     private Promotion makePromotion(final String inputPromotion) {
         List<String> tokens = StringParser.parseByDelimiter(inputPromotion, DELIMITER);
+        LocalDate localDate = parseToLocalDate(tokens);
         return new Promotion(tokens.get(0), StringParser.parseToInteger(tokens.get(1), ErrorMessage.INVALID_INPUT),
                 StringParser.parseToInteger(tokens.get(2), ErrorMessage.INVALID_INPUT),
-                LocalDate.parse(tokens.get(3)), LocalDate.parse(tokens.get(4)));
+                localDate, LocalDate.parse(tokens.get(4)));
+    }
+
+    private LocalDate parseToLocalDate(final List<String> tokens) {
+        try {
+            return LocalDate.parse(tokens.get(3));
+        } catch (RuntimeException e) {
+            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_INPUT);
+        }
     }
 
     private List<String> readPromotions() {
