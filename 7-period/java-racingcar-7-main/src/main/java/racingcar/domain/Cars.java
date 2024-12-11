@@ -9,7 +9,7 @@ public class Cars {
 
     private final List<Car> values;
 
-    private Cars(final List<Car> values) {
+    public Cars(final List<Car> values) {
         this.values = new ArrayList<>(values);
     }
 
