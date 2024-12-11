@@ -1,5 +1,6 @@
 package lotto.domain;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -36,7 +37,9 @@ public class WinningResult {
         return LottoRank.findAll().stream()
                 .collect(Collectors.toMap(
                         lottoRank -> lottoRank,
-                        lottoRank -> 0
+                        lottoRank -> 0,
+                        (l1, l2) -> l1,
+                        LinkedHashMap::new
                 ));
     }
 
