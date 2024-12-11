@@ -37,7 +37,7 @@ class ResultCalculatorTest {
     }
 
     private Lottos makeLottos() {
-        List<Lotto> lottos = List.of(new Lotto(List.of(1, 2, 3, 11, 12, 13)),
+        List<Lotto> lottos = List.of(new Lotto(List.of(1, 2, 3, 7, 12, 13)),
                 new Lotto(List.of(20, 21, 22, 23, 24, 25)));
         return new Lottos(lottos);
     }

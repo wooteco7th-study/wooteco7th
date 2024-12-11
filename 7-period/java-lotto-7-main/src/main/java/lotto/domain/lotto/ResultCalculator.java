@@ -56,7 +56,7 @@ public class ResultCalculator {
     private void calculateEachLotto(final Lotto purchaseLotto) {
         int matchingCount = purchaseLotto.countMatchingNumber(winningLotto);
         boolean matchBonus = purchaseLotto.doesMatchBonus(bonusNumber);
-        LottoAward award = LottoAward.from(matchingCount, matchBonus);
+        LottoAward award = LottoAward.from(matchingCount);
         result.merge(award, 1, Integer::sum);
     }
 }

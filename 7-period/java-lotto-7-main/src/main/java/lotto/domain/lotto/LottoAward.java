@@ -28,9 +28,9 @@ public enum LottoAward {
         this.prize = prize;
     }
 
-    public static LottoAward from(int matchingCount, boolean matchBonus) {
+    public static LottoAward from(int matchingCount) {
         return VALUED_LOTTO_AWARD.stream()
-                .filter(lottoAward -> lottoAward.matchingCount == matchingCount && lottoAward.matchBonus == matchBonus)
+                .filter(lottoAward -> lottoAward.matchingCount == matchingCount)
                 .findFirst()
                 .orElse(NONE);
     }
