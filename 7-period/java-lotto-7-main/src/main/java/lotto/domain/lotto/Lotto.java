@@ -1,5 +1,7 @@
 package lotto.domain.lotto;
 
+import static lotto.exception.ErrorMessage.INVALID_LOTTO_NUMBER_DUPLICATED;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -29,8 +31,11 @@ public class Lotto {
     }
 
     private void validate(List<Integer> numbers) {
-        if (hasInvalidSize(numbers) || isDuplicated(numbers)) {
+        if (hasInvalidSize(numbers)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_LOTTO_SIZE);
+        }
+        if (isDuplicated(numbers)) {
+            throw new CustomIllegalArgumentException(INVALID_LOTTO_NUMBER_DUPLICATED);
         }
     }
 
@@ -44,5 +49,16 @@ public class Lotto {
 
     public List<LottoNumber> getNumbers() {
         return new ArrayList<>(numbers);
+    }
+
+    public int countMatchingNumber(final Lotto winningLotto) {
+        return (int) numbers.stream()
+                .filter(winningLotto::contains)
+                .count();
+    }
+
+    public boolean doesMatchBonus(final LottoNumber bonusNumber) {
+        return numbers.stream()
+                .anyMatch(number -> number.equals(bonusNumber));
     }
 }

@@ -2,7 +2,6 @@ package lotto.view;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import lotto.dto.StatisticsDto;
 
 public class OutputView {
 
@@ -19,7 +18,7 @@ public class OutputView {
             5개 일치 (1,500,000원) - %d개
             5개 일치, 보너스 볼 일치 (30,000,000원) - %d개
             6개 일치 (2,000,000,000원) - %d개""";
-    private static final String INFORM_PROFIT = "총 수익률은 %.2f%입니다.";
+    private static final String INFORM_PROFIT = "총 수익률은 %.1f%%입니다.";
     private static final String DELIMITER = ", ";
     private static final String PREFIX = "[";
     private static final String SUFFIX = "]";
@@ -43,8 +42,8 @@ public class OutputView {
         showln(LINE + REQUEST_BONUS_NUMBER);
     }
 
-    public void showInformResult(final StatisticsDto dto, double profit) {
-        showln(format(INFORM_RESULT, dto.match3(), dto.match4(), dto.match5(), dto.match5WithBonus(), dto.match6()));
+    public void showInformResult(final List<Integer> counts, double profit) {
+        showln(LINE + format(INFORM_RESULT, counts.get(0), counts.get(1), counts.get(2), counts.get(3), counts.get(4)));
         showln(format(INFORM_PROFIT, profit));
     }
 

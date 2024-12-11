@@ -1,12 +1,15 @@
 package lotto.controller;
 
-import lotto.domain.PurchaseAmount;
+import java.util.Map;
+import lotto.domain.amount.PurchaseAmount;
 import lotto.domain.generator.LottoGenerator;
 import lotto.domain.lotto.Lotto;
+import lotto.domain.lotto.LottoAward;
 import lotto.domain.lotto.LottoNumber;
 import lotto.domain.lotto.Lottos;
-import lotto.domain.lotto.WinningResult;
+import lotto.domain.lotto.ResultCalculator;
 import lotto.dto.LottoDto;
+import lotto.dto.StatisticsDto;
 import lotto.exception.ExceptionHandler;
 import lotto.service.LottoService;
 import lotto.view.InputView;
@@ -31,16 +34,23 @@ public class LottoController {
     }
 
     public void process() {
-        int quantity = calculateQuantity();
+        PurchaseAmount purchaseAmount = makeAmount();
+        int quantity = purchaseAmount.calculateLottoQuantity();
         Lottos purchaseLottos = purchaseLottos(quantity);
-        WinningResult winningResult = makeWinningResult();
-
+        calculateWinningResult(purchaseAmount, purchaseLottos);
     }
 
-    private WinningResult makeWinningResult() {
+    private void calculateWinningResult(final PurchaseAmount purchaseAmount, final Lottos purchaseLottos) {
+        ResultCalculator resultCalculator = makeWinningResultCalculator();
+        Map<LottoAward, Integer> result = resultCalculator.calculateWinningResult(purchaseLottos);
+        double profitRate = resultCalculator.calculateProfitRate(purchaseAmount);
+        outputView.showInformResult(StatisticsDto.of(result).values(), profitRate);
+    }
+
+    private ResultCalculator makeWinningResultCalculator() {
         Lotto winningLotto = makeWinningLotto();
         outputView.showRequestBonusNumber();
-        return exceptionHandler.retryUntilSuccess(() -> new WinningResult(winningLotto, makeBonusNumber()));
+        return exceptionHandler.retryUntilSuccess(() -> new ResultCalculator(winningLotto, makeBonusNumber()));
     }
 
     private LottoNumber makeBonusNumber() {
@@ -61,11 +71,6 @@ public class LottoController {
     private void showPurchaseLottos(final int quantity, final Lottos purchaseLottos) {
         LottoDto lottoDto = lottoService.convertToLottoDto(purchaseLottos);
         outputView.showPurchaseLotto(quantity, lottoDto.numbers());
-    }
-
-    private int calculateQuantity() {
-        PurchaseAmount purchaseAmount = makeAmount();
-        return purchaseAmount.calculateLottoQuantity();
     }
 
     private PurchaseAmount makeAmount() {

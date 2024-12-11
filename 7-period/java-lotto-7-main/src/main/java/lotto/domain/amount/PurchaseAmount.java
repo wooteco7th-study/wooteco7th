@@ -1,4 +1,4 @@
-package lotto.domain;
+package lotto.domain.amount;
 
 import lotto.exception.CustomIllegalArgumentException;
 import lotto.exception.ErrorMessage;
@@ -31,5 +31,9 @@ public class PurchaseAmount {
 
     private boolean isNotUnitNumber(final int value) {
         return value % LOTTO_UNIT_PRICE != MIN_EXCLUSIVE;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
