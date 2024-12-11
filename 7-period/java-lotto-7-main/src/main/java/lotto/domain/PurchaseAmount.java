@@ -3,16 +3,20 @@ package lotto.domain;
 import lotto.exception.CustomIllegalArgumentException;
 import lotto.exception.ErrorMessage;
 
-public class Amount {
+public class PurchaseAmount {
 
     private static final int LOTTO_UNIT_PRICE = 1000;
     private static final int MIN_EXCLUSIVE = 0;
 
     private final int value;
 
-    public Amount(final int value) {
+    public PurchaseAmount(final int value) {
         validate(value);
         this.value = value;
+    }
+
+    public int calculateLottoQuantity() {
+        return value / LOTTO_UNIT_PRICE;
     }
 
     private void validate(final int value) {

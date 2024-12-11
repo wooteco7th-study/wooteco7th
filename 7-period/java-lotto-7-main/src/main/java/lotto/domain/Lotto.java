@@ -1,20 +1,29 @@
 package lotto.domain;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
+import lotto.exception.CustomIllegalArgumentException;
+import lotto.exception.ErrorMessage;
 
 public class Lotto {
-    private final List<Integer> numbers;
+
+    public static final int LOTTO_SIZE = 6;
+    private final Set<Integer> numbers;
 
     public Lotto(List<Integer> numbers) {
         validate(numbers);
-        this.numbers = numbers;
+        this.numbers = new TreeSet<>(numbers);
     }
 
     private void validate(List<Integer> numbers) {
-        if (numbers.size() != 6) {
-            throw new IllegalArgumentException("[ERROR] 로또 번호는 6개여야 합니다.");
+        if (numbers.size() != LOTTO_SIZE) {
+            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_LOTTO_SIZE);
         }
     }
 
-    // TODO: 추가 기능 구현
+    public List<Integer> getNumbers() {
+        return new ArrayList<>(numbers);
+    }
 }

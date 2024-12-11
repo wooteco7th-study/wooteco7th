@@ -28,8 +28,8 @@ public class OutputView {
         showln(REQUEST_AMOUNT);
     }
 
-    public void showPurchaseLotto(final List<List<Integer>> numbers) {
-        showln(LINE + INFORM_QUANTITY);
+    public void showPurchaseLotto(final int quantity, final List<List<Integer>> numbers) {
+        showln(LINE + format(INFORM_QUANTITY, quantity));
         numbers.stream()
                 .map(this::makeLottoMessage)
                 .forEach(this::showln);
