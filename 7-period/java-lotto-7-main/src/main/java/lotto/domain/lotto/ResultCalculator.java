@@ -9,6 +9,7 @@ import lotto.exception.ErrorMessage;
 public class ResultCalculator {
 
     private static final int FULL_PERCENTAGE = 100;
+
     private final Lotto winningLotto;
     private final LottoNumber bonusNumber;
     private final Map<LottoAward, Integer> result;
@@ -18,6 +19,18 @@ public class ResultCalculator {
         this.winningLotto = winningLotto;
         this.bonusNumber = bonusNumber;
         this.result = initialize();
+    }
+
+    public Map<LottoAward, Integer> calculateWinningResult(final Lottos purchaseLottos) {
+        for (Lotto purchaseLotto : purchaseLottos.getLottos()) {
+            calculateEachLotto(purchaseLotto);
+        }
+        return result;
+    }
+
+    public double calculateProfitRate(final PurchaseAmount purchaseAmount) {
+        int profit = calculateProfit();
+        return (double) profit / purchaseAmount.getValue() * FULL_PERCENTAGE;
     }
 
     private Map<LottoAward, Integer> initialize() {
@@ -34,18 +47,6 @@ public class ResultCalculator {
         }
     }
 
-    public Map<LottoAward, Integer> calculateWinningResult(final Lottos purchaseLottos) {
-        for (Lotto purchaseLotto : purchaseLottos.getLottos()) {
-            calculateEachLotto(purchaseLotto);
-        }
-        return result;
-    }
-
-    public double calculateProfitRate(final PurchaseAmount purchaseAmount) {
-        int profit = calculateProfit();
-        return (double) profit / purchaseAmount.getValue() * FULL_PERCENTAGE;
-    }
-
     private int calculateProfit() {
         return result.entrySet().stream()
                 .mapToInt(entry -> entry.getKey().getPrize() * entry.getValue())
@@ -58,5 +59,4 @@ public class ResultCalculator {
         LottoAward award = LottoAward.from(matchingCount, matchBonus);
         result.merge(award, 1, Integer::sum);
     }
-
 }

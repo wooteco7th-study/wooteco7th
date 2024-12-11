@@ -6,19 +6,19 @@ import lotto.domain.lotto.Lottos;
 
 public class LottoGenerator {
 
-    private final LottoNumberGenerator lottoNumberGenerator;
+    private final NumberGenerator lottoNumberGenerator;
 
-    public LottoGenerator(final LottoNumberGenerator lottoNumberGenerator) {
+    public LottoGenerator(final NumberGenerator lottoNumberGenerator) {
         this.lottoNumberGenerator = lottoNumberGenerator;
-    }
-
-    public Lotto generate() {
-        return new Lotto(lottoNumberGenerator.generate());
     }
 
     public Lottos generateMultiple(final int quantity) {
         return new Lottos(IntStream.range(0, quantity)
                 .mapToObj(i -> generate())
                 .toList());
+    }
+
+    private Lotto generate() {
+        return new Lotto(lottoNumberGenerator.generate());
     }
 }

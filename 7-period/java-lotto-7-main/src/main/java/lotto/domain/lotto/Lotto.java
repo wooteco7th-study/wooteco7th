@@ -4,6 +4,7 @@ import static lotto.exception.ErrorMessage.INVALID_LOTTO_NUMBER_DUPLICATED;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 import java.util.TreeSet;
 import lotto.exception.CustomIllegalArgumentException;
@@ -60,5 +61,21 @@ public class Lotto {
     public boolean doesMatchBonus(final LottoNumber bonusNumber) {
         return numbers.stream()
                 .anyMatch(number -> number.equals(bonusNumber));
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Lotto lotto)) {
+            return false;
+        }
+        return Objects.equals(getNumbers(), lotto.getNumbers());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getNumbers());
     }
 }

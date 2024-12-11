@@ -7,7 +7,7 @@ import static lotto.domain.lotto.LottoNumber.START_INCLUSIVE;
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
 
-public class LottoNumberGenerator {
+public class LottoNumberGenerator implements NumberGenerator {
 
     public List<Integer> generate() {
         return Randoms.pickUniqueNumbersInRange(START_INCLUSIVE, END_INCLUSIVE, LOTTO_SIZE);
