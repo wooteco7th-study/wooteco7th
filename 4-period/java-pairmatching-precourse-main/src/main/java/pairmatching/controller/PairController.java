@@ -55,15 +55,16 @@ public class PairController {
         }
     }
 
-    private void processMatching(PairOrder pairOrder) {
-        while (pairService.hasHistory(pairOrder)) {
+    private void processMatching(final PairOrder pairOrder) {
+        PairOrder currentOrder = pairOrder;
+        while (pairService.hasHistory(currentOrder)) {
             if (wantRetry()) {
                 break;
             }
             outputView.showRetry();
-            pairOrder = makeRetryOrder();
+            currentOrder = makeRetryOrder();
         }
-        matchPair(pairOrder);
+        matchPair(currentOrder);
     }
 
     private void matchPair(PairOrder pairOrder) {
