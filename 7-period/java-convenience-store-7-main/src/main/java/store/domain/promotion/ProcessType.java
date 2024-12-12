@@ -7,4 +7,5 @@ public enum ProcessType {
     public boolean doesGuideNeeded() {
         return this == MIXED || this == CAN_GIFT;
     }
+
 }

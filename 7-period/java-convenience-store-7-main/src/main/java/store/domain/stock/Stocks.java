@@ -39,6 +39,7 @@ public class Stocks {
             return;
         }
         addPromotionStock(quantity, inputPromotion);
+        promotionType = PromotionType.EXIST;
     }
 
     private void addRegularStock(final int quantity) {
