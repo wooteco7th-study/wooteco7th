@@ -2,38 +2,31 @@ package menu.exception;
 
 import java.util.Optional;
 import java.util.function.Supplier;
-import menu.view.OutputView;
 
 public class ExceptionHandler {
 
-    private final OutputView outputView;
-
-        public ExceptionHandler(final OutputView outputView) {
-        this.outputView = outputView;
-    }
-
-    public <T> T retryUntilSuccess(Supplier<T> action) {
+    public static <T> T retryUntilSuccess(Supplier<T> action) {
         while (true) {
             try {
                 return action.get();
             } catch (IllegalArgumentException e) {
-                outputView.showException(e);
+                System.out.println(e.getMessage());
             }
         }
     }
 
-    public void retryUntilSuccess(Runnable callback) {
+    public static void retryUntilSuccess(Runnable callback) {
         while (true) {
             try {
                 callback.run();
                 return;
             } catch (IllegalArgumentException e) {
-                outputView.showException(e);
+                System.out.println(e.getMessage());
             }
         }
     }
 
-    public <T> T retryUntilPresent(Supplier<Optional<T>> action) {
+    public static <T> T retryUntilPresent(Supplier<Optional<T>> action) {
         while (true) {
             try {
                 Optional<T> result = action.get();
@@ -41,7 +34,7 @@ public class ExceptionHandler {
                     return result.get();
                 }
             } catch (IllegalArgumentException e) {
-                outputView.showException(e);
+                System.out.println(e.getMessage());
             }
         }
     }

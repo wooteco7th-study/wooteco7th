@@ -6,7 +6,6 @@ import menu.domain.name.Name;
 import menu.exception.CustomIllegalArgumentException;
 import menu.exception.ErrorMessage;
 
-// 코치 + 못먹는 메뉴
 public class CoachCannotEatMenus {
 
     private static final int MAX_MENU_NUMBER = 2;
