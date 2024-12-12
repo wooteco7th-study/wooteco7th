@@ -8,44 +8,36 @@ import menu.exception.ErrorMessage;
 
 public class Coach {
 
-    private static final int MAX_MENU_NUMBER = 2;
+    private static final int MAX_HATE_MENU_NUMBER = 2;
 
     private final Name coachName;
     private final Menus hateMenus;
     private final Menus recommendedMenus;
 
     public Coach(final Name coachName, final List<String> hateMenus,
-                 final List<Menu> recommendedMenus) {
+                 final List<String> recommendedMenus) {
         validateHateMenus(hateMenus);
         this.coachName = coachName;
         this.hateMenus = Menus.of(hateMenus);
-        this.recommendedMenus = new Menus(recommendedMenus);
+        this.recommendedMenus = Menus.of(recommendedMenus);;
+    }
+
+    public void addRecommendMenu(final Menu menu) {
+        List<Menu> candidate = new ArrayList<>(recommendedMenus.getMenus());
+        candidate.add(menu);
+        validateMenu(candidate);
+        recommendedMenus.add(menu);
     }
 
     private void validateHateMenus(final List<String> menus) {
-        if (menus.size() > MAX_MENU_NUMBER) {
+        if (menus.size() > MAX_HATE_MENU_NUMBER) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_NAME_NUMBER);
         }
     }
 
-    public void addRecommendMenu(final Menu menu) {
-        validateMenu(menu);
-        recommendedMenus.add(menu);
-    }
-
-    public void validateMenu(final Menu menu) {
-        List<Menu> menus = new ArrayList<>(recommendedMenus.getMenus());
-        menus.add(menu);
-        validateMenu(menus);
-    }
-
     private void validateMenu(final List<Menu> menus) {
-        validateUniqueSize(menus);
-        validateCanEat(menus);
-    }
-
-    private void validateUniqueSize(final List<Menu> menus) {
         validateDuplicated(menus);
+        validateCanEat(menus);
     }
 
     private void validateDuplicated(final List<Menu> menus) {
