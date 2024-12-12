@@ -1,7 +1,7 @@
 package pairmatching.controller;
 
+import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import pairmatching.domain.command.FunctionCommand;
 import pairmatching.domain.command.RetryCommand;
 import pairmatching.domain.order.PairOrder;
@@ -9,7 +9,6 @@ import pairmatching.domain.pair.PairHistory;
 import pairmatching.dto.PairMatchResultDto;
 import pairmatching.exception.ExceptionHandler;
 import pairmatching.service.PairService;
-import pairmatching.support.Initializer;
 import pairmatching.view.InputView;
 import pairmatching.view.OutputView;
 
@@ -19,19 +18,21 @@ public class PairController {
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
     private final PairService pairService;
-    private final Initializer initializer;
 
     public PairController(final InputView inputView, final OutputView outputView,
                           final ExceptionHandler exceptionHandler,
-                          final PairService pairService, final Initializer initializer) {
+                          final PairService pairService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
         this.pairService = pairService;
-        this.initializer = initializer;
     }
 
     public void process() {
+        processSession();
+    }
+
+    private void processSession() {
         while (true) {
             FunctionCommand command = makeFunctionCommand();
             if (command.isQuit()) {
@@ -46,35 +47,31 @@ public class PairController {
     }
 
     private void processInitialize() {
-        initializer.clearHistory();
+        pairService.initialize();
         outputView.showInformReset();
     }
 
     private void processWithCommand(final FunctionCommand command) {
         PairOrder pairOrder = makePairOrder();
         if (command.isPairMatching()) {
-            processPairMatching(pairOrder);
+            pairOrder = retryWhenHistoryExists(pairOrder);
+            matchPair(pairOrder);
         }
         if (command.IsPairInquiry()) {
             processPairInquiry(pairOrder);
         }
     }
 
-    private void processPairMatching(PairOrder pairOrder) {
-        PairHistory pairHistory = initializer.getHistory();
-        pairOrder = retryWhenHistoryExists(pairOrder, pairHistory);
-        matchPair(pairOrder);
-    }
-
-    private void matchPair(final PairOrder pairOrder) {
+    private void matchPair(PairOrder pairOrder) {
         exceptionHandler.executeWithCatch(() -> {
-            PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder, initializer);
+            PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder);
             outputView.showMatchResult(pairMatchResultDto);
         });
     }
 
-    private PairOrder retryWhenHistoryExists(PairOrder pairOrder, final PairHistory pairHistory) {
-        while (pairHistory.isExists(pairOrder)) {
+
+    private PairOrder retryWhenHistoryExists(PairOrder pairOrder) {
+        while (pairService.hasHistory(pairOrder)) {
             if (wantRetry()) {
                 break;
             }
@@ -82,15 +79,6 @@ public class PairController {
             pairOrder = makeRetryOrder();
         }
         return pairOrder;
-    }
-
-    private Optional<PairOrder> requestRetryOrder() {
-        outputView.showRequestRetry();
-        if (!wantRetry()) {
-            outputView.showRetry();
-            return Optional.ofNullable(makeRetryOrder());
-        }
-        return Optional.empty();
     }
 
     private PairOrder makeRetryOrder() {
@@ -101,9 +89,8 @@ public class PairController {
     }
 
     private void processPairInquiry(final PairOrder pairOrder) {
-        PairHistory pairHistory = initializer.getHistory();
         exceptionHandler.executeWithCatch(() -> {
-            PairMatchResultDto pairMatchResultDto = pairService.inquirePair(pairOrder, pairHistory);
+            PairMatchResultDto pairMatchResultDto = pairService.inquirePair(pairOrder);
             outputView.showMatchResult(pairMatchResultDto);
         });
     }
