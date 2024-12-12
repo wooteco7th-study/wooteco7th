@@ -7,6 +7,7 @@ import oncall.error.ErrorMessage;
 
 public enum DayOfWeek {
 
+
     SUNDAY(0, "일", true),
     MONDAY(1, "월", false),
     TUESDAY(2, "화", false),
@@ -25,7 +26,7 @@ public enum DayOfWeek {
         this.isWeekend = isWeekend;
     }
 
-    public DayOfWeek findByName(final String name) {
+    public static DayOfWeek findByName(final String name) {
         return Arrays.stream(DayOfWeek.values())
                 .filter(dayOfWeek -> Objects.equals(dayOfWeek.name, name))
                 .findAny()

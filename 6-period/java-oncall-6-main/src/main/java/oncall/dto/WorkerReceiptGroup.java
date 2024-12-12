@@ -20,14 +20,16 @@ public record WorkerReceiptGroup(
             int month,
             int dayOfMonth,
             String dayOfWeek,
-            String name
+            String name,
+            boolean isWeekdayAndHoliday
     ) {
         public static WorkerReceipt of(final Worker worker) {
             return new WorkerReceipt(
                     worker.getMonth(),
                     worker.getDayOfMonth(),
                     worker.getDayOfWeek(),
-                    worker.getName()
+                    worker.getName(),
+                    worker.isWeekdayAndHoliday()
             );
         }
     }
