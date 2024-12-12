@@ -64,7 +64,7 @@ public class MenuRecommender {
         while (true) {
             try {
                 List<String> menuNames = Menu.findMenuNames(category);
-                Menu menu = Menu.from(menuGenerator.chooseMenu(menuNames));
+                Menu menu = Menu.fromWithoutNone(menuGenerator.chooseMenu(menuNames));
                 recommendedMenus.validate(menu);
                 recommendedMenus.addMenu(menu);
                 return;

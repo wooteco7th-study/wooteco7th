@@ -42,10 +42,11 @@ public enum Menu {
         this.category = category;
     }
 
-    public static List<Menu> findWithCategory(Category category) {
+    public static Menu fromWithoutNone(String input) {
         return VALUED_MENUS.stream()
-                .filter(menu -> menu.category.equals(category))
-                .toList();
+                .filter(menuName -> Objects.equals(menuName.menuName, input))
+                .findFirst()
+                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_NAME));
     }
 
     public static Menu from(String input) {
