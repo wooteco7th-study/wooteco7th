@@ -2,7 +2,7 @@ package menu.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import menu.domain.menu.CoachCannotEatMenus;
+import menu.domain.menu.Coach;
 import menu.domain.name.Name;
 import menu.domain.name.Names;
 import menu.domain.random.CategoryGenerator;
@@ -37,20 +37,20 @@ public class MenuController {
         // 코치 이름 입력 기능 구현
         Names names = makeNames();
         // 코치별 못 먹는 메뉴 입력 기능 구현
-        List<CoachCannotEatMenus> menusCannotEat = makeMenus(names);
+        List<Coach> coaches = makeMenus(names);
         // 코치별 메뉴 추천 기능 구현
-        recommendMenus(menusCannotEat);
+        recommendMenus(coaches);
     }
 
-    private void recommendMenus(final List<CoachCannotEatMenus> menusCannotEat) {
-        MenuRecommender menuRecommender = new MenuRecommender(categoryGenerator, menuGenerator, menusCannotEat);
+    private void recommendMenus(final List<Coach> coaches) {
+        MenuRecommender menuRecommender = new MenuRecommender(categoryGenerator, menuGenerator, coaches);
         ResultDto resultDto = menuService.makeRecommendedMenus(menuRecommender);
         outputView.showTitleResult(resultDto);
         outputView.showTitleEndResult();
     }
 
-    private List<CoachCannotEatMenus> makeMenus(final Names names) {
-        List<CoachCannotEatMenus> menus = new ArrayList<>();
+    private List<Coach> makeMenus(final Names names) {
+        List<Coach> menus = new ArrayList<>();
         for (Name name : names.getNames()) {
             outputView.showRequestMenu(name.getValue());
             menus.add(makeCoachMenus(name));
@@ -58,9 +58,10 @@ public class MenuController {
         return menus;
     }
 
-    private CoachCannotEatMenus makeCoachMenus(final Name name) {
+    private Coach makeCoachMenus(final Name name) {
         return ExceptionHandler.retryUntilSuccess(
-                () -> new CoachCannotEatMenus(name, inputView.readMenuCannotEat(ErrorMessage.INVALID_INPUT)));
+                () -> new Coach(name, inputView.readMenuCannotEat(ErrorMessage.INVALID_INPUT),
+                        new ArrayList<>()));
     }
 
     private Names makeNames() {

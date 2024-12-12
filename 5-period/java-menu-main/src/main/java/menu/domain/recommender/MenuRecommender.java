@@ -4,9 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import menu.domain.menu.Categories;
 import menu.domain.menu.Category;
-import menu.domain.menu.CoachCannotEatMenus;
+import menu.domain.menu.Coach;
 import menu.domain.menu.Menu;
-import menu.domain.menu.RecommendedMenus;
 import menu.domain.random.CategoryGenerator;
 import menu.domain.random.MenuGenerator;
 import menu.exception.ExceptionHandler;
@@ -17,39 +16,28 @@ public class MenuRecommender {
 
     private final CategoryGenerator categoryGenerator;
     private final MenuGenerator menuGenerator;
-    private final List<CoachCannotEatMenus> coachCannotEatMenus;
-    private final List<RecommendedMenus> recommendedMenus;
+    private final List<Coach> coaches;
     private final Categories categories;
 
     public MenuRecommender(final CategoryGenerator categoryGenerator, final MenuGenerator menuGenerator,
-                           final List<CoachCannotEatMenus> coachCannotEatMenus) {
+                           final List<Coach> coaches) {
         this.categoryGenerator = categoryGenerator;
         this.menuGenerator = menuGenerator;
-        this.coachCannotEatMenus = coachCannotEatMenus;
-        this.recommendedMenus = initializeRecommendedMenus(coachCannotEatMenus);
+        this.coaches = coaches;
         this.categories = new Categories(new ArrayList<>());
     }
 
-    private List<RecommendedMenus> initializeRecommendedMenus(final List<CoachCannotEatMenus> coachCannotEatMenus) {
-        List<RecommendedMenus> menus = new ArrayList<>();
-        for (CoachCannotEatMenus coachCannotEatMenu : coachCannotEatMenus) {
-            menus.add(new RecommendedMenus(coachCannotEatMenu.getCoachName().getValue(), coachCannotEatMenu));
-        }
-        return menus;
-    }
-
-    public List<RecommendedMenus> makeWeekdayMenus() {
+    public List<Coach> makeWeekdayMenus() {
         for (int i = 0; i < WEEKDAY_SIZE; i++) {
             addCategory();
             makeTodayMenus(categories.getCategory(i));
         }
-        return recommendedMenus;
+        return coaches;
     }
 
     private void makeTodayMenus(final Category category) {
-        for (int i = 0; i < coachCannotEatMenus.size(); i++) {
-            RecommendedMenus recommendedMenu = recommendedMenus.get(i);
-            makeRandomMenu(category, recommendedMenu);
+        for (Coach coach : coaches) {
+            makeRandomMenu(category, coach);
         }
     }
 
@@ -60,17 +48,11 @@ public class MenuRecommender {
         });
     }
 
-    private void makeRandomMenu(final Category category, final RecommendedMenus recommendedMenus) {
-        while (true) {
-            try {
-                List<String> menuNames = Menu.findMenuNames(category);
-                Menu menu = Menu.fromActualMenus(menuGenerator.chooseMenu(menuNames));
-                recommendedMenus.validate(menu);
-                recommendedMenus.addMenu(menu);
-                return;
-            } catch (IllegalArgumentException ignored) {
-                System.out.println(ignored.getMessage());
-            }
-        }
+    private void makeRandomMenu(final Category category, final Coach coach) {
+        ExceptionHandler.retryUntilSuccess(() -> {
+            List<String> menuNames = Menu.findMenuNames(category);
+            Menu menu = Menu.fromActualMenus(menuGenerator.chooseMenu(menuNames));
+            coach.addRecommendMenu(menu);
+        });
     }
 }
