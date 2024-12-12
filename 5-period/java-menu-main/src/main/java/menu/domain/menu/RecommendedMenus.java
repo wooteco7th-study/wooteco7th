@@ -47,7 +47,6 @@ public class RecommendedMenus {
         }
     }
 
-
     private boolean cannotEat(final List<Menu> menus) {
         return menus.stream()
                 .anyMatch(menu -> !eatableMenus.contains(menu));
