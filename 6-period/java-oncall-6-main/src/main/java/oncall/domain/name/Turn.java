@@ -1,6 +1,8 @@
 package oncall.domain.name;
 
+import java.util.ArrayDeque;
 import java.util.Collections;
+import java.util.Deque;
 import java.util.List;
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
@@ -10,17 +12,25 @@ public class Turn {
     private static final int MIN_LENGTH = 5;
     private static final int MAX_LENGTH = 35;
 
-    private final List<Name> names;
+    private final Deque<Name> names;
 
     public Turn(final List<String> names) {
         validate(names);
         this.names = Turn.of(names);
     }
 
-    private static List<Name> of(final List<String> names) {
-        return names.stream()
+    private static Deque<Name> of(final List<String> names) {
+        return new ArrayDeque<>(names.stream()
                 .map(Name::new)
-                .toList();
+                .toList());
+    }
+
+    public boolean hasSameNameFront(final Name compared) {
+        return compared.equals(names.peekFirst());
+    }
+
+    public Name pollFirst() {
+        return names.pollFirst();
     }
 
     public boolean hasOnlyOne(final Name name) {
@@ -50,6 +60,22 @@ public class Turn {
     }
 
     public List<Name> getNames() {
-        return Collections.unmodifiableList(names);
+        return List.copyOf(names);
+    }
+
+    public void addLast(final Name name) {
+        names.addLast(name);
+    }
+
+    public void addFirst(final Name name) {
+        names.addFirst(name);
+    }
+
+    public Name pollLast() {
+        return names.pollLast();
+    }
+
+    public Name peekFirst() {
+        return names.peekFirst();
     }
 }

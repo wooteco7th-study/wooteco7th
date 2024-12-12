@@ -6,6 +6,7 @@ import oncall.domain.date.Month;
 import oncall.domain.date.MonthType;
 import oncall.domain.name.Turn;
 import oncall.domain.name.Turns;
+import oncall.dto.TurnDto;
 import oncall.exception.ErrorMessage;
 import oncall.exception.ExceptionHandler;
 import oncall.service.OncallService;
@@ -34,6 +35,8 @@ public class OncallController {
         Month month = makeMonth();
         // 근무 순번 입력 기능 구현
         Turns turns = makeTurns();
+        List<TurnDto> turnDtos = oncallService.processSchedule(month, turns);
+        outputView.showResult(turnDtos);
     }
 
     private Turn makeWeekdayTurn() {

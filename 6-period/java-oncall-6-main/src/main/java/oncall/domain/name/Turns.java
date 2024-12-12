@@ -36,5 +36,11 @@ public class Turns {
                 .anyMatch(name -> !holidayTurn.hasOnlyOne(name));
     }
 
+    public Turn getWeekdayTurn() {
+        return weekdayTurn;
+    }
 
+    public Turn getHolidayTurn() {
+        return holidayTurn;
+    }
 }

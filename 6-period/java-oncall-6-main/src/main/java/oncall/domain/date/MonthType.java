@@ -26,4 +26,12 @@ public enum MonthType {
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_INPUT));
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public int getEndDay() {
+        return endDay;
+    }
 }

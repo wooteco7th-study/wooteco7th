@@ -26,6 +26,7 @@ public class OutputView {
     }
 
     public void showResult(List<TurnDto> dtos) {
+        showln("");
         dtos.stream()
                 .map(this::makeMessage)
                 .forEach(this::showln);

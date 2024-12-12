@@ -1,5 +1,7 @@
 package oncall.domain.date;
 
+import java.util.Arrays;
+
 public enum LegalHoliday {
 
     신정(MonthType.from(1), 1), 삼일절(MonthType.from(3), 1), 어린이날(MonthType.from(5), 5),
@@ -12,5 +14,10 @@ public enum LegalHoliday {
     LegalHoliday(final MonthType monthType, final int day) {
         this.monthType = monthType;
         this.day = day;
+    }
+
+    public static boolean isHoliday(final MonthType monthType, final int day) {
+        return Arrays.stream(values())
+                .anyMatch(legalHoliday -> legalHoliday.monthType == monthType && legalHoliday.day == day);
     }
 }
