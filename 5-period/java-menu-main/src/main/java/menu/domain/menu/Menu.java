@@ -30,7 +30,7 @@ public enum Menu {
     없음("", Category.NONE);
 
 
-    private static final List<Menu> VALUED_MENUS = Arrays.stream(Menu.values())
+    private static final List<Menu> ACTUAL_MENUS = Arrays.stream(Menu.values())
             .filter(menu -> menu != 없음)
             .toList();
 
@@ -42,29 +42,29 @@ public enum Menu {
         this.category = category;
     }
 
-    public static Menu fromWithoutNone(String input) {
-        return VALUED_MENUS.stream()
+    public static Menu fromActualMenus(String input) {
+        return ACTUAL_MENUS.stream()
                 .filter(menuName -> Objects.equals(menuName.menuName, input))
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_NAME));
     }
 
     public static Menu from(String input) {
-        return VALUED_MENUS.stream()
+        return Arrays.stream(values())
                 .filter(menuName -> Objects.equals(menuName.menuName, input))
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_NAME));
     }
 
     public static List<String> findMenuNames(final Category category) {
-        return VALUED_MENUS.stream()
+        return ACTUAL_MENUS.stream()
                 .filter(menu -> menu.category.equals(category))
                 .map(Menu::getMenuName)
                 .toList();
     }
 
     public static List<Menu> filteredMenus(List<Menu> menuToExclude) {
-        return VALUED_MENUS.stream()
+        return ACTUAL_MENUS.stream()
                 .filter(menu -> !menuToExclude.contains(menu))
                 .toList();
     }

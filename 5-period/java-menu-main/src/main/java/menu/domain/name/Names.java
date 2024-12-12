@@ -7,6 +7,9 @@ import menu.exception.ErrorMessage;
 
 public class Names {
 
+    private static final int MIN_LENGTH = 2;
+    private static final int MAX_LENGTH = 5;
+
     private final List<Name> names;
 
     public Names(final List<String> names) {
@@ -32,10 +35,10 @@ public class Names {
     }
 
     private void validateLength(final List<String> names) {
-        if (names.size() < 2) {
+        if (names.size() < MIN_LENGTH) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_COACH_NUMBER_MIN);
         }
-        if (names.size() > 5) {
+        if (names.size() > MAX_LENGTH) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_COACH_NUMBER_MAX);
         }
     }
