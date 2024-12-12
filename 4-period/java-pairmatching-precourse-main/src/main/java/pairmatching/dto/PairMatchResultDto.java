@@ -8,7 +8,7 @@ public record PairMatchResultDto(List<List<String>> results) {
     public static PairMatchResultDto from(final List<Pair> pairs) {
         List<List<String>> result = new ArrayList<>();
         for (Pair pair : pairs) {
-            result.add(pair.getCrews());
+            result.add(pair.getNames());
         }
         return new PairMatchResultDto(result);
     }

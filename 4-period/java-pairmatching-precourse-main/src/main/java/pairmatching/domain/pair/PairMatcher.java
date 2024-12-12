@@ -1,9 +1,9 @@
 package pairmatching.domain.pair;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import pairmatching.domain.crew.Crew;
+import pairmatching.domain.crew.Crews;
 import pairmatching.domain.order.Level;
 import pairmatching.domain.random.Shuffle;
 import pairmatching.exception.CustomIllegalArgumentException;
@@ -11,17 +11,19 @@ import pairmatching.exception.ErrorMessage;
 
 public class PairMatcher {
 
-    private final List<Crew> crews;
+    private static final int MAX_PAIR_COUNT = 3;
+
+    private final Crews crews;
     private final Shuffle shuffle;
 
-    public PairMatcher(final List<Crew> crews, final Shuffle randomShuffle) {
+    public PairMatcher(final Crews crews, final Shuffle randomShuffle) {
         this.crews = crews;
         this.shuffle = randomShuffle;
     }
 
     public List<Pair> matchCrewUntilCount(final PairHistory pairHistory, final Level level) {
         int count = 0;
-        while (count != 3) {
+        while (count != MAX_PAIR_COUNT) {
             List<Pair> pairs = matchCrew(pairHistory, level);
             if (!pairs.isEmpty()) {
                 return pairs;
@@ -32,39 +34,19 @@ public class PairMatcher {
     }
 
     private List<Pair> matchCrew(final PairHistory pairHistory, final Level level) {
-        List<String> crews = shuffle.shuffleCrews(getNames());
-        List<Pair> pairs = makePairs(crews);
+        Crews shuffleCrews = Crews.of(crews.getCourse(), shuffle.shuffleCrews(getNames()));
+        List<Pair> pairs = makePairs(shuffleCrews);
         if (hasPair(pairs, pairHistory, level)) {
             return Collections.emptyList();
         }
         return pairs;
     }
 
-    private List<Pair> makePairs(final List<String> crews) {
-        if (crews.size() % 2 == 0) {
-            return makePairsForEvenNumbers(crews);
+    private List<Pair> makePairs(final Crews crews) {
+        if (crews.isEvenNumberSize()) {
+            return crews.makePairsForEvenNumbers();
         }
-        return makePairsForOddNumbers(crews);
-    }
-
-    private List<Pair> makePairsForEvenNumbers(final List<String> crews) {
-        List<Pair> pairs = new ArrayList<>();
-        for (int i = 0; i < crews.size(); i += 2) {
-            Pair pair = new Pair(new ArrayList<>(List.of(crews.get(i), crews.get(i + 1))));
-            pairs.add(pair);
-        }
-        return pairs;
-    }
-
-    private List<Pair> makePairsForOddNumbers(final List<String> crews) {
-        List<Pair> pairs = new ArrayList<>();
-        for (int i = 0; i < crews.size() - 1; i += 2) {
-            Pair pair = new Pair(new ArrayList<>(List.of(crews.get(i), crews.get(i + 1))));
-            pairs.add(pair);
-        }
-        Pair lastPair = pairs.getLast();
-        lastPair.add(crews.getLast());
-        return pairs;
+        return crews.makePairsForOddNumbers();
     }
 
     private boolean hasPair(final List<Pair> pairs, final PairHistory pairHistory, final Level level) {
@@ -72,8 +54,8 @@ public class PairMatcher {
                 .anyMatch(pair -> pairHistory.hasSameLevelPair(pair, level));
     }
 
-    private List<String> getNames() {
-        return crews.stream()
+    public List<String> getNames() {
+        return crews.getCrews().stream()
                 .map(Crew::getName)
                 .toList();
     }

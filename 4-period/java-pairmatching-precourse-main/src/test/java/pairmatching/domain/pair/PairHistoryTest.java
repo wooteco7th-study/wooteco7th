@@ -1,6 +1,7 @@
 package pairmatching.domain.pair;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static pairmatching.support.TestFixture.makeCrew;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -33,13 +34,13 @@ class PairHistoryTest {
     @DisplayName("같은 레벨에서 Pair가 존재할 경우 true가 반환된다.")
     void hasSameLevelPair(Pair pair, boolean expected) {
         // Given
-        Pair pair1 = new Pair(List.of("러키", "밍트"));
-        Pair pair2 = new Pair(List.of("진수", "수달", "혜민"));
+        Pair pair1 = new Pair(List.of(makeCrew("러키"), makeCrew("밍트")));
+        Pair pair2 = new Pair(List.of(makeCrew("진수"), makeCrew("수달"), makeCrew("혜민")));
         PairResult pairResultLevel1 = new PairResult(
                 new PairOrder(Course.백엔드.name(), Level.레벨1.name(), Mission.로또.name()),
                 List.of(pair1, pair2));
-        Pair pair3 = new Pair(List.of("혜민", "밍트"));
-        Pair pair4 = new Pair(List.of("수달", "러키", "혜민"));
+        Pair pair3 = new Pair(List.of(makeCrew("혜민"), makeCrew("밍트")));
+        Pair pair4 = new Pair(List.of(makeCrew("수달"), makeCrew("러키"), makeCrew("혜민")));
         PairResult pairResultLevel2 = new PairResult(
                 new PairOrder(Course.백엔드.name(), Level.레벨2.name(), Mission.로또.name()),
                 List.of(pair3, pair4));
@@ -51,9 +52,9 @@ class PairHistoryTest {
 
     private static Stream<Arguments> hasSameLevelPair() {
         return Stream.of(
-                Arguments.of(new Pair(List.of("혜민", "밍트")), false),
-                Arguments.of(new Pair(List.of("혜민", "러키")), false),
-                Arguments.of(new Pair(List.of("수달", "진수")), true)
+                Arguments.of(new Pair(List.of(makeCrew("혜민"), makeCrew("밍트"))), false),
+                Arguments.of(new Pair(List.of(makeCrew("혜민"), makeCrew("러키"))), false),
+                Arguments.of(new Pair(List.of(makeCrew("수달"), makeCrew("진수"))), true)
         );
     }
 

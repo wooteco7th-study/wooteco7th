@@ -17,7 +17,7 @@ public class PairService {
 
     public PairMatchResultDto matchPair(final PairOrder pairOrder, final Initializer initializer) {
         Crews crews = getCrews(pairOrder, initializer);
-        PairMatcher pairMatcher = new PairMatcher(crews.getCrews(), new RandomShuffle());
+        PairMatcher pairMatcher = new PairMatcher(crews, new RandomShuffle());
         PairHistory pairHistory = initializer.getHistory();
         List<Pair> pairs = pairMatcher.matchCrewUntilCount(pairHistory, pairOrder.getLevel());
         pairHistory.add(new PairResult(pairOrder, pairs));

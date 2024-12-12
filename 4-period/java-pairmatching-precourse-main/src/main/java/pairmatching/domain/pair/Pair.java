@@ -4,31 +4,32 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import pairmatching.domain.crew.Crew;
 import pairmatching.exception.CustomIllegalArgumentException;
 import pairmatching.exception.ErrorMessage;
 
 public class Pair {
 
-    private final List<String> crews;
+    private final List<Crew> crews;
 
-    public Pair(final List<String> crews) {
+    public Pair(final List<Crew> crews) {
         validate(crews);
         this.crews = crews;
     }
 
-    private void validate(final List<String> crews) {
+    private void validate(final List<Crew> crews) {
         if (isDuplicated(crews)) {
             throw new CustomIllegalArgumentException(ErrorMessage.PAIR_DUPLICATED);
         }
     }
 
-    private boolean isDuplicated(final List<String> crews) {
+    private boolean isDuplicated(final List<Crew> crews) {
         return crews.size() != crews.stream()
                 .distinct()
                 .count();
     }
 
-    public void add(final String crew) {
+    public void add(final Crew crew) {
         crews.add(crew);
     }
 
@@ -40,8 +41,8 @@ public class Pair {
         if (!(o instanceof Pair pair)) {
             return false;
         }
-        HashSet<String> crewsUnique = new HashSet<>(crews);
-        HashSet<String> comparedUnique = new HashSet<>(pair.crews);
+        HashSet<Crew> crewsUnique = new HashSet<>(crews);
+        HashSet<Crew> comparedUnique = new HashSet<>(pair.crews);
         return crewsUnique.containsAll(comparedUnique) || comparedUnique.containsAll(crewsUnique);
     }
 
@@ -50,7 +51,13 @@ public class Pair {
         return Objects.hash(crews);
     }
 
-    public List<String> getCrews() {
+    public List<String> getNames() {
+        return crews.stream()
+                .map(Crew::getName)
+                .toList();
+    }
+
+    public List<Crew> getCrews() {
         return Collections.unmodifiableList(crews);
     }
 }

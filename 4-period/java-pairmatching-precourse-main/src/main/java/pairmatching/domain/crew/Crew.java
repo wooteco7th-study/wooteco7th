@@ -1,5 +1,6 @@
 package pairmatching.domain.crew;
 
+import java.util.Objects;
 import pairmatching.domain.order.Course;
 
 public class Crew {
@@ -12,12 +13,20 @@ public class Crew {
         this.name = name;
     }
 
-    public boolean isBackend() {
-        return course.isBackend();
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Crew crew)) {
+            return false;
+        }
+        return getCourse() == crew.getCourse() && Objects.equals(getName(), crew.getName());
     }
 
-    public boolean isFrontend() {
-        return course.isFrontend();
+    @Override
+    public int hashCode() {
+        return Objects.hash(getCourse(), getName());
     }
 
     public Course getCourse() {
