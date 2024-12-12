@@ -1,9 +1,10 @@
-package oncall.domain.name;
+package oncall.domain.turn;
 
 import java.util.ArrayDeque;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
+import oncall.domain.name.Name;
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
 

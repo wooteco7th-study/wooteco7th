@@ -1,7 +1,8 @@
-package oncall.domain.name;
+package oncall.domain.turn;
 
 import java.util.List;
 import oncall.domain.date.Month;
+import oncall.domain.name.Name;
 
 public class WorkScheduler {
 

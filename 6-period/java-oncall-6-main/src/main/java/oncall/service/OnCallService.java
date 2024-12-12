@@ -6,8 +6,8 @@ import java.util.stream.IntStream;
 import oncall.domain.date.DayType;
 import oncall.domain.date.Month;
 import oncall.domain.name.Name;
-import oncall.domain.name.Turns;
-import oncall.domain.name.WorkScheduler;
+import oncall.domain.turn.Turns;
+import oncall.domain.turn.WorkScheduler;
 import oncall.dto.TurnDto;
 
 public class OnCallService {

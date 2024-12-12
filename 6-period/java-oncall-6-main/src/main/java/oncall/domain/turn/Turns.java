@@ -1,4 +1,4 @@
-package oncall.domain.name;
+package oncall.domain.turn;
 
 import oncall.exception.CustomIllegalArgumentException;
 import oncall.exception.ErrorMessage;
