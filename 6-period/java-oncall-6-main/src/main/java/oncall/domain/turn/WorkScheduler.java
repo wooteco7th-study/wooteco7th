@@ -29,8 +29,8 @@ public class WorkScheduler {
         return result;
     }
 
-    private boolean processTurn(final Turn turn, final boolean isHolidayChanged) {
-        if (isHolidayChanged) {
+    private boolean processTurn(final Turn turn, final boolean isChanged) {
+        if (isChanged) {
             changeToOriginalTurn(turn);
             return false;
         }
@@ -42,29 +42,29 @@ public class WorkScheduler {
         return false;
     }
 
-    private void executeWithoutChange(final Turn holidayTurn) {
-        Name name = holidayTurn.pollFirst();
+    private void executeWithoutChange(final Turn turn) {
+        Name name = turn.pollFirst();
         result.add(name);
-        holidayTurn.addLast(name);
+        turn.addLast(name);
     }
 
-    private void changeTurn(final Turn holidayTurn) {
-        Name name = holidayTurn.pollFirst();
-        Name nextName = holidayTurn.pollFirst();
+    private void changeTurn(final Turn turn) {
+        Name name = turn.pollFirst();
+        Name nextName = turn.pollFirst();
         result.add(nextName);
-        holidayTurn.addFirst(name);
-        holidayTurn.addLast(nextName);
+        turn.addFirst(name);
+        turn.addLast(nextName);
     }
 
     private boolean hasSameNameBefore(final Name name) {
         return !result.isEmpty() && name.equals(result.getLast());
     }
 
-    private void changeToOriginalTurn(final Turn holidayTurn) {
-        Name name = holidayTurn.pollFirst();
+    private void changeToOriginalTurn(final Turn turn) {
+        Name name = turn.pollFirst();
         result.add(name);
-        Name nextName = holidayTurn.pollLast();
-        holidayTurn.addLast(name);
-        holidayTurn.addLast(nextName);
+        Name nextName = turn.pollLast();
+        turn.addLast(name);
+        turn.addLast(nextName);
     }
 }

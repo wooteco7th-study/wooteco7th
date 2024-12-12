@@ -16,7 +16,7 @@ public enum LegalHoliday {
         this.day = day;
     }
 
-    public static boolean isHoliday(final MonthType monthType, final int day) {
+    public static boolean isLegalHoliday(final MonthType monthType, final int day) {
         return Arrays.stream(values())
                 .anyMatch(legalHoliday -> legalHoliday.monthType == monthType && legalHoliday.day == day);
     }

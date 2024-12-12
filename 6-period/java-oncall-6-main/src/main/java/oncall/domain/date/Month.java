@@ -15,11 +15,11 @@ public class Month {
     }
 
     public boolean isHoliday(int day) {
-        return startDayType.isWeekend(day) || LegalHoliday.isHoliday(monthType, day);
+        return startDayType.isWeekend(day) || LegalHoliday.isLegalHoliday(monthType, day);
     }
 
     public boolean isSpecialDay(int day) {
-        return !startDayType.isWeekend(day) && LegalHoliday.isHoliday(monthType, day);
+        return !startDayType.isWeekend(day) && LegalHoliday.isLegalHoliday(monthType, day);
     }
 
     public int getMonthTypeValue() {

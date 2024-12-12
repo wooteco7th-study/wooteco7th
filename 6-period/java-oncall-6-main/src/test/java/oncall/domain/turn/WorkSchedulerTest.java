@@ -59,6 +59,6 @@ class WorkSchedulerTest {
                         "로케",
                         "밍트",
                         "수달")
-                );
+        );
     }
 }
