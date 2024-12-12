@@ -10,7 +10,7 @@ import oncall.domain.name.Turns;
 import oncall.domain.name.WorkScheduler;
 import oncall.dto.TurnDto;
 
-public class OncallService {
+public class OnCallService {
 
 
     public List<TurnDto> processSchedule(final Month month, final Turns turns) {

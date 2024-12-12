@@ -9,21 +9,21 @@ import oncall.domain.name.Turns;
 import oncall.dto.TurnDto;
 import oncall.exception.ErrorMessage;
 import oncall.exception.ExceptionHandler;
-import oncall.service.OncallService;
+import oncall.service.OnCallService;
 import oncall.util.StringParser;
 import oncall.view.InputView;
 import oncall.view.OutputView;
 
-public class OncallController {
+public class OnCallController {
 
     private final InputView inputView;
     private final OutputView outputView;
     private final ExceptionHandler exceptionHandler;
-    private final OncallService oncallService;
+    private final OnCallService oncallService;
 
-    public OncallController(final InputView inputView, final OutputView outputView,
+    public OnCallController(final InputView inputView, final OutputView outputView,
                             final ExceptionHandler exceptionHandler,
-                            final OncallService oncallService) {
+                            final OnCallService oncallService) {
         this.inputView = inputView;
         this.outputView = outputView;
         this.exceptionHandler = exceptionHandler;
@@ -31,9 +31,7 @@ public class OncallController {
     }
 
     public void process() {
-        // 월, 시작요일 입력 기능 구현
         Month month = makeMonth();
-        // 근무 순번 입력 기능 구현
         Turns turns = makeTurns();
         List<TurnDto> turnDtos = oncallService.processSchedule(month, turns);
         outputView.showResult(turnDtos);
