@@ -20,7 +20,7 @@ public class Turns {
     }
 
     private void validateFrequency(final Turn weekdayTurn, final Turn holidayTurn) {
-        if (isInvalidFrequency(weekdayTurn, holidayTurn)) {
+        if (!isValidFrequency(weekdayTurn, holidayTurn)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_INPUT);
         }
     }
@@ -31,9 +31,9 @@ public class Turns {
         }
     }
 
-    private boolean isInvalidFrequency(final Turn weekdayTurn, final Turn holidayTurn) {
+    private boolean isValidFrequency(final Turn weekdayTurn, final Turn holidayTurn) {
         return weekdayTurn.getNames().stream()
-                .anyMatch(name -> !holidayTurn.hasOnlyOne(name));
+                .anyMatch(holidayTurn::hasOnlyOne);
     }
 
     public Turn getWeekdayTurn() {

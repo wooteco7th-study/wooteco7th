@@ -1,6 +1,7 @@
 package oncall.domain.turn;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
@@ -35,7 +36,7 @@ public class Turn {
     }
 
     public boolean hasOnlyOne(final Name name) {
-        int frequency = Collections.frequency(names, name);
+        int frequency = Collections.frequency(new ArrayList<>(names), name);
         return frequency == 1;
     }
 
