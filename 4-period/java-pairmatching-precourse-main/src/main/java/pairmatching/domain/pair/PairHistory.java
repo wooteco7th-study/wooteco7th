@@ -1,8 +1,8 @@
 package pairmatching.domain.pair;
 
-import static pairmatching.exception.ErrorMessage.PAIR_MATCH_ORDER_FAILED;
-
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import pairmatching.domain.order.Level;
 import pairmatching.domain.order.PairOrder;
 import pairmatching.exception.CustomIllegalArgumentException;
@@ -10,48 +10,35 @@ import pairmatching.exception.ErrorMessage;
 
 public class PairHistory {
 
-    private final List<PairResult> results;
+    private final Map<PairOrder, List<Pair>> history;
 
-    public PairHistory(final List<PairResult> results) {
-        this.results = results;
+    public PairHistory(final Map<PairOrder, List<Pair>> history) {
+        this.history = new HashMap<>(history);
     }
 
     public void add(final PairResult pairResult) {
         PairOrder pairOrder = pairResult.getPairOrder();
-        if (isExists(pairOrder)) {
-            PairResult samePairOrderResult = findSamePairOrderResult(pairOrder);
-            results.remove(samePairOrderResult);
-        }
-        results.add(pairResult);
-    }
-
-    public PairResult findSamePairOrderResult(final PairOrder compared) {
-        return results.stream()
-                .filter(pairResult -> pairResult.getPairOrder().equals(compared))
-                .findAny()
-                .orElseThrow(() -> new CustomIllegalArgumentException(PAIR_MATCH_ORDER_FAILED));
+        history.put(pairOrder, pairResult.getPairs());
     }
 
     public boolean isExists(final PairOrder compared) {
-        return results.stream()
-                .map(PairResult::getPairOrder)
-                .anyMatch(pairOrder -> pairOrder.equals(compared));
+        return history.containsKey(compared);
     }
 
     public boolean hasSameLevelPair(final Pair pair, final Level level) {
-        return results.stream()
-                .filter(result -> result.hasSameLevel(level))
-                .anyMatch(result -> result.hasSamePair(pair));
+        return history.entrySet().stream()
+                .filter(history -> history.getKey().hasSameLevel(level))
+                .anyMatch(history -> history.getValue().contains(pair));
     }
 
-    public PairResult inquire(final PairOrder compared) {
-        return results.stream()
-                .filter(result -> result.getPairOrder().equals(compared))
-                .findAny()
-                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_NO_HISTORY));
+    public List<Pair> inquire(final PairOrder compared) {
+        if (history.containsKey(compared)) {
+            return history.get(compared);
+        }
+        throw new CustomIllegalArgumentException(ErrorMessage.INVALID_NO_HISTORY);
     }
 
     public void clear() {
-        results.clear();
+        history.clear();
     }
 }

@@ -7,11 +7,11 @@ import static pairmatching.support.TestFixture.makeCrew;
 import static pairmatching.support.TestFixture.makeCrews;
 import static pairmatching.support.TestFixture.makeOddNumberCrews;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pairmatching.domain.crew.Crew;
 import pairmatching.domain.crew.Crews;
 import pairmatching.domain.order.Course;
 import pairmatching.domain.order.Level;
@@ -31,7 +31,7 @@ class PairMatcherTest {
         PairMatcher pairMatcher = new PairMatcher(crews, shuffle);
 
         // When
-        List<Pair> pairs = pairMatcher.matchCrewUntilCount(new PairHistory(new ArrayList<>()), Level.레벨1);
+        List<Pair> pairs = pairMatcher.matchCrewUntilCount(new PairHistory(new HashMap<>()), Level.레벨1);
 
         // Then
         assertAll(
@@ -50,7 +50,7 @@ class PairMatcherTest {
         PairMatcher pairMatcher = new PairMatcher(crews, shuffle);
 
         // When
-        List<Pair> pairs = pairMatcher.matchCrewUntilCount(new PairHistory(new ArrayList<>()), Level.레벨1);
+        List<Pair> pairs = pairMatcher.matchCrewUntilCount(new PairHistory(new HashMap<>()), Level.레벨1);
 
         // Then
         assertAll(
@@ -72,7 +72,8 @@ class PairMatcherTest {
                 List.of(pair1, pair2));
 
         // When
-        assertIllegalArgument(() -> pairMatcher.matchCrewUntilCount(new PairHistory(List.of(pairResult)), Level.레벨1),
+        assertIllegalArgument(() -> pairMatcher.matchCrewUntilCount(
+                        new PairHistory(Map.of(pairResult.getPairOrder(), pairResult.getPairs())), Level.레벨1),
                 ErrorMessage.PAIR_MATCH_FAILED);
     }
 
@@ -89,7 +90,8 @@ class PairMatcherTest {
                 List.of(pair1, pair2));
 
         // When
-        assertIllegalArgument(() -> pairMatcher.matchCrewUntilCount(new PairHistory(List.of(pairResult)), Level.레벨1),
+        assertIllegalArgument(() -> pairMatcher.matchCrewUntilCount(
+                        new PairHistory(Map.of(pairResult.getPairOrder(), pairResult.getPairs())), Level.레벨1),
                 ErrorMessage.PAIR_MATCH_FAILED);
     }
 }

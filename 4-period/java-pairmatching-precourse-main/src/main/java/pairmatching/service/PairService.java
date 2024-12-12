@@ -36,8 +36,8 @@ public class PairService {
         if (!historyNotExists(pairOrder, pairHistory)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_NO_HISTORY);
         }
-        PairResult pairResult = pairHistory.inquire(pairOrder);
-        return PairMatchResultDto.from(pairResult.getPairs());
+        List<Pair> pairs = pairHistory.inquire(pairOrder);
+        return PairMatchResultDto.from(pairs);
     }
 
     private boolean historyNotExists(final PairOrder pairOrder, final PairHistory pairHistory) {

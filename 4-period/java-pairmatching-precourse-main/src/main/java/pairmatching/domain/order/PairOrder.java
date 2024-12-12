@@ -14,6 +14,10 @@ public class PairOrder {
         this.mission = Mission.from(mission);
     }
 
+    public boolean hasSameLevel(final Level input) {
+        return level.equals(input);
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) {

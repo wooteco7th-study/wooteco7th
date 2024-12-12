@@ -1,6 +1,7 @@
 package pairmatching.support;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import pairmatching.domain.crew.Crew;
 import pairmatching.domain.crew.Crews;
@@ -17,7 +18,7 @@ public class Initializer {
     public Initializer() {
         this.backendCrews = makeBackendCrews();
         this.frontendCrews = makeFrontendCrews();
-        this.history = new PairHistory(new ArrayList<>());
+        this.history = new PairHistory(new HashMap<>());
     }
 
     private Crews makeBackendCrews() {

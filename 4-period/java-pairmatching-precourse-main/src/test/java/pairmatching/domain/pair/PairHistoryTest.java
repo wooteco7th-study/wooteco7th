@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static pairmatching.support.TestFixture.makeCrew;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,9 @@ class PairHistoryTest {
         PairResult pairResultLevel2 = new PairResult(
                 new PairOrder(Course.백엔드.name(), Level.레벨2.name(), Mission.로또.name()),
                 List.of(pair3, pair4));
-        PairHistory pairHistory = new PairHistory(List.of(pairResultLevel1, pairResultLevel2));
+        PairHistory pairHistory = new PairHistory(
+                Map.of(pairResultLevel1.getPairOrder(), pairResultLevel1.getPairs(), pairResultLevel2.getPairOrder(),
+                        pairResultLevel2.getPairs()));
 
         // When & Then
         assertThat(pairHistory.hasSameLevelPair(pair, Level.레벨1)).isEqualTo(expected);
