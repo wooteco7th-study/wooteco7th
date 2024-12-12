@@ -1,13 +1,14 @@
 package oncall.controller;
 
 import java.util.List;
-import oncall.domain.DayType;
-import oncall.domain.Month;
-import oncall.domain.MonthType;
+import oncall.domain.date.DayType;
+import oncall.domain.date.Month;
+import oncall.domain.date.MonthType;
+import oncall.domain.name.Turn;
+import oncall.domain.name.Turns;
 import oncall.exception.ErrorMessage;
 import oncall.exception.ExceptionHandler;
 import oncall.service.OncallService;
-import oncall.util.InputValidator;
 import oncall.util.StringParser;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -31,6 +32,26 @@ public class OncallController {
     public void process() {
         // 월, 시작요일 입력 기능 구현
         Month month = makeMonth();
+        // 근무 순번 입력 기능 구현
+        Turns turns = makeTurns();
+    }
+
+    private Turn makeWeekdayTurn() {
+        outputView.showRequestWeekdayTurn();
+        return new Turn(inputView.readTurn());
+    }
+
+    private Turns makeTurns() {
+        return exceptionHandler.retryUntilSuccess(() -> {
+            Turn weekdayTurn = makeWeekdayTurn();
+            Turn holidayTurn = makeHolidayTurn();
+            return new Turns(weekdayTurn, holidayTurn);
+        });
+    }
+
+    private Turn makeHolidayTurn() {
+        outputView.showRequestHolidayTurn();
+        return new Turn(inputView.readTurn());
     }
 
     private Month makeMonth() {

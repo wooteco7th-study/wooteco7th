@@ -13,20 +13,16 @@ public class OutputView {
     private static final String HOLIDAY = "(휴일)";
     private static final String EMPTY = "";
 
-    // TITLE_ : 제목
-    // REQUEST_ : 요청
-    // INFORM_ : 결과
-
     public void showRequestStartDay() {
-        showln(REQUEST_START_DAY);
+        show(REQUEST_START_DAY);
     }
 
     public void showRequestWeekdayTurn() {
-        showln(REQUEST_WEEKDAY_TURN);
+        show(REQUEST_WEEKDAY_TURN);
     }
 
-    public void showRequestWeekendTurn() {
-        showln(REQUEST_WEEKEND_TURN);
+    public void showRequestHolidayTurn() {
+        show(REQUEST_WEEKEND_TURN);
     }
 
     public void showResult(List<TurnDto> dtos) {
