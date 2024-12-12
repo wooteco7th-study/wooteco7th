@@ -21,7 +21,7 @@ public record ResultDto(List<List<String>> menus) {
     private static List<String> getMenuName(final Coach coach) {
         List<String> result = new ArrayList<>();
         result.add(coach.getCoachName().getValue());
-        for (Menu recommendedMenu : coach.getRecommendedMenus()) {
+        for (Menu recommendedMenu : coach.getRecommendedMenus().getMenus()) {
             result.add(recommendedMenu.getMenuName());
         }
         return result;

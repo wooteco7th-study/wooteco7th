@@ -2,8 +2,8 @@ package menu.domain.recommender;
 
 import java.util.ArrayList;
 import java.util.List;
-import menu.domain.menu.Categories;
-import menu.domain.menu.Category;
+import menu.domain.category.Categories;
+import menu.domain.category.Category;
 import menu.domain.menu.Coach;
 import menu.domain.menu.Menu;
 import menu.domain.random.CategoryGenerator;

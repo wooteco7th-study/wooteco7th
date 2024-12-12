@@ -1,9 +1,8 @@
-package menu.domain.menu;
+package menu.domain.category;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import menu.exception.CustomIllegalArgumentException;
 import menu.exception.ErrorMessage;
 

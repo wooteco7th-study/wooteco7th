@@ -1,16 +1,9 @@
 package menu.domain.recommender;
 
 import static menu.domain.support.CustomAssert.assertIllegalArgument;
-import static menu.exception.ErrorMessage.INVALID_CATEGORY_DUPLICATED;
-import static org.junit.jupiter.api.Assertions.*;
 
 import camp.nextstep.edu.missionutils.Randoms;
 import java.util.List;
-import java.util.Random;
-import menu.domain.menu.Category;
-import menu.domain.random.CategoryGenerator;
-import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class CategoryRecommenderTest {

@@ -1,7 +1,7 @@
 package menu.domain.random;
 
 import camp.nextstep.edu.missionutils.Randoms;
-import menu.domain.menu.Category;
+import menu.domain.category.Category;
 
 public class RandomCategoryGenerator implements CategoryGenerator {
 

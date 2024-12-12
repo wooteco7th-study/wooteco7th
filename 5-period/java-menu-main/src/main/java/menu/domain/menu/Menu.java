@@ -3,6 +3,7 @@ package menu.domain.menu;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import menu.domain.category.Category;
 import menu.exception.CustomIllegalArgumentException;
 import menu.exception.ErrorMessage;
 

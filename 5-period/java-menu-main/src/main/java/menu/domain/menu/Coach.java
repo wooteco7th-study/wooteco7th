@@ -1,7 +1,6 @@
 package menu.domain.menu;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import menu.domain.name.Name;
 import menu.exception.CustomIllegalArgumentException;
@@ -12,27 +11,18 @@ public class Coach {
     private static final int MAX_MENU_NUMBER = 2;
 
     private final Name coachName;
-    private final List<Menu> hateMenus;
-    private final List<Menu> recommendedMenus;
+    private final Menus hateMenus;
+    private final Menus recommendedMenus;
 
     public Coach(final Name coachName, final List<String> hateMenus,
                  final List<Menu> recommendedMenus) {
         validateHateMenus(hateMenus);
         this.coachName = coachName;
-        this.hateMenus = makeMenus(hateMenus);
-        this.recommendedMenus = recommendedMenus;
-    }
-
-    private List<Menu> makeMenus(final List<String> inputs) {
-        return inputs.stream()
-                .map(Menu::from)
-                .toList();
+        this.hateMenus = Menus.of(hateMenus);
+        this.recommendedMenus = new Menus(recommendedMenus);
     }
 
     private void validateHateMenus(final List<String> menus) {
-        if (menus.size() != menus.stream().distinct().count()) {
-            throw new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_NAME_DUPLICATED);
-        }
         if (menus.size() > MAX_MENU_NUMBER) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_NAME_NUMBER);
         }
@@ -44,7 +34,7 @@ public class Coach {
     }
 
     public void validateMenu(final Menu menu) {
-        List<Menu> menus = new ArrayList<>(recommendedMenus);
+        List<Menu> menus = new ArrayList<>(recommendedMenus.getMenus());
         menus.add(menu);
         validateMenu(menus);
     }
@@ -74,12 +64,8 @@ public class Coach {
         return menus.stream().anyMatch(hateMenus::contains);
     }
 
-    public List<Menu> getRecommendedMenus() {
+    public Menus getRecommendedMenus() {
         return recommendedMenus;
-    }
-
-    public List<Menu> getHateMenus() {
-        return Collections.unmodifiableList(hateMenus);
     }
 
     public Name getCoachName() {
