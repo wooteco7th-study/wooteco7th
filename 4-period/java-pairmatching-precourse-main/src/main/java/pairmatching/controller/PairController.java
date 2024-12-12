@@ -1,11 +1,9 @@
 package pairmatching.controller;
 
-import java.util.HashMap;
 import java.util.List;
 import pairmatching.domain.command.FunctionCommand;
 import pairmatching.domain.command.RetryCommand;
 import pairmatching.domain.order.PairOrder;
-import pairmatching.domain.pair.PairHistory;
 import pairmatching.dto.PairMatchResultDto;
 import pairmatching.exception.ExceptionHandler;
 import pairmatching.service.PairService;
@@ -29,10 +27,6 @@ public class PairController {
     }
 
     public void process() {
-        processSession();
-    }
-
-    private void processSession() {
         while (true) {
             FunctionCommand command = makeFunctionCommand();
             if (command.isQuit()) {
@@ -54,23 +48,14 @@ public class PairController {
     private void processWithCommand(final FunctionCommand command) {
         PairOrder pairOrder = makePairOrder();
         if (command.isPairMatching()) {
-            pairOrder = retryWhenHistoryExists(pairOrder);
-            matchPair(pairOrder);
+            processMatching(pairOrder);
         }
         if (command.IsPairInquiry()) {
             processPairInquiry(pairOrder);
         }
     }
 
-    private void matchPair(PairOrder pairOrder) {
-        exceptionHandler.executeWithCatch(() -> {
-            PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder);
-            outputView.showMatchResult(pairMatchResultDto);
-        });
-    }
-
-
-    private PairOrder retryWhenHistoryExists(PairOrder pairOrder) {
+    private void processMatching(PairOrder pairOrder) {
         while (pairService.hasHistory(pairOrder)) {
             if (wantRetry()) {
                 break;
@@ -78,7 +63,14 @@ public class PairController {
             outputView.showRetry();
             pairOrder = makeRetryOrder();
         }
-        return pairOrder;
+        matchPair(pairOrder);
+    }
+
+    private void matchPair(PairOrder pairOrder) {
+        exceptionHandler.executeWithCatch(() -> {
+            PairMatchResultDto pairMatchResultDto = pairService.matchPair(pairOrder);
+            outputView.showMatchResult(pairMatchResultDto);
+        });
     }
 
     private PairOrder makeRetryOrder() {

@@ -38,8 +38,7 @@ class PairHistoryTest {
         Pair pair1 = new Pair(List.of(makeCrew("러키"), makeCrew("밍트")));
         Pair pair2 = new Pair(List.of(makeCrew("진수"), makeCrew("수달"), makeCrew("혜민")));
         PairResult pairResultLevel1 = new PairResult(
-                new PairOrder(Course.백엔드.name(), Level.레벨1.name(), Mission.로또.name()),
-                List.of(pair1, pair2));
+                new PairOrder(Course.백엔드.name(), Level.레벨1.name(), Mission.로또.name()), List.of(pair1, pair2));
         Pair pair3 = new Pair(List.of(makeCrew("혜민"), makeCrew("밍트")));
         Pair pair4 = new Pair(List.of(makeCrew("수달"), makeCrew("러키"), makeCrew("혜민")));
         PairResult pairResultLevel2 = new PairResult(
@@ -62,7 +61,21 @@ class PairHistoryTest {
     }
 
     @Test
+    @DisplayName("페어 히스토리를 조회한다.")
     void inquire() {
+        // Given
+        Pair pair1 = new Pair(List.of(makeCrew("러키"), makeCrew("밍트")));
+        Pair pair2 = new Pair(List.of(makeCrew("진수"), makeCrew("수달"), makeCrew("혜민")));
+        PairResult pairResult = new PairResult(
+                new PairOrder(Course.백엔드.name(), Level.레벨1.name(), Mission.로또.name()), List.of(pair1, pair2));
+        PairHistory pairHistory = new PairHistory(
+                Map.of(pairResult.getPairOrder(), pairResult.getPairs()));
+
+        // When
+        List<Pair> result = pairHistory.inquire(new PairOrder(Course.백엔드.name(), Level.레벨1.name(), Mission.로또.name()));
+
+        // Then
+        assertThat(result.getFirst()).extracting("crews").isEqualTo(List.of(makeCrew("러키"), makeCrew("밍트")));
     }
 
     @Test
