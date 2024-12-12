@@ -8,6 +8,8 @@ import oncall.util.NumberValidator;
 
 public class Schedule {
 
+    private static final int NAME_MIN_LENGTH = 1;
+    private static final int NAME_MAX_LENGTH = 5;
     private static final int MIN = 5;
     private static final int MAX = 35;
 
@@ -35,5 +37,12 @@ public class Schedule {
     private void validate(final List<String> workers) {
         ListValidator.validateDuplicate(workers, ErrorMessage.INVALID_INPUT);
         NumberValidator.validateRange(workers.size(), MIN, MAX, ErrorMessage.INVALID_INPUT);
+        validateLength(workers);
+    }
+
+    private void validateLength(final List<String> workers) {
+        for (String worker : workers) {
+            NumberValidator.validateRange(worker.length(), NAME_MIN_LENGTH, NAME_MAX_LENGTH, ErrorMessage.INVALID_INPUT);
+        }
     }
 }
