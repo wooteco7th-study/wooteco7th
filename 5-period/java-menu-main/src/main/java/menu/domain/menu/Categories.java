@@ -1,5 +1,6 @@
 package menu.domain.menu;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ public class Categories {
 
     private static final int UNIT = 1;
     private static final int DUPLICATED_CATEGORY_MAX = 2;
+
     private final List<Category> categories;
 
     public Categories(final List<Category> categories) {
@@ -17,9 +19,11 @@ public class Categories {
         this.categories = categories;
     }
 
-    public Categories addCategory(Category category) {
+    public void addCategory(final Category category) {
+        List<Category> temp = new ArrayList<>(categories);
+        temp.add(category);
+        validate(temp);
         categories.add(category);
-        return new Categories(categories);
     }
 
     private void validate(final List<Category> categories) {
