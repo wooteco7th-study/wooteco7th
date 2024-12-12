@@ -29,8 +29,7 @@ public class MenuRecommender {
     private List<RecommendedMenus> initializeRecommendedMenus(final List<CoachCannotEatMenus> coachCannotEatMenus) {
         List<RecommendedMenus> menus = new ArrayList<>();
         for (CoachCannotEatMenus coachCannotEatMenu : coachCannotEatMenus) {
-            menus.add(new RecommendedMenus(coachCannotEatMenu.getCoachName().getValue(), coachCannotEatMenu,
-                    new ArrayList<>()));
+            menus.add(new RecommendedMenus(coachCannotEatMenu.getCoachName().getValue(), coachCannotEatMenu));
         }
         return menus;
     }
@@ -50,12 +49,13 @@ public class MenuRecommender {
         }
     }
 
-    private void makeRandomMenu(final Category category, final RecommendedMenus recommendedMenu) {
+    private void makeRandomMenu(final Category category, final RecommendedMenus recommendedMenus) {
         while (true) {
             try {
                 List<String> menuNames = Menu.findMenuNames(category);
                 Menu menu = Menu.from(menuGenerator.chooseMenu(menuNames));
-                recommendedMenu.addMenu(menu);
+                recommendedMenus.validate(menu);
+                recommendedMenus.addMenu(menu);
                 return;
             } catch (IllegalArgumentException ignored) {
                 System.out.println(ignored.getMessage());

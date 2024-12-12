@@ -12,21 +12,30 @@ public class RecommendedMenus {
     private final List<Menu> eatableMenus;
     private final List<Menu> recommendedMenus;
 
-    public RecommendedMenus(final String coachName, final CoachCannotEatMenus coachCannotEatMenus, final List<Menu> recommendedMenus) {
+    public RecommendedMenus(final String coachName, final CoachCannotEatMenus coachCannotEatMenus) {
         this.coachName = coachName;
         this.eatableMenus = Menu.filteredMenus(coachCannotEatMenus.getCannotEatMenus());
-        validate(recommendedMenus);
-        this.recommendedMenus = new ArrayList<>(recommendedMenus);
+        this.recommendedMenus = new ArrayList<>();
     }
 
     public void addMenu(final Menu inputMenu) {
         recommendedMenus.add(inputMenu);
-        System.out.println(recommendedMenus);
-        validate(recommendedMenus);
+    }
+
+    // validate에서 recommendedMenus.add(menu)한 후 검증 수행 -> 예외 발생
+    // 먼저 validate 메서드 호출 후에 예외 발생시킨 후 정상적인 상황에서만 recommendedMenus.add 수행 -> 성공
+    public void validate(final Menu menu) {
+        List<Menu> menus = new ArrayList<>(recommendedMenus);
+        menus.add(menu);
+        validate(menus);
     }
 
     private void validate(final List<Menu> menus) {
         validateUniqueSize(menus);
+        validateCanEat(menus);
+    }
+
+    private void validateCanEat(final List<Menu> menus) {
         if (cannotEat(menus)) {
             throw new CustomIllegalArgumentException(ErrorMessage.INVALID_MENU_COACH_CANNOT_EAT);
         }
