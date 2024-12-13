@@ -1,5 +1,6 @@
 package pairmatching.domain.pair;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,5 +41,9 @@ public class PairHistory {
 
     public void clear() {
         history.clear();
+    }
+
+    public Map<PairOrder, List<Pair>> getHistory() {
+        return Collections.unmodifiableMap(history);
     }
 }

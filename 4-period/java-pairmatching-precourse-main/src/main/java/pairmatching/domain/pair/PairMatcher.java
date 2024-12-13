@@ -34,7 +34,7 @@ public class PairMatcher {
     }
 
     private List<Pair> matchCrew(final PairHistory pairHistory, final Level level) {
-        Crews shuffleCrews = Crews.of(crews.getCourse(), shuffle.shuffleCrews(getNames()));
+        Crews shuffleCrews = Crews.from(crews.getCourse(), shuffle.shuffleCrews(getNames()));
         List<Pair> pairs = makePairs(shuffleCrews);
         if (hasPair(pairs, pairHistory, level)) {
             return Collections.emptyList();

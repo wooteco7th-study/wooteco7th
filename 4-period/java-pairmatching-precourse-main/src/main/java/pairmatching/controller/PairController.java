@@ -3,7 +3,10 @@ package pairmatching.controller;
 import java.util.List;
 import pairmatching.domain.command.FunctionCommand;
 import pairmatching.domain.command.RetryCommand;
+import pairmatching.domain.crew.Crews;
+import pairmatching.domain.order.Course;
 import pairmatching.domain.order.PairOrder;
+import pairmatching.dto.CrewDto;
 import pairmatching.dto.PairMatchResultDto;
 import pairmatching.exception.ExceptionHandler;
 import pairmatching.service.PairService;
@@ -30,22 +33,43 @@ public class PairController {
         while (true) {
             FunctionCommand command = makeFunctionCommand();
             if (command.isQuit()) {
+                processQuit();
                 return;
             }
-            if (command.isInitialized()) {
-                processInitialize();
-                continue;
+            if (command.isRegardingCrew()) {
+                processCrews(command);
             }
-            processWithCommand(command);
+            if (command.isRegardingPair()) {
+                processPairs(command);
+            }
+            outputView.showBlank();
         }
     }
 
-    private void processInitialize() {
-        pairService.initialize();
-        outputView.showInformReset();
+    private void processQuit() {
+        requestSavingCrews();
+        requestSavingPairMatching();
     }
 
-    private void processWithCommand(final FunctionCommand command) {
+    private void requestSavingCrews() {
+        outputView.showRequestSaveCrew();
+        if (isYes()) {
+            pairService.saveCrew();
+        }
+    }
+
+    private void requestSavingPairMatching() {
+        outputView.showRequestSavePairMatching();
+        if (isYes()) {
+            pairService.savePairMatching();
+        }
+    }
+
+    private void processPairs(final FunctionCommand command) {
+        if (command.isInitialized()) {
+            processInitialize();
+            return;
+        }
         PairOrder pairOrder = makePairOrder();
         if (command.isPairMatching()) {
             processMatching(pairOrder);
@@ -53,6 +77,73 @@ public class PairController {
         if (command.IsPairInquiry()) {
             processPairInquiry(pairOrder);
         }
+    }
+
+    private void processCrews(final FunctionCommand command) {
+        // 1. 크루 추가
+        if (command.addCrew()) {
+            addCrew();
+        }
+        //2. 크루 조회
+        if (command.inquireCrew()) {
+            inquireCrew();
+        }
+        //3. 크루 초기화
+        if (command.initializeCrew()) {
+            outputView.informExcludeFunction();
+        }
+    }
+
+    private void initializeCrew() {
+        pairService.initializeCrew();
+        outputView.showInformReset();
+    }
+
+    private void inquireCrew() {
+        Course course = makeCourse();
+        exceptionHandler.executeWithCatch(() -> {
+            CrewDto crewDto = pairService.inquireCrew(course);
+            outputView.showCrew(crewDto);
+        });
+    }
+
+    private void addCrew() {
+        while (true) {
+            Course course = makeCourse();
+            addCrew(course);
+            if (!wantCrewNameRetry()) {
+                return;
+            }
+        }
+    }
+
+    private boolean wantCrewNameRetry() {
+        outputView.showRequestCrewNameRetry();
+        return isYes();
+    }
+
+    private Boolean isYes() {
+        return exceptionHandler.retryUntilSuccess(() -> RetryCommand.from(inputView.readRequestRetry()).isYes());
+    }
+
+    private void addCrew(final Course course) {
+        exceptionHandler.retryUntilSuccess(() -> {
+            outputView.showRequestCrewName();
+            Crews crews = Crews.from(course, inputView.readCrewNames());
+            pairService.addCrews(crews);
+        });
+    }
+
+    private Course makeCourse() {
+        return exceptionHandler.retryUntilSuccess(() -> {
+            outputView.showRequestCourse();
+            return Course.from(inputView.readCourse());
+        });
+    }
+
+    private void processInitialize() {
+        pairService.initialize();
+        outputView.showInformReset();
     }
 
     private void processMatching(final PairOrder pairOrder) {
@@ -90,7 +181,7 @@ public class PairController {
 
     private boolean wantRetry() {
         outputView.showRequestRetry();
-        return exceptionHandler.retryUntilSuccess(() -> RetryCommand.from(inputView.readRequestRetry()).isYes());
+        return isYes();
     }
 
     private PairOrder makePairOrder() {

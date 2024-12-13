@@ -9,9 +9,9 @@ public enum Course {
 
     백엔드, 프론트엔드;
 
-    public static Course from(String course) {
+    public static Course from(String input) {
         return Arrays.stream(Course.values())
-                .filter(upDown -> Objects.equals(upDown.name(), course))
+                .filter(course -> Objects.equals(course.name(), input))
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_COURSE));
     }
