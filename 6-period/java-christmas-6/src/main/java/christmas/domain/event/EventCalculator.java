@@ -53,11 +53,11 @@ public class EventCalculator {
         return specialDiscount.calculateDiscount();
     }
 
-    private boolean checkGiftCondition() {
-        return today.isInDecember() && calculateTotalOrderPrice() > GIFT_THRESHOLD;
-    }
-
     public boolean isWeekday() {
         return today.isWeekday();
+    }
+
+    private boolean checkGiftCondition() {
+        return today.isInDecember() && calculateTotalOrderPrice() > GIFT_THRESHOLD;
     }
 }
