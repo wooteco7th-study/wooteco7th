@@ -19,7 +19,8 @@ public class WeekendDiscount extends Discount {
         if (canReceiveDiscount() && super.visitDate.isWeekend()) {
             final long count = super.orderMenuGroup.getOrderMenus().stream()
                     .filter(OrderMenu::isMain)
-                    .count();
+                    .mapToInt(OrderMenu::getQuantity)
+                    .sum();
             discount += (int) (DISCOUNT * count);
         }
         return discount;

@@ -8,6 +8,7 @@ public class BenefitDiscount extends Discount {
 
     private static final int DISCOUNT_CONDITION = 120_000;
     private static final Menu BENEFIT = Menu.CHAMPAGNE;
+    private static final int BENEFIT_QUANTITY = 1;
 
     public BenefitDiscount(final DiscountType discountType, final VisitDate visitDate,
                            final OrderMenuGroup orderMenuGroup) {
@@ -25,5 +26,9 @@ public class BenefitDiscount extends Discount {
 
     public Menu getBenefit() {
         return BENEFIT;
+    }
+
+    public int getBenefitQuantity() {
+        return BENEFIT_QUANTITY;
     }
 }
