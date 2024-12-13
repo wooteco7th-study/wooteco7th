@@ -1,5 +1,10 @@
 package christmas.domain;
 
+import christmas.exception.CustomIllegalArgumentException;
+import christmas.exception.ErrorMessage;
+import java.util.Arrays;
+import java.util.Objects;
+
 public enum Menu {
 
     양송이수프(MenuType.애피타이저, 6_000), 타파스(MenuType.애피타이저, 5_500), 시저샐러드(MenuType.애피타이저, 8_000),
@@ -17,5 +22,12 @@ public enum Menu {
     Menu(final MenuType menuType, final int price) {
         this.menuType = menuType;
         this.price = price;
+    }
+
+    public static Menu from(String input) {
+        return Arrays.stream(Menu.values())
+                .filter(menu -> Objects.equals(menu.name(), input))
+                .findFirst()
+                .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_ORDER));
     }
 }
