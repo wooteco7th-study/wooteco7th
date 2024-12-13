@@ -25,6 +25,7 @@ public class OrderMenuGroup {
                 .map(OrderMenuGroup::createOrderMenu)
                 .toList();
         validateQuantity(orderMenus);
+        validateOnlyDrink(orderMenus);
         return new OrderMenuGroup(orderMenus);
     }
 
@@ -53,6 +54,12 @@ public class OrderMenuGroup {
 
     private static void validateQuantity(final List<OrderMenu> orderMenus) {
         if (isExceedsQuantity(orderMenus)) {
+            throw new AppException(ErrorMessage.WRONG_ORDER_FORMAT);
+        }
+    }
+
+    private static void validateOnlyDrink(final List<OrderMenu> orderMenus) {
+        if (orderMenus.stream().allMatch(OrderMenu::isDrink)) {
             throw new AppException(ErrorMessage.WRONG_ORDER_FORMAT);
         }
     }

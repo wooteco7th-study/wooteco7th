@@ -36,6 +36,10 @@ public class OrderMenu {
         return Objects.equals(menu.getMenuType(), MenuType.MAIN);
     }
 
+    public boolean isDrink() {
+        return Objects.equals(menu.getMenuType(), MenuType.DRINK);
+    }
+
     public Menu getMenu() {
         return menu;
     }
