@@ -1,9 +1,13 @@
 package christmas.controller;
 
-import christmas.domain.Day;
-import christmas.domain.Menu;
-import christmas.domain.Order;
-import christmas.domain.Orders;
+import christmas.domain.date.Day;
+import christmas.domain.event.Badge;
+import christmas.domain.event.EventCalculator;
+import christmas.domain.menu.Menu;
+import christmas.domain.order.Order;
+import christmas.domain.order.Orders;
+import christmas.dto.DiscountDetailsDto;
+import christmas.dto.OrderDto;
 import christmas.exception.ErrorMessage;
 import christmas.exception.ExceptionHandler;
 import christmas.service.ChristmasService;
@@ -12,6 +16,7 @@ import christmas.util.StringParser;
 import christmas.view.InputView;
 import christmas.view.OutputView;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class ChristmasController {
@@ -38,6 +43,61 @@ public class ChristmasController {
         Day day = makeDay();
         // 주문 메뉴, 개수 입력 기능 구현
         Orders orders = makeOrders();
+        showOrderMenu(day, orders);
+        calculateEvent(day, orders);
+    }
+
+    private void calculateEvent(final Day day, final Orders orders) {
+        EventCalculator eventCalculator = new EventCalculator(day, orders);
+        showTotalOrderPrice(eventCalculator);
+        showGift(eventCalculator);
+        showDiscount(eventCalculator);
+    }
+
+    private void showDiscount(final EventCalculator eventCalculator) {
+        int christmasDdayDiscount = eventCalculator.calculateChristmasDdayDiscount();
+        int dayDiscount = eventCalculator.calculateDayDiscount();
+        int specialDiscount = eventCalculator.calculateSpecialDiscount();
+        int giftDiscount = eventCalculator.calculateGiftDiscount();
+        boolean isWeekday = eventCalculator.isWeekday();
+        DiscountDetailsDto dto = new DiscountDetailsDto(christmasDdayDiscount, dayDiscount,
+                specialDiscount, giftDiscount, isWeekday);
+        outputView.showTitleDiscountDetails(dto);
+        calculateResult(eventCalculator, christmasDdayDiscount, dayDiscount, specialDiscount, giftDiscount);
+    }
+
+    private void calculateResult(final EventCalculator eventCalculator, final int christmasDdayDiscount,
+                           final int dayDiscount, final int specialDiscount, final int giftDiscount) {
+        int totalDiscount = christmasDdayDiscount + dayDiscount + specialDiscount;
+        int totalEventPrice = totalDiscount + giftDiscount;
+        outputView.showTitleTotalDiscount(totalEventPrice);
+        showEstimatedPrice(eventCalculator, totalDiscount);
+        showBadge(totalEventPrice);
+    }
+
+    private void showEstimatedPrice(final EventCalculator eventCalculator, final int totalDiscount) {
+        int estimatedPrice = eventCalculator.calculateTotalOrderPrice() - totalDiscount;
+        outputView.showTitleEstimatedPrice(estimatedPrice);
+    }
+
+    private void showBadge(final int totalEventPrice) {
+        Badge badge = Badge.calculateBadge(totalEventPrice);
+        outputView.showTitleBadge(badge.name());
+    }
+
+    private void showGift(final EventCalculator eventCalculator) {
+        Map<Menu, Integer> gifts = eventCalculator.calculateGift();
+        outputView.showTitleGiftMenu(OrderDto.from(gifts));
+    }
+
+    private void showTotalOrderPrice(final EventCalculator eventCalculator) {
+        int totalPrice = eventCalculator.calculateTotalOrderPrice();
+        outputView.showTitleTotalOrderPrice(totalPrice);
+    }
+
+    private void showOrderMenu(final Day day, final Orders orders) {
+        outputView.showInformTitleDiscount(day.getToday());
+        outputView.showTitleOrderMenu(OrderDto.from(orders));
     }
 
     private Orders makeOrders() {

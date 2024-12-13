@@ -1,4 +1,4 @@
-package christmas.domain;
+package christmas.domain.menu;
 
 import christmas.exception.CustomIllegalArgumentException;
 import christmas.exception.ErrorMessage;
@@ -29,5 +29,13 @@ public enum Menu {
                 .filter(menu -> Objects.equals(menu.name(), input))
                 .findFirst()
                 .orElseThrow(() -> new CustomIllegalArgumentException(ErrorMessage.INVALID_ORDER));
+    }
+
+    public MenuType getMenuType() {
+        return menuType;
+    }
+
+    public int getPrice() {
+        return price;
     }
 }
