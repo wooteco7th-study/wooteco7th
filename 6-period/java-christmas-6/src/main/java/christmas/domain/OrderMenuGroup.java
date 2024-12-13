@@ -34,6 +34,10 @@ public class OrderMenuGroup {
                 .sum();
     }
 
+    public List<OrderMenu> getOrderMenus() {
+        return orderMenus;
+    }
+
     private static OrderMenu createOrderMenu(final String inputMenu) {
         final List<String> tokens = StringParser.parseToTokens(inputMenu, DELIMITER_HYPHEN);
         final String menuName = tokens.get(MENU_NAME_INDEX);
